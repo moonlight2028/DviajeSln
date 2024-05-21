@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
 {
-    internal class Adjunto
+    public class Adjunto
     {
         [Key]
         public int IdAdjunto { get; set; }

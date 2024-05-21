@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
 {
-    internal class Favorito
+    public class Favorito
     {
         [Key]
         public int IdFavorito { get; set; }
