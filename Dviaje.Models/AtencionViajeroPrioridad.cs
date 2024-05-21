@@ -1,4 +1,4 @@
-﻿namespace Dviaje.Model
+﻿namespace Dviaje.Models
 {
     public enum AtencionViajeroPrioridad
     {

@@ -1,6 +1,8 @@
 ﻿namespace Dviaje.Models
 {
-    internal class AliadoEstado
+    public enum AliadoEstado
     {
+        Disponible,
+        NoDisponible
     }
 }

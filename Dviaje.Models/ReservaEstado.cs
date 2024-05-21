@@ -1,6 +1,9 @@
 ﻿namespace Dviaje.Models
 {
-    internal class ReservaEstado
+    public enum ReservaEstado
     {
+        Activo,
+        Cancelado,
+        Aprobado
     }
 }

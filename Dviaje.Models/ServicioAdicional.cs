@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Modelos
+namespace Dviaje.Models
 {
     public class ServicioAdicional
     {

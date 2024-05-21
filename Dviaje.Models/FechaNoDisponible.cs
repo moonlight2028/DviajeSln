@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Modelos
+namespace Dviaje.Models
 {
     public class FechaNoDisponible
     {
@@ -12,7 +12,7 @@ namespace Modelos
         public DateTime FechaSinDisponible { get; set; }
 
         [Required]
-        public int IdPublicacion { get; set }
+        public int IdPublicacion { get; set; }
 
         [ForeignKey("IdPublicacion")]
         public Publicacion Publicacion { get; set; }

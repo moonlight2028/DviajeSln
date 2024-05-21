@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dviaje.Model
+namespace Dviaje.Models
 {
     internal class Favorito
     {

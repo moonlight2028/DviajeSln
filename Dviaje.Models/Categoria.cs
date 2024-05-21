@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Modelos
+namespace Dviaje.Models
 {
     public class Categoria
     {

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dviaje.Model
+namespace Dviaje.Models
 {
-    internal class Usuario
+    public class Usuario
     {
         [Key]
         public int IdUsuario { get; set; }
