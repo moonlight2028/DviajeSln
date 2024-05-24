@@ -30,6 +30,36 @@ namespace Dviaje.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+
+            //Desabilitando la eliminacion en cascada
+
+            modelBuilder.Entity<Favorito>()
+                .HasOne(f => f.Usuario)
+                .WithMany()
+                .HasForeignKey(f => f.IdUsuario)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Favorito>()
+                .HasOne(f => f.Publicacion)
+                .WithMany()
+                .HasForeignKey(f => f.IdPublicacion)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Reserva>()
+                .HasOne(f => f.Usuario)
+                .WithMany()
+                .HasForeignKey(f => f.IdUsuario)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Reserva>()
+                .HasOne(f => f.Publicacion)
+                .WithMany()
+                .HasForeignKey(f => f.IdPublicacion)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
         }
 
     }

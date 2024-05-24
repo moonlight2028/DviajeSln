@@ -14,4 +14,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dviaje.DataAccess\Dviaje.DataAccess.csproj" />
+    <ProjectReference Include="..\Dviaje.Models\Dviaje.Models.csproj" />
+  </ItemGroup>
+
 </Project>
