@@ -1,6 +1,4 @@
-﻿using Dviaje.Models;
-
-namespace Dviaje.DataAccess.Repository.IRepository
+﻿namespace Dviaje.DataAccess.Repository.IRepository
 {
     public interface IAtencionViajeroRepository : IRepository<AtencionViajero>
     {

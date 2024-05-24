@@ -1,8 +1,4 @@
-﻿using Dviaje.DataAccess.Data;
-using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
-
-namespace Dviaje.DataAccess.Repository
+﻿namespace Dviaje.DataAccess.Repository
 {
     public class RestriccionRepository : Repository<Restriccion>, IRestriccionRepository
     {
@@ -15,7 +11,7 @@ namespace Dviaje.DataAccess.Repository
 
         public void Udpate(Restriccion restriccion)
         {
-            _db.Restriccions.Update(restriccion);
+            _db.Restricciones.Update(restriccion);
         }
     }
 }
