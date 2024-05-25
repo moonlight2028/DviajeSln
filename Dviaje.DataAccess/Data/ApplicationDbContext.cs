@@ -9,7 +9,6 @@ namespace Dviaje.DataAccess.Data
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<Restriccion> Restriccions { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<ServicioAdicional> serviciosAdicionales { get; set; }
         public DbSet<AtencionViajero> AtencionViajeros { get; set; }
         public DbSet<Adjunto> Adjuntos { get; set; }
         public DbSet<Aliado> Aliados { get; set; }
@@ -24,6 +23,7 @@ namespace Dviaje.DataAccess.Data
         public DbSet<PublicacionRestriccion> PublicacionesRestricciones { get; set; }
         public DbSet<PublicacionCategoria> PublicacionesCategorias { get; set; }
         public DbSet<FechaNoDisponible> FechasNoDisponibles { get; set; }
+        public DbSet<ServicioAdicional> ServiciosAdicionales { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
@@ -31,10 +31,7 @@ namespace Dviaje.DataAccess.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
-
             //Desabilitando la eliminacion en cascada
-
             modelBuilder.Entity<Favorito>()
                 .HasOne(f => f.Usuario)
                 .WithMany()
