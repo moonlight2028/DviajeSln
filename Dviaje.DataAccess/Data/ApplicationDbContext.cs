@@ -25,7 +25,7 @@ namespace Dviaje.DataAccess.Data
         public DbSet<FechaNoDisponible> FechasNoDisponibles { get; set; }
         public DbSet<ServicioAdicional> ServiciosAdicionales { get; set; }
 
-        public ApplicationDbContext(DbContextOptions options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
