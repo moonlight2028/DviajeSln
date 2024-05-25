@@ -57,6 +57,67 @@ namespace Dviaje.DataAccess.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
+            // Datos Agregados
+
+
+            // Usuarios
+
+
+            // Servicios
+
+
+            // Restricciones
+
+
+            // Categorias
+
+
+            // AtencionViajeros
+
+
+            // Adjuntos
+
+
+            // Aliados
+
+
+            // Verificados
+
+
+            // Publicaciones
+
+
+            // Favoritos
+
+
+            // Reservas
+
+
+            // Resenas
+
+
+            // PublicacionesFavoritas
+
+
+            // PublicacionesImagenes
+
+
+            // PublicacionesServicios
+
+
+            // PublicacionesRestricciones
+
+
+            // PublicacionesCategorias
+
+
+            // FechasNoDisponibles
+
+
+            // ServiciosAdicionales
+
+
+
         }
 
     }
