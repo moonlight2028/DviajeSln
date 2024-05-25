@@ -1,7 +1,4 @@
-﻿using Dviaje.DataAccess.Data;
-using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
-namespace Dviaje.DataAccess.Repository
+﻿namespace Dviaje.DataAccess.Repository
 {
     public class AdjuntoRepository : Repository<Adjunto>, IAdjuntoRepository
     {

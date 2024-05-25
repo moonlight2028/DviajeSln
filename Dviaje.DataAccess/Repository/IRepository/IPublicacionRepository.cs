@@ -1,5 +1,4 @@
-﻿using Dviaje.Models;
-namespace Dviaje.DataAccess.Repository.IRepository
+﻿namespace Dviaje.DataAccess.Repository.IRepository
 {
     internal interface IPublicacionRepository : IRepository<Publicacion>
     {
