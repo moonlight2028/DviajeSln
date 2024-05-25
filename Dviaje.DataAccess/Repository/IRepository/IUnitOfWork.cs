@@ -1,6 +1,6 @@
 ﻿namespace Dviaje.DataAccess.Repository.IRepository
 {
-    public interface IUntOfWork
+    public interface IUnitOfWork
     {
         IPublicacionRepository PublicacionRepository { get; }
         IReservaRepository ReservaRepository { get; }

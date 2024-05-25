@@ -3,7 +3,7 @@ using Dviaje.DataAccess.Repository.IRepository;
 
 namespace Dviaje.DataAccess.Repository
 {
-    public class UntOfWork : IUntOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
 
@@ -46,7 +46,7 @@ namespace Dviaje.DataAccess.Repository
         public IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; private set; }
 
 
-        public UntOfWork(ApplicationDbContext db)
+        public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
 
