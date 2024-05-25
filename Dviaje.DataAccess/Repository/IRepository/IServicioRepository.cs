@@ -6,4 +6,5 @@ namespace Dviaje.DataAccess.Repository.IRepository
     {
         void Update(Servicio servicio);
     }
+
 }
