@@ -9,7 +9,7 @@ namespace Dviaje.Models
         public int IdPublicacionFavorita { get; set; }
 
         [Required]
-        public int Idpublicacion { get; set; }
+        public int IdPublicacion { get; set; }
 
         [ForeignKey("Idpublicacion")]
         public Publicacion Publicacion { get; set; }

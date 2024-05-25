@@ -2,7 +2,7 @@
 {
     public enum VerificadoEstado
     {
-        Pendiennte,
+        Pendiente,
         Aprobado,
         Rechazado
     }

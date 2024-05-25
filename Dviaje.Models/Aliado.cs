@@ -28,10 +28,15 @@ namespace Dviaje.Models
         [Required]
         public bool Verificado { get; set; }
 
+        [Required]
+        public AliadoEstado AliadoEstado { get; set; }
+
         public int IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
+
+
 
 
 

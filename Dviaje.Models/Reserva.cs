@@ -6,7 +6,7 @@ namespace Dviaje.Models
     public class Reserva
     {
         [Key]
-        public int IdRserva { get; set; }
+        public int IdReserva { get; set; }
 
         [Required]
         public DateTime FechaInicial { get; set; }
