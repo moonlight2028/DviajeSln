@@ -1,20 +1,21 @@
 ﻿using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
+
 namespace Dviaje.DataAccess.Repository
 {
-    public class RestriccionRepository : Repository<Restriccion>, IRestriccionRepository
+    public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public RestriccionRepository(ApplicationDbContext db) : base(db)
+        public CategoriaRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(Restriccion restriccion)
+        public void Update(Categoria categoria)
         {
-            _db.Restricciones.Update(restriccion);
+            _db.Categorias.Update(categoria);
         }
     }
 }
