@@ -1,4 +1,9 @@
-﻿namespace Dviaje.DataAccess.Repository
+﻿using Dviaje.DataAccess.Data;
+using Dviaje.DataAccess.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
+namespace Dviaje.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
