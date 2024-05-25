@@ -1,4 +1,7 @@
-﻿namespace Dviaje.DataAccess.Repository
+﻿using Dviaje.DataAccess.Data;
+using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
+namespace Dviaje.DataAccess.Repository
 {
     public class RestriccionRepository : Repository<Restriccion>, IRestriccionRepository
     {
