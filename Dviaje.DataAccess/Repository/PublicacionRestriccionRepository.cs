@@ -4,7 +4,7 @@ using Dviaje.Models;
 
 namespace Dviaje.DataAccess.Repository
 {
-    public class PublicacionRestriccionRepository : Repository<PublicacionRestriccion>, IPublicacionRestriccion
+    public class PublicacionRestriccionRepository : Repository<PublicacionRestriccion>, IPublicacionRestriccionRepository
     {
         private readonly ApplicationDbContext _db;
 

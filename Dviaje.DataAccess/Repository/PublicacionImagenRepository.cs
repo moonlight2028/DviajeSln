@@ -4,7 +4,7 @@ using Dviaje.Models;
 
 namespace Dviaje.DataAccess.Repository
 {
-    public class PublicacionImagenRepository : Repository<PublicacionImagen>, IPubliacaionImagenRepository
+    public class PublicacionImagenRepository : Repository<PublicacionImagen>, IPubliacacionImagenRepository
     {
         private readonly ApplicationDbContext _db;
         public PublicacionImagenRepository(ApplicationDbContext db) : base(db)

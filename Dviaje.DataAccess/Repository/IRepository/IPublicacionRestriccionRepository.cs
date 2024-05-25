@@ -2,7 +2,7 @@
 
 namespace Dviaje.DataAccess.Repository.IRepository
 {
-    public interface IPublicacionRestriccion : IRepository<PublicacionRestriccion>
+    public interface IPublicacionRestriccionRepository : IRepository<PublicacionRestriccion>
     {
         void Update(PublicacionRestriccion publicacionRestriccion);
     }
