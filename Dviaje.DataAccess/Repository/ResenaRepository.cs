@@ -3,18 +3,18 @@ using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 namespace Dviaje.DataAccess.Repository
 {
-    public class ReservaRepository : Repository<Reserva>, IReservaRepository
+    public class ResenaRepository : Repository<Resena>, IResenaRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public ReservaRepository(ApplicationDbContext db) : base(db)
+        public ResenaRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(Reserva reserva)
+        public void Update(Resena resena)
         {
-            _db.Reservas.Update(reserva);
+            _db.Resenas.Update(resena);
         }
     }
 }

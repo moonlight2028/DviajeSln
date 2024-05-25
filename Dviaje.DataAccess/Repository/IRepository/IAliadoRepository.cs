@@ -1,6 +1,8 @@
-﻿namespace Dviaje.DataAccess.Repository.IRepository
+﻿using Dviaje.Models;
+namespace Dviaje.DataAccess.Repository.IRepository
 {
-    internal interface IAliadoRepository
+    public interface IAliadoRepository : IRepository<Aliado>
     {
+        void Update(Aliado aliado);
     }
 }
