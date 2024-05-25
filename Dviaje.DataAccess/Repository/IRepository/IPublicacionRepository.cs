@@ -1,7 +1,7 @@
 ﻿using Dviaje.Models;
 namespace Dviaje.DataAccess.Repository.IRepository
 {
-    internal interface IPublicacionRepository : IRepository<Publicacion>
+    public interface IPublicacionRepository : IRepository<Publicacion>
     {
         void Update(Publicacion publicacion);
     }

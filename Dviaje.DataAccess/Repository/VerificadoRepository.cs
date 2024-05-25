@@ -1,21 +1,19 @@
 ﻿using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
+
 namespace Dviaje.DataAccess.Repository
 {
-    public class PublicacionRepository : Repository<Publicacion>, IPublicacionRepository
+    public class VerificadoRepository : Repository<Verificado>, IVerificadoRepository
     {
         private readonly ApplicationDbContext _db;
-
-        public PublicacionRepository(ApplicationDbContext db) : base(db)
+        public VerificadoRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
-
-        public void Update(Publicacion publicacion)
+        public void Update(Verificado verificado)
         {
-            _db.Publicaciones.Update(publicacion);
+            _db.Verificados.Update(verificado);
         }
-
     }
 }
