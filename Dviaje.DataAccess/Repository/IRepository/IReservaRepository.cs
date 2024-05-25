@@ -1,4 +1,5 @@
-﻿namespace Dviaje.DataAccess.Repository.IRepository
+﻿using Dviaje.Models;
+namespace Dviaje.DataAccess.Repository.IRepository
 {
     public interface IReservaRepository : IRepository<Reserva>
     {
