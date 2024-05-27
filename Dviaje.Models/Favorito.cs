@@ -11,13 +11,13 @@ namespace Dviaje.Models
         [Required]
         public int IdUsuario { get; set; }
 
-        [ForeignKey("IdUsuaio")]
+        [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
 
         [Required]
         public int IdPublicacion { get; set; }
 
-        [ForeignKey("IdPubliacion")]
+        [ForeignKey("IdPublicacion")]
         public Publicacion Publicacion { get; set; }
     }
 }

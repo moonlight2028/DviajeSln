@@ -16,7 +16,7 @@ namespace Dviaje.Models
 
         public int Puntuacion { get; set; }
 
-        public int NumeroRsenas { get; set; }
+        public int NumeroResenas { get; set; }
 
         public int CapacidadCamas { get; set; }
 
