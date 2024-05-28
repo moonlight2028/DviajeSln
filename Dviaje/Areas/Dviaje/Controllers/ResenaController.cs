@@ -2,7 +2,7 @@
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
-    [Area("Resenas")]
+    [Area("Dviaje")]
     public class ResenaController : Controller
     {
         public IActionResult Reseñas()
