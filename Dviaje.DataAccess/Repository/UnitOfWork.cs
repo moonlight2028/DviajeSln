@@ -89,9 +89,7 @@ namespace Dviaje.DataAccess.Repository
             FechaNoDisponibleRepository = new FechaNoDiponibleRepository(_db);
 
         }
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task Save() => await _db.SaveChangesAsync();
+
     }
 }

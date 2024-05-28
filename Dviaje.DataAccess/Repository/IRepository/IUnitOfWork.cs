@@ -22,7 +22,7 @@
         IPublicacionCategoriaRepository PublicacionCategoriaRepository { get; }
         IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; }
 
-        void Save();
+        Task Save();
 
     }
 }

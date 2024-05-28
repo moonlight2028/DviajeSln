@@ -16,24 +16,52 @@ namespace Dviaje.DataAccess.Repository
             this.dbSet = _db.Set<T>();
         }
 
-        public Task AddAsync(T entity)
+        public async Task AddAsync(T entity) => await dbSet.AddAsync(entity);
+
+
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? incluideProperties = null)
         {
-            throw new NotImplementedException();
+            IQueryable<T> consulta = dbSet;
+            if (filter != null)
+            {
+                consulta = consulta.Where(filter);
+            }
+
+            if (incluideProperties != null)
+            {
+                foreach (var propiedad in incluideProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    consulta.Include(propiedad);
+                }
+            }
+
+            return await consulta.ToListAsync();
+
+
+
         }
 
-        public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? incluideProperties = null)
+        public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null, string? incluideProperties = null, bool tracking = false)
         {
-            throw new NotImplementedException();
+            IQueryable<T> consulta = tracking ? dbSet : dbSet.AsNoTracking();
+            if (filter != null)
+            {
+                consulta = consulta.Where(filter);
+            }
+
+            if (incluideProperties != null)
+            {
+                foreach (var propiedad in incluideProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    consulta.Include(propiedad);
+                }
+            }
+
+            return await consulta.FirstOrDefaultAsync();
+
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, string? incluideProperties = null, bool tracking = false)
-        {
-            throw new NotImplementedException();
-        }
+        public void Remove(T entity) => dbSet.Remove(entity);
 
-        public void Remove(T entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
