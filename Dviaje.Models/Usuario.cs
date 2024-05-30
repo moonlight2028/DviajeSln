@@ -5,6 +5,9 @@ namespace Dviaje.Models
     public class Usuario
     {
         [Key]
-        public int IdUsuario { get; set; }
+        public string IdUsuario { get; set; }
+
+        [Required]
+        public AliadoEstado AliadoEstado { get; set; }
     }
 }

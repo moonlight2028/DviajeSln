@@ -20,7 +20,7 @@ namespace Dviaje.Models
         [Required]
         public int NumeroPersonas { get; set; }
 
-        public int IdUsuario { get; set; }
+        public string IdUsuario { get; set; }
 
         public int IdPublicacion { get; set; }
 

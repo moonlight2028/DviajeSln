@@ -17,10 +17,9 @@ namespace Dviaje.Models
         public VerificadoEstado VerificadoEstado { get; set; }
 
         [Required]
-        public int IdAliado { get; set; }
+        public string IdUsuario { get; set; }
 
-        [ForeignKey("IdAliado")]
-
-        public Aliado Aliado { get; set; }
+        [ForeignKey("IdUsuario")]
+        public Usuario Usuario { get; set; }
     }
 }

@@ -37,11 +37,9 @@ namespace Dviaje.Models
         [StringLength(50)]
         public string Direccion { get; set; }
 
-        public int IdAliado { get; set; }
+        public string IdUsuario { get; set; }
 
-        [ForeignKey("IdAliado")]
-        public Aliado Aliado { get; set; }
-
-
+        [ForeignKey("IdUsuario")]
+        public Usuario Usuario { get; set; }
     }
 }

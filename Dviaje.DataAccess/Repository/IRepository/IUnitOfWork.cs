@@ -4,7 +4,6 @@
     {
         IPublicacionRepository PublicacionRepository { get; }
         IReservaRepository ReservaRepository { get; }
-        IAliadoRepository AliadoRepository { get; }
         IAtencionViajeroRepository AtencionViajeroRepository { get; }
         IAdjuntoRepository AdjuntoRepository { get; }
         IFavoritoRepository FavoritoRepository { get; }

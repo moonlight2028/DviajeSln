@@ -11,7 +11,6 @@ namespace Dviaje.DataAccess.Data
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<AtencionViajero> AtencionViajeros { get; set; }
         public DbSet<Adjunto> Adjuntos { get; set; }
-        public DbSet<Aliado> Aliados { get; set; }
         public DbSet<Verificado> Verificados { get; set; }
         public DbSet<Publicacion> Publicaciones { get; set; }
         public DbSet<Favorito> Favoritos { get; set; }
@@ -30,6 +29,8 @@ namespace Dviaje.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
 
             //Desabilitando la eliminacion en cascada
             modelBuilder.Entity<Favorito>()
@@ -57,6 +58,8 @@ namespace Dviaje.DataAccess.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
+
+            /*
             // Datos Agregados
             // Usuarios
             modelBuilder.Entity<Usuario>().HasData(
@@ -1566,6 +1569,8 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacion = 9
                 }
             );
+            */
+
 
         }
 

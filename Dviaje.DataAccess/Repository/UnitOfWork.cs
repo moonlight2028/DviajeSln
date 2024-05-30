@@ -11,8 +11,6 @@ namespace Dviaje.DataAccess.Repository
 
         public IReservaRepository ReservaRepository { get; private set; }
 
-        public IAliadoRepository AliadoRepository { get; private set; }
-
         public IAtencionViajeroRepository AtencionViajeroRepository { get; private set; }
 
         public IAdjuntoRepository AdjuntoRepository { get; private set; }
@@ -53,8 +51,6 @@ namespace Dviaje.DataAccess.Repository
             PublicacionRepository = new PublicacionRepository(_db);
 
             ReservaRepository = new ReservaRepository(_db);
-
-            AliadoRepository = new AliadoRepository(_db);
 
             AtencionViajeroRepository = new AtencionViajeroRepository(_db);
 
