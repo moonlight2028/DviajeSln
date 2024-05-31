@@ -1,9 +1,11 @@
 ﻿using Dviaje.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dviaje.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Servicio> Servicios { get; set; }

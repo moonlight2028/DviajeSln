@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dviaje.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
     {
-        [Key]
-        public string IdUsuario { get; set; }
 
         [Required]
         public AliadoEstado AliadoEstado { get; set; }
