@@ -1,4 +1,5 @@
 ﻿using Dviaje.Models;
+using Dviaje.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,35 @@ namespace Dviaje.DataAccess.Data
                 .WithMany()
                 .HasForeignKey(f => f.IdPublicacion)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            // Registro de roles en la Db
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = "c7c1674b-f34c-4229-9dff-649b5ce707c7",
+                    Name = RolesUtility.RoleTurista,
+                    NormalizedName = RolesUtility.RoleTurista.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "31b53ef9-fc25-4db7-82ca-500f69d60bab",
+                    Name = RolesUtility.RoleAliado,
+                    NormalizedName = RolesUtility.RoleAliado.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6",
+                    Name = RolesUtility.RoleModerador,
+                    NormalizedName = RolesUtility.RoleModerador.ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "66a316e1-a6a0-47a2-93f9-57a151fdb6a7",
+                    Name = RolesUtility.RoleAdministrador,
+                    NormalizedName = RolesUtility.RoleAdministrador.ToUpper()
+                }
+            );
 
 
 

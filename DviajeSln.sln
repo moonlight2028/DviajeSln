@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dviaje.Models", "Dviaje.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dviaje.DataAccess", "Dviaje.DataAccess\Dviaje.DataAccess.csproj", "{2FB00062-0282-447C-B11B-43D5C2978F9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dviaje.Utility", "Dviaje.Utility\Dviaje.Utility.csproj", "{6E71FCA6-139F-44CA-96BD-3182DEB8942D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dviaje.Services", "Dviaje.Services\Dviaje.Services.csproj", "{F998ED24-3379-497E-9758-F8DBFFD54691}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{2FB00062-0282-447C-B11B-43D5C2978F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FB00062-0282-447C-B11B-43D5C2978F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FB00062-0282-447C-B11B-43D5C2978F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E71FCA6-139F-44CA-96BD-3182DEB8942D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E71FCA6-139F-44CA-96BD-3182DEB8942D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E71FCA6-139F-44CA-96BD-3182DEB8942D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E71FCA6-139F-44CA-96BD-3182DEB8942D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F998ED24-3379-497E-9758-F8DBFFD54691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F998ED24-3379-497E-9758-F8DBFFD54691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F998ED24-3379-497E-9758-F8DBFFD54691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F998ED24-3379-497E-9758-F8DBFFD54691}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

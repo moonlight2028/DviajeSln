@@ -27,6 +27,13 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
+            @* Campos provisionales para registrar el usuario con cualquier rol, en la versión final no va esto *@
+            <div class="form-floating">
+                <span>Campos provisionales para registrar el usuario con cualquier rol, en la versión final no va esto </span>
+                <select asp-for="Input.Role" asp-items="@Model.Input.ListaRoles" class="form-select"></select>
+            </div>
+
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>

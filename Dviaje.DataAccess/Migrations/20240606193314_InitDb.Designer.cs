@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dviaje.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240531002645_Agregar")]
-    partial class Agregar
+    [Migration("20240606193314_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -516,6 +516,36 @@ namespace Dviaje.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c7c1674b-f34c-4229-9dff-649b5ce707c7",
+                            ConcurrencyStamp = "ae60de37-0ed6-42b2-9268-aa86006499ed",
+                            Name = "Turista",
+                            NormalizedName = "TURISTA"
+                        },
+                        new
+                        {
+                            Id = "31b53ef9-fc25-4db7-82ca-500f69d60bab",
+                            ConcurrencyStamp = "fa149957-cb35-4074-8686-e9fb2ed29234",
+                            Name = "Aliado",
+                            NormalizedName = "ALIADO"
+                        },
+                        new
+                        {
+                            Id = "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6",
+                            ConcurrencyStamp = "9512a2b6-918a-4e1c-8a45-b2c4e5608113",
+                            Name = "Moderador",
+                            NormalizedName = "MODERADOR"
+                        },
+                        new
+                        {
+                            Id = "66a316e1-a6a0-47a2-93f9-57a151fdb6a7",
+                            ConcurrencyStamp = "7b59900c-7c9a-4813-8af6-1748f235c56d",
+                            Name = "Administrador",
+                            NormalizedName = "ADMINISTRADOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

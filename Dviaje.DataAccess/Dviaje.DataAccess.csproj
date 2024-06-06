@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dviaje.Models\Dviaje.Models.csproj" />
+    <ProjectReference Include="..\Dviaje.Utility\Dviaje.Utility.csproj" />
   </ItemGroup>
 
 </Project>
