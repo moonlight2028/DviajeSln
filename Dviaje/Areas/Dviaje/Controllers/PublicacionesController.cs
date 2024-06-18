@@ -9,5 +9,10 @@ namespace Dviaje.Areas.Dviaje.Controllers
         {
             return View();
         }
+
+        public IActionResult Publicacion()
+        {
+            return View();
+        }
     }
 }

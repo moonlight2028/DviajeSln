@@ -28,4 +28,9 @@
     <ProjectReference Include="..\Dviaje.Services\Dviaje.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\tailwind\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>

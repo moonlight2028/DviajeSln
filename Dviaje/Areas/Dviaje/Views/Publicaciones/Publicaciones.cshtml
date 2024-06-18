@@ -1,4 +1,1979 @@
 ﻿@{
     ViewData["Title"] = "Publicaciones";
 }
-<h1>publicaciones</h1>
+
+@section Styles{
+    <!-- Swiper v11 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Font-awesome v6.5.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <!-- Utilidades -->
+    <link rel="stylesheet" href="~/css/page/utilidades.css">
+
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/page/publicaciones.css">
+}
+
+
+<div class="p-2">
+    <!-- Buscar formulario -->
+    <form action="" class="w-full my-10">
+        <!-- Barra de busqueda -->
+        <div class="flex flex-col gap-4 max-w-7xl p-2 rounded-3xl mx-auto overflow-hidden sm:p-4 lg:flex-row lg:p-2   b-s-11">
+
+            <div class="flex flex-col gap-4 sm:flex-row w-full">
+                <!-- Busqueda -->
+                <label for="UserEmail"
+                       class="relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 ml-4 focus-within:border-orange-500 w-[92%] sm:w-full">
+                    <input type="text" id="buscar" placeholder="Buscar"
+                           class="peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" />
+
+                    <span class="absolute start-0 top-2 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
+                        Buscar
+                    </span>
+                </label>
+
+                <!-- Fechas -->
+                <div class="flex gap-2">
+                    <label for="booking-busqueda-llegada"
+                           class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
+                        <input type="date" id="booking-busqueda-llegada"
+                               class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                               placeholder="Username" />
+
+                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                            Llegada
+                        </span>
+                    </label>
+                    <label for="booking-busqueda-salida"
+                           class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
+                        <input type="date" id="booking-busqueda-salida"
+                               class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                               placeholder="Username" />
+
+                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                            Salida
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex flex-col gap-2 sm:flex-row w-full">
+                <button class="group inline-block w-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+                        href="#" id="booking-btn-filtrar">
+                    <span class="flex justify-center rounded-full bg-white py-2 text-base font-medium group-hover:bg-transparent text-orange-500 group-hover:text-white">
+                        Filtrar
+                    </span>
+                </button>
+
+                <button class="button-87-main text-base p-[9px] font-semibold w-full" type="submit">Buscar</button>
+            </div>
+        </div>
+
+        <!-- Modal Filtros -->
+        <div class="fixed top-0 left-0 w-full h-svh z-[1000] backdrop-blur-sm bg-black bg-opacity-50 hidden"
+             id="booking-filtrar-modal">
+            <!-- Filtros -->
+            <section class="flex flex-col gap-1 p-2 w-full max-w-md rounded-xl border border-gray-300 b-s-11 mx-auto relative top-1/2 transform -translate-y-1/2 bg-white">
+                <!-- Fitro precio -->
+                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group"
+                         open>
+                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                        <span class="text-sm font-medium">Precio</span>
+
+                        <span class="transition group-open:-rotate-180 text-gray-300">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+                    <div class="flex justify-between gap-4 p-4 border-t border-gray-200 bg-white">
+                        <label for="precioMinimo"
+                               class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
+                            <input type="number" id="precioMinimo"
+                                   class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
+                                   placeholder="Precio mínimo $cop" />
+
+                            <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                                Precio mínimo $cop
+                            </span>
+                        </label>
+                        <label for="precioMaximo"
+                               class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
+                            <input type="number" id="precioMaximo"
+                                   class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
+                                   placeholder="Precio máximo $cop" />
+
+                            <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                                Precio máximo $cop
+                            </span>
+                        </label>
+                    </div>
+                </details>
+
+                <!-- Filtro puntiacion -->
+                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group"
+                         open>
+                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                        <span class="text-sm font-medium">Puntuación</span>
+
+                        <span class="transition group-open:-rotate-180 text-gray-300">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+                    <div class="flex justify-center p-4 text-xl border-t border-gray-200 bg-white">
+                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-1"
+                               class="cursor-pointer hover:text-orange-500">
+                            <span>1</span>
+                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
+                        </label>
+                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-2"
+                               class="cursor-pointer pl-2 hover:text-orange-500">
+                            <span>2</span>
+                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
+                        </label>
+                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-3"
+                               class="cursor-pointer pl-2 hover:text-orange-500">
+                            <span>3</span>
+                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
+                        </label>
+                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-4"
+                               class="cursor-pointer pl-2 hover:text-orange-500">
+                            <span>4</span>
+                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
+                        </label>
+                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-5"
+                               class="cursor-pointer pl-2 hover:text-orange-500">
+                            <span>5</span>
+                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
+                        </label>
+
+                        <div class="hidden">
+                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-1"
+                                   value="1">
+                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-2"
+                                   value="2">
+                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-3"
+                                   value="3">
+                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-4"
+                                   value="4">
+                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-5"
+                                   value="5">
+                        </div>
+                    </div>
+
+
+                </details>
+
+                <!-- Fitro categorias -->
+                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
+                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                        <span class="text-sm font-medium">categorias</span>
+
+                        <span class="transition group-open:-rotate-180 text-gray-300">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+
+                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                    </div>
+
+                </details>
+
+                <!-- Fitro Servicios de habitación -->
+                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
+                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                        <span class="text-sm font-medium">Servicios de habitación</span>
+
+                        <span class="transition group-open:-rotate-180 text-gray-300">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+
+                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                    </div>
+
+                </details>
+
+                <!-- Fitro Servicios de establecimiento -->
+                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
+                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                        <span class="text-sm font-medium">Servicios de establecimiento</span>
+
+                        <span class="transition group-open:-rotate-180 text-gray-300">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+
+                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                    </div>
+
+                </details>
+
+                <!-- Fitro Servicios de accesibilidad -->
+                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
+                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                        <span class="text-sm font-medium">Servicios de accesibilidad</span>
+
+                        <span class="transition group-open:-rotate-180 text-gray-300">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+
+                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                        <label for="filtroCategoria"
+                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                            <span class="text-sm text-gray-600">Nombre categoria</span>
+                            <input type="checkbox" id="filtroCategoria" class="hidden">
+                        </label>
+                    </div>
+
+                </details>
+
+                <button class="group inline-block w-full mt-4 rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+                        href="#">
+                    <span class="flex justify-center rounded-full bg-white py-2 text-base font-medium group-hover:bg-transparent text-orange-500 group-hover:text-white">
+                        Filtrar
+                    </span>
+                </button>
+            </section>
+            <!-- Fin Filtros -->
+        </div>
+    </form>
+    <!-- Fin Buscar formulario -->
+    <!-- Publicaciones -->
+    <section class="flex flex-col items-center gap-2 max-w-screen-2xl mx-auto">
+        <!-- Fitro ordenar publicaciones -->
+        <section class="relative ml-auto mb-5">
+            <button class="inline-flex items-center overflow-hidden rounded-md border bg-white group hover:border-orange-500"
+                    data-booking="btn-filtro" data-booking-filtro="precio">
+                <span class="border-e px-4 py-2 text-sm/none text-gray-600 hover:bg-gray-50 group-hover:text-black group-hover:border-e-orange-500">
+                    Ordenar
+                </span>
+
+                <span class="h-full px-2 text-sm text-gray-600 group-hover:text-orange-500">
+                    <i class="fa-solid fa-chevron-down transition-all ease-in-out"></i>
+                </span>
+            </button>
+
+            <div class="absolute top-0 right-0 z-50 mt-8 rounded-xl border border-gray-100 bg-white shadow-lg overflow-hidden hidden"
+                 data-booking-filtro="precio-modal">
+                <div class="flex flex-col w-36 text-sm text-gray-600">
+                    <span class="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer">Recomendado</span>
+                    <span class="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer">Puntuación</span>
+                    <span class="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer">Precio Menor</span>
+                    <span class="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer">Precio Mayor</span>
+                </div>
+            </div>
+        </section>
+        <!-- Fin Fitro ordenar publicaciones -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a class="button-87-main text-xl font-semibold md:w-full" asp-action="Publicacion">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+        <!-- Tarjeta publicación -->
+        <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
+            <!-- Imágenes publicación -->
+            <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </div>
+                </div>
+
+                <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+                </div>
+
+                <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+                <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20   text-white md:right-auto">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <!-- FIn Imágenes publicación -->
+            <!-- Información publicación -->
+            <div class="p-3 md:w-[70%]">
+                <!-- Usuario precio -->
+                <section class="flex items-center justify-between">
+                    <a href="" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                                 alt="" class="img-f">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">Nombre usuariossssss</span>
+                            <span class="text-xs text-gray-500 group-hover:text-black">5,813 Publicaciones</span>
+                        </div>
+                    </a>
+
+                    <div class="flex items-end">
+                        <span class="font-semibold text-2xl">99.999.999</span>
+                        <span class="text-gray-500 text-sm">$col</span>
+                    </div>
+                </section>
+
+                <!-- Texto -->
+                <section class="flex flex-col gap-2 mt-2">
+                    <h1 class="font-bold text-3xl">Lorem ipsum dolor sit amet consectetur adipisicingsc</h1>
+
+                    <div>
+                        <a href="" class="group">
+                            <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
+                            <span class="text-gray-500 group-hover:text-black">Ubicación</span>
+                        </a>
+
+                        <!-- Calificación -->
+                        <section class="flex items-center justify-start gap-2">
+                            <span class="font-semibold text-4xl">4.7</span>
+
+                            <a href="" class="mt-1 group">
+                                <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div style="width: 87%;"
+                                         class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 group-hover:text-black">(2.500 Reseñas)</span>
+                            </a>
+                        </section>
+                    </div>
+
+                    <p class="text-lg text-pretty descripcion">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum repudiandae nisi architecto
+                        sunt
+                        incidunt aut eum cumque sapiente optio. Minima nostrum debitis deleniti ab nemo natus sed
+                        animi
+                        recusandae accusamus.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia voluptate dignissimos
+                        explicabo ut, quis iste recusandae officiis tempora omnis, et voluptas unde odio quam vitae
+                        animi expedita vel commodi sapiente.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magnam non enim ad
+                        dolorum
+                        sit, recusandae voluptatibus aut ducimus veniam aperiam amet, ipsam, sapiente doloribus
+                        quisquam
+                        beatae et vero. Cumque?
+                    </p>
+
+                    <!-- Swiper categorias -->
+                    <div class="swiper-categorias">
+                        <div class="swiper-wrapper">
+                            <a href=""
+                               class="swiper-slide w-fit px-3 text-xl rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600">
+                                <i class="fa-solid fa-person-swimming"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Fin Swiper categorias -->
+                </section>
+
+                <!-- Botones -->
+                <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
+                    <a href="" class="w-full">
+                        <button class="button-64-segundo w-full">
+                            <span class="text-xl font-semibold">Reservar</span>
+                        </button>
+                    </a>
+
+                    <a href="" class="button-87-main text-xl font-semibold md:w-full">Ver más</a>
+                </div>
+            </div>
+            <!-- Fin Información publicación -->
+        </article>
+        <!-- Fin Tarjeta publicación -->
+    </section>
+    <!-- Fin Publicaciones -->
+    <!-- Paginación -->
+    <ol class="flex justify-center gap-1 text-lg my-20">
+        <li class="">
+            <a href="#"
+               class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180 hover:bg-orange-500 hover:text-white">
+                <span class="sr-only">Prev Page</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                          clip-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+
+        <li>
+            <a href="#"
+               class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900 hover:border-orange-500 hover:bg-orange-500 hover:text-white">
+                1
+            </a>
+        </li>
+
+        <li>
+            <a href="#"
+               class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900 hover:border-orange-500 hover:bg-orange-500 hover:text-white">
+                2
+            </a>
+        </li>
+
+
+        <li>
+            <a href="#"
+               class="block size-8 rounded border border-orange-500 bg-orange-500 text-center leading-8 text-white">
+                3
+            </a>
+        </li>
+
+        <li>
+            <a href="#"
+               class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900 hover:border-orange-500 hover:bg-orange-500 hover:text-white">
+                4
+            </a>
+        </li>
+
+        <li>
+            <a href="#"
+               class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900 hover:border-orange-500 hover:bg-orange-500 hover:text-white">
+                5
+            </a>
+        </li>
+
+        <li>
+            <a href="#"
+               class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180 hover:bg-orange-500 hover:text-white">
+                <span class="sr-only">Next Page</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clip-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+    </ol>
+    <!-- Fin Paginación -->
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/page/publicaciones.js" type="module"></script>
+}

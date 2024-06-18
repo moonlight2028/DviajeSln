@@ -2,8 +2,12 @@
     ViewData["Title"] = "PQRS";
 }
 @section Styles {
-    <link rel="stylesheet" href="~/css/page/PqrsDviaje.css" asp-append-version="true" />
+    <!-- Bootstrap v5.3.3 -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/page/PqrsDviaje.css" />
 }
+
 <div class="container">
     <div class="contact__wrapper shadow-lg mt-n9">
         <div class="row no-gutters">
@@ -113,3 +117,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <!-- Bootstrap v5.3.3 -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+}
