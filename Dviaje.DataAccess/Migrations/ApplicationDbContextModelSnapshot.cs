@@ -519,28 +519,28 @@ namespace Dviaje.DataAccess.Migrations
                         new
                         {
                             Id = "c7c1674b-f34c-4229-9dff-649b5ce707c7",
-                            ConcurrencyStamp = "ae60de37-0ed6-42b2-9268-aa86006499ed",
+                            ConcurrencyStamp = "c83baae3-e431-43d6-bd1c-92f633df830a",
                             Name = "Turista",
                             NormalizedName = "TURISTA"
                         },
                         new
                         {
                             Id = "31b53ef9-fc25-4db7-82ca-500f69d60bab",
-                            ConcurrencyStamp = "fa149957-cb35-4074-8686-e9fb2ed29234",
+                            ConcurrencyStamp = "d13f9750-bf96-4339-a306-01e6eccc1376",
                             Name = "Aliado",
                             NormalizedName = "ALIADO"
                         },
                         new
                         {
                             Id = "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6",
-                            ConcurrencyStamp = "9512a2b6-918a-4e1c-8a45-b2c4e5608113",
+                            ConcurrencyStamp = "8be306e2-1c7e-416f-8c0b-26ebe2231532",
                             Name = "Moderador",
                             NormalizedName = "MODERADOR"
                         },
                         new
                         {
                             Id = "66a316e1-a6a0-47a2-93f9-57a151fdb6a7",
-                            ConcurrencyStamp = "7b59900c-7c9a-4813-8af6-1748f235c56d",
+                            ConcurrencyStamp = "dca9c19b-fa82-4ee6-a011-c482ec16a462",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         });
@@ -729,6 +729,41 @@ namespace Dviaje.DataAccess.Migrations
 
                     b.Property<int>("AliadoEstado")
                         .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RazonSocial")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("SitioWeb")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("Verificado")
+                        .HasColumnType("bit");
+
+                    b.HasIndex("Direccion")
+                        .IsUnique()
+                        .HasFilter("[Direccion] IS NOT NULL");
+
+                    b.HasIndex("RazonSocial")
+                        .IsUnique()
+                        .HasFilter("[RazonSocial] IS NOT NULL");
+
+                    b.HasIndex("Telefono")
+                        .IsUnique()
+                        .HasFilter("[Telefono] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("Usuario");
                 });

@@ -34,7 +34,6 @@ namespace Dviaje.DataAccess.Data
             base.OnModelCreating(modelBuilder);
 
 
-
             //Desabilitando la eliminacion en cascada
             modelBuilder.Entity<Favorito>()
                 .HasOne(f => f.Usuario)
@@ -59,6 +58,12 @@ namespace Dviaje.DataAccess.Data
                 .WithMany()
                 .HasForeignKey(f => f.IdPublicacion)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            // Restricción para campos únicos
+            modelBuilder.Entity<Usuario>().HasIndex(u => u.RazonSocial).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(u => u.Telefono).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(u => u.Direccion).IsUnique();
 
 
             // Registro de roles en la Db

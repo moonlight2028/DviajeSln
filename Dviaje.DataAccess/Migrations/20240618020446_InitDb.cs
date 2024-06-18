@@ -29,6 +29,11 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RazonSocial = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    SitioWeb = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Verificado = table.Column<bool>(type: "bit", nullable: true),
                     AliadoEstado = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -549,10 +554,10 @@ namespace Dviaje.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "31b53ef9-fc25-4db7-82ca-500f69d60bab", "fa149957-cb35-4074-8686-e9fb2ed29234", "Aliado", "ALIADO" },
-                    { "66a316e1-a6a0-47a2-93f9-57a151fdb6a7", "7b59900c-7c9a-4813-8af6-1748f235c56d", "Administrador", "ADMINISTRADOR" },
-                    { "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6", "9512a2b6-918a-4e1c-8a45-b2c4e5608113", "Moderador", "MODERADOR" },
-                    { "c7c1674b-f34c-4229-9dff-649b5ce707c7", "ae60de37-0ed6-42b2-9268-aa86006499ed", "Turista", "TURISTA" }
+                    { "31b53ef9-fc25-4db7-82ca-500f69d60bab", "d13f9750-bf96-4339-a306-01e6eccc1376", "Aliado", "ALIADO" },
+                    { "66a316e1-a6a0-47a2-93f9-57a151fdb6a7", "dca9c19b-fa82-4ee6-a011-c482ec16a462", "Administrador", "ADMINISTRADOR" },
+                    { "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6", "8be306e2-1c7e-416f-8c0b-26ebe2231532", "Moderador", "MODERADOR" },
+                    { "c7c1674b-f34c-4229-9dff-649b5ce707c7", "c83baae3-e431-43d6-bd1c-92f633df830a", "Turista", "TURISTA" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -591,6 +596,27 @@ namespace Dviaje.DataAccess.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Direccion",
+                table: "AspNetUsers",
+                column: "Direccion",
+                unique: true,
+                filter: "[Direccion] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_RazonSocial",
+                table: "AspNetUsers",
+                column: "RazonSocial",
+                unique: true,
+                filter: "[RazonSocial] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Telefono",
+                table: "AspNetUsers",
+                column: "Telefono",
+                unique: true,
+                filter: "[Telefono] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
