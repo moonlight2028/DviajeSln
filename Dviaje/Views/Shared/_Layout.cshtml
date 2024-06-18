@@ -4,11 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Dviaje</title>
-    @*Bootstrap v5.3.3 *@
-    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
-
-
-
+    
     @RenderSection("Styles", required: false)
 
     @*Tailwind v3.4.4 *@
@@ -260,7 +256,8 @@
         </div>
     </footer>
 
-
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
