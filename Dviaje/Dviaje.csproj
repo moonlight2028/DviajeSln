@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<Target Name="Tailwind" BeforeTargets="Build">
-		<Exec Command="npm run css:build"/>
+		<Exec Command=".\tailwindcss-v3-4-4 -i wwwroot/lib/tailwind/input.css -o wwwroot/lib/tailwind/output.css --minify"/>
 	</Target>
 
 </Project>
