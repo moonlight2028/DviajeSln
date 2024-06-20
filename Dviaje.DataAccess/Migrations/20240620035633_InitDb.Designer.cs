@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dviaje.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618020446_InitDb")]
+    [Migration("20240620035633_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,9 +167,6 @@ namespace Dviaje.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPublicacion"), 1L, 1);
 
-                    b.Property<int>("CapacidadCamas")
-                        .HasColumnType("int");
-
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(1500)
@@ -193,8 +190,8 @@ namespace Dviaje.DataAccess.Migrations
                     b.Property<double>("Precio")
                         .HasColumnType("float");
 
-                    b.Property<int>("Puntuacion")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Puntuacion")
+                        .HasColumnType("decimal(1,1)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -521,28 +518,28 @@ namespace Dviaje.DataAccess.Migrations
                         new
                         {
                             Id = "c7c1674b-f34c-4229-9dff-649b5ce707c7",
-                            ConcurrencyStamp = "c83baae3-e431-43d6-bd1c-92f633df830a",
+                            ConcurrencyStamp = "81f7a700-b548-40f3-819d-629477983341",
                             Name = "Turista",
                             NormalizedName = "TURISTA"
                         },
                         new
                         {
                             Id = "31b53ef9-fc25-4db7-82ca-500f69d60bab",
-                            ConcurrencyStamp = "d13f9750-bf96-4339-a306-01e6eccc1376",
+                            ConcurrencyStamp = "39451a6a-c211-443b-9301-b73e0f50dd48",
                             Name = "Aliado",
                             NormalizedName = "ALIADO"
                         },
                         new
                         {
                             Id = "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6",
-                            ConcurrencyStamp = "8be306e2-1c7e-416f-8c0b-26ebe2231532",
+                            ConcurrencyStamp = "9e670850-55fd-477c-9476-4a1d60f9f9e2",
                             Name = "Moderador",
                             NormalizedName = "MODERADOR"
                         },
                         new
                         {
                             Id = "66a316e1-a6a0-47a2-93f9-57a151fdb6a7",
-                            ConcurrencyStamp = "dca9c19b-fa82-4ee6-a011-c482ec16a462",
+                            ConcurrencyStamp = "55064acb-107e-4686-9cd1-ffc25dfe91df",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         });

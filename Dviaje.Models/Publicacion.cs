@@ -13,12 +13,10 @@ namespace Dviaje.Models
         [StringLength(50)]
         public string Titulo { get; set; }
 
-
-        public int Puntuacion { get; set; }
+        [Column(TypeName = "decimal(1,1)")]
+        public decimal Puntuacion { get; set; }
 
         public int NumeroResenas { get; set; }
-
-        public int CapacidadCamas { get; set; }
 
         [Required]
         [Column(TypeName = "text")]
@@ -26,7 +24,6 @@ namespace Dviaje.Models
         public string Descripcion { get; set; }
 
         [Required]
-
         public double Precio { get; set; }
 
         [Required]

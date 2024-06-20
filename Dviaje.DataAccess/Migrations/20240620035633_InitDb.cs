@@ -237,9 +237,8 @@ namespace Dviaje.DataAccess.Migrations
                     IdPublicacion = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "text", maxLength: 50, nullable: false),
-                    Puntuacion = table.Column<int>(type: "int", nullable: false),
+                    Puntuacion = table.Column<decimal>(type: "decimal(1,1)", nullable: false),
                     NumeroResenas = table.Column<int>(type: "int", nullable: false),
-                    CapacidadCamas = table.Column<int>(type: "int", nullable: false),
                     Descripcion = table.Column<string>(type: "text", maxLength: 1500, nullable: false),
                     Precio = table.Column<double>(type: "float", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -554,10 +553,10 @@ namespace Dviaje.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "31b53ef9-fc25-4db7-82ca-500f69d60bab", "d13f9750-bf96-4339-a306-01e6eccc1376", "Aliado", "ALIADO" },
-                    { "66a316e1-a6a0-47a2-93f9-57a151fdb6a7", "dca9c19b-fa82-4ee6-a011-c482ec16a462", "Administrador", "ADMINISTRADOR" },
-                    { "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6", "8be306e2-1c7e-416f-8c0b-26ebe2231532", "Moderador", "MODERADOR" },
-                    { "c7c1674b-f34c-4229-9dff-649b5ce707c7", "c83baae3-e431-43d6-bd1c-92f633df830a", "Turista", "TURISTA" }
+                    { "31b53ef9-fc25-4db7-82ca-500f69d60bab", "39451a6a-c211-443b-9301-b73e0f50dd48", "Aliado", "ALIADO" },
+                    { "66a316e1-a6a0-47a2-93f9-57a151fdb6a7", "55064acb-107e-4686-9cd1-ffc25dfe91df", "Administrador", "ADMINISTRADOR" },
+                    { "6f2a20cf-8d09-4e1b-8ed5-603330f1a4a6", "9e670850-55fd-477c-9476-4a1d60f9f9e2", "Moderador", "MODERADOR" },
+                    { "c7c1674b-f34c-4229-9dff-649b5ce707c7", "81f7a700-b548-40f3-819d-629477983341", "Turista", "TURISTA" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -98,122 +98,526 @@ namespace Dviaje.DataAccess.Data
 
             /*
             // Datos Agregados
-            // Usuarios
+            // Datos de prueba
             modelBuilder.Entity<Usuario>().HasData(
+                // Usuarios sin el rol asignado
+                // Correccion
                 new Usuario
                 {
-                    IdUsuario = 1,
+                    Id = "f7ad1421-b744-4f4e-93d9-e51fe1120136",
+                    Email = "jesus@gmail.com",
+                    NormalizedEmail = "JESUS@GMAIL.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = "",
+                    RazonSocial = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 2,
+                    Id = "b652f0fb-95c4-40ed-81aa-8e1792d089f8",
+                    Email = "maria@hotmail.com",
+                    NormalizedEmail = "MARIA@HOTMAIL.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = "",
+                    RazonSocial = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 3,
+                    Id = "eb5daf52-3be0-4083-ac20-f4f5ad0028c6",
+                    Email = "juan@yahoo.com",
+                    NormalizedEmail = "JUAN@YAHOO.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = "",
+                    RazonSocial = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 4,
+                    Id = "02aef042-3060-4a52-9a09-e9c5583c840c",
+                    Email = "pedro@outlook.com",
+                    NormalizedEmail = "PEDRO@OUTLOOK.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = "",
+                    RazonSocial = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 5,
+                    Id = "299c3027-88a1-4c43-98fa-e1c460dbd885",
+                    Email = "ana@icloud.com",
+                    NormalizedEmail = "ANA@ICLOUD.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = "",
+                    RazonSocial = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 6,
+                    Id = "7b6fc7d7-804c-4063-b58a-83a2a6d9cb4c",
+                    Email = "luis@aol.com",
+                    NormalizedEmail = "LUIS@AOL.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = "",
+                    RazonSocial = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 7,
+                    Id = "5d9b8f6f-9750-4678-a91b-4001bc0a22b5",
+                    Email = "carmen@gmail.com",
+                    NormalizedEmail = "CARMEN@GMAIL.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 8,
+                    Id = "329988fe-7243-49f4-98ef-cafc80d16789",
+                    Email = "rosa@live.com",
+                    NormalizedEmail = "ROSA@LIVE.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 9,
+                    Id = "b6651473-663d-4225-b2a8-522c7f0dbba4",
+                    Email = "jose@protonmail.com",
+                    NormalizedEmail = "JOSE@PROTONMAIL.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = ""
                 },
                 new Usuario
                 {
-                    IdUsuario = 10,
+                    Id = "447a628d-a118-44e0-bbb1-c2e40975283c",
+                    Email = "paula@mail.com",
+                    NormalizedEmail = "PAULA@MAIL.COM",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    Direccion = ""
+                },
+
+
+                // Aliados sin el rol asignado
+                new Usuario
+                {
+                    Id = "95d735f9-d14e-47de-a00e-2359d142646b",
+                    RazonSocial = "Servicios Globales S.A.",
+                    SitioWeb = "globalservices.com",
+                    Telefono = "22814209",
+                    Direccion = "Carrera 10 No. 25-67",
+                    Verificado = true,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "GlobalServ",
+                    NormalizedUserName = "GLOBALSERV",
+                    Email = "info@globalservices.com",
+                    NormalizedEmail = "INFO@GLOBALSERVICES.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "4f4bbb47-8619-4523-a83c-2d18eb961ae7",
+                    RazonSocial = "Tecnologías Avanzadas LTDA",
+                    SitioWeb = "techadv.com",
+                    Telefono = "22814310",
+                    Direccion = "Avenida 45 No. 12-34",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "TechAdv",
+                    NormalizedUserName = "TECHADV",
+                    Email = "contact@techadv.com",
+                    NormalizedEmail = "CONTACT@TECHADV.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "9b6fedaf-0fa5-4c6a-9266-117650a4c2d8",
+                    RazonSocial = "Construcciones del Norte S.A.",
+                    SitioWeb = "nortebuild.com",
+                    Telefono = "22814411",
+                    Direccion = "Calle 67 No. 10-25",
+                    Verificado = true,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "NorteBuild",
+                    NormalizedUserName = "NORTEBUILD",
+                    Email = "info@nortebuild.com",
+                    NormalizedEmail = "INFO@NORTEBUILD.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "995eb3b8-b7b8-418d-9eee-7eec0b39515d",
+                    RazonSocial = "Comercializadora Internacional S.A.",
+                    SitioWeb = "cominter.com",
+                    Telefono = "22814512",
+                    Direccion = "Carrera 30 No. 14-56",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "ComInter",
+                    NormalizedUserName = "COMINTER",
+                    Email = "sales@cominter.com",
+                    NormalizedEmail = "SALES@COMINTER.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "2e5bad99-bcde-4fe9-9e0f-3c1df844f336",
+                    RazonSocial = "Inmobiliaria del Sur LTDA",
+                    SitioWeb = "southrealestate.com",
+                    Telefono = "22814613",
+                    Direccion = "Avenida 70 No. 8-45",
+                    Verificado = true,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "SouthRealEstate",
+                    NormalizedUserName = "SOUTHREALESTATE",
+                    Email = "contact@southrealestate.com",
+                    NormalizedEmail = "CONTACT@SOUTHREALESTATE.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "f9dc84e7-1c0c-47ee-ad99-b589db9163a0",
+                    RazonSocial = "Innovación y Desarrollo S.A.",
+                    SitioWeb = "innodev.com",
+                    Telefono = "22814714",
+                    Direccion = "Calle 80 No. 5-67",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "InnoDev",
+                    NormalizedUserName = "INNODEV",
+                    Email = "info@innodev.com",
+                    NormalizedEmail = "INFO@INNODEV.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "b3567b2f-4c23-4adf-ab76-206b7e1858ec",
+                    RazonSocial = "Logística Integral S.A.",
+                    SitioWeb = "integrallogistics.com",
+                    Telefono = "22814815",
+                    Direccion = "Carrera 5 No. 70-80",
+                    Verificado = true,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "IntegralLogistics",
+                    NormalizedUserName = "INTEGRALLOGISTICS",
+                    Email = "contact@integrallogistics.com",
+                    NormalizedEmail = "CONTACT@INTEGRALLOGISTICS.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "964fcd99-99db-406b-9a52-eff38524afe8",
+                    RazonSocial = "Producción Agropecuaria S.A.",
+                    SitioWeb = "agroproduce.com",
+                    Telefono = "22814916",
+                    Direccion = "Calle 23 No. 4-56",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "AgroProduce",
+                    NormalizedUserName = "AGROPRODUCE",
+                    Email = "info@agroproduce.com",
+                    NormalizedEmail = "INFO@AGROPRODUCE.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "2c390f18-bbcf-4675-9859-8e4d3fa32571",
+                    RazonSocial = "Soluciones Ambientales S.A.",
+                    SitioWeb = "enviro-solutions.com",
+                    Telefono = "22815017",
+                    Direccion = "Carrera 40 No. 15-90",
+                    Verificado = true,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "EnviroSolutions",
+                    NormalizedUserName = "ENVIROSOLUTIONS",
+                    Email = "contact@enviro-solutions.com",
+                    NormalizedEmail = "CONTACT@ENVIRO-SOLUTIONS.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "c7350e94-45ab-483c-9f3f-153e54e0198b",
+                    RazonSocial = "Red de Servicios Médicos S.A.",
+                    SitioWeb = "mednetwork.com",
+                    Telefono = "22815118",
+                    Direccion = "Calle 32 No. 6-78",
+                    Verificado = false,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "MedNetwork",
+                    NormalizedUserName = "MEDNETWORK",
+                    Email = "info@mednetwork.com",
+                    NormalizedEmail = "INFO@MEDNETWORK.COM",
+                    EmailConfirmed = true,
+                },
+                new Usuario
+                {
+                    Id = "89537343-76cd-4739-a360-4c0c26ecfd4d",
+                    RazonSocial = "Distribuciones Nacionales S.A.",
+                    SitioWeb = "natdist.com",
+                    Telefono = "22815219",
+                    Direccion = "Carrera 50 No. 20-34",
+                    Verificado = true,
+                    AliadoEstado = AliadoEstado.Disponible,
+                    UserName = "NatDist",
+                    NormalizedUserName = "NATDIST",
+                    Email = "contact@natdist.com",
+                    NormalizedEmail = "CONTACT@NATDIST.COM",
+                    EmailConfirmed = true,
                 }
             );
 
 
             // Servicios
             modelBuilder.Entity<Servicio>().HasData(
+                // Servicios de establecimiento
                 new Servicio
                 {
                     IdServicio = 1,
-                    NombreServicio = "Cama",
-                    ServicioTipo = ServicioTipo.Habitacion,
-                    RutaIcono = ""
+                    NombreServicio = "Piscina",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-water-ladder"
                 },
                 new Servicio
                 {
                     IdServicio = 2,
-                    NombreServicio = "Gimnasio",
+                    NombreServicio = "Piscina techada",
                     ServicioTipo = ServicioTipo.Establecimiento,
-                    RutaIcono = "random"
+                    RutaIcono = "fa-solid fa-water-ladder"
                 },
                 new Servicio
                 {
                     IdServicio = 3,
-                    NombreServicio = "Spa",
+                    NombreServicio = "Parqueadero",
                     ServicioTipo = ServicioTipo.Establecimiento,
-                    RutaIcono = "random"
+                    RutaIcono = "fa-solid fa-square-parking"
                 },
                 new Servicio
                 {
                     IdServicio = 4,
                     NombreServicio = "Restaurante",
                     ServicioTipo = ServicioTipo.Establecimiento,
-                    RutaIcono = "random"
-                },
-                new Servicio
+                    RutaIcono = "fa-solid fa-utensils"
+                }, new Servicio
                 {
                     IdServicio = 5,
-                    NombreServicio = "Sala de juegos",
+                    NombreServicio = "Bañera de hidromasaje",
                     ServicioTipo = ServicioTipo.Establecimiento,
-                    RutaIcono = "random"
+                    RutaIcono = "fa-solid fa-bath"
                 },
                 new Servicio
                 {
                     IdServicio = 6,
-                    NombreServicio = "Cine",
-                    ServicioTipo = ServicioTipo.Habitacion,
-                    RutaIcono = "random"
+                    NombreServicio = "Spa",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-spa"
                 },
                 new Servicio
                 {
                     IdServicio = 7,
-                    NombreServicio = "Cancha de tenis",
+                    NombreServicio = "Gimnasio",
                     ServicioTipo = ServicioTipo.Establecimiento,
-                    RutaIcono = "random"
+                    RutaIcono = "fa-solid fa-dumbbell"
                 },
                 new Servicio
                 {
                     IdServicio = 8,
-                    NombreServicio = "Cancha de baloncesto",
+                    NombreServicio = "Sauna",
                     ServicioTipo = ServicioTipo.Establecimiento,
-                    RutaIcono = "random"
+                    RutaIcono = "fa-solid fa-hot-tub-person"
                 },
                 new Servicio
                 {
                     IdServicio = 9,
-                    NombreServicio = "Sauna",
-                    ServicioTipo = ServicioTipo.Habitacion,
-                    RutaIcono = "random"
+                    NombreServicio = "Sombrillas de playa",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-umbrella-beach"
                 },
                 new Servicio
                 {
                     IdServicio = 10,
-                    NombreServicio = "Bar",
+                    NombreServicio = "Desayuno incluido",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bacon"
+                },
+                new Servicio
+                {
+                    IdServicio = 11,
+                    NombreServicio = "Centro de negocios",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-business-time"
+                },
+                new Servicio
+                {
+                    IdServicio = 12,
+                    NombreServicio = "Acepta mascotas",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-paw"
+                },
+                new Servicio
+                {
+                    IdServicio = 13,
+                    NombreServicio = "Recepción disponible 24 horas",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bell-concierge"
+                },
+                new Servicio
+                {
+                    IdServicio = 14,
+                    NombreServicio = "Servicio de lavandería",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-jug-detergent"
+                }, new Servicio
+                {
+                    IdServicio = 15,
+                    NombreServicio = "Salas de reuniones",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-people-roof"
+                },
+                new Servicio
+                {
+                    IdServicio = 16,
+                    NombreServicio = "Cajero automático",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-money-bills"
+                },
+                new Servicio
+                {
+                    IdServicio = 17,
+                    NombreServicio = "Piscina climatizada",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-water-ladder"
+                },
+                new Servicio
+                {
+                    IdServicio = 18,
+                    NombreServicio = "Alquiler de bicicletas",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bicycle"
+                },
+                new Servicio
+                {
+                    IdServicio = 19,
+                    NombreServicio = "Sala de juegos",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-table-tennis-paddle-ball"
+                },
+                new Servicio
+                {
+                    IdServicio = 20,
+                    NombreServicio = "Piscina al aire libre",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-person-swimming"
+                },
+
+                // Servicios de habitacion
+                new Servicio
+                {
+                    IdServicio = 21,
+                    NombreServicio = "Wi-Fi",
                     ServicioTipo = ServicioTipo.Habitacion,
-                    RutaIcono = "random"
+                    RutaIcono = "fa-solid fa-wifi"
+                },
+                new Servicio
+                {
+                    IdServicio = 22,
+                    NombreServicio = "Internet",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-network-wired"
+                },
+                new Servicio
+                {
+                    IdServicio = 23,
+                    NombreServicio = "Aire acondicionado",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-wind"
+                },
+                new Servicio
+                {
+                    IdServicio = 24,
+                    NombreServicio = "Cocina",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-kitchen-set"
+                },
+                new Servicio
+                {
+                    IdServicio = 25,
+                    NombreServicio = "Balcón/Terraza",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-house"
+                },
+                new Servicio
+                {
+                    IdServicio = 26,
+                    NombreServicio = "Bañera",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-bath"
+                },
+                new Servicio
+                {
+                    IdServicio = 27,
+                    NombreServicio = "Minibar",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-champagne-glasses"
+                },
+                new Servicio
+                {
+                    IdServicio = 28,
+                    NombreServicio = "Servicio de limpieza",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-broom"
+                },
+                new Servicio
+                {
+                    IdServicio = 29,
+                    NombreServicio = "Secador de pelo",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-wind"
+                },
+                new Servicio
+                {
+                    IdServicio = 30,
+                    NombreServicio = "Teléfono",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-phone"
+                },
+                new Servicio
+                {
+                    IdServicio = 31,
+                    NombreServicio = "Balcón privado",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-house"
+                },
+                new Servicio
+                {
+                    IdServicio = 32,
+                    NombreServicio = "Horno",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-fire-burner"
+                },
+
+                // Servicios de accesibilidad
+                new Servicio
+                {
+                    IdServicio = 33,
+                    NombreServicio = "Acceso silla de ruedas",
+                    ServicioTipo = ServicioTipo.Accesibilidad,
+                    RutaIcono = "fa-solid fa-wheelchair"
+                },
+                new Servicio
+                {
+                    IdServicio = 34,
+                    NombreServicio = "Hab. p/ personas con discapacidad",
+                    ServicioTipo = ServicioTipo.Accesibilidad,
+                    RutaIcono = "fa-solid fa-house-user"
+                },
+                new Servicio
+                {
+                    IdServicio = 35,
+                    NombreServicio = "Parqueadero p/ personas con discapacidad",
+                    ServicioTipo = ServicioTipo.Accesibilidad,
+                    RutaIcono = "fa-solid fa-square-parking"
                 }
             );
 
@@ -289,61 +693,103 @@ namespace Dviaje.DataAccess.Data
                 {
                     IdCategoria = 1,
                     NombreCategoria = "Finca",
-                    RutaIcono = "Ruta"
+                    RutaIcono = "fa-solid fa-sign-hanging"
                 },
                 new Categoria
                 {
                     IdCategoria = 2,
                     NombreCategoria = "Apartamento",
-                    RutaIcono = "Ruta"
+                    RutaIcono = "fa-solid fa-house-user"
                 },
                 new Categoria
                 {
                     IdCategoria = 3,
                     NombreCategoria = "Casa",
-                    RutaIcono = "Ruta"
+                    RutaIcono = "fa-solid fa-house"
                 },
                 new Categoria
                 {
                     IdCategoria = 4,
-                    NombreCategoria = "Hotel",
-                    RutaIcono = "Ruta"
+                    NombreCategoria = "Cabaña",
+                    RutaIcono = "fa-solid fa-house-chimney"
                 },
                 new Categoria
                 {
                     IdCategoria = 5,
-                    NombreCategoria = "Hostal",
-                    RutaIcono = "Ruta"
+                    NombreCategoria = "Hotel",
+                    RutaIcono = "fa-solid fa-hotel"
                 },
                 new Categoria
                 {
                     IdCategoria = 6,
-                    NombreCategoria = "Cabaña",
-                    RutaIcono = "Ruta"
+                    NombreCategoria = "Hostal",
+                    RutaIcono = "fa-solid fa-hotel"
                 },
                 new Categoria
                 {
                     IdCategoria = 7,
                     NombreCategoria = "Villa",
-                    RutaIcono = "Ruta"
+                    RutaIcono = "fa-solid fa-house-chimney-window"
                 },
                 new Categoria
                 {
                     IdCategoria = 8,
                     NombreCategoria = "Resort",
-                    RutaIcono = "Ruta"
+                    RutaIcono = "fa-solid fa-hotel"
                 },
                 new Categoria
                 {
                     IdCategoria = 9,
                     NombreCategoria = "Piso compartido",
-                    RutaIcono = "Ruta"
+                    RutaIcono = "fa-solid fa-people-roof"
                 },
                 new Categoria
                 {
                     IdCategoria = 10,
-                    NombreCategoria = "Finca",
-                    RutaIcono = "Ruta"
+                    NombreCategoria = "Villa vacacional",
+                    RutaIcono = "fa-solid fa-house-chimney-window"
+                },
+                new Categoria
+                {
+                    IdCategoria = 11,
+                    NombreCategoria = "Casa de campo",
+                    RutaIcono = "fa-solid fa-house-chimney"
+                },
+                new Categoria
+                {
+                    IdCategoria = 12,
+                    NombreCategoria = "Campamentos",
+                    RutaIcono = "fa-solid fa-campground"
+                },
+                new Categoria
+                {
+                    IdCategoria = 13,
+                    NombreCategoria = "Pensión",
+                    RutaIcono = "fa-solid fa-house"
+                },
+                new Categoria
+                {
+                    IdCategoria = 14,
+                    NombreCategoria = "Motel",
+                    RutaIcono = "fa-solid fa-hotel"
+                },
+                new Categoria
+                {
+                    IdCategoria = 15,
+                    NombreCategoria = "Apartahotel",
+                    RutaIcono = "fa-solid fa-hotel"
+                },
+                new Categoria
+                {
+                    IdCategoria = 16,
+                    NombreCategoria = "Casa rural",
+                    RutaIcono = "fa-solid fa-house-chimney"
+                },
+                new Categoria
+                {
+                    IdCategoria = 17,
+                    NombreCategoria = "Posada",
+                    RutaIcono = "fa-solid fa-house"
                 }
             );
 
@@ -360,7 +806,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
-                    IdUsuario = 1
+                    IdUsuario = "f7ad1421-b744-4f4e-93d9-e51fe1120136"
                 },
                 new AtencionViajero
                 {
@@ -372,7 +818,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
-                    IdUsuario = 2
+                    IdUsuario = "b652f0fb-95c4-40ed-81aa-8e1792d089f8"
                 },
                 new AtencionViajero
                 {
@@ -384,7 +830,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Proceso,
-                    IdUsuario = 3
+                    IdUsuario = "eb5daf52-3be0-4083-ac20-f4f5ad0028c6"
                 },
                 new AtencionViajero
                 {
@@ -396,7 +842,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Proceso,
-                    IdUsuario = 4
+                    IdUsuario = "02aef042-3060-4a52-9a09-e9c5583c840c"
                 },
                 new AtencionViajero
                 {
@@ -408,7 +854,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Reclamo,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
-                    IdUsuario = 5
+                    IdUsuario = "299c3027-88a1-4c43-98fa-e1c460dbd885"
                 },
                 new AtencionViajero
                 {
@@ -420,7 +866,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Proceso,
-                    IdUsuario = 6
+                    IdUsuario = "7b6fc7d7-804c-4063-b58a-83a2a6d9cb4c"
                 },
                 new AtencionViajero
                 {
@@ -432,7 +878,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
-                    IdUsuario = 7
+                    IdUsuario = "5d9b8f6f-9750-4678-a91b-4001bc0a22b5"
                 },
                 new AtencionViajero
                 {
@@ -444,7 +890,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
-                    IdUsuario = 8
+                    IdUsuario = "329988fe-7243-49f4-98ef-cafc80d16789"
                 },
                 new AtencionViajero
                 {
@@ -456,7 +902,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
-                    IdUsuario = 9
+                    IdUsuario = "b6651473-663d-4225-b2a8-522c7f0dbba4"
                 },
                 new AtencionViajero
                 {
@@ -468,7 +914,7 @@ namespace Dviaje.DataAccess.Data
                     FechaRespuesta = DateTime.Today,
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Reclamo,
                     AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
-                    IdUsuario = 10
+                    IdUsuario = "447a628d-a118-44e0-bbb1-c2e40975283c"
                 }
             );
 
@@ -538,121 +984,6 @@ namespace Dviaje.DataAccess.Data
             );
 
 
-            // Aliados
-            modelBuilder.Entity<Aliado>().HasData(
-                new Aliado
-                {
-                    IdAliado = 1,
-                    RazonSocial = "quiero plata",
-                    SitioWeb = "www.abueno.com",
-                    Telefono = "3333332222",
-                    Direccion = "calle me lo calana",
-                    Verificado = true,
-                    AliadoEstado = AliadoEstado.NoDisponible,
-                    IdUsuario = 1
-                },
-                new Aliado
-                {
-                    IdAliado = 2,
-                    RazonSocial = "Finanzas Seguras",
-                    SitioWeb = "www.finseguras.com",
-                    Telefono = "3111111111",
-                    Direccion = "Avenida Siempre Viva 123",
-                    Verificado = true,
-                    AliadoEstado = AliadoEstado.NoDisponible,
-                    IdUsuario = 2
-                },
-                new Aliado
-                {
-                    IdAliado = 3,
-                    RazonSocial = "Crédito Fácil",
-                    SitioWeb = "www.creditofacil.com",
-                    Telefono = "3222222222",
-                    Direccion = "Calle Luna 456",
-                    Verificado = false,
-                    AliadoEstado = 0,
-                    IdUsuario = 3
-                },
-                new Aliado
-                {
-                    IdAliado = 4,
-                    RazonSocial = "Préstamos Ya",
-                    SitioWeb = "www.prestamosya.com",
-                    Telefono = "3333333333",
-                    Direccion = "Calle Sol 789",
-                    Verificado = true,
-                    AliadoEstado = AliadoEstado.NoDisponible,
-                    IdUsuario = 4
-                },
-                new Aliado
-                {
-                    IdAliado = 5,
-                    RazonSocial = "Dinero Rápido",
-                    SitioWeb = "www.dinerorapido.com",
-                    Telefono = "3444444444",
-                    Direccion = "Avenida del Parque 101",
-                    Verificado = false,
-                    AliadoEstado = 0,
-                    IdUsuario = 5
-                },
-                new Aliado
-                {
-                    IdAliado = 6,
-                    RazonSocial = "Crédito Seguro",
-                    SitioWeb = "www.creditoseguro.com",
-                    Telefono = "3555555555",
-                    Direccion = "Calle del Río 202",
-                    Verificado = true,
-                    AliadoEstado = AliadoEstado.NoDisponible,
-                    IdUsuario = 6
-                },
-                new Aliado
-                {
-                    IdAliado = 7,
-                    RazonSocial = "Préstamo Fácil",
-                    SitioWeb = "www.prestamofacil.com",
-                    Telefono = "3666666666",
-                    Direccion = "Boulevard del Mar 303",
-                    Verificado = false,
-                    AliadoEstado = 0,
-                    IdUsuario = 7
-                },
-                new Aliado
-                {
-                    IdAliado = 8,
-                    RazonSocial = "Dinero Seguro",
-                    SitioWeb = "www.dineroseguro.com",
-                    Telefono = "3777777777",
-                    Direccion = "Calle del Sol 404",
-                    Verificado = true,
-                    AliadoEstado = AliadoEstado.NoDisponible,
-                    IdUsuario = 8
-                },
-                new Aliado
-                {
-                    IdAliado = 9,
-                    RazonSocial = "Préstamos Rápidos",
-                    SitioWeb = "www.prestamosrapidos.com",
-                    Telefono = "3888888888",
-                    Direccion = "Avenida de las Flores 505",
-                    Verificado = false,
-                    AliadoEstado = 0,
-                    IdUsuario = 9
-                },
-                new Aliado
-                {
-                    IdAliado = 10,
-                    RazonSocial = "Créditos al Instante",
-                    SitioWeb = "www.creditosinstante.com",
-                    Telefono = "3999999999",
-                    Direccion = "Calle del Bosque 606",
-                    Verificado = true,
-                    AliadoEstado = AliadoEstado.NoDisponible,
-                    IdUsuario = 10
-                }
-            );
-
-
             // Verificados
             modelBuilder.Entity<Verificado>().HasData(
                 new Verificado
@@ -660,100 +991,239 @@ namespace Dviaje.DataAccess.Data
                     IdVerificado = 1,
                     FechaSolicitud = DateTime.Now,
                     FechaRespuesta = DateTime.Now,
-                    VerificadoEstado = VerificadoEstado.Pendiente,
-                    IdAliado = 1
+                    VerificadoEstado = VerificadoEstado.Aprobado,
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
 
                 },
                 new Verificado
                 {
                     IdVerificado = 2,
-                    FechaSolicitud = DateTime.Now.AddDays(-1),
-                    FechaRespuesta = DateTime.Now.AddDays(1),
-                    VerificadoEstado = VerificadoEstado.Pendiente,
-                    IdAliado = 2
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Aprobado,
+                    IdUsuario = "9b6fedaf-0fa5-4c6a-9266-117650a4c2d8"
+
                 },
                 new Verificado
                 {
                     IdVerificado = 3,
-                    FechaSolicitud = DateTime.Now.AddDays(-2),
-                    FechaRespuesta = DateTime.Now.AddDays(2),
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
                     VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = 3
+                    IdUsuario = "2e5bad99-bcde-4fe9-9e0f-3c1df844f336"
+
                 },
                 new Verificado
                 {
                     IdVerificado = 4,
-                    FechaSolicitud = DateTime.Now.AddDays(-3),
-                    FechaRespuesta = DateTime.Now.AddDays(3),
-                    VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = 4
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Aprobado,
+                    IdUsuario = "b3567b2f-4c23-4adf-ab76-206b7e1858ec"
+
                 },
                 new Verificado
                 {
                     IdVerificado = 5,
-                    FechaSolicitud = DateTime.Now.AddDays(-4),
-                    FechaRespuesta = DateTime.Now.AddDays(4),
-                    VerificadoEstado = VerificadoEstado.Pendiente,
-                    IdAliado = 5
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Aprobado,
+                    IdUsuario = "2c390f18-bbcf-4675-9859-8e4d3fa32571"
+
                 },
                 new Verificado
                 {
                     IdVerificado = 6,
-                    FechaSolicitud = DateTime.Now.AddDays(-5),
-                    FechaRespuesta = DateTime.Now.AddDays(5),
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
                     VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = 6
+                    IdUsuario = "89537343-76cd-4739-a360-4c0c26ecfd4d"
                 },
                 new Verificado
                 {
                     IdVerificado = 7,
-                    FechaSolicitud = DateTime.Now.AddDays(-6),
-                    FechaRespuesta = DateTime.Now.AddDays(6),
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
                     VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = 7
+                    IdUsuario = "4f4bbb47-8619-4523-a83c-2d18eb961ae7"
                 },
                 new Verificado
                 {
                     IdVerificado = 8,
-                    FechaSolicitud = DateTime.Now.AddDays(-7),
-                    FechaRespuesta = DateTime.Now.AddDays(7),
-                    VerificadoEstado = VerificadoEstado.Pendiente,
-                    IdAliado = 8
+                    FechaSolicitud = DateTime.Now,
+                    FechaRespuesta = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Rechazado,
+                    IdUsuario = "995eb3b8-b7b8-418d-9eee-7eec0b39515d"
                 },
                 new Verificado
                 {
                     IdVerificado = 9,
-                    FechaSolicitud = DateTime.Now.AddDays(-8),
-                    FechaRespuesta = DateTime.Now.AddDays(8),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = 9
+                    FechaSolicitud = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Pendiente,
+                    IdUsuario = "f9dc84e7-1c0c-47ee-ad99-b589db9163a0"
                 },
                 new Verificado
                 {
                     IdVerificado = 10,
-                    FechaSolicitud = DateTime.Now.AddDays(-9),
-                    FechaRespuesta = DateTime.Now.AddDays(9),
-                    VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = 10
+                    FechaSolicitud = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Pendiente,
+                    IdUsuario = "964fcd99-99db-406b-9a52-eff38524afe8"
+                },
+                new Verificado
+                {
+                    IdVerificado = 11,
+                    FechaSolicitud = DateTime.Now,
+                    VerificadoEstado = VerificadoEstado.Pendiente,
+                    IdUsuario = "c7350e94-45ab-483c-9f3f-153e54e0198b"
                 }
             );
 
-
+            
             // Publicaciones
             modelBuilder.Entity<Publicacion>().HasData(
                 new Publicacion
                 {
                     IdPublicacion = 1,
-                    Titulo = "hola colombia",
-                    Puntuacion = 5,
-                    NumeroResenas = 5,
-                    CapacidadCamas = 5,
-                    Descripcion = "una ona de relax",
-                    Precio = 5000,
+                    Titulo = "Descubre Cundinamarca",
+                    Puntuacion = 4.3M,
+                    NumeroResenas = 2,
+                    Descripcion = "Las lujosas comodidades de cinco estrellas y el servicio personalizado crean la mejor escapada para una estrella de rock. 15 piscinas amplias, cuatro bares en la piscina, una piscina para niños y un río lento. La playa del hotel es elogiada por los huéspedes. Los huéspedes aprecian la amabilidad del personal del hotel. Nueve restaurantes, incluido Simon Mansion & Supper Club, del famoso chef de rock n roll Kerry Simon.",
+                    Precio = 150000,
                     Fecha = DateTime.Now,
-                    Direccion = "calle diomedez",
-                    IdAliado = 5
+                    Direccion = "Carrera 10 No. 25-67",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
                 },
+                new Publicacion
+                {
+                    IdPublicacion = 2,
+                    Titulo = "Aventura en Antioquia",
+                    Puntuacion = 4.7M,
+                    NumeroResenas = 5,
+                    Descripcion = "Sumérgete en la naturaleza con caminatas por senderos exuberantes y excursiones a cascadas escondidas. Los visitantes elogian la belleza natural y las actividades al aire libre. Disfruta de recorridos guiados, observación de aves y visitas a fincas cafetaleras locales.",
+                    Precio = 200000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Calle 20 No. 30-40",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 3,
+                    Titulo = "Cultura en Bogotá",
+                    Puntuacion = 4.1M,
+                    NumeroResenas = 3,
+                    Descripcion = "Descubre la vibrante vida cultural de Bogotá. Visita museos, parques y galerías de arte. Los visitantes aprecian la rica historia y la diversidad cultural. Disfruta de recorridos guiados por la ciudad y actividades culturales nocturnas.",
+                    Precio = 120000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Avenida 68 No. 45-70",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 4,
+                    Titulo = "Playas del Caribe",
+                    Puntuacion = 3.8M,
+                    NumeroResenas = 8,
+                    Descripcion = "Relájate en las arenas blancas y aguas cristalinas del Caribe. Los huéspedes disfrutan de deportes acuáticos, paseos en bote y relajación en la playa. Visita restaurantes de mariscos y mercados locales para una experiencia auténtica.",
+                    Precio = 250000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Carrera 50 No. 10-20",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 5,
+                    Titulo = "Gastronomía en Medellín",
+                    Puntuacion = 2.6M,
+                    NumeroResenas = 4,
+                    Descripcion = "Experimenta la rica gastronomía de Medellín. Disfruta de platos típicos en restaurantes locales y participa en talleres de cocina. Los visitantes elogian la calidad de la comida y la hospitalidad de los locales.",
+                    Precio = 180000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Calle 15 No. 30-50",
+                    IdUsuario = ""
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 6,
+                    Titulo = "Ruta del Café en Quindío",
+                    Puntuacion = 0.9M,
+                    NumeroResenas = 10,
+                    Descripcion = "Conoce el proceso del café desde la semilla hasta la taza. Visita fincas cafetaleras y participa en catas de café. Los visitantes disfrutan de la belleza del paisaje y la riqueza cultural de la región.",
+                    Precio = 220000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Avenida 40 No. 20-60",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 7,
+                    Titulo = "Ecoturismo en Amazonas",
+                    Puntuacion = 1.7M,
+                    NumeroResenas = 7,
+                    Descripcion = "Explora la selva amazónica y su increíble biodiversidad. Participa en excursiones guiadas y visitas a comunidades indígenas. Los visitantes valoran la autenticidad de la experiencia y la belleza natural.",
+                    Precio = 300000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Carrera 60 No. 25-30",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 8,
+                    Titulo = "Senderismo en Boyacá",
+                    Puntuacion = 3.4M,
+                    NumeroResenas = 6,
+                    Descripcion = "Recorre senderos naturales y disfruta de paisajes impresionantes. Los visitantes aprecian la tranquilidad y la oportunidad de conectarse con la naturaleza. Participa en excursiones y actividades al aire libre.",
+                    Precio = 140000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Calle 25 No. 15-35",
+                    IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 9,
+                    Titulo = "Historia en Cartagena",
+                    Puntuacion = 2.6M,
+                    NumeroResenas = 5,
+                    Descripcion = "Visita sitios históricos y aprende sobre la rica historia de Cartagena. Explora fortalezas, museos y el casco antiguo. Los visitantes valoran la arquitectura y la atmósfera histórica de la ciudad.",
+                    Precio = 190000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Avenida 30 No. 50-80",
+                    IdUsuario = "4f4bbb47-8619-4523-a83c-2d18eb961ae7"
+                },
+
+                new Publicacion
+                {
+                    IdPublicacion = 10,
+                    Titulo = "Naturaleza en Huila",
+                    Puntuacion = 4.5M,
+                    NumeroResenas = 4,
+                    Descripcion = "Descubre parques naturales y disfruta de actividades al aire libre. Los visitantes valoran la biodiversidad y las oportunidades para la observación de aves. Participa en excursiones y visitas guiadas.",
+                    Precio = 160000,
+                    Fecha = DateTime.Now,
+                    Direccion = "Carrera 70 No. 30-45",
+                    IdUsuario = "4f4bbb47-8619-4523-a83c-2d18eb961ae7"
+                },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 new Publicacion
                 {
                     IdPublicacion = 2,
@@ -1605,7 +2075,8 @@ namespace Dviaje.DataAccess.Data
                     IdServicio = 9,
                     IdPublicacion = 9
                 }
-            );
+
+                );
             */
 
 
