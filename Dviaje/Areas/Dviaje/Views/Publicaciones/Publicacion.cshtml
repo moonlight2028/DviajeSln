@@ -1,0 +1,887 @@
+﻿@{
+    ViewData["Title"] = "Publicación";
+}
+
+@section Styles {
+    <!-- Swiper v11 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Font-awesome v6.5.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <!-- Fancybox ui v5.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@@5.0/dist/fancybox/fancybox.css" />
+
+    <!-- Utilidades -->
+    <link rel="stylesheet" href="~/css/page/utilidades.css">
+
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/page/publicacion.css">
+}
+
+
+<div class="flex flex-col lg:flex-row lg:items-center overflow-hidden bg-neutral-950">
+    <!-- Carrusel imágenes -->
+    <section class="flex flex-col w-full h-dvh p-4 overflow-hidden md:flex-row lg:order-2 lg:pl-0">
+        <!-- Slider main container -->
+        <div class="carrusel-imagenes-main relative w-full h-[80%] rounded-t-xl overflow-hidden md:w-[70%] md:h-full md:rounded-bl-xl md:rounded-tr-none xl:w-full">
+
+            <!-- Botón favorito -->
+            <button class="absolute top-0 right-0 text-4xl mt-1 mx-2 z-20 text-white">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper w-full h-full">
+                <!-- Slides -->
+                <!-- Imagen Full -->
+                <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+                   class="swiper-slide w-full h-full">
+                    <!-- Imagen Carrusel -->
+                    <img src="https://images.unsplash.com/photo-1718115257239-7246f434a7b0?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </a>
+                <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery" class="swiper-slide">
+                    <!-- Imagen Carrusel -->
+                    <img src="https://images.unsplash.com/photo-1718046254335-d9ff832c9c3c?q=80&w=1942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </a>
+                <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery" class="swiper-slide">
+                    <!-- Imagen Carrusel -->
+                    <img src="https://images.unsplash.com/photo-1689602037070-fec2eca3f5b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </a>
+                <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery" class="swiper-slide">
+                    <!-- Imagen Carrusel -->
+                    <img src="https://images.unsplash.com/photo-1718125188885-7ce699512931?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </a>
+            </div>
+
+            <div class="swiper-main-pagination absolute bottom-3 flex items-center justify-center rounded-xl w-fit px-3 text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
+            </div>
+
+            <div class="absolute top-0 flex justify-between w-full h-full text-white text-opacity-70 z-10 pointer-events-none hover:text-opacity-100">
+                <div class="swiper-prev flex items-center h-full text-4xl px-3 pointer-events-auto md:px-5">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="swiper-next flex items-center h-full text-4xl px-3 pointer-events-auto">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider thumbs -->
+        <div thumbsSlider=""
+             class="swiper-thumbs w-full h-[20%] mt-1 overflow-hidden rounded-b-xl md:w-[30%] md:mt-0 md:ml-1 md:h-full md:rounded-tr-xl md:rounded-bl-none xl:w-[300px]">
+            <div class="swiper-wrapper w-full h-full">
+                <div class="swiper-slide overflow-hidden">
+                    <!-- 324*200 -->
+                    <img src="https://images.unsplash.com/photo-1718115257239-7246f434a7b0?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </div>
+                <div class="swiper-slide">
+                    <!-- 324*200 -->
+                    <img src="https://images.unsplash.com/photo-1718046254335-d9ff832c9c3c?q=80&w=1942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </div>
+                <div class="swiper-slide">
+                    <!-- 324*200 -->
+                    <img src="https://images.unsplash.com/photo-1689602037070-fec2eca3f5b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </div>
+                <div class="swiper-slide">
+                    <!-- 324*200 -->
+                    <img src="https://images.unsplash.com/photo-1718125188885-7ce699512931?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="" class="img-f">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Fin Carrusel imágenes -->
+    <!-- Información -->
+    <section class="w-full py-10 text-white lg:w-[40%] xl:w-[30%]">
+        <div class="text-center max-w-7xl mx-auto">
+
+            <h1 class="font-bold text-4xl">
+                Lorem ipsum dolor sit amet, consectetur adipiscs
+            </h1>
+
+            <div class="my-5">
+                <p class="descripcion-texto font-medium px-5 text-gray-300 text-pretty">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam odio dui, tincidunt et
+                    sagittis
+                    ac,
+                    dapibus eu dolor. Donec feugiat sem vitae diam ultrices commodo. Cras non dapibus est.
+                    Interdum
+                    et
+                    malesuada fames ac ante ipsum primis in faucibus. Suspendisse vel pharetra tortor. Praesent
+                    vitae
+                    augue ac nunc pulvinar lacinia. Praesent vel dignissim leo, nec vestibulum lacus. In hac
+                    habitasse
+                    platea dictumst. Quisque vehicula dapibus ligula, vitae finibus erat tempor in.
+
+                    Vivamus condimentum pellentesque odio, in mattis lectus placerat euismod. Suspendisse sed
+                    urna
+                    eu
+                    quam lobortis imperdiet at id velit. Phasellus non dapibus dolor. Vivamus fermentum, nibh
+                    sed
+                    malesuada mollis, tortor magna consectetur nibh, eu finibus felis arcu non velit. Nam vitae
+                    erat
+                    nunc. Vestibulum volutpat dapibus tincidunt. Fusce tristique lacus et interdum viverra. Duis
+                    id
+                    eleifend est. Pellentesque in malesuada nunc. Fusce erat mauris, euismod sed sagittis
+                    molestie,
+                    dapibus eu enim.
+
+                    Suspendisse eu convallis mauris. Quisque et diam vitae nunc porttitor tincidunt. Vivamus
+                    euismod
+                    aliquam mattis. Mauris eros nisi, finibus in tellus ac, dignissim pharetra nunc. Fusce eu
+                    vestibulum
+                    neque. Vestibulum sit amet elit vehicula, pretium sem vitae, iaculis turpis. Maecenas eu
+                    nisi
+                    sapien. Aenean a ultricies risus, ac scelerisque leo. In congue vel lacus vel consectetur.
+                    Proin
+                    pharetra, magna a elementum ultricies, nisi dolor tempor mi, in feugiat justo mi nec ex.
+
+                    Aenean at aliquet lorem, a tempor risus. Mauris vitae molestie neque. Nulla malesuada purus
+                    id
+                    elit
+                    interdum fringilla. Sed eleifend ipsum nulla, ac faucibus ipsum aliquet ut. Pellentesque
+                    consectetur
+                    at velit bibendum cursus. Nulla mauris quam, ultricies et erat in, semper fermentum dolor.
+                    Aenean
+                    eget nisi et nulla sagittis eleifend a nec turpis. Mauris eu imperdiet diam. Nulla vel
+                    libero
+                    lacus.
+                    Proin suscipit turpis quis augue consectetur, et consectetur erat blandit. Pellentesque sed
+                    mattis
+                    quam.
+
+                    Aenean ornare placerat laoreet. Nullam aliquet odio sit amet fermentum facilisis. Nam
+                    scelerisque
+                    diam sit amet elit condimentum suscipit. Suspendisse egestas, neque a varius pretium, quam
+                    nisl
+                    eleifend leo, nec pharetra ipsum orci semper erat. Curabitur vel ullamcorper arcu. Morbi
+                    tempus
+                    faucibus felis, eu cursus erat laoreet ut. Curabitur maximus lacus ut enim porta, eu
+                    fringilla
+                    nibh
+                    fermentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
+                    himenaeos. Pellentesque tempus ornare urna id sodales. Duis cursus venenatis nunc, vitae
+                    dictum
+                    lacus aliquam at.
+
+                    Pellentesque suscipit urna fermentum neque convallis elementum. Class aptent taciti sociosqu
+                    ad
+                    litora torquent per conubia nostra, per inceptos himenaeos. Aliquam erat volutpat. Aenean
+                    sit
+                    amet
+                    ullamcorper risus. Mauris ornare a metus placerat vehicula. Nunc sem ligula, tristique a
+                    auctor
+                    ac,
+                    efficitur et mauris. Curabitur gravida, ligula ac scelerisque accumsan, sem diam iaculis
+                    arcu,
+                    sit
+                    amet lobortis nulla metus sed ipsum. Sed lectus tellus, maximus id velit et, volutpat
+                    faucibus
+                    diam.
+                    Pellentesque arcu leo, tempor non erat non, pharetra ultricies turpis. In rhoncus nibh quis
+                    pellentesque commodo. Donec tempus, dui nec eleifend luctus, nulla mauris cursus tortor,
+                    quis
+                    suscipit metus lacus sit amet nulla. Maecenas blandit est in turpis pharetra, quis pretium
+                    ligula
+                    posuere.
+
+                    Nam lobortis tincidunt felis commodo fringilla. Nunc gravida placerat enim, vel vestibulum
+                    nunc.
+                    Proin aliquam facilisis sagittis. Vestibulum facilisis dolor blandit purus feugiat, sed
+                    ornare
+                    magna
+                    tempor. Etiam non posuere enim. Nam eget molestie mi, eu consectetur orci. Integer sed velit
+                    molestie, tempus ipsum nec, ullamcorper sem. Mauris interdum a sem nec aliquam. Vestibulum
+                    vel
+                    erat
+                    et quam eleifend posuere in eget purus. Nulla maximus rutrum metus a ornare. Phasellus
+                    viverra
+                    tellus nec ipsum cursus venenatis. Morbi eu tempor mauris. Nulla tristique convallis orci a
+                    laoreet.
+                    In sit amet posuere ipsum. Pellentesque turpis eros, commodo vel lobortis eu, eleifend in
+                    leo.
+                    Morbi
+                    convallis orci neque, ac facilisis ipsum pulvinar sed.
+
+                    Proin venenatis, est sit amet varius fringilla, elit ante vulputate nunc, id bibendum magna
+                    est
+                    et
+                    quam. Quisque dui libero, sollicitudin vitae tincidunt nec, vestibulum bibendum lectus. Duis
+                    facilisis, nibh ut placerat fermentum, odio quam sodales sapien, eget efficitur eros eros
+                    non
+                    est.
+                    Fusce accumsan in turpis vel bibendum. Nunc cursus est varius metus lobortis, a sagittis
+                    nulla
+                    faucibus. Nunc tempus sollicitudin tellus. Ut sit amet purus est. Etiam dictum consequat
+                    pretium.
+                    Duis lobortis eleifend metus ac viverra. Nulla auctor et dolor quis fermentum. Ut finibus,
+                    mi eu
+                    tempor lobortis, orci nulla convallis metus, nec dignissim est nibh et lectus. Etiam
+                    pellentesque
+                    diam sit amet lacus sagittis, ut tempus arcu imperdiet.
+
+                    Quisque in posuere urna, in pellentesque tellus. Curabitur quis ante tempus, porta elit
+                    quis,
+                    sollicitudin lacus. Integer dignissim nulla leo, sed sodales odio eleifend et. Maecenas nunc
+                    lorem,
+                    varius rhoncus dolor quis, porta pharetra risus. Nunc nunc urna, consequat nec nisl ac,
+                    placerat
+                    iaculis sapien. Etiam pretium pellentesque libero, ut molestie ipsum ultricies tempus.
+                    Aenean
+                    eros
+                    purus, hendrerit vitae risus in, dignissim commodo mauris. Ut at arcu vitae dui pretium
+                    porta.
+                    Morbi
+                    eget gravida mi, eu porttitor est.
+
+                    Aliquam commodo ac sem ac sagittis. Etiam quis enim in velit fringilla varius. Vivamus
+                    consectetur
+                    laoreet nisi. Nunc eget lacus vitae mi euismod aliquet. Mauris id turpis sit amet sem
+                    efficitur
+                    blandit ut sit amet nibh. Donec id iaculis libero, sed sollicitudin nisl. Morbi pretium
+                    risus
+                    condimentum risus laoreet, et bibendum velit imperdiet. Nunc varius nibh risus, ut posuere
+                    nunc
+                    euismod at. Nam lacus nunc, consectetur in pulvinar vel, viverra id nisi. Mauris vel dolor
+                    ut
+                    nibh
+                    fermentum condimentum non id lectus. Class aptent taciti sociosqu ad litora torquent per
+                    conubia
+                    nostra, per inceptos himenaeos. Sed pellentesque vel est vitae tincidunt. Curabitur erat
+                    dolor,
+                    dapibus vel condimentum in, aliquet vitae dui. Proin pretium eros nec ipsum ultricies
+                    semper.
+                    Suspendisse facilisis lacus et est laoreet elementum sit amet eu augue. Donec accumsan
+                    placerat
+                    semper.
+
+                    Donec sodales volutpat nulla, et elementum ipsum cursus in. Vivamus vehicula ipsum sodales
+                    nunc
+                    volutpat rhoncus. Fusce vitae urna at enim sodales pretium a sed eros. Donec pharetra, enim
+                    ut
+                    auctor tempor, libero justo tincidunt nisi, sit amet sodales massa ligula eget nisl. Etiam
+                    nec
+                    libero erat. Sed bibendum libero a porta eleifend. In id quam massa. Mauris scelerisque
+                    lobortis
+                    mattis.
+
+                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In
+                    interdum
+                    suscipit ipsum, bibendum placerat diam elementum et. Curabitur id risus elit. Maecenas
+                    pulvinar
+                    ligula eleifend, porttitor ex ut, laoreet nisi. Nulla dictum nec nibh vel accumsan. Nam
+                    eleifend
+                    tortor velit, eu congue massa commodo vehicula. Pellentesque faucibus malesuada nunc at
+                    pharetra.
+                    Curabitur suscipit mollis metus, in feugiat nibh ultrices a. Sed sed leo ac elit eleifend
+                    bibendum
+                    vel eu urna. Sed vestibulum at tellus sollicitudin feugiat. Vivamus dignissim ullamcorper
+                    nunc
+                    ut
+                    venenatis. Sed aliquam, est ut viverra cursus, elit dui aliquam est, ultricies efficitur mi
+                    ex
+                    in
+                    magna.
+
+                    Pellentesque aliquet vitae purus in porta. Donec mattis pretium dolor. Donec vitae lacus
+                    quis
+                    tortor
+                    maximus commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+                    cubilia
+                    curae; Cras nisl elit, fermentum sed est id, fringilla fringilla risus. Phasellus ut
+                    efficitur
+                    nibh,
+                    sit amet aliquam ante. Donec enim felis, sagittis volutpat scelerisque sit amet, lobortis
+                    vitae
+                    purus. Donec placerat nec libero ut vehicula. Vestibulum nibh est, tincidunt ac risus at,
+                    viverra
+                    condimentum sapien. Pellentesque commodo ultrices ante. Suspendisse potenti.
+
+                    Suspendisse potenti. Donec in urna mattis ex sodales laoreet. Donec sapien sapien, euismod
+                    vitae
+                    molestie et, elementum quis ante. Nullam at justo neque. Suspendisse sit amet libero sed
+                    nunc
+                    suscipit dapibus finibus semper quam. Sed egestas leo efficitur consequat mollis. Praesent
+                    volutpat
+                    velit quis bibendum tempor. Sed dapibus nisi a metus varius sagittis. Duis nec magna purus.
+                    Morbi
+                    fermentum mauris quis risus efficitur blandit.
+
+                    Etiam porttitor scelerisque diam, a imperdiet leo sollicitudin vel. Nunc iaculis ante id
+                    odio
+                    ornare
+                    facilisis. Integer ipsum sapien, pellentesque non eros eget, sodales ultrices ante. Maecenas
+                    a
+                    elementum diam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
+                    ridiculus
+                    mus. Etiam molestie pharetra odio, a gravida nisi commodo sed. Vivamus aliquet dolor vitae
+                    purus
+                    laoreet lobortis non ut libero. Sed efficitur felis at turpis viverra vehicula. In in velit
+                    interdum, mollis est in, fermentum neque. Mauris dictum libero egestas, tincidunt orci sed,
+                    pretium
+                    ipsum.
+
+                    Aliquam id mi consequat, volutpat metus finibus, porta mauris. Suspendisse consectetur
+                    laoreet
+                    nibh
+                    aliquam placerat. Nulla facilisi. Phasellus facilisis imperdiet nunc, et malesuada diam
+                    feugiat
+                    nec.
+                    Suspendisse ut lectus id libero viverra laoreet ut a elit. Cras ullamcorper augue ipsum, a
+                    efficitur
+                    nisi venenatis eget. Nam efficitur lorem sollicitudin velit malesuada accumsan. Maecenas
+                    consectetur
+                    efficitur risus et pretium. Maecenas ultricies eget libero vel feugiat. Fusce malesuada
+                    neque
+                    iaculis ipsum accumsan elementum tempor a elit. Aenean sollicitudin nisi neque, sit amet
+                    porttitor
+                    ligula consequat in. Nam porttitor enim et lacus ullamcorper sollicitudin. In hac habitasse
+                    platea
+                    dictumst. Donec bibendum turpis nunc, eu porttitor massa facilisis quis.
+
+                    Donec sit amet sapien risus. Aenean dapibus libero at enim convallis, eu gravida risus
+                    sodales.
+                    Nulla in purus id eros dignissim ullamcorper et at nulla. Ut a posuere leo. Ut at auctor
+                    purus.
+                    Cras
+                    blandit elit urna, vitae convallis ex elementum ut. Vivamus faucibus diam ligula, in posuere
+                    dui
+                    gravida id. Quisque vulputate mattis tortor, vitae congue massa facilisis eget. Praesent
+                    fringilla
+                    volutpat leo, eu pretium lectus faucibus ac. Suspendisse ultrices blandit varius. Cras
+                    egestas
+                    ornare feugiat. Donec condimentum.
+                </p>
+                <button class="text-orange-600 hover:text-cyan-500" data-btn="btn-descripcion">
+                    <span>Leer más</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <a href="" class="group">
+                <i class="fa-solid fa-location-dot text-orange-400 group-hover:text-cyan-500"></i>
+                <span class="text-gray-300 font-light group-hover:text-white group-hover:font-normal">Ubicación</span>
+            </a>
+
+            <!-- Lista de categorías -->
+            <section class="w-full overflow-hidden mt-4">
+                <!-- Slider main container -->
+                <div class="swiper-categorias flex justify-center">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper flex gap-4 w-fit">
+                        <!-- Slides -->
+                        <a href="" class="swiper-slide flex items-center gap-1 w-fit group">
+                            <i class="fa-solid fa-binoculars text-4xl text-white group-hover:text-orange-500"></i>
+                            <span class="text-xl text-gray-300 group-hover:text-white">Categoria</span>
+                        </a>
+                        <a href="" class="swiper-slide flex items-center gap-1 w-fit group">
+                            <i class="fa-solid fa-binoculars text-4xl text-white group-hover:text-orange-500"></i>
+                            <span class="text-xl text-gray-300 group-hover:text-white">Categoria</span>
+                        </a>
+                        <a href="" class="swiper-slide flex items-center gap-1 w-fit group">
+                            <i class="fa-solid fa-binoculars text-4xl text-white group-hover:text-orange-500"></i>
+                            <span class="text-xl text-gray-300 group-hover:text-white">Categoria</span>
+                        </a>
+                        <a href="" class="swiper-slide flex items-center gap-1 w-fit group">
+                            <i class="fa-solid fa-binoculars text-4xl text-white group-hover:text-orange-500"></i>
+                            <span class="text-xl text-gray-300 group-hover:text-white">Categoria</span>
+                        </a>
+                        <a href="" class="swiper-slide flex items-center gap-1 w-fit group">
+                            <i class="fa-solid fa-binoculars text-4xl text-white group-hover:text-orange-500"></i>
+                            <span class="text-xl text-gray-300 group-hover:text-white">Categoria</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <!-- Fin Lista de categorías -->
+            <!-- Precio -->
+            <section class="flex justify-center gap-5 mt-5">
+                <div class="flex items-center">
+                    <span data-precio="valor" class="text-2xl font-semibold">99.999.999</span>
+                    <span class="text-lg text-gray-500">$cop</span>
+                </div>
+
+                <a href="#"
+                   class="group inline-block rounded-full bg-gradient-to-r from-orange-700 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75">
+                    <span class="block rounded-full bg-neutral-950 px-8 py-2 text-lg font-semibold group-hover:bg-transparent">
+                        Reservar
+                    </span>
+                </a>
+            </section>
+            <!-- Fin Precio -->
+        </div>
+    </section>
+    <!-- Fin Información -->
+</div>
+
+
+<!-- Información Calificación servicios -->
+<section class="flex flex-col items-start gap-4 p-4 my-10 sm:flex-row sm:justify-center">
+    <div class="w-full max-w-96">
+        <!-- Información aliado -->
+        <section class="flex items-center gap-2">
+            <a href=""
+               class="block w-12 h-12 rounded-full overflow-hidden border-[2px] border-orange-500 hover:border-cyan-500">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                     alt="" class="img-f">
+            </a>
+
+            <div class="flex flex-col">
+                <a href="" class="font-medium">Nombre aliado</a>
+                <a href="" class="text-sm mt-[-5px] text-gray-500 hover:text-black ">5.800 Publicaciones</a>
+            </div>
+        </section>
+        <!-- Fin Información aliado -->
+        <!-- Calificación -->
+        <section class="flex flex-col gap-2 py-2">
+            <div class="flex gap-2 items-end">
+                <p class="text-5xl font-semibold">4.5</p>
+
+                <a href="" class="flex flex-col w-fit group">
+                    <div class="flex w-fit relative text-xl text-orange-500 group-hover:text-orange-600">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <div class="flex absolute top-0 left-0 overflow-hidden w-[85%]">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500 group-hover:text-black group-hover:font-semibold">
+                        6,003
+                        Reseñas
+                    </span>
+                </a>
+            </div>
+
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-between w-10">
+                        <span class="font-medium">5</span>
+                        <i class="fa-solid fa-star text-orange-500"></i>
+                    </div>
+
+                    <div class="w-full h-2 rounded-xl bg-gray-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full bg-orange-500 w-[85%]"></div>
+                    </div>
+
+                    <span class="flex items-center justify-start w-14">1,800</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-between w-10">
+                        <span class="font-medium">4</span>
+                        <i class="fa-solid fa-star text-orange-500"></i>
+                    </div>
+
+                    <div class="w-full h-2 rounded-xl bg-gray-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full bg-orange-500 w-[85%]"></div>
+                    </div>
+
+                    <span class="flex items-center justify-start w-14">1,800</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-between w-10">
+                        <span class="font-medium">3</span>
+                        <i class="fa-solid fa-star text-orange-500"></i>
+                    </div>
+
+                    <div class="w-full h-2 rounded-xl bg-gray-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full bg-orange-500 w-[85%]"></div>
+                    </div>
+
+                    <span class="flex items-center justify-start w-14">1,800</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-between w-10">
+                        <span class="font-medium">2</span>
+                        <i class="fa-solid fa-star text-orange-500"></i>
+                    </div>
+
+                    <div class="w-full h-2 rounded-xl bg-gray-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full bg-orange-500 w-[85%]"></div>
+                    </div>
+
+                    <span class="flex items-center justify-start w-14">1,800</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-between w-10">
+                        <span class="font-medium">1</span>
+                        <i class="fa-solid fa-star text-orange-500"></i>
+                    </div>
+
+                    <div class="w-full h-2 rounded-xl bg-gray-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 h-full bg-orange-500 w-[85%]"></div>
+                    </div>
+
+                    <span class="flex items-center justify-start w-14">1,800</span>
+                </div>
+            </div>
+        </section>
+        <!-- Fin Calificación -->
+    </div>
+
+    <!-- Servicios -->
+    <section class="flex flex-col gap-2 w-full  sm:max-w-lg">
+        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                <span class="text-sm font-medium">
+                    Servicios de Habitación
+                </span>
+
+                <span class="transition  group-open:-rotate-180">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+            </summary>
+
+            <!-- Lista servicios -->
+            <div class="border-t border-gray-200 bg-white">
+                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Fin Lista servicios -->
+        </details>
+
+        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                <span class="text-sm font-medium">
+                    Servicios de Establecimiento
+                </span>
+
+                <span class="transition  group-open:-rotate-180">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+            </summary>
+
+            <!-- Lista servicios -->
+            <div class="border-t border-gray-200 bg-white">
+                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Fin Lista servicios -->
+        </details>
+
+        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                <span class="text-sm font-medium">
+                    Servicios de Accesibilidad
+                </span>
+
+                <span class="transition  group-open:-rotate-180">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+            </summary>
+
+            <!-- Lista servicios -->
+            <div class="border-t border-gray-200 bg-white">
+                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Fin Lista servicios -->
+        </details>
+
+        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                <span class="text-sm font-medium">
+                    Restricciones
+                </span>
+
+                <span class="transition  group-open:-rotate-180">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+            </summary>
+
+            <!-- Lista servicios -->
+            <div class="border-t border-gray-200 bg-white">
+                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i>
+                        <span class="text-sm text-gray-700">
+                            Servico Nombre
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Fin Lista servicios -->
+        </details>
+    </section>
+    <!-- Fin Servicios -->
+</section>
+<!-- Fin Información Calificación servicios -->
+<!-- Mosaico imágenes -->
+<section class="py-10 bg-zinc-950">
+    <div class="contenedor-mosaico max-w-7xl mx-auto">
+        <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+           class="w-full h-full rounded-xl overflow-hidden hover:-scale-[-.98] transition-all mosaico-1">
+            <img src="https://images.unsplash.com/photo-1718125188885-7ce699512931?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+        </a>
+        <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+           class="w-full h-full rounded-xl overflow-hidden hover:-scale-[-.98] transition-all mosaico-2">
+            <img src="https://images.unsplash.com/photo-1718019668172-5380fd58f2c5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+        </a>
+        <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+           class="w-full h-full rounded-xl overflow-hidden hover:-scale-[-.98] transition-all mosaico-3">
+            <img src="https://images.unsplash.com/photo-1718137654436-b9d3661a90d4?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+        </a>
+        <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+           class="w-full h-full rounded-xl overflow-hidden hover:-scale-[-.98] transition-all mosaico-4">
+            <img src="https://images.unsplash.com/photo-1718051653501-c5530b8277c6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+        </a>
+        <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+           class="w-full h-full rounded-xl overflow-hidden hover:-scale-[-.98] transition-all mosaico-5">
+            <img src="https://images.unsplash.com/photo-1718137623411-7816fda25a14?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+        </a>
+        <a href="https://lipsum.app/id/60/1600x1200" data-fancybox="gallery"
+           class="w-full h-full rounded-xl overflow-hidden hover:-scale-[-.98] transition-all mosaico-6">
+            <img src="https://images.unsplash.com/photo-1718111990329-cfe23a502e06?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+        </a>
+    </div>
+</section>
+<!-- Fin Mosaico imágenes -->
+<!-- Servicio adicionales -->
+<section class="w-full max-w-7xl mb-10 mx-auto lg:p-5 lg:my-10">
+    <form class="flex flex-col gap-4 relative lg:flex-row lg:gap-0">
+        <div class="absolute w-full h-52 bg-gradient-to-r from-cyan-700 via-cyan-600 to-cyan-500 -z-10 lg:w-[50%] lg:right-0 lg:rounded-xl lg:rounded-tl-[4rem] b-s-93">
+        </div>
+
+        <div class="flex flex-col items-center justify-center gap-5 w-full h-52 text-white lg:order-2 lg:w-[600px]">
+            <div>
+                <h2 class="text-4xl font-semibold">Servicios Adicionales</h2>
+                <p class="text-gray-100 text-lg">
+                    Elige los servicios adicionales que prefieras
+                </p>
+            </div>
+
+            <div class="flex gap-4 sm:flex-col sm:gap-1">
+                <div class="flex items-center">
+                    <span data-precio="valor" class="text-2xl font-semibold">99.999.999</span>
+                    <span class="text-lg text-gray-100">$cop</span>
+                </div>
+
+                <button type="submit"
+                        class="group w-full text-center inline-block rounded-full bg-gradient-to-r from-orange-700 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75">
+                    <span class="block rounded-full bg-cyan-600 px-8 py-2 text-lg font-semibold group-hover:bg-transparent">
+                        Reservar
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Servicios adicionales checkbox -->
+        <div class="bg-white bg-opacity-80 grid grid-cols-2 gap-2 p-5 mx-5 rounded-2xl sm:grid-cols-3 lg:mt-10 lg:mx-0 backdrop-blur-xl b-s-13">
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+            <div>
+                <label for="servicioUno" data-servicio="adicional"
+                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
+                    <span>Servicio adicional</span>
+                </label>
+                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+            </div>
+
+        </div>
+        <!-- Fin Servicios adicionales checkbox -->
+    </form>
+</section>
+<!-- Servicio adicionales -->
+<!-- Top reseñas -->
+<section class="text-white bg-zinc-950 py-10 px-5">
+    <h2 class="text-4xl font-semibold">Reseñas</h2>
+</section>
+<!-- Fin Top reseñas -->
+
+
+@section Scripts {
+    <script src="~/js/page/publicacion.js" type="module"></script>
+}

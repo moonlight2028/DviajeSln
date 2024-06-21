@@ -1,0 +1,10 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.img-f {
+    @apply block;
+    @apply w-full;
+    @apply h-full;
+    @apply object-cover;
+}
