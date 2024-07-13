@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Conexion a la base de datos
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("localDb")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("localDb"), new MariaDbServerVersion(new Version(10,4,32))));
 
 //Identity personalizado
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
