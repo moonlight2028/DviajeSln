@@ -27,8 +27,6 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Co
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
