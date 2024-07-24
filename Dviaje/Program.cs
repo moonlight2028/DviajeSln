@@ -1,4 +1,6 @@
 using Dviaje.DataAccess.Data;
+using Dviaje.DataAccess.Repository;
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -10,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Conexion a la base de datos
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("localDb"), new MariaDbServerVersion(new Version(10,4,32))));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("localDb"), new MariaDbServerVersion(new Version(10, 4, 32))));
 
 //Identity personalizado
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -21,6 +23,9 @@ builder.Services.AddRazorPages();
 
 // Servicios
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+// UnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 var app = builder.Build();
