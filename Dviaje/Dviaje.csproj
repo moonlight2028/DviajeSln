@@ -32,7 +32,6 @@
     <Folder Include="Areas\Administrador\Controllers\" />
     <Folder Include="Areas\Aliado\Controllers\" />
     <Folder Include="Areas\Moderador\Controllers\" />
-    <Folder Include="Areas\Turista\Controllers\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
