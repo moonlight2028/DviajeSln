@@ -1,17 +1,17 @@
-﻿
+﻿@model Reserva
 <h1>VISTA Reserva</h1>
 
-<form>
+<form method="post">
 
 	
-	<p>ingrese la fecha inicial</p>
-	<input  type="date" id="FechaInicial"/>
+	<label asp-for="FechaInicial"></label>
+	<input  type="date" />
 
-	<p>ingrese la fecha final</p>
-	<input type="date" id="FechaFinal"/>
+	<label asp-for="FechaFinal"></label>
+	<input type="date" />
 
-	<p>ingrese el numero de personas que se hospedan</p>
-	<input type="number" id="CantidadPersonas"/>
+	<label asp-for="NumeroPersonas"></label>
+	<input type="number" />
 
 
 

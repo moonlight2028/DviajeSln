@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
@@ -9,15 +10,18 @@ namespace Dviaje.Models
         public int IdReserva { get; set; }
 
         [Required]
+        [DisplayName("Fecha inicial")]
         public DateTime FechaInicial { get; set; }
 
         [Required]
+        [DisplayName("Fecha final")]
         public DateTime FechaFinal { get; set; }
 
         [Required]
         public ReservaEstado ReservaEstado { get; set; }
 
         [Required]
+        [DisplayName("Numero de personas")]
         public int NumeroPersonas { get; set; }
 
         public string IdUsuario { get; set; }

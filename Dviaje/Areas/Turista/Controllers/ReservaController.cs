@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dviaje.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -9,13 +10,19 @@ namespace Dviaje.Areas.Turista.Controllers
     {
 
 
-
-        public IActionResult Reserva()
+		
+        public IActionResult Reserva(Reserva reserva)
         {
             return View();
         }
 
-		public IActionResult MisReservas()
+        [HttpPost]
+        public IActionResult ReservaPost(Reserva reserva)
+        {
+            return View();
+        }
+
+        public IActionResult MisReservas()
 		{
 			return View();
 		}
