@@ -1,0 +1,18 @@
+﻿@model Resena
+
+<h1>Vista Resañas</h1>
+
+<form asp-action="Create" method="post">
+    <label asp-for="Opinion"></label>
+    <input asp-for="Opinion" />
+
+    <div class="star-rating">
+        @for (int i = 5; i >= 1; i--)
+        {
+            <input type="radio" id="star-@i" name="rating" value="@i" asp-for="Calificacion" />
+            <label for="star-@i" class="star">&#9733;</label>
+        }
+    </div>
+
+    <button type="submit">Guardar</button>
+</form>
