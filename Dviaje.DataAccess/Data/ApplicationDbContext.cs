@@ -63,7 +63,7 @@ namespace Dviaje.DataAccess.Data
             // Restricción para campos únicos
             modelBuilder.Entity<Usuario>().HasIndex(u => u.RazonSocial).IsUnique();
             modelBuilder.Entity<Usuario>().HasIndex(u => u.Telefono).IsUnique();
-            modelBuilder.Entity<Usuario>().HasIndex(u => u.Direccion).IsUnique();
+            //modelBuilder.Entity<Usuario>().HasIndex(u => u.Direccion).IsUnique();
 
 
             // Registro de roles en la Db
@@ -1130,7 +1130,7 @@ namespace Dviaje.DataAccess.Data
                     Direccion = "Carrera 50 No. 10-20",
                     IdUsuario = "95d735f9-d14e-47de-a00e-2359d142646b"
                 },
-
+                /*
                 new Publicacion
                 {
                     IdPublicacion = 5,
@@ -1143,6 +1143,7 @@ namespace Dviaje.DataAccess.Data
                     Direccion = "Calle 15 No. 30-50",
                     IdUsuario = ""
                 },
+                */
 
                 new Publicacion
                 {
@@ -1374,12 +1375,14 @@ namespace Dviaje.DataAccess.Data
                     IdUsuario = "02aef042-3060-4a52-9a09-e9c5583c840c",
                     IdPublicacion = 4
                 },
+                /*
                 new Favorito
                 {
                     IdFavorito = 5,
                     IdUsuario = "299c3027-88a1-4c43-98fa-e1c460dbd885",
                     IdPublicacion = 5
                 },
+                */
                 new Favorito
                 {
                     IdFavorito = 6,
@@ -1456,6 +1459,7 @@ namespace Dviaje.DataAccess.Data
                     IdUsuario = "02aef042-3060-4a52-9a09-e9c5583c840c",
                     IdPublicacion = 4
                 },
+                /*
                 new Reserva
                 {
                     IdReserva = 5,
@@ -1466,6 +1470,7 @@ namespace Dviaje.DataAccess.Data
                     IdUsuario = "299c3027-88a1-4c43-98fa-e1c460dbd885",
                     IdPublicacion = 5
                 },
+                */
                 new Reserva
                 {
                     IdReserva = 6,
@@ -1518,9 +1523,10 @@ namespace Dviaje.DataAccess.Data
                 }
             );
 
-
+            /*
             // Resenas
             modelBuilder.Entity<Resena>().HasData(
+                
                 new Resena
                 {
                     IdResena = 1,
@@ -1528,20 +1534,22 @@ namespace Dviaje.DataAccess.Data
                     Fecha = DateTime.Today,
                     Calificacion = 2,
                     MeGusta = 3,
-                    IdPublicacion = 4,
+                    IdPublicacion = 1,
                     IdReserva = 5,
 
                 },
-                new Resena
-                {
-                    IdResena = 2,
-                    Opinion = "Excelente servicio y atención.",
-                    Fecha = DateTime.Today.AddDays(-1),
-                    Calificacion = 5,
-                    MeGusta = 10,
-                    IdPublicacion = 2,
-                    IdReserva = 3,
-                },
+                
+
+            new Resena
+            {
+                IdResena = 2,
+                Opinion = "Excelente servicio y atención.",
+                Fecha = DateTime.Today.AddDays(-1),
+                Calificacion = 5,
+                MeGusta = 10,
+                IdPublicacion = 2,
+                IdReserva = 3,
+            },
                 new Resena
                 {
                     IdResena = 3,
@@ -1623,6 +1631,8 @@ namespace Dviaje.DataAccess.Data
                     IdReserva = 9,
                 }
             );
+            */
+
 
 
             // PublicacionesFavoritas
@@ -1647,11 +1657,15 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacionFavorita = 4,
                     IdPublicacion = 4,
                 },
+
+                /*
                 new PublicacionFavorita
                 {
                     IdPublicacionFavorita = 5,
                     IdPublicacion = 5,
                 },
+                */
+
                 new PublicacionFavorita
                 {
                     IdPublicacionFavorita = 6,
@@ -1706,12 +1720,14 @@ namespace Dviaje.DataAccess.Data
                     Ruta = "img/nose/cityscape",
                     IdPublicacion = 4
                 },
+                /*
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 5,
                     Ruta = "img/nose/luxuryroom",
                     IdPublicacion = 5
                 },
+                */
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 6,
@@ -1772,12 +1788,14 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacion = 4,
                     IdServicio = 4,
                 },
+                /*
                 new PublicacionServicio
                 {
                     IdPublicacionServicio = 5,
                     IdPublicacion = 5,
                     IdServicio = 5,
                 },
+                */
                 new PublicacionServicio
                 {
                     IdPublicacionServicio = 6,
@@ -1838,12 +1856,14 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacion = 4,
                     IdRestriccion = 4,
                 },
+                /*
                 new PublicacionRestriccion
                 {
                     IdPublicacionRestriccion = 5,
                     IdPublicacion = 5,
                     IdRestriccion = 5,
                 },
+                */
                 new PublicacionRestriccion
                 {
                     IdPublicacionRestriccion = 6,
@@ -1903,12 +1923,14 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacion = 4,
                     IdCategoria = 4
                 },
+                /*
                 new PublicacionCategoria
                 {
                     IdPublicacionCategoria = 5,
                     IdPublicacion = 5,
                     IdCategoria = 5
                 },
+                */
                 new PublicacionCategoria
                 {
                     IdPublicacionCategoria = 6,
@@ -1968,12 +1990,15 @@ namespace Dviaje.DataAccess.Data
                     FechaSinDisponible = DateTime.Now.AddDays(3),
                     IdPublicacion = 4
                 },
+                /*
                 new FechaNoDisponible
                 {
                     IdFechaNoDisponible = 5,
                     FechaSinDisponible = DateTime.Now.AddDays(4),
                     IdPublicacion = 5
                 },
+                */
+
                 new FechaNoDisponible
                 {
                     IdFechaNoDisponible = 6,
@@ -2044,6 +2069,7 @@ namespace Dviaje.DataAccess.Data
                     IdServicio = 4,
                     IdPublicacion = 4
                 },
+                /*
                 new ServicioAdicional
                 {
                     IdServicioAdicional = 6,
@@ -2051,6 +2077,7 @@ namespace Dviaje.DataAccess.Data
                     IdServicio = 5,
                     IdPublicacion = 5
                 },
+                */
                 new ServicioAdicional
                 {
                     IdServicioAdicional = 7,
