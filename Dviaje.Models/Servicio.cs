@@ -9,11 +9,11 @@ namespace Dviaje.Models
 
         [Required]
         [StringLength(50)]
-        public string NombreServicio { get; set; }
+        public string? NombreServicio { get; set; }
 
         public ServicioTipo ServicioTipo { get; set; }
 
         [Required]
-        public string RutaIcono { get; set; }
+        public string? RutaIcono { get; set; }
     }
 }

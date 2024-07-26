@@ -8,13 +8,13 @@ namespace Dviaje.Models
         [Key]
         public int IdPublicacionImagen { get; set; }
 
-        public string Ruta { get; set; }
+        public string? Ruta { get; set; }
 
         [Required]
         public int IdPublicacion { get; set; }
 
         [ForeignKey("IdPublicacion")]
 
-        public Publicacion Publicacion { get; set; }
+        public Publicacion? Publicacion { get; set; }
     }
 }

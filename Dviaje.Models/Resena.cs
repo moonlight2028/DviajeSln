@@ -11,7 +11,7 @@ namespace Dviaje.Models
         [Required]
         [Column(TypeName = "text")]
         [StringLength(1500)]
-        public string Opinion { get; set; }
+        public string? Opinion { get; set; }
 
         [Required]
         public DateTime Fecha { get; set; }
@@ -26,11 +26,11 @@ namespace Dviaje.Models
         public int IdReserva { get; set; }
 
         [ForeignKey("IdPublicacion")]
-        public Publicacion Publicacion { get; set; }
+        public Publicacion? Publicacion { get; set; }
 
         [ForeignKey("IdReserva")]
 
-        public Reserva Reserva { get; set; }
+        public Reserva? Reserva { get; set; }
 
 
 

@@ -24,16 +24,16 @@ namespace Dviaje.Models
         [DisplayName("Numero de personas")]
         public int NumeroPersonas { get; set; }
 
-        public string IdUsuario { get; set; }
+        public string? IdUsuario { get; set; }
 
         public int IdPublicacion { get; set; }
 
 
         [ForeignKey("IdUsuario")]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
 
         [ForeignKey("IdPublicacion")]
-        public Publicacion Publicacion { get; set; }
+        public Publicacion? Publicacion { get; set; }
 
 
 
