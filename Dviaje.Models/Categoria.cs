@@ -9,9 +9,9 @@ namespace Dviaje.Models
 
         [Required]
         [StringLength(50)]
-        public string NombreCategoria { get; set; }
+        public string? NombreCategoria { get; set; }
 
         [Required]
-        public string RutaIcono { get; set; }
+        public string? RutaIcono { get; set; }
     }
 }

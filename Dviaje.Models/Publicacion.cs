@@ -11,7 +11,7 @@ namespace Dviaje.Models
         [Required]
         [Column(TypeName = "text")]
         [StringLength(50)]
-        public string Titulo { get; set; }
+        public string? Titulo { get; set; }
 
         [Column(TypeName = "decimal(1,1)")]
         public decimal Puntuacion { get; set; }
@@ -21,7 +21,7 @@ namespace Dviaje.Models
         [Required]
         [Column(TypeName = "text")]
         [StringLength(1500)]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
         [Required]
         public double Precio { get; set; }
@@ -32,11 +32,11 @@ namespace Dviaje.Models
         [Required]
         [Column(TypeName = "text")]
         [StringLength(50)]
-        public string Direccion { get; set; }
+        public string? Direccion { get; set; }
 
-        public string IdUsuario { get; set; }
+        public string? IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
     }
 }

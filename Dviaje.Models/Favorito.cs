@@ -9,15 +9,15 @@ namespace Dviaje.Models
         public int IdFavorito { get; set; }
 
         [Required]
-        public string IdUsuario { get; set; }
+        public string? IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
 
         [Required]
         public int IdPublicacion { get; set; }
 
         [ForeignKey("IdPublicacion")]
-        public Publicacion Publicacion { get; set; }
+        public Publicacion? Publicacion { get; set; }
     }
 }

@@ -13,16 +13,16 @@ namespace Dviaje.Models
 
         [Column(TypeName = "text")]
         [StringLength(250)]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
         [Column(TypeName = "text")]
         [StringLength(250)]
-        public string Respuesta { get; set; }
+        public string? Respuesta { get; set; }
 
         [Required]
         [Column(TypeName = "text")]
         [StringLength(100)]
-        public string Asunto { get; set; }
+        public string? Asunto { get; set; }
 
         public DateTime FechaRespuesta { get; set; }
 
@@ -33,10 +33,10 @@ namespace Dviaje.Models
         public AtencionViajeroPrioridad AtencionViajeroPrioridad { get; set; }
 
         [Required]
-        public string IdUsuario { get; set; }
+        public string? IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
 
     }
 }

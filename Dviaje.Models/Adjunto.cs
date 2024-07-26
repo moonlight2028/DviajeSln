@@ -9,13 +9,13 @@ namespace Dviaje.Models
         public int IdAdjunto { get; set; }
 
         [Required]
-        public string RutaAdjunto { get; set; }
+        public string? RutaAdjunto { get; set; }
 
         [Required]
         public int IdAtencion { get; set; }
 
         [ForeignKey("IdAtencion")]
 
-        public AtencionViajero AtencionViajero { get; set; }
+        public AtencionViajero? AtencionViajero { get; set; }
     }
 }
