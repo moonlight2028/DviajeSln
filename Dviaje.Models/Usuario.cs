@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace Dviaje.Models
 {
@@ -9,7 +9,7 @@ namespace Dviaje.Models
         public string RazonSocial { get; set; }
 
         [StringLength(250)]
-        public string SitioWeb { get; set; }
+        public string? SitioWeb { get; set; }
 
         [StringLength(15)]
         public string Telefono { get; set; }

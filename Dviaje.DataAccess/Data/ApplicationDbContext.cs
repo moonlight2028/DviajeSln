@@ -96,7 +96,7 @@ namespace Dviaje.DataAccess.Data
 
 
 
-            /*
+
             // Datos Agregados
             // Datos de prueba
             modelBuilder.Entity<Usuario>().HasData(
@@ -1078,7 +1078,7 @@ namespace Dviaje.DataAccess.Data
                 }
             );
 
-            
+
             // Publicaciones
             modelBuilder.Entity<Publicacion>().HasData(
                 new Publicacion
@@ -1207,141 +1207,145 @@ namespace Dviaje.DataAccess.Data
                     Fecha = DateTime.Now,
                     Direccion = "Carrera 70 No. 30-45",
                     IdUsuario = "4f4bbb47-8619-4523-a83c-2d18eb961ae7"
-                },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                new Publicacion
-                {
-                    IdPublicacion = 2,
-                    Titulo = "Descubre México",
-                    Puntuacion = 4,
-                    NumeroResenas = 10,
-                    CapacidadCamas = 3,
-                    Descripcion = "Un lugar lleno de cultura",
-                    Precio = 7000,
-                    Fecha = DateTime.Now.AddDays(-1),
-                    Direccion = "Avenida Reforma",
-                    IdAliado = 6
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 3,
-                    Titulo = "Aventura en Perú",
-                    Puntuacion = 5,
-                    NumeroResenas = 8,
-                    CapacidadCamas = 4,
-                    Descripcion = "Explora la magia de los Andes",
-                    Precio = 8000,
-                    Fecha = DateTime.Now.AddDays(-2),
-                    Direccion = "Calle de las Flores",
-                    IdAliado = 7
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 4,
-                    Titulo = "Paraíso en Brasil",
-                    Puntuacion = 4,
-                    NumeroResenas = 12,
-                    CapacidadCamas = 6,
-                    Descripcion = "Disfruta del sol y la playa",
-                    Precio = 9000,
-                    Fecha = DateTime.Now.AddDays(-3),
-                    Direccion = "Playa Copacabana",
-                    IdAliado = 8
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 5,
-                    Titulo = "Relax en Argentina",
-                    Puntuacion = 5,
-                    NumeroResenas = 15,
-                    CapacidadCamas = 5,
-                    Descripcion = "Descansa en la Patagonia",
-                    Precio = 10000,
-                    Fecha = DateTime.Now.AddDays(-4),
-                    Direccion = "Calle San Martín",
-                    IdAliado = 9
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 6,
-                    Titulo = "Encanto en Chile",
-                    Puntuacion = 4,
-                    NumeroResenas = 6,
-                    CapacidadCamas = 3,
-                    Descripcion = "Explora el desierto de Atacama",
-                    Precio = 6000,
-                    Fecha = DateTime.Now.AddDays(-5),
-                    Direccion = "Avenida del Mar",
-                    IdAliado = 10
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 7,
-                    Titulo = "Aventura en Bolivia",
-                    Puntuacion = 3,
-                    NumeroResenas = 7,
-                    CapacidadCamas = 4,
-                    Descripcion = "Descubre el Salar de Uyuni",
-                    Precio = 7500,
-                    Fecha = DateTime.Now.AddDays(-6),
-                    Direccion = "Calle Uyuni",
-                    IdAliado = 2
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 8,
-                    Titulo = "Diversión en Uruguay",
-                    Puntuacion = 5,
-                    NumeroResenas = 9,
-                    CapacidadCamas = 5,
-                    Descripcion = "Visita Punta del Este",
-                    Precio = 8500,
-                    Fecha = DateTime.Now.AddDays(-7),
-                    Direccion = "Avenida Gorlero",
-                    IdAliado = 1
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 9,
-                    Titulo = "Tranquilidad en Paraguay",
-                    Puntuacion = 4,
-                    NumeroResenas = 5,
-                    CapacidadCamas = 2,
-                    Descripcion = "Relájate en Asunción",
-                    Precio = 5500,
-                    Fecha = DateTime.Now.AddDays(-8),
-                    Direccion = "Calle Palma",
-                    IdAliado = 3
-                },
-                new Publicacion
-                {
-                    IdPublicacion = 10,
-                    Titulo = "Maravillas de Ecuador",
-                    Puntuacion = 5,
-                    NumeroResenas = 14,
-                    CapacidadCamas = 6,
-                    Descripcion = "Explora las Islas Galápagos",
-                    Precio = 9500,
-                    Fecha = DateTime.Now.AddDays(-9),
-                    Direccion = "Avenida Amazonas",
-                    IdAliado = 4
                 }
-            );
+                );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*
+            new Publicacion
+            {
+                IdPublicacion = 2,
+                Titulo = "Descubre México",
+                Puntuacion = 4,
+                NumeroResenas = 10,
+                CapacidadCamas = 3,
+                Descripcion = "Un lugar lleno de cultura",
+                Precio = 7000,
+                Fecha = DateTime.Now.AddDays(-1),
+                Direccion = "Avenida Reforma",
+                IdAliado = 6
+            },
+            new Publicacion
+            {
+                IdPublicacion = 3,
+                Titulo = "Aventura en Perú",
+                Puntuacion = 5,
+                NumeroResenas = 8,
+                CapacidadCamas = 4,
+                Descripcion = "Explora la magia de los Andes",
+                Precio = 8000,
+                Fecha = DateTime.Now.AddDays(-2),
+                Direccion = "Calle de las Flores",
+                IdAliado = 7
+            },
+            new Publicacion
+            {
+                IdPublicacion = 4,
+                Titulo = "Paraíso en Brasil",
+                Puntuacion = 4,
+                NumeroResenas = 12,
+                CapacidadCamas = 6,
+                Descripcion = "Disfruta del sol y la playa",
+                Precio = 9000,
+                Fecha = DateTime.Now.AddDays(-3),
+                Direccion = "Playa Copacabana",
+                IdAliado = 8
+            },
+            new Publicacion
+            {
+                IdPublicacion = 5,
+                Titulo = "Relax en Argentina",
+                Puntuacion = 5,
+                NumeroResenas = 15,
+                CapacidadCamas = 5,
+                Descripcion = "Descansa en la Patagonia",
+                Precio = 10000,
+                Fecha = DateTime.Now.AddDays(-4),
+                Direccion = "Calle San Martín",
+                IdAliado = 9
+            },
+            new Publicacion
+            {
+                IdPublicacion = 6,
+                Titulo = "Encanto en Chile",
+                Puntuacion = 4,
+                NumeroResenas = 6,
+                CapacidadCamas = 3,
+                Descripcion = "Explora el desierto de Atacama",
+                Precio = 6000,
+                Fecha = DateTime.Now.AddDays(-5),
+                Direccion = "Avenida del Mar",
+                IdAliado = 10
+            },
+            new Publicacion
+            {
+                IdPublicacion = 7,
+                Titulo = "Aventura en Bolivia",
+                Puntuacion = 3,
+                NumeroResenas = 7,
+                CapacidadCamas = 4,
+                Descripcion = "Descubre el Salar de Uyuni",
+                Precio = 7500,
+                Fecha = DateTime.Now.AddDays(-6),
+                Direccion = "Calle Uyuni",
+                IdAliado = 2
+            },
+            new Publicacion
+            {
+                IdPublicacion = 8,
+                Titulo = "Diversión en Uruguay",
+                Puntuacion = 5,
+                NumeroResenas = 9,
+                CapacidadCamas = 5,
+                Descripcion = "Visita Punta del Este",
+                Precio = 8500,
+                Fecha = DateTime.Now.AddDays(-7),
+                Direccion = "Avenida Gorlero",
+                IdAliado = 1
+            },
+            new Publicacion
+            {
+                IdPublicacion = 9,
+                Titulo = "Tranquilidad en Paraguay",
+                Puntuacion = 4,
+                NumeroResenas = 5,
+                CapacidadCamas = 2,
+                Descripcion = "Relájate en Asunción",
+                Precio = 5500,
+                Fecha = DateTime.Now.AddDays(-8),
+                Direccion = "Calle Palma",
+                IdAliado = 3
+            },
+            new Publicacion
+            {
+                IdPublicacion = 10,
+                Titulo = "Maravillas de Ecuador",
+                Puntuacion = 5,
+                NumeroResenas = 14,
+                CapacidadCamas = 6,
+                Descripcion = "Explora las Islas Galápagos",
+                Precio = 9500,
+                Fecha = DateTime.Now.AddDays(-9),
+                Direccion = "Avenida Amazonas",
+                IdAliado = 4
+            }
+        );
+            */
+
+
 
 
             // Favoritos
@@ -1349,61 +1353,61 @@ namespace Dviaje.DataAccess.Data
                 new Favorito
                 {
                     IdFavorito = 1,
-                    IdUsuario = 1,
+                    IdUsuario = "f7ad1421-b744-4f4e-93d9-e51fe1120136",
                     IdPublicacion = 1,
                 },
                 new Favorito
                 {
                     IdFavorito = 2,
-                    IdUsuario = 2,
+                    IdUsuario = "b652f0fb-95c4-40ed-81aa-8e1792d089f8",
                     IdPublicacion = 2
                 },
                 new Favorito
                 {
                     IdFavorito = 3,
-                    IdUsuario = 3,
+                    IdUsuario = "eb5daf52-3be0-4083-ac20-f4f5ad0028c6",
                     IdPublicacion = 3
                 },
                 new Favorito
                 {
                     IdFavorito = 4,
-                    IdUsuario = 4,
+                    IdUsuario = "02aef042-3060-4a52-9a09-e9c5583c840c",
                     IdPublicacion = 4
                 },
                 new Favorito
                 {
                     IdFavorito = 5,
-                    IdUsuario = 5,
+                    IdUsuario = "299c3027-88a1-4c43-98fa-e1c460dbd885",
                     IdPublicacion = 5
                 },
                 new Favorito
                 {
                     IdFavorito = 6,
-                    IdUsuario = 6,
+                    IdUsuario = "7b6fc7d7-804c-4063-b58a-83a2a6d9cb4c",
                     IdPublicacion = 6
                 },
                 new Favorito
                 {
                     IdFavorito = 7,
-                    IdUsuario = 7,
+                    IdUsuario = "5d9b8f6f-9750-4678-a91b-4001bc0a22b5",
                     IdPublicacion = 7
                 },
                 new Favorito
                 {
                     IdFavorito = 8,
-                    IdUsuario = 8,
+                    IdUsuario = "329988fe-7243-49f4-98ef-cafc80d16789",
                     IdPublicacion = 8
                 },
                 new Favorito
                 {
                     IdFavorito = 9,
-                    IdUsuario = 9,
+                    IdUsuario = "b6651473-663d-4225-b2a8-522c7f0dbba4",
                     IdPublicacion = 9
                 },
                 new Favorito
                 {
                     IdFavorito = 10,
-                    IdUsuario = 10,
+                    IdUsuario = "447a628d-a118-44e0-bbb1-c2e40975283c",
                     IdPublicacion = 10
                 }
             );
@@ -1418,7 +1422,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now,
                     ReservaEstado = ReservaEstado.Activo,
                     NumeroPersonas = 1,
-                    IdUsuario = 4,
+                    IdUsuario = "f7ad1421-b744-4f4e-93d9-e51fe1120136",
                     IdPublicacion = 1
 
                 },
@@ -1429,7 +1433,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(2),
                     ReservaEstado = ReservaEstado.Activo,
                     NumeroPersonas = 2,
-                    IdUsuario = 5,
+                    IdUsuario = "b652f0fb-95c4-40ed-81aa-8e1792d089f8",
                     IdPublicacion = 2
                 },
                 new Reserva
@@ -1439,7 +1443,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(4),
                     ReservaEstado = ReservaEstado.Cancelado,
                     NumeroPersonas = 3,
-                    IdUsuario = 6,
+                    IdUsuario = "eb5daf52-3be0-4083-ac20-f4f5ad0028c6",
                     IdPublicacion = 3
                 },
                 new Reserva
@@ -1449,7 +1453,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(6),
                     ReservaEstado = ReservaEstado.Aprobado,
                     NumeroPersonas = 4,
-                    IdUsuario = 7,
+                    IdUsuario = "02aef042-3060-4a52-9a09-e9c5583c840c",
                     IdPublicacion = 4
                 },
                 new Reserva
@@ -1459,7 +1463,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(8),
                     ReservaEstado = ReservaEstado.Activo,
                     NumeroPersonas = 2,
-                    IdUsuario = 8,
+                    IdUsuario = "299c3027-88a1-4c43-98fa-e1c460dbd885",
                     IdPublicacion = 5
                 },
                 new Reserva
@@ -1469,7 +1473,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(10),
                     ReservaEstado = ReservaEstado.Cancelado,
                     NumeroPersonas = 1,
-                    IdUsuario = 9,
+                    IdUsuario = "7b6fc7d7-804c-4063-b58a-83a2a6d9cb4c",
                     IdPublicacion = 6
                 },
                 new Reserva
@@ -1479,7 +1483,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(12),
                     ReservaEstado = ReservaEstado.Aprobado,
                     NumeroPersonas = 3,
-                    IdUsuario = 10,
+                    IdUsuario = "5d9b8f6f-9750-4678-a91b-4001bc0a22b5",
                     IdPublicacion = 7
                 },
                 new Reserva
@@ -1489,7 +1493,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(14),
                     ReservaEstado = ReservaEstado.Activo,
                     NumeroPersonas = 4,
-                    IdUsuario = 1,
+                    IdUsuario = "329988fe-7243-49f4-98ef-cafc80d16789",
                     IdPublicacion = 8
                 },
                 new Reserva
@@ -1499,7 +1503,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(16),
                     ReservaEstado = ReservaEstado.Cancelado,
                     NumeroPersonas = 2,
-                    IdUsuario = 2,
+                    IdUsuario = "b6651473-663d-4225-b2a8-522c7f0dbba4",
                     IdPublicacion = 9
                 },
                 new Reserva
@@ -1509,7 +1513,7 @@ namespace Dviaje.DataAccess.Data
                     FechaFinal = DateTime.Now.AddDays(18),
                     ReservaEstado = ReservaEstado.Aprobado,
                     NumeroPersonas = 1,
-                    IdUsuario = 3,
+                    IdUsuario = "447a628d-a118-44e0-bbb1-c2e40975283c",
                     IdPublicacion = 10
                 }
             );
@@ -2077,7 +2081,7 @@ namespace Dviaje.DataAccess.Data
                 }
 
                 );
-            */
+
 
 
         }
