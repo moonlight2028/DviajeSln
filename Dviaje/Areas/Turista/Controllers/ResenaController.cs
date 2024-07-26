@@ -19,9 +19,9 @@ namespace Dviaje.Areas.Turista.Controllers
         {
             if (ModelState.IsValid)
             {
-                resena.PublicacionId = publicacionId;
-                _context.Add(resena);
-                _context.SaveChanges();
+               // resena.PublicacionId = publicacionId;
+                //_context.Add(resena);
+                //_context.SaveChanges();
             }
 
             return RedirectToAction("Detalles", "Publicaciones", new { id = publicacionId });

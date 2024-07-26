@@ -1,19 +1,28 @@
 ﻿@model Reserva
 <h1>VISTA Reserva</h1>
 
-<form method="post">
+<body>
 
-	
-	<label asp-for="FechaInicial"></label>
-	<input  type="date" />
+	<div class="align-text-bottom">
 
-	<label asp-for="FechaFinal"></label>
-	<input type="date" />
+	</div>
 
-	<label asp-for="NumeroPersonas"></label>
-	<input type="number" />
+	<form method="post" >
 
 
+		<label asp-for="FechaInicial"></label> <br />
+		<input type="date" /> <br />
 
+		<label asp-for="FechaFinal"></label> <br /><br />
+		<input type="date" /><br />
 
-</form>
+		<label asp-for="NumeroPersonas"></label><br /><br />
+		<input type="number" /><br />
+
+		<br /><br />
+		<button type="submit">enviar</button>
+
+	</form>
+
+</body>
+
