@@ -9,18 +9,18 @@ namespace Dviaje.Models
         [Key]
         public int IdReserva { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Debe ingresar un fecha valida")]
         [DisplayName("Fecha inicial")]
         public DateTime FechaInicial { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Debe ingresar una fecha valida")]
         [DisplayName("Fecha final")]
         public DateTime FechaFinal { get; set; }
 
         [Required]
         public ReservaEstado ReservaEstado { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Inngrese una cantidad valida de personas")]
         [DisplayName("Numero de personas")]
         public int NumeroPersonas { get; set; }
 

@@ -1,7 +1,10 @@
 using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository;
 using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Services;
+using Dviaje.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +29,9 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+//Valideitors
+builder.Services.AddScoped<IValidator<Reserva>, ReservaValidator>();
 
 var app = builder.Build();
 

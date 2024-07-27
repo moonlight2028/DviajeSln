@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
@@ -26,6 +27,7 @@
     <ProjectReference Include="..\Dviaje.DataAccess\Dviaje.DataAccess.csproj" />
     <ProjectReference Include="..\Dviaje.Models\Dviaje.Models.csproj" />
     <ProjectReference Include="..\Dviaje.Services\Dviaje.Services.csproj" />
+    <ProjectReference Include="..\Dviaje.Validators\Dviaje.Validators.csproj" />
   </ItemGroup>
 
   <ItemGroup>
