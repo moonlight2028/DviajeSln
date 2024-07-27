@@ -1,7 +1,5 @@
-﻿@model PqrsVM
-
-@{
-    ViewData["Title"] = "PQRS";
+﻿@{
+    ViewData["Title"] = "Atencion";
 }
 @section Styles {
     <!-- Bootstrap v5.3.3 -->
@@ -71,45 +69,12 @@
                 </div>
                 <!-- Fin del Acordeón -->
 
-                <form action="#" class="contact-form form-validate" novalidate="novalidate" method="post">
+                <form action="#" class="contact-form form-validate" novalidate="novalidate">
                     <div class="row">
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Nombres" class="required-field" for="firstName">Nombres</label>
-                                <input asp-for="Nombres" type="text" class="form-control" id="firstName" name="firstName" placeholder="Wendy">
-                                <span asp-validation-for="Nombres"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Apellidos" for="lastName">Apellidos</label>
-                                <input asp-for="Apellidos" type="text" class="form-control" id="lastName" name="lastName" placeholder="Appleseed">
-                                <span asp-validation-for="Apellidos"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Correo" class="required-field" for="email">Correo</label>
-                                <input asp-for="Correo" type="text" class="form-control" id="email" name="email" placeholder="example@mail.com">
-                                <span asp-validation-for="Correo"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Telefono" for="phone">Telefono</label>
-                                <input asp-for="Telefono" type="tel" class="form-control" id="phone" name="phone" placeholder="(021)-454-545">
-                                <span asp-validation-for="Telefono"></span>
-                            </div>
-                        </div>
-
                         <div class="col-sm-12 mb-3">
                             <div class="form-group">
-                                <label asp-for="Descripcion" class="required-field" for="message">como podemos ayudarte?</label>
-                                <textarea asp-for="Descripcion" class="form-control" id="message" name="mensaje" rows="4" placeholder="Dinos como podemos mejorar :)"></textarea>
-                                <span asp-validation-for="Descripcion"></span>
+                                <label class="required-field" for="message">como podemos ayudarte?</label>
+                                <textarea class="form-control" id="message" name="mensaje" rows="4" placeholder="Dinos como podemos mejorar :)"></textarea>
                             </div>
                         </div>
 
