@@ -8,18 +8,20 @@ namespace Dviaje.Models
         [Key]
         public int IdPublicacionServicio { get; set; }
 
+
         [Required]
         public int IdPublicacion { get; set; }
+
 
         [Required]
         public int IdServicio { get; set; }
 
+
         [ForeignKey("IdPublicacion")]
         public Publicacion? Publicacion { get; set; }
 
+
         [ForeignKey("IdServicio")]
         public Servicio? Servicio { get; set; }
-
-
     }
 }

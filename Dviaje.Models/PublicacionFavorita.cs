@@ -8,13 +8,12 @@ namespace Dviaje.Models
         [Key]
         public int IdPublicacionFavorita { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "El ID de la publicación es obligatorio.")]
         public int IdPublicacion { get; set; }
+
 
         [ForeignKey("IdPublicacion")]
         public Publicacion? Publicacion { get; set; }
     }
-
-
-
 }

@@ -8,14 +8,18 @@ namespace Dviaje.Models
         [Key]
         public int IdFavorito { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "El ID del usuario es obligatorio.")]
         public string? IdUsuario { get; set; }
+
+
+        [Required(ErrorMessage = "El ID de la publicación es obligatorio.")]
+        public int IdPublicacion { get; set; }
+
 
         [ForeignKey("IdUsuario")]
         public Usuario? Usuario { get; set; }
 
-        [Required]
-        public int IdPublicacion { get; set; }
 
         [ForeignKey("IdPublicacion")]
         public Publicacion? Publicacion { get; set; }

@@ -8,32 +8,42 @@ namespace Dviaje.Models
         [Key]
         public int IdAtencion { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "La fecha de atención es obligatoria.")]
+        [Column(TypeName = "timestamp")]
         public DateTime FechaAtencion { get; set; }
 
+
         [Column(TypeName = "text")]
-        [StringLength(250)]
+        [StringLength(250, ErrorMessage = "La descripción no puede tener más de 250 caracteres.")]
         public string? Descripcion { get; set; }
 
+
         [Column(TypeName = "text")]
-        [StringLength(250)]
+        [StringLength(250, MinimumLength = 10, ErrorMessage = "La respuesta debe tener entre 10 y 250 caracteres.")]
         public string? Respuesta { get; set; }
 
-        [Required]
-        [Column(TypeName = "text")]
-        [StringLength(100)]
+
+        [Required(ErrorMessage = "El asunto es obligatorio.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "El asunto debe tener entre 3 y 100 caracteres.")]
         public string? Asunto { get; set; }
 
+
+        [Column(TypeName = "timestamp")]
         public DateTime FechaRespuesta { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "El tipo de PQRS es obligatorio.")]
         public AtencionViajeroTipoPqrs AtencionViajeroTipoPqrs { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "La prioridad es obligatoria.")]
         public AtencionViajeroPrioridad AtencionViajeroPrioridad { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "El ID de usuario es obligatorio.")]
         public string? IdUsuario { get; set; }
+
 
         [ForeignKey("IdUsuario")]
         public Usuario? Usuario { get; set; }
