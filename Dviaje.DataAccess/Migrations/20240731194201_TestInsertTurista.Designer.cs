@@ -3,6 +3,7 @@ using System;
 using Dviaje.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dviaje.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240731194201_TestInsertTurista")]
+    partial class TestInsertTurista
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -712,58 +715,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "26cfe5c9-00f8-411e-b589-df3405a8b798",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "e4309639-4588-4553-8c14-5ce4426e0dd7",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "3a895383-b546-4693-8246-924a9fc5289f",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "13825fa6-5c27-4303-ab17-6e13aac24c12",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "2e59aa62-61bd-4c8d-9a3d-13f461696eab",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        },
-                        new
-                        {
-                            UserId = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
-                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -834,7 +785,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ceb1cae2-31de-4856-bad8-c4cdf4eb3dde",
+                            ConcurrencyStamp = "b8d8f2c7-536c-46e2-8762-e24a6fa6b7d4",
                             Email = "andres@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -842,163 +793,10 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANDRES",
                             PhoneNumber = "3159725595",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "f6caecc2-9b3a-4787-af10-69b13bbef353",
+                            SecurityStamp = "9b831195-c6f3-405e-86b0-7d30f6a6c122",
                             TwoFactorEnabled = false,
                             UserName = "Andres",
-                            Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "26cfe5c9-00f8-411e-b589-df3405a8b798",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fc221577-342b-4c71-9e76-d59f4a2837c2",
-                            Email = "maria@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "MARIA@GMAIL.COM",
-                            NormalizedUserName = "MARIA",
-                            PhoneNumber = "3101234567",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "0cbb88d9-3ccb-4792-b737-749e199b2c3b",
-                            TwoFactorEnabled = false,
-                            UserName = "Maria",
-                            Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "21e68587-3782-48e4-b767-7c697ebde426",
-                            Email = "carlos@yahoo.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CARLOS@YAHOO.COM",
-                            NormalizedUserName = "CARLOS",
-                            PhoneNumber = "3189876543",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "cbf8a3ce-2c74-4c43-9326-c03e6c93f2ed",
-                            TwoFactorEnabled = false,
-                            UserName = "Carlos",
-                            Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "e4309639-4588-4553-8c14-5ce4426e0dd7",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "8bb68220-57ec-455d-a264-44388ef85524",
-                            Email = "sofia@hotmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SOFIA@HOTMAIL.COM",
-                            NormalizedUserName = "SOFIA",
-                            PhoneNumber = "3123456789",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "8f25e936-03f4-46b2-b6e5-ea6ded0d12bf",
-                            TwoFactorEnabled = false,
-                            UserName = "Sofia",
-                            Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "3a895383-b546-4693-8246-924a9fc5289f",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "127dc7a5-7f65-42ed-8df2-6ca452ce5438",
-                            Email = "luis@outlook.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "LUIS@OUTLOOK.COM",
-                            NormalizedUserName = "LUIS",
-                            PhoneNumber = "3112345678",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "2a215468-0de1-4e88-b85a-385a6ceac830",
-                            TwoFactorEnabled = false,
-                            UserName = "Luis",
-                            Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4e7a59f-4141-4500-93b5-9a550b341de9",
-                            Email = "isabella@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ISABELLA@GMAIL.COM",
-                            NormalizedUserName = "ISABELLA",
-                            PhoneNumber = "3179876543",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "cd1a47b7-3cff-4b08-98c2-a34603dd01e5",
-                            TwoFactorEnabled = false,
-                            UserName = "Isabella",
-                            Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "13825fa6-5c27-4303-ab17-6e13aac24c12",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb6d1d54-293a-4df9-be22-6cdf3d6d6b49",
-                            Email = "fernando@yahoo.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "FERNANDO@YAHOO.COM",
-                            NormalizedUserName = "FERNANDO",
-                            PhoneNumber = "3198765432",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "3d4cf244-4eac-435b-8e1b-89b6836b1b1e",
-                            TwoFactorEnabled = false,
-                            UserName = "Fernando",
-                            Avatar = "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "0ec4ef68-ee24-4a8c-beb6-5ee83cef7236",
-                            Email = "ana@hotmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ANA@HOTMAIL.COM",
-                            NormalizedUserName = "ANA",
-                            PhoneNumber = "3149876543",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "13f60b3e-9675-47eb-bd49-c02d65eec0bb",
-                            TwoFactorEnabled = false,
-                            UserName = "Ana",
-                            Avatar = "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww"
-                        },
-                        new
-                        {
-                            Id = "2e59aa62-61bd-4c8d-9a3d-13f461696eab",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "7b9c8b72-abb3-4bc2-a365-a40659859418",
-                            Email = "jorge@outlook.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "JORGE@OUTLOOK.COM",
-                            NormalizedUserName = "JORGE",
-                            PhoneNumber = "3151234567",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "6542ee83-d289-4404-a023-4a69defab324",
-                            TwoFactorEnabled = false,
-                            UserName = "Jorge",
-                            Avatar = "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
-                        },
-                        new
-                        {
-                            Id = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "37904069-60cd-4c94-bac0-a6c9d37fff3d",
-                            Email = "gabriela@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "GABRIELA@GMAIL.COM",
-                            NormalizedUserName = "GABRIELA",
-                            PhoneNumber = "3169876543",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "1edcb2fd-79b7-4dda-acbc-9c32accd1cb6",
-                            TwoFactorEnabled = false,
-                            UserName = "Gabriela",
-                            Avatar = "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
+                            Avatar = "https://unsplash.com/es/fotos/hombre-vestido-con-polo-verde-6anudmpILw4"
                         });
                 });
 
