@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -12,139 +12,104 @@ namespace Dviaje.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Discriminator = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RazonSocial = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SitioWeb = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telefono = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Direccion = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Verificado = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    AliadoEstado = table.Column<int>(type: "int", nullable: true),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Discriminator = table.Column<string>(type: "character varying(13)", maxLength: 13, nullable: false),
+                    RazonSocial = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    SitioWeb = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    Direccion = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Verificado = table.Column<bool>(type: "boolean", nullable: true),
+                    AliadoEstado = table.Column<int>(type: "integer", nullable: true),
+                    Avatar = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Categorias",
                 columns: table => new
                 {
-                    IdCategoria = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NombreCategoria = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RutaIcono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IdCategoria = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NombreCategoria = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    RutaIcono = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categorias", x => x.IdCategoria);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Restricciones",
                 columns: table => new
                 {
-                    IdRestriccion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NombreRestriccion = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RutaIcono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IdRestriccion = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NombreRestriccion = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    RutaIcono = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Restricciones", x => x.IdRestriccion);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Servicios",
                 columns: table => new
                 {
-                    IdServicio = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NombreServicio = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ServicioTipo = table.Column<int>(type: "int", nullable: false),
-                    RutaIcono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IdServicio = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NombreServicio = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ServicioTipo = table.Column<int>(type: "integer", nullable: false),
+                    RutaIcono = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Servicios", x => x.IdServicio);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimType = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,21 +120,17 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimType = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,21 +141,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProviderKey = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProviderDisplayName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    ProviderKey = table.Column<string>(type: "text", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -205,17 +161,14 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    RoleId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -232,21 +185,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LoginProvider = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Value = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,27 +205,22 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AtencionViajeros",
                 columns: table => new
                 {
-                    IdAtencion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FechaAtencion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Descripcion = table.Column<string>(type: "text", maxLength: 250, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Respuesta = table.Column<string>(type: "text", maxLength: 250, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Asunto = table.Column<string>(type: "text", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FechaRespuesta = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    AtencionViajeroTipoPqrs = table.Column<int>(type: "int", nullable: false),
-                    AtencionViajeroPrioridad = table.Column<int>(type: "int", nullable: false),
-                    IdUsuario = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IdAtencion = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FechaAtencion = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    Descripcion = table.Column<string>(type: "text", maxLength: 250, nullable: true),
+                    Respuesta = table.Column<string>(type: "text", maxLength: 250, nullable: true),
+                    Asunto = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    FechaRespuesta = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    AtencionViajeroTipoPqrs = table.Column<int>(type: "integer", nullable: false),
+                    AtencionViajeroPrioridad = table.Column<int>(type: "integer", nullable: false),
+                    IdUsuario = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,72 +231,64 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Publicaciones",
                 columns: table => new
                 {
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Titulo = table.Column<string>(type: "text", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Puntuacion = table.Column<decimal>(type: "decimal(1,1)", nullable: false),
-                    NumeroResenas = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "text", maxLength: 1500, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Precio = table.Column<double>(type: "double", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Direccion = table.Column<string>(type: "text", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdUsuario = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Titulo = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Puntuacion = table.Column<decimal>(type: "numeric(1,1)", nullable: false),
+                    NumeroResenas = table.Column<int>(type: "integer", nullable: false),
+                    Descripcion = table.Column<string>(type: "text", maxLength: 1500, nullable: false),
+                    Precio = table.Column<double>(type: "numeric(10,2)", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    Direccion = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IdAliado = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Publicaciones", x => x.IdPublicacion);
                     table.ForeignKey(
-                        name: "FK_Publicaciones_AspNetUsers_IdUsuario",
-                        column: x => x.IdUsuario,
+                        name: "FK_Publicaciones_AspNetUsers_IdAliado",
+                        column: x => x.IdAliado,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Verificados",
                 columns: table => new
                 {
-                    IdVerificado = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FechaSolicitud = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    FechaRespuesta = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    VerificadoEstado = table.Column<int>(type: "int", nullable: false),
-                    IdUsuario = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IdVerificado = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FechaSolicitud = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    FechaRespuesta = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    VerificadoEstado = table.Column<int>(type: "integer", nullable: false),
+                    IdAliado = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Verificados", x => x.IdVerificado);
                     table.ForeignKey(
-                        name: "FK_Verificados_AspNetUsers_IdUsuario",
-                        column: x => x.IdUsuario,
+                        name: "FK_Verificados_AspNetUsers_IdAliado",
+                        column: x => x.IdAliado,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Adjuntos",
                 columns: table => new
                 {
-                    IdAdjunto = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RutaAdjunto = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdAtencion = table.Column<int>(type: "int", nullable: false)
+                    IdAdjunto = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RutaAdjunto = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    IdAtencion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -364,18 +299,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "AtencionViajeros",
                         principalColumn: "IdAtencion",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Favoritos",
                 columns: table => new
                 {
-                    IdFavorito = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdUsuario = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
+                    IdFavorito = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdUsuario = table.Column<string>(type: "text", nullable: false),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -385,24 +318,24 @@ namespace Dviaje.DataAccess.Migrations
                         column: x => x.IdUsuario,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Favoritos_Publicaciones_IdPublicacion",
                         column: x => x.IdPublicacion,
                         principalTable: "Publicaciones",
                         principalColumn: "IdPublicacion",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "FechasNoDisponibles",
                 columns: table => new
                 {
-                    IdFechaNoDisponible = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FechaSinDisponible = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
+                    IdFechaNoDisponible = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FechaInicial = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    FechaFinal = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -413,17 +346,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Publicaciones",
                         principalColumn: "IdPublicacion",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "PublicacionesCategorias",
                 columns: table => new
                 {
-                    IdPublicacionCategoria = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false),
-                    IdCategoria = table.Column<int>(type: "int", nullable: false)
+                    IdPublicacionCategoria = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false),
+                    IdCategoria = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -440,16 +372,15 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Publicaciones",
                         principalColumn: "IdPublicacion",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "PublicacionesFavoritas",
                 columns: table => new
                 {
-                    IdPublicacionFavorita = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
+                    IdPublicacionFavorita = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -460,18 +391,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Publicaciones",
                         principalColumn: "IdPublicacion",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "PublicacionesImagenes",
                 columns: table => new
                 {
-                    IdPublicacionImagen = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Ruta = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
+                    IdPublicacionImagen = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Ruta = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -482,17 +411,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Publicaciones",
                         principalColumn: "IdPublicacion",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "PublicacionesRestricciones",
                 columns: table => new
                 {
-                    IdPublicacionRestriccion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false),
-                    IdRestriccion = table.Column<int>(type: "int", nullable: false)
+                    IdPublicacionRestriccion = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false),
+                    IdRestriccion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -509,17 +437,16 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Restricciones",
                         principalColumn: "IdRestriccion",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "PublicacionesServicios",
                 columns: table => new
                 {
-                    IdPublicacionServicio = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false),
-                    IdServicio = table.Column<int>(type: "int", nullable: false)
+                    IdPublicacionServicio = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false),
+                    IdServicio = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -536,22 +463,20 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Servicios",
                         principalColumn: "IdServicio",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Reservas",
                 columns: table => new
                 {
-                    IdReserva = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FechaInicial = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    FechaFinal = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ReservaEstado = table.Column<int>(type: "int", nullable: false),
-                    NumeroPersonas = table.Column<int>(type: "int", nullable: false),
-                    IdUsuario = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
+                    IdReserva = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FechaInicial = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    FechaFinal = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    ReservaEstado = table.Column<int>(type: "integer", nullable: false),
+                    NumeroPersonas = table.Column<int>(type: "integer", nullable: false),
+                    IdUsuario = table.Column<string>(type: "text", nullable: false),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -561,25 +486,24 @@ namespace Dviaje.DataAccess.Migrations
                         column: x => x.IdUsuario,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservas_Publicaciones_IdPublicacion",
                         column: x => x.IdPublicacion,
                         principalTable: "Publicaciones",
                         principalColumn: "IdPublicacion",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "ServiciosAdicionales",
                 columns: table => new
                 {
-                    IdServicioAdicional = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PrecioServicioAdicional = table.Column<double>(type: "double", nullable: false),
-                    IdServicio = table.Column<int>(type: "int", nullable: false),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false)
+                    IdServicioAdicional = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PrecioServicioAdicional = table.Column<double>(type: "numeric(10,2)", nullable: false),
+                    IdServicio = table.Column<int>(type: "integer", nullable: false),
+                    IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -596,45 +520,41 @@ namespace Dviaje.DataAccess.Migrations
                         principalTable: "Servicios",
                         principalColumn: "IdServicio",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Resenas",
                 columns: table => new
                 {
-                    IdResena = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Opinion = table.Column<string>(type: "text", maxLength: 1500, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Fecha = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Calificacion = table.Column<int>(type: "int", nullable: false),
-                    MeGusta = table.Column<int>(type: "int", nullable: false),
-                    IdPublicacion = table.Column<int>(type: "int", nullable: false),
-                    IdReserva = table.Column<int>(type: "int", nullable: false)
+                    IdResena = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Opinion = table.Column<string>(type: "text", maxLength: 1500, nullable: false),
+                    Fecha = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    Calificacion = table.Column<int>(type: "integer", nullable: false),
+                    MeGusta = table.Column<int>(type: "integer", nullable: false),
+                    IdReserva = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Resenas", x => x.IdResena);
-                    table.ForeignKey(
-                        name: "FK_Resenas_Publicaciones_IdPublicacion",
-                        column: x => x.IdPublicacion,
-                        principalTable: "Publicaciones",
-                        principalColumn: "IdPublicacion",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Resenas_Reservas_IdReserva",
                         column: x => x.IdReserva,
                         principalTable: "Reservas",
                         principalColumn: "IdReserva",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Adjuntos_IdAtencion",
                 table: "Adjuntos",
                 column: "IdAtencion");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Adjuntos_RutaAdjunto",
+                table: "Adjuntos",
+                column: "RutaAdjunto",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -668,6 +588,12 @@ namespace Dviaje.DataAccess.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Avatar",
+                table: "AspNetUsers",
+                column: "Avatar",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_Direccion",
                 table: "AspNetUsers",
                 column: "Direccion",
@@ -680,12 +606,6 @@ namespace Dviaje.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Telefono",
-                table: "AspNetUsers",
-                column: "Telefono",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -695,6 +615,12 @@ namespace Dviaje.DataAccess.Migrations
                 name: "IX_AtencionViajeros_IdUsuario",
                 table: "AtencionViajeros",
                 column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categorias_NombreCategoria",
+                table: "Categorias",
+                column: "NombreCategoria",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Favoritos_IdPublicacion",
@@ -712,9 +638,9 @@ namespace Dviaje.DataAccess.Migrations
                 column: "IdPublicacion");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Publicaciones_IdUsuario",
+                name: "IX_Publicaciones_IdAliado",
                 table: "Publicaciones",
-                column: "IdUsuario");
+                column: "IdAliado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PublicacionesCategorias_IdCategoria",
@@ -737,6 +663,12 @@ namespace Dviaje.DataAccess.Migrations
                 column: "IdPublicacion");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PublicacionesImagenes_Ruta",
+                table: "PublicacionesImagenes",
+                column: "Ruta",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PublicacionesRestricciones_IdPublicacion",
                 table: "PublicacionesRestricciones",
                 column: "IdPublicacion");
@@ -757,11 +689,6 @@ namespace Dviaje.DataAccess.Migrations
                 column: "IdServicio");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resenas_IdPublicacion",
-                table: "Resenas",
-                column: "IdPublicacion");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Resenas_IdReserva",
                 table: "Resenas",
                 column: "IdReserva");
@@ -777,6 +704,18 @@ namespace Dviaje.DataAccess.Migrations
                 column: "IdUsuario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Restricciones_NombreRestriccion",
+                table: "Restricciones",
+                column: "NombreRestriccion",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Servicios_NombreServicio",
+                table: "Servicios",
+                column: "NombreServicio",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ServiciosAdicionales_IdPublicacion",
                 table: "ServiciosAdicionales",
                 column: "IdPublicacion");
@@ -787,9 +726,9 @@ namespace Dviaje.DataAccess.Migrations
                 column: "IdServicio");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Verificados_IdUsuario",
+                name: "IX_Verificados_IdAliado",
                 table: "Verificados",
-                column: "IdUsuario");
+                column: "IdAliado");
         }
 
         /// <inheritdoc />

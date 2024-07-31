@@ -1,7 +1,5 @@
-﻿using Dviaje.DataAccess.Repository;
-using Dviaje.DataAccess.Repository.IRepository;
+﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Turista.Controllers
@@ -13,14 +11,11 @@ namespace Dviaje.Areas.Turista.Controllers
     {
         //Datos para ingresar a la base de datos
         private readonly IUnitOfWork _db;
-        private IValidator<Reserva> _validator;
 
         //inyeccion 
-        public ReservaController(IUnitOfWork _db, IValidator<Reserva>_validator)
+        public ReservaController(IUnitOfWork _db)
         {
             this._db = _db;
-            this._validator = _validator;
-
         }
 
         public IActionResult Reserva()
@@ -31,23 +26,17 @@ namespace Dviaje.Areas.Turista.Controllers
         [HttpPost]
         public IActionResult Reserva(Reserva reserva)
         {
-            var resultadoValidacion = _validator.Validate(reserva);
-            if (!resultadoValidacion.IsValid)
-            {
-
-            }
-
             return View();
         }
 
         public IActionResult MisReservas()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
-		public IActionResult MiReserva()
-		{
-			return View();
-		}
-	}
+        public IActionResult MiReserva()
+        {
+            return View();
+        }
+    }
 }

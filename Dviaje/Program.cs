@@ -1,10 +1,7 @@
 using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository;
 using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
 using Dviaje.Services;
-using Dviaje.Validators;
-using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//Conexion a la base de datos
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("localDb"), new MariaDbServerVersion(new Version(10, 4, 32))));
+// Conexión a la base de datos
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
-//Identity personalizado
+// Identity personalizado
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-//Agrega soporte a las paginas razor
+// Soporte para páginas razor
 builder.Services.AddRazorPages();
 
 // Servicios
@@ -29,9 +28,6 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-//Valideitors
-builder.Services.AddScoped<IValidator<Reserva>, ReservaValidator>();
 
 var app = builder.Build();
 
@@ -50,7 +46,7 @@ app.UseRouting();
 app.UseAuthentication(); ;
 app.UseAuthorization();
 
-//Agrega el RoutingMap para paginas razor
+// Agrega el mapeo de rutas a las páginas razor
 app.MapRazorPages();
 
 app.MapControllerRoute(

@@ -48,10 +48,10 @@ namespace Dviaje.Models
 
 
         [Required]
-        public string? IdUsuario { get; set; }
+        public string? IdAliado { get; set; }
 
 
-        [ForeignKey("IdUsuario")]
-        public Usuario? Usuario { get; set; }
+        [ForeignKey("IdAliado")]
+        public Aliado? Aliado { get; set; }
     }
 }

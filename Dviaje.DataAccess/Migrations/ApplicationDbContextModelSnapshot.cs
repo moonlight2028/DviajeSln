@@ -3,8 +3,8 @@ using System;
 using Dviaje.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,28 +18,32 @@ namespace Dviaje.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Dviaje.Models.Adjunto", b =>
                 {
                     b.Property<int>("IdAdjunto")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdAdjunto"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdAdjunto"));
 
                     b.Property<int>("IdAtencion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("RutaAdjunto")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.HasKey("IdAdjunto");
 
                     b.HasIndex("IdAtencion");
+
+                    b.HasIndex("RutaAdjunto")
+                        .IsUnique();
 
                     b.ToTable("Adjuntos");
                 });
@@ -48,34 +52,34 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdAtencion")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdAtencion"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdAtencion"));
 
                     b.Property<string>("Asunto")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("AtencionViajeroPrioridad")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("AtencionViajeroTipoPqrs")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(250)
                         .HasColumnType("text");
 
                     b.Property<DateTime>("FechaAtencion")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
                     b.Property<DateTime>("FechaRespuesta")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("IdUsuario")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Respuesta")
                         .HasMaxLength(250)
@@ -92,20 +96,24 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdCategoria")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdCategoria"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdCategoria"));
 
                     b.Property<string>("NombreCategoria")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("RutaIcono")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.HasKey("IdCategoria");
+
+                    b.HasIndex("NombreCategoria")
+                        .IsUnique();
 
                     b.ToTable("Categorias");
                 });
@@ -114,16 +122,16 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdFavorito")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdFavorito"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdFavorito"));
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("IdUsuario")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("IdFavorito");
 
@@ -138,15 +146,18 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdFechaNoDisponible")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdFechaNoDisponible"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdFechaNoDisponible"));
 
-                    b.Property<DateTime>("FechaSinDisponible")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("FechaFinal")
+                        .HasColumnType("timestamp");
+
+                    b.Property<DateTime>("FechaInicial")
+                        .HasColumnType("timestamp");
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdFechaNoDisponible");
 
@@ -159,9 +170,9 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdPublicacion")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPublicacion"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPublicacion"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -171,31 +182,32 @@ namespace Dviaje.DataAccess.Migrations
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
-                    b.Property<string>("IdUsuario")
-                        .HasColumnType("varchar(255)");
+                    b.Property<string>("IdAliado")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("NumeroResenas")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<double>("Precio")
-                        .HasColumnType("double");
+                        .HasColumnType("numeric(10,2)");
 
                     b.Property<decimal>("Puntuacion")
-                        .HasColumnType("decimal(1,1)");
+                        .HasColumnType("numeric(1,1)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("IdPublicacion");
 
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("IdAliado");
 
                     b.ToTable("Publicaciones");
                 });
@@ -204,15 +216,15 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdPublicacionCategoria")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPublicacionCategoria"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPublicacionCategoria"));
 
                     b.Property<int>("IdCategoria")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdPublicacionCategoria");
 
@@ -227,12 +239,12 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdPublicacionFavorita")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPublicacionFavorita"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPublicacionFavorita"));
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdPublicacionFavorita");
 
@@ -245,19 +257,24 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdPublicacionImagen")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPublicacionImagen"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPublicacionImagen"));
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Ruta")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.HasKey("IdPublicacionImagen");
 
                     b.HasIndex("IdPublicacion");
+
+                    b.HasIndex("Ruta")
+                        .IsUnique();
 
                     b.ToTable("PublicacionesImagenes");
                 });
@@ -266,15 +283,15 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdPublicacionRestriccion")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPublicacionRestriccion"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPublicacionRestriccion"));
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("IdRestriccion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdPublicacionRestriccion");
 
@@ -289,15 +306,15 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdPublicacionServicio")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPublicacionServicio"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPublicacionServicio"));
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("IdServicio")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdPublicacionServicio");
 
@@ -312,24 +329,21 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdResena")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdResena"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdResena"));
 
                     b.Property<int>("Calificacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("timestamp");
 
                     b.Property<int>("IdReserva")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("MeGusta")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Opinion")
                         .IsRequired()
@@ -337,8 +351,6 @@ namespace Dviaje.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("IdResena");
-
-                    b.HasIndex("IdPublicacion");
 
                     b.HasIndex("IdReserva");
 
@@ -349,27 +361,28 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdReserva")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdReserva"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdReserva"));
 
                     b.Property<DateTime>("FechaFinal")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
                     b.Property<DateTime>("FechaInicial")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("IdUsuario")
-                        .HasColumnType("varchar(255)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("NumeroPersonas")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ReservaEstado")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdReserva");
 
@@ -384,20 +397,24 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdRestriccion")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdRestriccion"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdRestriccion"));
 
                     b.Property<string>("NombreRestriccion")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("RutaIcono")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.HasKey("IdRestriccion");
+
+                    b.HasIndex("NombreRestriccion")
+                        .IsUnique();
 
                     b.ToTable("Restricciones");
                 });
@@ -406,23 +423,27 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdServicio")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdServicio"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdServicio"));
 
                     b.Property<string>("NombreServicio")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("RutaIcono")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<int>("ServicioTipo")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdServicio");
+
+                    b.HasIndex("NombreServicio")
+                        .IsUnique();
 
                     b.ToTable("Servicios");
                 });
@@ -431,18 +452,18 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdServicioAdicional")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdServicioAdicional"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdServicioAdicional"));
 
                     b.Property<int>("IdPublicacion")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("IdServicio")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<double>("PrecioServicioAdicional")
-                        .HasColumnType("double");
+                        .HasColumnType("numeric(10,2)");
 
                     b.HasKey("IdServicioAdicional");
 
@@ -457,26 +478,26 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("IdVerificado")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdVerificado"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdVerificado"));
 
                     b.Property<DateTime>("FechaRespuesta")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
                     b.Property<DateTime>("FechaSolicitud")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
-                    b.Property<string>("IdUsuario")
+                    b.Property<string>("IdAliado")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<int>("VerificadoEstado")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("IdVerificado");
 
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("IdAliado");
 
                     b.ToTable("Verificados");
                 });
@@ -484,19 +505,19 @@ namespace Dviaje.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -511,19 +532,19 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -535,59 +556,59 @@ namespace Dviaje.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(13)
-                        .HasColumnType("varchar(13)");
+                        .HasColumnType("character varying(13)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -609,19 +630,19 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -633,17 +654,17 @@ namespace Dviaje.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -655,10 +676,10 @@ namespace Dviaje.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -670,47 +691,43 @@ namespace Dviaje.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Dviaje.Models.Usuario", b =>
+            modelBuilder.Entity("Dviaje.Models.Aliado", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<int>("AliadoEstado")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Direccion")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("RazonSocial")
                         .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("SitioWeb")
                         .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Telefono")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("character varying(250)");
 
                     b.Property<bool>("Verificado")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.HasIndex("Direccion")
                         .IsUnique();
@@ -718,7 +735,18 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("RazonSocial")
                         .IsUnique();
 
-                    b.HasIndex("Telefono")
+                    b.HasDiscriminator().HasValue("Aliado");
+                });
+
+            modelBuilder.Entity("Dviaje.Models.Usuario", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Avatar")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasIndex("Avatar")
                         .IsUnique();
 
                     b.HasDiscriminator().HasValue("Usuario");
@@ -751,13 +779,13 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasOne("Dviaje.Models.Publicacion", "Publicacion")
                         .WithMany()
                         .HasForeignKey("IdPublicacion")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dviaje.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Publicacion");
@@ -778,11 +806,13 @@ namespace Dviaje.DataAccess.Migrations
 
             modelBuilder.Entity("Dviaje.Models.Publicacion", b =>
                 {
-                    b.HasOne("Dviaje.Models.Usuario", "Usuario")
+                    b.HasOne("Dviaje.Models.Aliado", "Aliado")
                         .WithMany()
-                        .HasForeignKey("IdUsuario");
+                        .HasForeignKey("IdAliado")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Aliado");
                 });
 
             modelBuilder.Entity("Dviaje.Models.PublicacionCategoria", b =>
@@ -866,19 +896,11 @@ namespace Dviaje.DataAccess.Migrations
 
             modelBuilder.Entity("Dviaje.Models.Resena", b =>
                 {
-                    b.HasOne("Dviaje.Models.Publicacion", "Publicacion")
-                        .WithMany()
-                        .HasForeignKey("IdPublicacion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Dviaje.Models.Reserva", "Reserva")
                         .WithMany()
                         .HasForeignKey("IdReserva")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Publicacion");
 
                     b.Navigation("Reserva");
                 });
@@ -888,13 +910,14 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasOne("Dviaje.Models.Publicacion", "Publicacion")
                         .WithMany()
                         .HasForeignKey("IdPublicacion")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dviaje.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Publicacion");
 
@@ -922,13 +945,13 @@ namespace Dviaje.DataAccess.Migrations
 
             modelBuilder.Entity("Dviaje.Models.Verificado", b =>
                 {
-                    b.HasOne("Dviaje.Models.Usuario", "Usuario")
+                    b.HasOne("Dviaje.Models.Aliado", "Aliado")
                         .WithMany()
-                        .HasForeignKey("IdUsuario")
+                        .HasForeignKey("IdAliado")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Aliado");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

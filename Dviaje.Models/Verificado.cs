@@ -22,11 +22,11 @@ namespace Dviaje.Models
         public VerificadoEstado VerificadoEstado { get; set; }
 
 
-        [Required(ErrorMessage = "El ID de usuario es obligatorio.")]
-        public string? IdUsuario { get; set; }
+        [Required(ErrorMessage = "El ID del aliado es obligatorio.")]
+        public string? IdAliado { get; set; }
 
 
-        [ForeignKey("IdUsuario")]
-        public Usuario? Usuario { get; set; }
+        [ForeignKey("IdAliado")]
+        public Aliado? Aliado { get; set; }
     }
 }

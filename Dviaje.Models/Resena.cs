@@ -29,16 +29,8 @@ namespace Dviaje.Models
         public int MeGusta { get; set; }
 
 
-        [Required(ErrorMessage = "El ID de la publicación es obligatorio.")]
-        public int IdPublicacion { get; set; }
-
-
         [Required(ErrorMessage = "El ID de la reserva es obligatorio.")]
         public int IdReserva { get; set; }
-
-
-        [ForeignKey("IdPublicacion")]
-        public Publicacion? Publicacion { get; set; }
 
 
         [ForeignKey("IdReserva")]
