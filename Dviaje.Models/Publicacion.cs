@@ -14,7 +14,7 @@ namespace Dviaje.Models
         public string? Titulo { get; set; }
 
 
-        //[Column(TypeName = "numeric(2,1)")]
+        [Column(TypeName = "numeric(2,1)")]
         [Range(0.0, 5.0, ErrorMessage = "La puntuación debe estar entre 0.0 y 5.0.")]
         public decimal Puntuacion { get; set; }
 
@@ -29,9 +29,9 @@ namespace Dviaje.Models
         public string? Descripcion { get; set; }
 
 
-        //[Column(TypeName = "numeric(10,2)")]
+        [Column(TypeName = "numeric(10,2)")]
         [Required(ErrorMessage = "El precio es obligatorio.")]
-        [Range(1.0, 10000000000.00, ErrorMessage = "El precio debe ser mayor a 1.")]
+        [Range(1.0, 99999999.99, ErrorMessage = "El precio debe ser mayor a 1.")]
         public decimal Precio { get; set; }
 
 

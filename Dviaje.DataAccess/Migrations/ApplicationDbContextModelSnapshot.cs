@@ -399,10 +399,10 @@ namespace Dviaje.DataAccess.Migrations
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Precio")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric(10,2)");
 
                     b.Property<decimal>("Puntuacion")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric(2,1)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -427,6 +427,138 @@ namespace Dviaje.DataAccess.Migrations
                             Precio = 813000m,
                             Puntuacion = 4.3m,
                             Titulo = "Casa Quincha Glamping"
+                        },
+                        new
+                        {
+                            IdPublicacion = 2,
+                            Descripcion = "Sumérgete en la tranquilidad de la naturaleza en Eco Lodge del Valle. Ofrecemos cabañas ecológicas con vistas impresionantes, actividades al aire libre y un enfoque en la sostenibilidad. Perfecto para quienes buscan un escape relajante y responsable.",
+                            Direccion = "Vereda El Dorado, Valle de Cauca, Colombia",
+                            Fecha = new DateTime(2024, 8, 2, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            NumeroResenas = 98,
+                            Precio = 925000m,
+                            Puntuacion = 4.7m,
+                            Titulo = "Eco Lodge del Valle"
+                        },
+                        new
+                        {
+                            IdPublicacion = 3,
+                            Descripcion = "Refugio del Bosque ofrece una experiencia única en medio de un bosque encantado. Disfruta de nuestras cabañas acogedoras, senderos para caminatas y actividades al aire libre. Ideal para familias y aventureros.",
+                            Direccion = "Km 10 Via Manizales - Chinchina, Manizales, Colombia",
+                            Fecha = new DateTime(2024, 8, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            NumeroResenas = 76,
+                            Precio = 675000m,
+                            Puntuacion = 4.2m,
+                            Titulo = "Refugio del Bosque"
+                        },
+                        new
+                        {
+                            IdPublicacion = 4,
+                            Descripcion = "Descubre el lujo y la serenidad en Oasis de la Sierra. Nuestra propiedad ofrece vistas espectaculares, instalaciones de primera clase y actividades exclusivas en un entorno montañoso inigualable.",
+                            Direccion = "Avenida de los Andes, Cúcuta, Colombia",
+                            Fecha = new DateTime(2024, 8, 4, 14, 45, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520",
+                            NumeroResenas = 120,
+                            Precio = 1150000m,
+                            Puntuacion = 4.6m,
+                            Titulo = "Oasis de la Sierra"
+                        },
+                        new
+                        {
+                            IdPublicacion = 5,
+                            Descripcion = "Villas del Mar ofrece una experiencia de lujo frente al mar con villas privadas, piscina infinita y servicios personalizados. Ideal para escapadas románticas o celebraciones especiales.",
+                            Direccion = "Playa de San Andrés, San Andrés, Colombia",
+                            Fecha = new DateTime(2024, 8, 5, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520",
+                            NumeroResenas = 134,
+                            Precio = 1500000m,
+                            Puntuacion = 4.8m,
+                            Titulo = "Villas del Mar"
+                        },
+                        new
+                        {
+                            IdPublicacion = 6,
+                            Descripcion = "Disfruta de una estancia relajante en Cabañas del Río, rodeado de la belleza natural de la región. Ofrecemos cabañas rústicas con acceso directo al río y actividades de pesca y senderismo.",
+                            Direccion = "Vereda El Río, Medellín, Colombia",
+                            Fecha = new DateTime(2024, 8, 6, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "8142c33b-ee02-4a13-b0c1-1e941387433d",
+                            NumeroResenas = 85,
+                            Precio = 720000m,
+                            Puntuacion = 4.4m,
+                            Titulo = "Cabañas del Río"
+                        },
+                        new
+                        {
+                            IdPublicacion = 7,
+                            Descripcion = "Rincón del Viento ofrece una experiencia de glamping en medio de la naturaleza con tiendas de lujo, fogatas y una vista impresionante de las montañas. Perfecto para una escapada romántica o una aventura familiar.",
+                            Direccion = "Km 20 Via Villa de Leyva, Boyacá, Colombia",
+                            Fecha = new DateTime(2024, 8, 7, 11, 30, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551",
+                            NumeroResenas = 63,
+                            Precio = 860000m,
+                            Puntuacion = 4.1m,
+                            Titulo = "Rincón del Viento"
+                        },
+                        new
+                        {
+                            IdPublicacion = 8,
+                            Descripcion = "Hotel del Lago ofrece una estancia lujosa con vistas al lago, spa, y restaurante gourmet. Ideal para una experiencia de relax y confort con servicios de alta calidad.",
+                            Direccion = "Río Guatapé, Antioquia, Colombia",
+                            Fecha = new DateTime(2024, 8, 8, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551",
+                            NumeroResenas = 142,
+                            Precio = 1050000m,
+                            Puntuacion = 4.5m,
+                            Titulo = "Hotel del Lago"
+                        },
+                        new
+                        {
+                            IdPublicacion = 9,
+                            Descripcion = "Vive una experiencia de bienestar total en nuestro centro de bienestar natural. Ofrecemos retiros de meditación, yoga, y spa en un entorno tranquilo y rejuvenecedor.",
+                            Direccion = "Vereda La Primavera, Bogotá, Colombia",
+                            Fecha = new DateTime(2024, 8, 9, 10, 15, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "c3733288-b354-445d-95da-4c655c3220b3",
+                            NumeroResenas = 167,
+                            Precio = 1300000m,
+                            Puntuacion = 1.0m,
+                            Titulo = "Centro de Bienestar Natural"
+                        },
+                        new
+                        {
+                            IdPublicacion = 10,
+                            Descripcion = "Aventura en la Selva ofrece una experiencia única de ecoturismo con cabañas en la selva, guías especializados y actividades de exploración en la biodiversidad local.",
+                            Direccion = "Reserva Natural del Amazonas, Leticia, Colombia",
+                            Fecha = new DateTime(2024, 8, 10, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
+                            NumeroResenas = 110,
+                            Precio = 930000m,
+                            Puntuacion = 1.3m,
+                            Titulo = "Aventura en la Selva"
+                        },
+                        new
+                        {
+                            IdPublicacion = 11,
+                            Descripcion = "Casas del Valle ofrece una estancia encantadora en casas de campo tradicionales con acceso a actividades al aire libre, incluyendo paseos a caballo y rutas de senderismo.",
+                            Direccion = "Vereda El Valle, Tunja, Colombia",
+                            Fecha = new DateTime(2024, 8, 11, 12, 45, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
+                            NumeroResenas = 95,
+                            Precio = 785000m,
+                            Puntuacion = 2.4m,
+                            Titulo = "Casas del Valle"
+                        },
+                        new
+                        {
+                            IdPublicacion = 12,
+                            Descripcion = "Camping de Montaña ofrece una experiencia auténtica de campamento con acceso a rutas de senderismo y vistas panorámicas de las montañas. Perfecto para los amantes de la naturaleza y la aventura.",
+                            Direccion = "Parque Nacional de los Nevados, Manizales, Colombia",
+                            Fecha = new DateTime(2024, 8, 12, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
+                            NumeroResenas = 80,
+                            Precio = 590000m,
+                            Puntuacion = 3.0m,
+                            Titulo = "Camping de Montaña"
                         });
                 });
 
@@ -1244,7 +1376,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "28c5a33c-5474-4647-a03b-f257fef94797",
+                            ConcurrencyStamp = "14174665-ae69-4441-82b0-4e81377b0f3a",
                             Email = "info@colombiaadventure.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1252,7 +1384,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "COLOMBIAADV",
                             PhoneNumber = "3216549870",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "a41bada8-94b9-4f96-8b4a-0a7467cdcd40",
+                            SecurityStamp = "40bf8ab5-ff95-4317-9aa9-d3f472b0a982",
                             TwoFactorEnabled = false,
                             UserName = "ColombiaAdv",
                             AliadoEstado = 0,
@@ -1266,7 +1398,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "488a39a3-e1b7-42b1-9bff-7e18f91d39a6",
+                            ConcurrencyStamp = "7dce1bb6-03b4-45f1-a221-c0f73a9c4871",
                             Email = "contact@bogotatours.co",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1274,7 +1406,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BOGOTATOURS",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "73fe02bb-cdb0-471d-ba00-9af346bb0914",
+                            SecurityStamp = "c1bd0264-9dbc-4f8c-a724-6aa0efbf1e9b",
                             TwoFactorEnabled = false,
                             UserName = "BogotaTours",
                             AliadoEstado = 0,
@@ -1288,7 +1420,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "c654adef-5f0c-48e6-946a-52706f8ac520",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0d49c0f9-0dd0-48bc-87e8-f0521ac0af12",
+                            ConcurrencyStamp = "00a8ace3-ab4c-46b0-99c0-392b834dd5c2",
                             Email = "hello@medellinexplore.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1296,7 +1428,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MEDELLINEXPLORE",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9e79c2cd-bac5-493f-809c-5ae9a21760c9",
+                            SecurityStamp = "2a7265f5-37ca-4a7e-bf3b-c7aaeea3abe6",
                             TwoFactorEnabled = false,
                             UserName = "MedellinExplore",
                             AliadoEstado = 0,
@@ -1310,7 +1442,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "8142c33b-ee02-4a13-b0c1-1e941387433d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c138a801-5035-4891-9e52-481b1dfc6ca5",
+                            ConcurrencyStamp = "055a31d1-968a-4ea3-802b-13e29af8b527",
                             Email = "support@cartagenagetaways.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1318,7 +1450,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARTAGENAGETAWAYS",
                             PhoneNumber = "3176543210",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "16f6142d-71b7-4924-8529-902e793a2925",
+                            SecurityStamp = "b6546c2b-3c93-4337-a4cd-9925598c6fa4",
                             TwoFactorEnabled = false,
                             UserName = "CartagenaGetaways",
                             AliadoEstado = 0,
@@ -1332,7 +1464,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "39e10980-4df3-494a-bbe7-410e105f6551",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d58f1edf-535c-4e69-8950-f59da859b734",
+                            ConcurrencyStamp = "fbe0018d-0ffe-45fb-a75e-f0b2bf1ebb6d",
                             Email = "info@santamartaadventures.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1340,7 +1472,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SANTAMARTAADV",
                             PhoneNumber = "3154321098",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d8c73ba3-1c50-429b-8f09-54d425d1d3fc",
+                            SecurityStamp = "cbd3f5b2-8af1-4c06-920e-21a98fbb0d79",
                             TwoFactorEnabled = false,
                             UserName = "SantaMartaAdv",
                             AliadoEstado = 0,
@@ -1354,7 +1486,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "c3733288-b354-445d-95da-4c655c3220b3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9879c34a-c87a-4de7-a3f3-1b14272d3fab",
+                            ConcurrencyStamp = "537835d3-3451-406e-ae13-28081c860c23",
                             Email = "contact@caliexperiences.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1362,7 +1494,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CALIEXP",
                             PhoneNumber = "3132109876",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "1beeebf1-2eb2-41aa-a2af-9a34ea205641",
+                            SecurityStamp = "40a83880-91e6-4e40-9694-1ac2cffdd18e",
                             TwoFactorEnabled = false,
                             UserName = "CaliExp",
                             AliadoEstado = 0,
@@ -1376,7 +1508,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d65bff5a-2b48-420c-afe8-87b2632b6d80",
+                            ConcurrencyStamp = "dd23486c-9674-4188-818d-df160d7b4731",
                             Email = "hello@barranquillaescapes.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1384,7 +1516,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BQUILLAESCAPES",
                             PhoneNumber = "3140987654",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6bab02bc-a7a3-42f6-a6dc-8ab8a4ea933f",
+                            SecurityStamp = "b54d61b0-7a2e-4d29-a8e0-0ef75a523107",
                             TwoFactorEnabled = false,
                             UserName = "BquillaEscapes",
                             AliadoEstado = 0,
@@ -1398,7 +1530,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6987555f-43cd-44dd-9cd3-640d5ceb4ac8",
+                            ConcurrencyStamp = "4959cb48-7e1d-4f26-9264-83d047e0b61c",
                             Email = "support@bucaramangajourneys.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1406,7 +1538,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BUCARAJOURNEYS",
                             PhoneNumber = "3229876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9ee6a172-6d1b-4a80-a755-4a6f26bb9265",
+                            SecurityStamp = "215c2a8a-329c-4a34-af7f-14ac82cab051",
                             TwoFactorEnabled = false,
                             UserName = "BucaraJourneys",
                             AliadoEstado = 0,
@@ -1420,7 +1552,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7971714e-9255-4bd3-bbc5-033eaaef1907",
+                            ConcurrencyStamp = "d1e3730d-a967-4d79-9ab0-adc1ffdc92fa",
                             Email = "info@pereiratravels.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1428,7 +1560,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "PEREIRATRAVELS",
                             PhoneNumber = "3107654321",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "66077e3b-04c5-4c48-b98d-9682011d62fc",
+                            SecurityStamp = "631029d8-c9ed-4335-8e5a-ce40bfdbe464",
                             TwoFactorEnabled = false,
                             UserName = "PereiraTravels",
                             AliadoEstado = 0,
@@ -1442,7 +1574,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ed9e7f58-61a0-4617-a24a-4da8a1f016e8",
+                            ConcurrencyStamp = "40c5f6b3-92c5-4523-8544-10e805e77467",
                             Email = "contact@manizaleswonders.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1450,7 +1582,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MANIZALESWONDERS",
                             PhoneNumber = "3165432109",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "07d25194-880f-4e7a-b5d6-1df9b8fce9c0",
+                            SecurityStamp = "5ba931c1-6035-4a74-82eb-d13f86319b83",
                             TwoFactorEnabled = false,
                             UserName = "ManizalesWonders",
                             AliadoEstado = 0,
@@ -1480,7 +1612,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7be91b1a-17ee-4ad6-9945-a08f3058f063",
+                            ConcurrencyStamp = "b4bd263a-ccd6-41c8-903c-e362db094b53",
                             Email = "andres@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1488,7 +1620,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANDRES",
                             PhoneNumber = "3159725595",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "669c66b4-cd07-45f8-ada7-0d283e016cfd",
+                            SecurityStamp = "8fa931ba-6a21-4d90-966c-bd269595d4ff",
                             TwoFactorEnabled = false,
                             UserName = "Andres",
                             Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1497,7 +1629,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "26cfe5c9-00f8-411e-b589-df3405a8b798",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "df448b3f-57bc-4308-b367-9634800b0e85",
+                            ConcurrencyStamp = "e35e583f-9b60-4d3a-a189-81a216b7823c",
                             Email = "maria@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1505,7 +1637,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MARIA",
                             PhoneNumber = "3101234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "fb7c664e-72fa-4b97-8202-4cfa378091d7",
+                            SecurityStamp = "a2371686-d671-4289-8401-54652de3e6f5",
                             TwoFactorEnabled = false,
                             UserName = "Maria",
                             Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1514,7 +1646,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "349e0959-b8ed-4413-92bc-966b8260e463",
+                            ConcurrencyStamp = "630b3452-581a-451a-a173-1ea6f8d69346",
                             Email = "carlos@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1522,7 +1654,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARLOS",
                             PhoneNumber = "3189876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "ace7ab5b-227d-4deb-9fa7-7ff63432fb63",
+                            SecurityStamp = "69da28e5-c6fb-412d-bd68-5d6274dd32ef",
                             TwoFactorEnabled = false,
                             UserName = "Carlos",
                             Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1531,7 +1663,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "e4309639-4588-4553-8c14-5ce4426e0dd7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "33056936-54d6-4523-85bb-c962e23b7341",
+                            ConcurrencyStamp = "64faf09d-f75d-4ae1-a6d0-bee7bb39d211",
                             Email = "sofia@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1539,7 +1671,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SOFIA",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "4f5a18d9-ab0e-4a23-8083-d1ad2be6b281",
+                            SecurityStamp = "b48ce09a-1768-4a57-b787-2c4c00739cae",
                             TwoFactorEnabled = false,
                             UserName = "Sofia",
                             Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1548,7 +1680,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "3a895383-b546-4693-8246-924a9fc5289f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "87c5859d-8e67-43db-a41a-f59c0ec52dc4",
+                            ConcurrencyStamp = "5c264909-1a44-4539-954f-3c4aa3cfa867",
                             Email = "luis@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1556,7 +1688,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "LUIS",
                             PhoneNumber = "3112345678",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "85ec739b-71a4-4beb-bfaf-a8ccb887f30b",
+                            SecurityStamp = "49afe8f5-5965-41a4-9a27-f7c96b1edebf",
                             TwoFactorEnabled = false,
                             UserName = "Luis",
                             Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1565,7 +1697,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "811c0f5b-a24d-4974-924c-90a8c58fa7a8",
+                            ConcurrencyStamp = "41bd0298-438d-4b4b-9107-4aa2c95d1f21",
                             Email = "isabella@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1573,7 +1705,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ISABELLA",
                             PhoneNumber = "3179876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "5a7461f8-21c7-4a70-99db-3ef29932ae1b",
+                            SecurityStamp = "a7340600-c36d-4687-95e6-b6443610174f",
                             TwoFactorEnabled = false,
                             UserName = "Isabella",
                             Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1582,7 +1714,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "13825fa6-5c27-4303-ab17-6e13aac24c12",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "69a405de-711f-4a8c-90b0-0bff9d7e5f6d",
+                            ConcurrencyStamp = "91fddcca-d223-4571-8e6e-f8f1da50ba54",
                             Email = "fernando@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1590,7 +1722,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "FERNANDO",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "0f8a94e1-107b-4d5d-b4a4-065e8440ea50",
+                            SecurityStamp = "bb50bb53-d1d9-4e1b-bd56-3b6c51e78b2e",
                             TwoFactorEnabled = false,
                             UserName = "Fernando",
                             Avatar = "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1599,7 +1731,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "beba93d4-79b7-4835-aa03-84a71bfc1478",
+                            ConcurrencyStamp = "67cb4d79-c16f-4544-ab60-a4a93fd3fddc",
                             Email = "ana@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1607,7 +1739,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANA",
                             PhoneNumber = "3149876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "54f6f689-140d-4470-a211-a403ce991308",
+                            SecurityStamp = "571e21ce-fb13-43ef-9dbf-346fc60b9aa3",
                             TwoFactorEnabled = false,
                             UserName = "Ana",
                             Avatar = "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -1616,7 +1748,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2e59aa62-61bd-4c8d-9a3d-13f461696eab",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "673b73a4-4d42-43b7-bc31-3a356fc60a48",
+                            ConcurrencyStamp = "0fb5ae14-25e3-41eb-a640-5b13c1e89ad6",
                             Email = "jorge@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1624,7 +1756,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "JORGE",
                             PhoneNumber = "3151234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "7fae8018-955b-41ae-8fef-9f88ea004262",
+                            SecurityStamp = "eb978297-a9a8-4127-93ac-3cab2ba3b4c4",
                             TwoFactorEnabled = false,
                             UserName = "Jorge",
                             Avatar = "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
@@ -1633,7 +1765,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0cbc29d0-3af1-4a53-a809-dfb7eb29b5b1",
+                            ConcurrencyStamp = "a332746f-3013-4122-9ab4-8dc8c1a701b6",
                             Email = "gabriela@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -1641,7 +1773,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "GABRIELA",
                             PhoneNumber = "3169876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d8cbdf48-d792-4ab4-8c12-8ff0be653b77",
+                            SecurityStamp = "7d3cbd70-9fd2-456f-9ebe-a0eba35831a4",
                             TwoFactorEnabled = false,
                             UserName = "Gabriela",
                             Avatar = "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"

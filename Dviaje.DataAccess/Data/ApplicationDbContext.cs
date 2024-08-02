@@ -713,158 +713,150 @@ namespace Dviaje.DataAccess.Data
 
             // Registros de Publicacion.
             modelBuilder.Entity<Publicacion>().HasData(
-
-            new Publicacion
-            {
-                IdPublicacion = 1,
-                Titulo = "Casa Quincha Glamping",
-                Puntuacion = 4.3m,
-                NumeroResenas = 150,
-                Descripcion = "Descubre la magia de la naturaleza sin renunciar a las comodidades del hogar en Casa Quincha Glamping. Ubicada en un entorno sereno y pintoresco, nuestra experiencia de glamping combina el lujo y la aventura, ofreciendo una estancia inolvidable para quienes buscan relajarse y reconectar con el entorno natural.",
-                Precio = 813000m,
-                Fecha = new DateTime(2024, 08, 01, 14, 15, 00),
-                Direccion = "Km 5 Via San Francisco - Supatá, San Francisco 253601 Colombia",
-                IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
-            }
-
-
-            /*
-            new Publicacion
-            {
-                IdPublicacion = 2,
-                Titulo = "Eco Lodge del Valle",
-                Puntuacion = 4.7m,
-                NumeroResenas = 98,
-                Descripcion = "Sumérgete en la tranquilidad de la naturaleza en Eco Lodge del Valle. Ofrecemos cabañas ecológicas con vistas impresionantes, actividades al aire libre y un enfoque en la sostenibilidad. Perfecto para quienes buscan un escape relajante y responsable.",
-                Precio = 925000,
-                Fecha = new DateTime(2024, 08, 02, 10, 00, 00),
-                Direccion = "Vereda El Dorado, Valle de Cauca, Colombia",
-                IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 3,
-                Titulo = "Refugio del Bosque",
-                Puntuacion = 4.2m,
-                NumeroResenas = 76,
-                Descripcion = "Refugio del Bosque ofrece una experiencia única en medio de un bosque encantado. Disfruta de nuestras cabañas acogedoras, senderos para caminatas y actividades al aire libre. Ideal para familias y aventureros.",
-                Precio = 675000,
-                Fecha = new DateTime(2024, 08, 03, 12, 30, 00),
-                Direccion = "Km 10 Via Manizales - Chinchina, Manizales, Colombia",
-                IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 4,
-                Titulo = "Oasis de la Sierra",
-                Puntuacion = 4.6m,
-                NumeroResenas = 120,
-                Descripcion = "Descubre el lujo y la serenidad en Oasis de la Sierra. Nuestra propiedad ofrece vistas espectaculares, instalaciones de primera clase y actividades exclusivas en un entorno montañoso inigualable.",
-                Precio = 1150000,
-                Fecha = new DateTime(2024, 08, 04, 14, 45, 00),
-                Direccion = "Avenida de los Andes, Cúcuta, Colombia",
-                IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 5,
-                Titulo = "Villas del Mar",
-                Puntuacion = 4.8m,
-                NumeroResenas = 134,
-                Descripcion = "Villas del Mar ofrece una experiencia de lujo frente al mar con villas privadas, piscina infinita y servicios personalizados. Ideal para escapadas románticas o celebraciones especiales.",
-                Precio = 1500000,
-                Fecha = new DateTime(2024, 08, 05, 16, 00, 00),
-                Direccion = "Playa de San Andrés, San Andrés, Colombia",
-                IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 6,
-                Titulo = "Cabañas del Río",
-                Puntuacion = 4.4m,
-                NumeroResenas = 85,
-                Descripcion = "Disfruta de una estancia relajante en Cabañas del Río, rodeado de la belleza natural de la región. Ofrecemos cabañas rústicas con acceso directo al río y actividades de pesca y senderismo.",
-                Precio = 720000,
-                Fecha = new DateTime(2024, 08, 06, 09, 15, 00),
-                Direccion = "Vereda El Río, Medellín, Colombia",
-                IdAliado = "8142c33b-ee02-4a13-b0c1-1e941387433d"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 7,
-                Titulo = "Rincón del Viento",
-                Puntuacion = 4.1m,
-                NumeroResenas = 63,
-                Descripcion = "Rincón del Viento ofrece una experiencia de glamping en medio de la naturaleza con tiendas de lujo, fogatas y una vista impresionante de las montañas. Perfecto para una escapada romántica o una aventura familiar.",
-                Precio = 860000,
-                Fecha = new DateTime(2024, 08, 07, 11, 30, 00),
-                Direccion = "Km 20 Via Villa de Leyva, Boyacá, Colombia",
-                IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 8,
-                Titulo = "Hotel del Lago",
-                Puntuacion = 4.5m,
-                NumeroResenas = 142,
-                Descripcion = "Hotel del Lago ofrece una estancia lujosa con vistas al lago, spa, y restaurante gourmet. Ideal para una experiencia de relax y confort con servicios de alta calidad.",
-                Precio = 1050000,
-                Fecha = new DateTime(2024, 08, 08, 13, 00, 00),
-                Direccion = "Río Guatapé, Antioquia, Colombia",
-                IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 9,
-                Titulo = "Centro de Bienestar Natural",
-                Puntuacion = 1.0m,
-                NumeroResenas = 167,
-                Descripcion = "Vive una experiencia de bienestar total en nuestro centro de bienestar natural. Ofrecemos retiros de meditación, yoga, y spa en un entorno tranquilo y rejuvenecedor.",
-                Precio = 1300000,
-                Fecha = new DateTime(2024, 08, 09, 10, 15, 00),
-                Direccion = "Vereda La Primavera, Bogotá, Colombia",
-                IdAliado = "c3733288-b354-445d-95da-4c655c3220b3"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 10,
-                Titulo = "Aventura en la Selva",
-                Puntuacion = 1.3m,
-                NumeroResenas = 110,
-                Descripcion = "Aventura en la Selva ofrece una experiencia única de ecoturismo con cabañas en la selva, guías especializados y actividades de exploración en la biodiversidad local.",
-                Precio = 930000,
-                Fecha = new DateTime(2024, 08, 10, 15, 00, 00),
-                Direccion = "Reserva Natural del Amazonas, Leticia, Colombia",
-                IdAliado = "4c03648f-7727-4e5c-b096-fcbe3b9e3059"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 11,
-                Titulo = "Casas del Valle",
-                Puntuacion = 2.4m,
-                NumeroResenas = 95,
-                Descripcion = "Casas del Valle ofrece una estancia encantadora en casas de campo tradicionales con acceso a actividades al aire libre, incluyendo paseos a caballo y rutas de senderismo.",
-                Precio = 785000,
-                Fecha = new DateTime(2024, 08, 11, 12, 45, 00),
-                Direccion = "Vereda El Valle, Tunja, Colombia",
-                IdAliado = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b"
-            },
-            new Publicacion
-            {
-                IdPublicacion = 12,
-                Titulo = "Camping de Montaña",
-                Puntuacion = 3.0m,
-                NumeroResenas = 80,
-                Descripcion = "Camping de Montaña ofrece una experiencia auténtica de campamento con acceso a rutas de senderismo y vistas panorámicas de las montañas. Perfecto para los amantes de la naturaleza y la aventura.",
-                Precio = 590000,
-                Fecha = new DateTime(2024, 08, 12, 08, 30, 00),
-                Direccion = "Parque Nacional de los Nevados, Manizales, Colombia",
-                IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4"
-            }
-
-
-
-            */
+                new Publicacion
+                {
+                    IdPublicacion = 1,
+                    Titulo = "Casa Quincha Glamping",
+                    Puntuacion = 4.3m,
+                    NumeroResenas = 150,
+                    Descripcion = "Descubre la magia de la naturaleza sin renunciar a las comodidades del hogar en Casa Quincha Glamping. Ubicada en un entorno sereno y pintoresco, nuestra experiencia de glamping combina el lujo y la aventura, ofreciendo una estancia inolvidable para quienes buscan relajarse y reconectar con el entorno natural.",
+                    Precio = 813000m,
+                    Fecha = new DateTime(2024, 08, 01, 14, 15, 00),
+                    Direccion = "Km 5 Via San Francisco - Supatá, San Francisco 253601 Colombia",
+                    IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 2,
+                    Titulo = "Eco Lodge del Valle",
+                    Puntuacion = 4.7m,
+                    NumeroResenas = 98,
+                    Descripcion = "Sumérgete en la tranquilidad de la naturaleza en Eco Lodge del Valle. Ofrecemos cabañas ecológicas con vistas impresionantes, actividades al aire libre y un enfoque en la sostenibilidad. Perfecto para quienes buscan un escape relajante y responsable.",
+                    Precio = 925000m,
+                    Fecha = new DateTime(2024, 08, 02, 10, 00, 00),
+                    Direccion = "Vereda El Dorado, Valle de Cauca, Colombia",
+                    IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 3,
+                    Titulo = "Refugio del Bosque",
+                    Puntuacion = 4.2m,
+                    NumeroResenas = 76,
+                    Descripcion = "Refugio del Bosque ofrece una experiencia única en medio de un bosque encantado. Disfruta de nuestras cabañas acogedoras, senderos para caminatas y actividades al aire libre. Ideal para familias y aventureros.",
+                    Precio = 675000m,
+                    Fecha = new DateTime(2024, 08, 03, 12, 30, 00),
+                    Direccion = "Km 10 Via Manizales - Chinchina, Manizales, Colombia",
+                    IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 4,
+                    Titulo = "Oasis de la Sierra",
+                    Puntuacion = 4.6m,
+                    NumeroResenas = 120,
+                    Descripcion = "Descubre el lujo y la serenidad en Oasis de la Sierra. Nuestra propiedad ofrece vistas espectaculares, instalaciones de primera clase y actividades exclusivas en un entorno montañoso inigualable.",
+                    Precio = 1150000m,
+                    Fecha = new DateTime(2024, 08, 04, 14, 45, 00),
+                    Direccion = "Avenida de los Andes, Cúcuta, Colombia",
+                    IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 5,
+                    Titulo = "Villas del Mar",
+                    Puntuacion = 4.8m,
+                    NumeroResenas = 134,
+                    Descripcion = "Villas del Mar ofrece una experiencia de lujo frente al mar con villas privadas, piscina infinita y servicios personalizados. Ideal para escapadas románticas o celebraciones especiales.",
+                    Precio = 1500000m,
+                    Fecha = new DateTime(2024, 08, 05, 16, 00, 00),
+                    Direccion = "Playa de San Andrés, San Andrés, Colombia",
+                    IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 6,
+                    Titulo = "Cabañas del Río",
+                    Puntuacion = 4.4m,
+                    NumeroResenas = 85,
+                    Descripcion = "Disfruta de una estancia relajante en Cabañas del Río, rodeado de la belleza natural de la región. Ofrecemos cabañas rústicas con acceso directo al río y actividades de pesca y senderismo.",
+                    Precio = 720000m,
+                    Fecha = new DateTime(2024, 08, 06, 09, 15, 00),
+                    Direccion = "Vereda El Río, Medellín, Colombia",
+                    IdAliado = "8142c33b-ee02-4a13-b0c1-1e941387433d"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 7,
+                    Titulo = "Rincón del Viento",
+                    Puntuacion = 4.1m,
+                    NumeroResenas = 63,
+                    Descripcion = "Rincón del Viento ofrece una experiencia de glamping en medio de la naturaleza con tiendas de lujo, fogatas y una vista impresionante de las montañas. Perfecto para una escapada romántica o una aventura familiar.",
+                    Precio = 860000m,
+                    Fecha = new DateTime(2024, 08, 07, 11, 30, 00),
+                    Direccion = "Km 20 Via Villa de Leyva, Boyacá, Colombia",
+                    IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 8,
+                    Titulo = "Hotel del Lago",
+                    Puntuacion = 4.5m,
+                    NumeroResenas = 142,
+                    Descripcion = "Hotel del Lago ofrece una estancia lujosa con vistas al lago, spa, y restaurante gourmet. Ideal para una experiencia de relax y confort con servicios de alta calidad.",
+                    Precio = 1050000m,
+                    Fecha = new DateTime(2024, 08, 08, 13, 00, 00),
+                    Direccion = "Río Guatapé, Antioquia, Colombia",
+                    IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 9,
+                    Titulo = "Centro de Bienestar Natural",
+                    Puntuacion = 1.0m,
+                    NumeroResenas = 167,
+                    Descripcion = "Vive una experiencia de bienestar total en nuestro centro de bienestar natural. Ofrecemos retiros de meditación, yoga, y spa en un entorno tranquilo y rejuvenecedor.",
+                    Precio = 1300000m,
+                    Fecha = new DateTime(2024, 08, 09, 10, 15, 00),
+                    Direccion = "Vereda La Primavera, Bogotá, Colombia",
+                    IdAliado = "c3733288-b354-445d-95da-4c655c3220b3"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 10,
+                    Titulo = "Aventura en la Selva",
+                    Puntuacion = 1.3m,
+                    NumeroResenas = 110,
+                    Descripcion = "Aventura en la Selva ofrece una experiencia única de ecoturismo con cabañas en la selva, guías especializados y actividades de exploración en la biodiversidad local.",
+                    Precio = 930000m,
+                    Fecha = new DateTime(2024, 08, 10, 15, 00, 00),
+                    Direccion = "Reserva Natural del Amazonas, Leticia, Colombia",
+                    IdAliado = "4c03648f-7727-4e5c-b096-fcbe3b9e3059"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 11,
+                    Titulo = "Casas del Valle",
+                    Puntuacion = 2.4m,
+                    NumeroResenas = 95,
+                    Descripcion = "Casas del Valle ofrece una estancia encantadora en casas de campo tradicionales con acceso a actividades al aire libre, incluyendo paseos a caballo y rutas de senderismo.",
+                    Precio = 785000m,
+                    Fecha = new DateTime(2024, 08, 11, 12, 45, 00),
+                    Direccion = "Vereda El Valle, Tunja, Colombia",
+                    IdAliado = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b"
+                },
+                new Publicacion
+                {
+                    IdPublicacion = 12,
+                    Titulo = "Camping de Montaña",
+                    Puntuacion = 3.0m,
+                    NumeroResenas = 80,
+                    Descripcion = "Camping de Montaña ofrece una experiencia auténtica de campamento con acceso a rutas de senderismo y vistas panorámicas de las montañas. Perfecto para los amantes de la naturaleza y la aventura.",
+                    Precio = 590000m,
+                    Fecha = new DateTime(2024, 08, 12, 08, 30, 00),
+                    Direccion = "Parque Nacional de los Nevados, Manizales, Colombia",
+                    IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4"
+                }
             );
 
 
