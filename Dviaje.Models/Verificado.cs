@@ -15,7 +15,7 @@ namespace Dviaje.Models
 
 
         [Column(TypeName = "timestamp")]
-        public DateTime FechaRespuesta { get; set; }
+        public DateTime? FechaRespuesta { get; set; }
 
 
         [Required(ErrorMessage = "El estado verificado es obligatorio.")]

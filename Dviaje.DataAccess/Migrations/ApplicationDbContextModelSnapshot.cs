@@ -46,6 +46,92 @@ namespace Dviaje.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Adjuntos");
+
+                    b.HasData(
+                        new
+                        {
+                            IdAdjunto = 1,
+                            IdAtencion = 1,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/queja_tourrtt.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 2,
+                            IdAtencion = 2,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/queja_tour.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 3,
+                            IdAtencion = 3,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/confirmacion_pago.pdf"
+                        },
+                        new
+                        {
+                            IdAdjunto = 4,
+                            IdAtencion = 3,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/itinerario_tour.pdf"
+                        },
+                        new
+                        {
+                            IdAdjunto = 5,
+                            IdAtencion = 4,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/felicitacion_tour.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 6,
+                            IdAtencion = 4,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/reembolso_traslado.pdf"
+                        },
+                        new
+                        {
+                            IdAdjunto = 7,
+                            IdAtencion = 9,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/informacion_tour.pdf"
+                        },
+                        new
+                        {
+                            IdAdjunto = 8,
+                            IdAtencion = 6,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/sugerencia_app.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 9,
+                            IdAtencion = 7,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/comprobante_reserva.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 10,
+                            IdAtencion = 1,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/agradecimiento_tour.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 11,
+                            IdAtencion = 8,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/problema_pago.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 12,
+                            IdAtencion = 3,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/comprobantesde_reserva.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 13,
+                            IdAtencion = 3,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/agradecimientosss_tour.jpg"
+                        },
+                        new
+                        {
+                            IdAdjunto = 14,
+                            IdAtencion = 9,
+                            RutaAdjunto = "https://DViaje.com/adjuntos/problemaconid_pago.jpg"
+                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.AtencionViajero", b =>
@@ -90,6 +176,124 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("AtencionViajeros");
+
+                    b.HasData(
+                        new
+                        {
+                            IdAtencion = 1,
+                            Asunto = "Queja por Servicio de Visita Guiada Retrasada el 25 de Julio",
+                            AtencionViajeroPrioridad = 2,
+                            AtencionViajeroTipoPqrs = 1,
+                            Descripcion = "Me gustaría presentar una queja sobre el servicio recibido el pasado 25 de julio de 2024 a través de su plataforma de turismo. Ese día, tenía programada una visita guiada para las 10:00 a.m. en el centro histórico, pero la guía no llegó hasta las 11:30 a.m., sin ninguna explicación por parte del equipo de soporte. Además, la atención recibida fue poco profesional, ya que la guía no pudo responder adecuadamente a mis preguntas sobre los lugares visitados. Agradecería una revisión de este caso y una explicación sobre lo ocurrido, así como las medidas que se tomarán para evitar que situaciones similares se repitan en el futuro. /n Adjunto capturas de pantalla de los correos de confirmación de mi reserva y del pago realizado como referencia.",
+                            FechaAtencion = new DateTime(2024, 7, 25, 10, 30, 50, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(2024, 7, 30, 7, 39, 20, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
+                            Respuesta = "Gracias por comunicarse con nosotros y por informarnos sobre su experiencia con nuestro servicio el 25 de julio de 2024. Lamentamos sinceramente los inconvenientes que experimentó durante su visita guiada y cualquier insatisfacción que esto le haya causado. /n Hemos revisado su caso y constatamos que hubo un problema de programación inesperado que retrasó la llegada de la guía. Apreciamos su paciencia y comprensión en esta situación. Hemos tomado medidas para mejorar nuestros procesos de planificación y comunicación con el equipo de guías para asegurarnos de que este tipo de incidentes no se repitan. /n Además, como gesto de disculpa, nos gustaría ofrecerle un reembolso completo del costo de su reserva y un descuento del 20% en su próxima visita con nosotros. Un representante de nuestro equipo se pondrá en contacto con usted en breve para gestionar el reembolso. /n Gracias por su comprensión y por darnos la oportunidad de corregir este error. Valoramos mucho su opinión y esperamos poder servirle mejor en el futuro."
+                        },
+                        new
+                        {
+                            IdAtencion = 2,
+                            Asunto = "Problemas Técnicos con la Aplicación de Audio-Guía",
+                            AtencionViajeroPrioridad = 2,
+                            AtencionViajeroTipoPqrs = 1,
+                            Descripcion = "Durante mi visita al museo el 20 de julio de 2024, experimenté varios problemas técnicos con la aplicación de audio-guía. La aplicación se cerraba inesperadamente, y no pude escuchar la mayoría de las explicaciones. Adjunto capturas de pantalla de los errores.",
+                            FechaAtencion = new DateTime(2024, 7, 20, 15, 45, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(2024, 7, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798",
+                            Respuesta = "Gracias por informarnos sobre los problemas técnicos que experimentó el 20 de julio de 2024. Hemos identificado el problema y estamos trabajando para solucionarlo. Como compensación, le ofrecemos un pase gratuito para su próxima visita."
+                        },
+                        new
+                        {
+                            IdAtencion = 3,
+                            Asunto = "Información sobre Tour Ecológico",
+                            AtencionViajeroPrioridad = 2,
+                            AtencionViajeroTipoPqrs = 0,
+                            Descripcion = "Solicito información adicional sobre el tour ecológico programado para el 15 de agosto de 2024. Me gustaría conocer más sobre las actividades incluidas y el equipo necesario.",
+                            FechaAtencion = new DateTime(2024, 7, 15, 12, 10, 30, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(2024, 7, 16, 8, 45, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
+                            Respuesta = "Gracias por su interés en nuestro tour ecológico. El tour incluye caminatas guiadas, observación de fauna y flora, y un taller de reciclaje. Se recomienda llevar ropa cómoda, repelente y cámara."
+                        },
+                        new
+                        {
+                            IdAtencion = 4,
+                            Asunto = "Cancelación de Reserva de Tour Gastronómico",
+                            AtencionViajeroPrioridad = 1,
+                            AtencionViajeroTipoPqrs = 0,
+                            Descripcion = "Deseo cancelar mi reserva para el tour gastronómico del 22 de julio de 2024 debido a un cambio de planes. Adjunto el número de reserva.",
+                            FechaAtencion = new DateTime(2024, 7, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(2024, 7, 19, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7",
+                            Respuesta = "Hemos procesado la cancelación de su reserva para el tour gastronómico del 22 de julio de 2024. Se ha iniciado el reembolso correspondiente, que debería reflejarse en su cuenta en 5-7 días hábiles."
+                        },
+                        new
+                        {
+                            IdAtencion = 5,
+                            Asunto = "Agradecimiento por Excelente Servicio en Tour de Aventura",
+                            AtencionViajeroPrioridad = 1,
+                            AtencionViajeroTipoPqrs = 3,
+                            Descripcion = "Me gustaría felicitar al equipo por el excelente servicio recibido durante el tour de aventura el 8 de julio de 2024. La guía fue muy profesional y las actividades bien organizadas.",
+                            FechaAtencion = new DateTime(2024, 7, 10, 9, 30, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(2024, 7, 11, 8, 15, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f",
+                            Respuesta = "Gracias por sus amables palabras y por reconocer el esfuerzo de nuestro equipo. Compartiremos sus comentarios con la guía y el resto del equipo. Nos alegra que haya disfrutado de su experiencia."
+                        },
+                        new
+                        {
+                            IdAtencion = 6,
+                            Asunto = "Retraso en el Servicio de Traslado al Aeropuerto",
+                            AtencionViajeroPrioridad = 1,
+                            AtencionViajeroTipoPqrs = 1,
+                            Descripcion = "El vehículo asignado para el traslado al aeropuerto el 22 de julio de 2024 no llegó a tiempo, y casi perdí mi vuelo. Agradecería una explicación y compensación por este inconveniente.",
+                            FechaAtencion = new DateTime(2024, 7, 22, 11, 15, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(2024, 7, 23, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            Respuesta = "Lamentamos sinceramente el retraso en su traslado al aeropuerto el 22 de julio de 2024. Investigamos el incidente y estamos mejorando nuestros procesos de logística. Le ofrecemos un descuento del 30% en su próximo servicio de traslado."
+                        },
+                        new
+                        {
+                            IdAtencion = 7,
+                            Asunto = "Consulta sobre Disponibilidad de Tours Privados para Familias",
+                            AtencionViajeroPrioridad = 0,
+                            AtencionViajeroTipoPqrs = 0,
+                            Descripcion = "Me gustaría saber si hay disponibilidad de tours privados para familias en agosto de 2024 y cuáles serían las opciones y precios.",
+                            FechaAtencion = new DateTime(2024, 7, 17, 13, 45, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "9cd842af-b711-44cc-aa5e-3863e3c30b76"
+                        },
+                        new
+                        {
+                            IdAtencion = 8,
+                            Asunto = "Sugerencia para Mejorar la Aplicación Móvil",
+                            AtencionViajeroPrioridad = 0,
+                            AtencionViajeroTipoPqrs = 3,
+                            Descripcion = "Me gustaría proponer una mejora en su aplicación móvil. Sería útil poder descargar itinerarios y mapas para usarlos sin conexión.",
+                            FechaAtencion = new DateTime(2024, 7, 12, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "c654adef-5f0c-48e6-946a-52706f8ac520"
+                        },
+                        new
+                        {
+                            IdAtencion = 9,
+                            Asunto = "Falta de Confirmación de Reserva para Tour de Playa",
+                            AtencionViajeroPrioridad = 0,
+                            AtencionViajeroTipoPqrs = 2,
+                            Descripcion = "No recibí el correo de confirmación para mi reserva del tour de playa el 15 de julio de 2024. Adjunto el recibo de pago como comprobante.",
+                            FechaAtencion = new DateTime(2024, 7, 8, 8, 20, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "8142c33b-ee02-4a13-b0c1-1e941387433d"
+                        },
+                        new
+                        {
+                            IdAtencion = 10,
+                            Asunto = "Agradecimiento por Tour Cultural",
+                            AtencionViajeroPrioridad = 0,
+                            AtencionViajeroTipoPqrs = 3,
+                            Descripcion = "Quisiera expresar mi satisfacción por el excelente servicio recibido durante el tour cultural el 3 de julio de 2024. La organización fue impecable y la guía muy conocedora.",
+                            FechaAtencion = new DateTime(2024, 7, 5, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaRespuesta = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdUsuario = "39e10980-4df3-494a-bbe7-410e105f6551"
+                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Categoria", b =>
@@ -181,8 +385,8 @@ namespace Dviaje.DataAccess.Migrations
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp");
@@ -194,22 +398,36 @@ namespace Dviaje.DataAccess.Migrations
                     b.Property<int>("NumeroResenas")
                         .HasColumnType("integer");
 
-                    b.Property<double>("Precio")
-                        .HasColumnType("numeric(10,2)");
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("numeric");
 
                     b.Property<decimal>("Puntuacion")
-                        .HasColumnType("numeric(1,1)");
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("IdPublicacion");
 
                     b.HasIndex("IdAliado");
 
                     b.ToTable("Publicaciones");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPublicacion = 1,
+                            Descripcion = "Descubre la magia de la naturaleza sin renunciar a las comodidades del hogar en Casa Quincha Glamping. Ubicada en un entorno sereno y pintoresco, nuestra experiencia de glamping combina el lujo y la aventura, ofreciendo una estancia inolvidable para quienes buscan relajarse y reconectar con el entorno natural.",
+                            Direccion = "Km 5 Via San Francisco - Supatá, San Francisco 253601 Colombia",
+                            Fecha = new DateTime(2024, 8, 1, 14, 15, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            NumeroResenas = 150,
+                            Precio = 813000m,
+                            Puntuacion = 4.3m,
+                            Titulo = "Casa Quincha Glamping"
+                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.PublicacionCategoria", b =>
@@ -482,7 +700,7 @@ namespace Dviaje.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdVerificado"));
 
-                    b.Property<DateTime>("FechaRespuesta")
+                    b.Property<DateTime?>("FechaRespuesta")
                         .HasColumnType("timestamp");
 
                     b.Property<DateTime>("FechaSolicitud")
@@ -500,6 +718,102 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdAliado");
 
                     b.ToTable("Verificados");
+
+                    b.HasData(
+                        new
+                        {
+                            IdVerificado = 1,
+                            FechaRespuesta = new DateTime(2024, 7, 15, 10, 10, 54, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 8, 8, 20, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            VerificadoEstado = 1
+                        },
+                        new
+                        {
+                            IdVerificado = 2,
+                            FechaRespuesta = new DateTime(2024, 7, 18, 11, 30, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 10, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
+                            VerificadoEstado = 1
+                        },
+                        new
+                        {
+                            IdVerificado = 3,
+                            FechaRespuesta = new DateTime(2024, 7, 20, 16, 25, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 12, 14, 45, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520",
+                            VerificadoEstado = 1
+                        },
+                        new
+                        {
+                            IdVerificado = 4,
+                            FechaRespuesta = new DateTime(2024, 7, 22, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 15, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "8142c33b-ee02-4a13-b0c1-1e941387433d",
+                            VerificadoEstado = 1
+                        },
+                        new
+                        {
+                            IdVerificado = 5,
+                            FechaRespuesta = new DateTime(2024, 7, 25, 14, 15, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 18, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551",
+                            VerificadoEstado = 1
+                        },
+                        new
+                        {
+                            IdVerificado = 6,
+                            FechaRespuesta = new DateTime(2024, 7, 27, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 20, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "c3733288-b354-445d-95da-4c655c3220b3",
+                            VerificadoEstado = 1
+                        },
+                        new
+                        {
+                            IdVerificado = 7,
+                            FechaRespuesta = new DateTime(2024, 7, 29, 15, 45, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 22, 13, 20, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
+                            VerificadoEstado = 2
+                        },
+                        new
+                        {
+                            IdVerificado = 8,
+                            FechaRespuesta = new DateTime(2024, 8, 1, 9, 30, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 25, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
+                            VerificadoEstado = 2
+                        },
+                        new
+                        {
+                            IdVerificado = 9,
+                            FechaRespuesta = new DateTime(2024, 8, 4, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 28, 10, 45, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
+                            VerificadoEstado = 2
+                        },
+                        new
+                        {
+                            IdVerificado = 10,
+                            FechaRespuesta = new DateTime(2024, 8, 6, 14, 15, 0, 0, DateTimeKind.Unspecified),
+                            FechaSolicitud = new DateTime(2024, 7, 30, 11, 30, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
+                            VerificadoEstado = 2
+                        },
+                        new
+                        {
+                            IdVerificado = 11,
+                            FechaSolicitud = new DateTime(2024, 8, 3, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
+                            VerificadoEstado = 0
+                        },
+                        new
+                        {
+                            IdVerificado = 12,
+                            FechaSolicitud = new DateTime(2024, 8, 3, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdAliado = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
+                            VerificadoEstado = 0
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -763,6 +1077,106 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             UserId = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
                             RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "c654adef-5f0c-48e6-946a-52706f8ac520",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "8142c33b-ee02-4a13-b0c1-1e941387433d",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "39e10980-4df3-494a-bbe7-410e105f6551",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "c3733288-b354-445d-95da-4c655c3220b3",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
+                            RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39"
+                        },
+                        new
+                        {
+                            UserId = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "c654adef-5f0c-48e6-946a-52706f8ac520",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "8142c33b-ee02-4a13-b0c1-1e941387433d",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "39e10980-4df3-494a-bbe7-410e105f6551",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "c3733288-b354-445d-95da-4c655c3220b3",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
+                        },
+                        new
+                        {
+                            UserId = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
+                            RoleId = "651e4e93-f8a9-4c4e-9e85-9f0aea1d1894"
                         });
                 });
 
@@ -792,6 +1206,10 @@ namespace Dviaje.DataAccess.Migrations
                     b.Property<int>("AliadoEstado")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Avatar")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
                     b.Property<string>("Direccion")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -813,7 +1231,235 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("RazonSocial")
                         .IsUnique();
 
+                    b.ToTable("AspNetUsers", t =>
+                        {
+                            t.Property("Avatar")
+                                .HasColumnName("Aliado_Avatar");
+                        });
+
                     b.HasDiscriminator().HasValue("Aliado");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "28c5a33c-5474-4647-a03b-f257fef94797",
+                            Email = "info@colombiaadventure.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "INFO@COLOMBIAADVENTURE.COM",
+                            NormalizedUserName = "COLOMBIAADV",
+                            PhoneNumber = "3216549870",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a41bada8-94b9-4f96-8b4a-0a7467cdcd40",
+                            TwoFactorEnabled = false,
+                            UserName = "ColombiaAdv",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Carrera 7 # 45-23",
+                            RazonSocial = "Colombia Adventure",
+                            SitioWeb = "www.colombiaadventure.com",
+                            Verificado = true
+                        },
+                        new
+                        {
+                            Id = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "488a39a3-e1b7-42b1-9bff-7e18f91d39a6",
+                            Email = "contact@bogotatours.co",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CONTACT@BOGOTATOURS.CO",
+                            NormalizedUserName = "BOGOTATOURS",
+                            PhoneNumber = "3123456789",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "73fe02bb-cdb0-471d-ba00-9af346bb0914",
+                            TwoFactorEnabled = false,
+                            UserName = "BogotaTours",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1678009859747-9f4620e0c355?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Avenida 6 # 12-34",
+                            RazonSocial = "Bogotá Tours",
+                            SitioWeb = "www.bogotatours.co",
+                            Verificado = true
+                        },
+                        new
+                        {
+                            Id = "c654adef-5f0c-48e6-946a-52706f8ac520",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0d49c0f9-0dd0-48bc-87e8-f0521ac0af12",
+                            Email = "hello@medellinexplore.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HELLO@MEDELLINEXPLORE.COM",
+                            NormalizedUserName = "MEDELLINEXPLORE",
+                            PhoneNumber = "3198765432",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "9e79c2cd-bac5-493f-809c-5ae9a21760c9",
+                            TwoFactorEnabled = false,
+                            UserName = "MedellinExplore",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1673213314908-5b1863e742d1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Calle 80 # 25-67",
+                            RazonSocial = "Medellín Explore",
+                            SitioWeb = "www.medellinexplore.com",
+                            Verificado = true
+                        },
+                        new
+                        {
+                            Id = "8142c33b-ee02-4a13-b0c1-1e941387433d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c138a801-5035-4891-9e52-481b1dfc6ca5",
+                            Email = "support@cartagenagetaways.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SUPPORT@CARTAGENAGETAWAYS.COM",
+                            NormalizedUserName = "CARTAGENAGETAWAYS",
+                            PhoneNumber = "3176543210",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "16f6142d-71b7-4924-8529-902e793a2925",
+                            TwoFactorEnabled = false,
+                            UserName = "CartagenaGetaways",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1691225409811-a64942a0596a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Bocagrande, Avenida San Martín # 11-43",
+                            RazonSocial = "Cartagena Getaways",
+                            SitioWeb = "www.cartagenagetaways.com",
+                            Verificado = true
+                        },
+                        new
+                        {
+                            Id = "39e10980-4df3-494a-bbe7-410e105f6551",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d58f1edf-535c-4e69-8950-f59da859b734",
+                            Email = "info@santamartaadventures.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "INFO@SANTAMARTAADVENTURES.COM",
+                            NormalizedUserName = "SANTAMARTAADV",
+                            PhoneNumber = "3154321098",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "d8c73ba3-1c50-429b-8f09-54d425d1d3fc",
+                            TwoFactorEnabled = false,
+                            UserName = "SantaMartaAdv",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1543746746-46047c4f4bb0?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Centro Histórico, Carrera 2 # 10-55",
+                            RazonSocial = "Santa Marta Adventures",
+                            SitioWeb = "www.santamartaadventures.com",
+                            Verificado = true
+                        },
+                        new
+                        {
+                            Id = "c3733288-b354-445d-95da-4c655c3220b3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9879c34a-c87a-4de7-a3f3-1b14272d3fab",
+                            Email = "contact@caliexperiences.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CONTACT@CALIEXPERIENCES.COM",
+                            NormalizedUserName = "CALIEXP",
+                            PhoneNumber = "3132109876",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "1beeebf1-2eb2-41aa-a2af-9a34ea205641",
+                            TwoFactorEnabled = false,
+                            UserName = "CaliExp",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1523345863760-5b7f3472d14f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Barrio San Antonio, Carrera 10 # 5-32",
+                            RazonSocial = "Cali Experiences",
+                            SitioWeb = "www.caliexperiences.com",
+                            Verificado = true
+                        },
+                        new
+                        {
+                            Id = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d65bff5a-2b48-420c-afe8-87b2632b6d80",
+                            Email = "hello@barranquillaescapes.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HELLO@BARRANQUILLAESCAPES.COM",
+                            NormalizedUserName = "BQUILLAESCAPES",
+                            PhoneNumber = "3140987654",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "6bab02bc-a7a3-42f6-a6dc-8ab8a4ea933f",
+                            TwoFactorEnabled = false,
+                            UserName = "BquillaEscapes",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1492294112339-ea831887e5d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVyaXNtfGVufDB8fDB8fHwy",
+                            Direccion = "Vía 40 # 72-20",
+                            RazonSocial = "Barranquilla Escapes",
+                            SitioWeb = "www.barranquillaescapes.com",
+                            Verificado = false
+                        },
+                        new
+                        {
+                            Id = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6987555f-43cd-44dd-9cd3-640d5ceb4ac8",
+                            Email = "support@bucaramangajourneys.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SUPPORT@BUCARAMANGAJOURNEYS.COM",
+                            NormalizedUserName = "BUCARAJOURNEYS",
+                            PhoneNumber = "3229876543",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "9ee6a172-6d1b-4a80-a755-4a6f26bb9265",
+                            TwoFactorEnabled = false,
+                            UserName = "BucaraJourneys",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1463839346397-8e9946845e6d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D",
+                            Direccion = "Cabecera, Carrera 33 # 45-67",
+                            RazonSocial = "Bucaramanga Journeys",
+                            SitioWeb = "www.bucaramangajourneys.com",
+                            Verificado = false
+                        },
+                        new
+                        {
+                            Id = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7971714e-9255-4bd3-bbc5-033eaaef1907",
+                            Email = "info@pereiratravels.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "INFO@PEREIRATRAVELS.COM",
+                            NormalizedUserName = "PEREIRATRAVELS",
+                            PhoneNumber = "3107654321",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "66077e3b-04c5-4c48-b98d-9682011d62fc",
+                            TwoFactorEnabled = false,
+                            UserName = "PereiraTravels",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1519998334409-c7c6b1147f65?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D",
+                            Direccion = "Avenida Circunvalar # 18-10",
+                            RazonSocial = "Pereira Travels",
+                            SitioWeb = "www.pereiratravels.com",
+                            Verificado = false
+                        },
+                        new
+                        {
+                            Id = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ed9e7f58-61a0-4617-a24a-4da8a1f016e8",
+                            Email = "contact@manizaleswonders.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CONTACT@MANIZALESWONDERS.COM",
+                            NormalizedUserName = "MANIZALESWONDERS",
+                            PhoneNumber = "3165432109",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "07d25194-880f-4e7a-b5d6-1df9b8fce9c0",
+                            TwoFactorEnabled = false,
+                            UserName = "ManizalesWonders",
+                            AliadoEstado = 0,
+                            Avatar = "https://images.unsplash.com/photo-1532878056386-1e96eb5221ad?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D",
+                            Direccion = "Centro, Carrera 23 # 17-18",
+                            RazonSocial = "Manizales Wonders",
+                            SitioWeb = "www.manizaleswonders.com",
+                            Verificado = false
+                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Usuario", b =>
@@ -834,7 +1480,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ceb1cae2-31de-4856-bad8-c4cdf4eb3dde",
+                            ConcurrencyStamp = "7be91b1a-17ee-4ad6-9945-a08f3058f063",
                             Email = "andres@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -842,7 +1488,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANDRES",
                             PhoneNumber = "3159725595",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "f6caecc2-9b3a-4787-af10-69b13bbef353",
+                            SecurityStamp = "669c66b4-cd07-45f8-ada7-0d283e016cfd",
                             TwoFactorEnabled = false,
                             UserName = "Andres",
                             Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -851,7 +1497,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "26cfe5c9-00f8-411e-b589-df3405a8b798",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fc221577-342b-4c71-9e76-d59f4a2837c2",
+                            ConcurrencyStamp = "df448b3f-57bc-4308-b367-9634800b0e85",
                             Email = "maria@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -859,7 +1505,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MARIA",
                             PhoneNumber = "3101234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "0cbb88d9-3ccb-4792-b737-749e199b2c3b",
+                            SecurityStamp = "fb7c664e-72fa-4b97-8202-4cfa378091d7",
                             TwoFactorEnabled = false,
                             UserName = "Maria",
                             Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -868,7 +1514,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "21e68587-3782-48e4-b767-7c697ebde426",
+                            ConcurrencyStamp = "349e0959-b8ed-4413-92bc-966b8260e463",
                             Email = "carlos@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -876,7 +1522,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARLOS",
                             PhoneNumber = "3189876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "cbf8a3ce-2c74-4c43-9326-c03e6c93f2ed",
+                            SecurityStamp = "ace7ab5b-227d-4deb-9fa7-7ff63432fb63",
                             TwoFactorEnabled = false,
                             UserName = "Carlos",
                             Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -885,7 +1531,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "e4309639-4588-4553-8c14-5ce4426e0dd7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8bb68220-57ec-455d-a264-44388ef85524",
+                            ConcurrencyStamp = "33056936-54d6-4523-85bb-c962e23b7341",
                             Email = "sofia@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -893,7 +1539,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SOFIA",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "8f25e936-03f4-46b2-b6e5-ea6ded0d12bf",
+                            SecurityStamp = "4f5a18d9-ab0e-4a23-8083-d1ad2be6b281",
                             TwoFactorEnabled = false,
                             UserName = "Sofia",
                             Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -902,7 +1548,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "3a895383-b546-4693-8246-924a9fc5289f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "127dc7a5-7f65-42ed-8df2-6ca452ce5438",
+                            ConcurrencyStamp = "87c5859d-8e67-43db-a41a-f59c0ec52dc4",
                             Email = "luis@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -910,7 +1556,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "LUIS",
                             PhoneNumber = "3112345678",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "2a215468-0de1-4e88-b85a-385a6ceac830",
+                            SecurityStamp = "85ec739b-71a4-4beb-bfaf-a8ccb887f30b",
                             TwoFactorEnabled = false,
                             UserName = "Luis",
                             Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -919,7 +1565,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4e7a59f-4141-4500-93b5-9a550b341de9",
+                            ConcurrencyStamp = "811c0f5b-a24d-4974-924c-90a8c58fa7a8",
                             Email = "isabella@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -927,7 +1573,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ISABELLA",
                             PhoneNumber = "3179876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "cd1a47b7-3cff-4b08-98c2-a34603dd01e5",
+                            SecurityStamp = "5a7461f8-21c7-4a70-99db-3ef29932ae1b",
                             TwoFactorEnabled = false,
                             UserName = "Isabella",
                             Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -936,7 +1582,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "13825fa6-5c27-4303-ab17-6e13aac24c12",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb6d1d54-293a-4df9-be22-6cdf3d6d6b49",
+                            ConcurrencyStamp = "69a405de-711f-4a8c-90b0-0bff9d7e5f6d",
                             Email = "fernando@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -944,7 +1590,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "FERNANDO",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "3d4cf244-4eac-435b-8e1b-89b6836b1b1e",
+                            SecurityStamp = "0f8a94e1-107b-4d5d-b4a4-065e8440ea50",
                             TwoFactorEnabled = false,
                             UserName = "Fernando",
                             Avatar = "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -953,7 +1599,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0ec4ef68-ee24-4a8c-beb6-5ee83cef7236",
+                            ConcurrencyStamp = "beba93d4-79b7-4835-aa03-84a71bfc1478",
                             Email = "ana@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -961,7 +1607,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANA",
                             PhoneNumber = "3149876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "13f60b3e-9675-47eb-bd49-c02d65eec0bb",
+                            SecurityStamp = "54f6f689-140d-4470-a211-a403ce991308",
                             TwoFactorEnabled = false,
                             UserName = "Ana",
                             Avatar = "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -970,7 +1616,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2e59aa62-61bd-4c8d-9a3d-13f461696eab",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7b9c8b72-abb3-4bc2-a365-a40659859418",
+                            ConcurrencyStamp = "673b73a4-4d42-43b7-bc31-3a356fc60a48",
                             Email = "jorge@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -978,7 +1624,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "JORGE",
                             PhoneNumber = "3151234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6542ee83-d289-4404-a023-4a69defab324",
+                            SecurityStamp = "7fae8018-955b-41ae-8fef-9f88ea004262",
                             TwoFactorEnabled = false,
                             UserName = "Jorge",
                             Avatar = "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
@@ -987,7 +1633,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37904069-60cd-4c94-bac0-a6c9d37fff3d",
+                            ConcurrencyStamp = "0cbc29d0-3af1-4a53-a809-dfb7eb29b5b1",
                             Email = "gabriela@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -995,7 +1641,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "GABRIELA",
                             PhoneNumber = "3169876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "1edcb2fd-79b7-4dda-acbc-9c32accd1cb6",
+                            SecurityStamp = "d8cbdf48-d792-4ab4-8c12-8ff0be653b77",
                             TwoFactorEnabled = false,
                             UserName = "Gabriela",
                             Avatar = "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"

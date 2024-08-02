@@ -10,12 +10,12 @@ namespace Dviaje.Models
 
 
         [Required(ErrorMessage = "El título es obligatorio.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El título debe tener entre 3 y 50 caracteres.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "El título debe tener entre 3 y 50 caracteres.")]
         public string? Titulo { get; set; }
 
 
+        //[Column(TypeName = "numeric(2,1)")]
         [Range(0.0, 5.0, ErrorMessage = "La puntuación debe estar entre 0.0 y 5.0.")]
-        [Column(TypeName = "numeric(1,1)")]
         public decimal Puntuacion { get; set; }
 
 
@@ -29,10 +29,10 @@ namespace Dviaje.Models
         public string? Descripcion { get; set; }
 
 
+        //[Column(TypeName = "numeric(10,2)")]
         [Required(ErrorMessage = "El precio es obligatorio.")]
-        [Range(1.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor a 1.")]
-        [Column(TypeName = "numeric(10,2)")]
-        public double Precio { get; set; }
+        [Range(1.0, 10000000000.00, ErrorMessage = "El precio debe ser mayor a 1.")]
+        public decimal Precio { get; set; }
 
 
         [Required(ErrorMessage = "La fecha es obligatoria.")]
@@ -43,7 +43,7 @@ namespace Dviaje.Models
 
 
         [Required(ErrorMessage = "La dirección es obligatoria.")]
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 50 caracteres.")]
+        [StringLength(100, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 50 caracteres.")]
         public string? Direccion { get; set; }
 
 
