@@ -1,0 +1,24 @@
+﻿@model Publicacion
+
+<form method="post">
+
+    <label asp-for="Titulo"></label>
+    <input asp-for="Titulo" type="text" />
+    <span asp-validation-for="Titulo"></span>
+
+
+    <label asp-for="Descripcion"></label>
+    <input asp-for="Descripcion" type="text" />
+    <span asp-validation-for="Descripcion"></span>
+
+
+    <label asp-for="Precio"></label>
+    <input asp-for="Precio" type="number" />
+    <span asp-validation-for="Precio"></span>
+
+
+    <div asp-validation-summary="All"></div>
+
+
+    <button>Crear</button>
+</form>

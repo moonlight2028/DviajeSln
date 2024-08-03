@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
@@ -11,6 +12,7 @@ namespace Dviaje.Models
 
         [Required(ErrorMessage = "El título es obligatorio.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El título debe tener entre 3 y 50 caracteres.")]
+        [DisplayName("Título")]
         public string? Titulo { get; set; }
 
 
@@ -26,6 +28,7 @@ namespace Dviaje.Models
         [Required(ErrorMessage = "La descripción es obligatoria.")]
         [StringLength(1500, MinimumLength = 10, ErrorMessage = "La descripción debe tener entre 10 y 1500 caracteres.")]
         [Column(TypeName = "text")]
+        [DisplayName("Descripción")]
         public string? Descripcion { get; set; }
 
 
@@ -42,12 +45,10 @@ namespace Dviaje.Models
         public DateTime Fecha { get; set; }
 
 
-        [Required(ErrorMessage = "La dirección es obligatoria.")]
         [StringLength(100, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 50 caracteres.")]
         public string? Direccion { get; set; }
 
 
-        [Required]
         public string? IdAliado { get; set; }
 
 
