@@ -9,10 +9,10 @@ namespace Dviaje.Models
         public int IdServicioAdicional { get; set; }
 
 
-        [Required(ErrorMessage = "El precio del servicio adicional es obligatorio.")]
-        [Range(1.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor a 1.")]
         [Column(TypeName = "numeric(10,2)")]
-        public double PrecioServicioAdicional { get; set; }
+        [Required(ErrorMessage = "El precio es obligatorio.")]
+        [Range(1.0, 99999999.99, ErrorMessage = "El precio debe ser mayor a 1.")]
+        public decimal PrecioServicioAdicional { get; set; }
 
 
         [Required(ErrorMessage = "El ID del servicio es obligatorio.")]

@@ -860,7 +860,1008 @@ namespace Dviaje.DataAccess.Data
             );
 
 
+            // Registros de PublicacionFavorita.
+            modelBuilder.Entity<PublicacionFavorita>().HasData(
+                new PublicacionFavorita { IdPublicacionFavorita = 1, IdPublicacion = 1 },
+                new PublicacionFavorita { IdPublicacionFavorita = 2, IdPublicacion = 2 },
+                new PublicacionFavorita { IdPublicacionFavorita = 3, IdPublicacion = 3 },
+                new PublicacionFavorita { IdPublicacionFavorita = 4, IdPublicacion = 4 },
+                new PublicacionFavorita { IdPublicacionFavorita = 5, IdPublicacion = 5 }
+            );
 
+
+            // Registros de PublicacionImagen.
+            modelBuilder.Entity<PublicacionImagen>().HasData(
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 1,
+                    Ruta = "https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 1
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 2,
+                    Ruta = "https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 1
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 3,
+                    Ruta = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1421&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 1
+                },
+
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 4,
+                    Ruta = "https://unsplash.com/es/fotos/avion-en-el-cielo-durante-la-hora-dorada-M0AWNxnLaMw",
+                    IdPublicacion = 1
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 5,
+                    Ruta = "https://images.unsplash.com/photo-1504598318550-17eba1008a68?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 1
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 6,
+                    Ruta = "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 2
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 7,
+                    Ruta = "https://images.unsplash.com/photo-1473163928189-364b2c4e1135?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 2
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 8,
+                    Ruta = "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 2
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 9,
+                    Ruta = "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 10,
+                    Ruta = "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 11,
+                    Ruta = "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 12,
+                    Ruta = "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 13,
+                    Ruta = "https://images.unsplash.com/photo-1719937206491-ed673f64be1f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 14,
+                    Ruta = "https://images.unsplash.com/photo-1499063078284-f78f7d89616a?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 15,
+                    Ruta = "https://images.unsplash.com/photo-1522199710521-72d69614c702?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 3
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 16,
+                    Ruta = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 4
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 17,
+                    Ruta = "https://images.unsplash.com/photo-1512757776214-26d36777b513?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 4
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 18,
+                    Ruta = "https://images.unsplash.com/photo-1496950866446-3253e1470e8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 4
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 19,
+                    Ruta = "https://images.unsplash.com/photo-1476900543704-4312b78632f8?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 4
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 20,
+                    Ruta = "https://images.unsplash.com/photo-1707344088547-3cf7cea5ca49?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 4
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 21,
+                    Ruta = "https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 5
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 22,
+                    Ruta = "https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1368&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 5
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 23,
+                    Ruta = "https://images.unsplash.com/photo-1568849676085-51415703900f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 24,
+                    Ruta = "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 25,
+                    Ruta = "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 26,
+                    Ruta = "https://images.unsplash.com/photo-1504150558240-0b4fd8946624?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 27,
+                    Ruta = "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 28,
+                    Ruta = "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 29,
+                    Ruta = "https://images.unsplash.com/photo-1500301111609-42f1aa6df72a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 30,
+                    Ruta = "https://images.unsplash.com/photo-1500815845799-7748ca339f27?q=80&w=1527&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 6
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 31,
+                    Ruta = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 8
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 32,
+                    Ruta = "https://images.unsplash.com/photo-1526784725085-c69e947bf92e?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 8
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 33,
+                    Ruta = "https://images.unsplash.com/photo-1471623320832-752e8bbf8413?q=80&w=1410&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 8
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 34,
+                    Ruta = "https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=1492&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 8
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 35,
+                    Ruta = "https://images.unsplash.com/photo-1491800943052-1059ce1e1012?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 8
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 36,
+                    Ruta = "https://images.unsplash.com/photo-1551918120-9739cb430c6d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 8
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 37,
+                    Ruta = "https://images.unsplash.com/photo-1548625149-720134d51a3a?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 9
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 38,
+                    Ruta = "https://images.unsplash.com/photo-1492693429561-1c283eb1b2e8?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 9
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 39,
+                    Ruta = "https://images.unsplash.com/photo-1532347922424-c652d9b7208e?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 9
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 40,
+                    Ruta = "https://images.unsplash.com/photo-1567069160354-f25b26e62fa1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 9
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 41,
+                    Ruta = "https://images.unsplash.com/photo-1705588217460-d548807940ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 9
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 42,
+                    Ruta = "https://images.unsplash.com/photo-1558352541-95f7ac02fff2?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 43,
+                    Ruta = "https://images.unsplash.com/photo-1558461670-abf3421e18b6?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 44,
+                    Ruta = "https://images.unsplash.com/photo-1480497209098-7b9e9555bcee?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 45,
+                    Ruta = "https://images.unsplash.com/photo-1502489597346-dad15683d4c2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 46,
+                    Ruta = "https://images.unsplash.com/photo-1679420438051-19bd5aad4d67?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 47,
+                    Ruta = "https://images.unsplash.com/photo-1692308516530-5ffc490476a8?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 48,
+                    Ruta = "https://images.unsplash.com/photo-1704803269187-d6eb334ea5fe?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 10
+                }
+            );
+
+
+            // Registros de FechaNoDisponible.
+            modelBuilder.Entity<FechaNoDisponible>().HasData(
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 1,
+                    FechaInicial = new DateTime(2024, 07, 20, 15, 45, 00),
+                    FechaFinal = new DateTime(2024, 07, 30, 15, 45, 00),
+                    IdPublicacion = 1
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 2,
+                    FechaInicial = new DateTime(2024, 08, 01, 12, 00, 00),
+                    FechaFinal = new DateTime(2024, 08, 07, 12, 00, 00),
+                    IdPublicacion = 2
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 3,
+                    FechaInicial = new DateTime(2024, 08, 10, 09, 00, 00),
+                    FechaFinal = new DateTime(2024, 08, 15, 18, 00, 00),
+                    IdPublicacion = 3
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 4,
+                    FechaInicial = new DateTime(2024, 08, 12, 10, 00, 00),
+                    FechaFinal = new DateTime(2024, 08, 18, 14, 00, 00),
+                    IdPublicacion = 4
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 5,
+                    FechaInicial = new DateTime(2024, 08, 20, 16, 00, 00),
+                    FechaFinal = new DateTime(2024, 08, 25, 11, 00, 00),
+                    IdPublicacion = 5
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 6,
+                    FechaInicial = new DateTime(2024, 08, 22, 08, 30, 00),
+                    FechaFinal = new DateTime(2024, 08, 29, 09, 30, 00),
+                    IdPublicacion = 6
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 7,
+                    FechaInicial = new DateTime(2024, 08, 25, 15, 00, 00),
+                    FechaFinal = new DateTime(2024, 09, 02, 10, 00, 00),
+                    IdPublicacion = 7
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 8,
+                    FechaInicial = new DateTime(2024, 09, 01, 11, 00, 00),
+                    FechaFinal = new DateTime(2024, 09, 10, 11, 00, 00),
+                    IdPublicacion = 8
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 9,
+                    FechaInicial = new DateTime(2024, 09, 05, 14, 00, 00),
+                    FechaFinal = new DateTime(2024, 09, 12, 17, 00, 00),
+                    IdPublicacion = 9
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 10,
+                    FechaInicial = new DateTime(2024, 09, 10, 09, 00, 00),
+                    FechaFinal = new DateTime(2024, 09, 15, 12, 00, 00),
+                    IdPublicacion = 10
+                },
+                new FechaNoDisponible
+                {
+                    IdFechaNoDisponible = 11,
+                    FechaInicial = new DateTime(2024, 11, 12, 13, 00, 00),
+                    FechaFinal = new DateTime(2024, 11, 20, 14, 00, 00),
+                    IdPublicacion = 1
+                }
+            );
+
+
+            // Registros de Reserva.
+            modelBuilder.Entity<Reserva>().HasData(
+                new Reserva
+                {
+                    IdReserva = 1,
+                    FechaInicial = new DateTime(2024, 09, 20, 15, 45, 00),
+                    FechaFinal = new DateTime(2024, 09, 24, 15, 45, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 3,
+                    IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
+                    IdPublicacion = 1
+                },
+                new Reserva
+                {
+                    IdReserva = 2,
+                    FechaInicial = new DateTime(2024, 09, 25, 10, 00, 00),
+                    FechaFinal = new DateTime(2024, 09, 30, 11, 00, 00),
+                    ReservaEstado = ReservaEstado.Activo,
+                    NumeroPersonas = 2,
+                    IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798",
+                    IdPublicacion = 1
+                },
+                new Reserva
+                {
+                    IdReserva = 3,
+                    FechaInicial = new DateTime(2024, 10, 01, 14, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 07, 12, 00, 00),
+                    ReservaEstado = ReservaEstado.Cancelado,
+                    NumeroPersonas = 4,
+                    IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
+                    IdPublicacion = 1
+                },
+                new Reserva
+                {
+                    IdReserva = 4,
+                    FechaInicial = new DateTime(2024, 10, 10, 16, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 15, 10, 00, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 5,
+                    IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7",
+                    IdPublicacion = 1
+                },
+                new Reserva
+                {
+                    IdReserva = 5,
+                    FechaInicial = new DateTime(2024, 10, 12, 11, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 18, 14, 00, 00),
+                    ReservaEstado = ReservaEstado.Activo,
+                    NumeroPersonas = 2,
+                    IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
+                    IdPublicacion = 2
+                },
+                new Reserva
+                {
+                    IdReserva = 6,
+                    FechaInicial = new DateTime(2024, 10, 15, 09, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 20, 12, 00, 00),
+                    ReservaEstado = ReservaEstado.Cancelado,
+                    NumeroPersonas = 4,
+                    IdUsuario = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
+                    IdPublicacion = 2
+                },
+                new Reserva
+                {
+                    IdReserva = 7,
+                    FechaInicial = new DateTime(2024, 10, 18, 08, 30, 00),
+                    FechaFinal = new DateTime(2024, 10, 22, 15, 00, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 3,
+                    IdUsuario = "13825fa6-5c27-4303-ab17-6e13aac24c12",
+                    IdPublicacion = 2
+                },
+                new Reserva
+                {
+                    IdReserva = 8,
+                    FechaInicial = new DateTime(2024, 10, 20, 10, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 25, 16, 00, 00),
+                    ReservaEstado = ReservaEstado.Activo,
+                    NumeroPersonas = 6,
+                    IdUsuario = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
+                    IdPublicacion = 2
+                },
+                new Reserva
+                {
+                    IdReserva = 9,
+                    FechaInicial = new DateTime(2024, 10, 22, 14, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 28, 11, 00, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 2,
+                    IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f",
+                    IdPublicacion = 3
+                },
+                new Reserva
+                {
+                    IdReserva = 10,
+                    FechaInicial = new DateTime(2024, 10, 25, 12, 00, 00),
+                    FechaFinal = new DateTime(2024, 10, 30, 13, 00, 00),
+                    ReservaEstado = ReservaEstado.Cancelado,
+                    NumeroPersonas = 5,
+                    IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
+                    IdPublicacion = 3
+                },
+                new Reserva
+                {
+                    IdReserva = 11,
+                    FechaInicial = new DateTime(2024, 10, 28, 09, 00, 00),
+                    FechaFinal = new DateTime(2024, 11, 02, 10, 00, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 4,
+                    IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798",
+                    IdPublicacion = 4
+                },
+                new Reserva
+                {
+                    IdReserva = 12,
+                    FechaInicial = new DateTime(2024, 10, 30, 11, 00, 00),
+                    FechaFinal = new DateTime(2024, 11, 05, 12, 00, 00),
+                    ReservaEstado = ReservaEstado.Activo,
+                    NumeroPersonas = 3,
+                    IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7",
+                    IdPublicacion = 5
+                },
+                new Reserva
+                {
+                    IdReserva = 13,
+                    FechaInicial = new DateTime(2024, 11, 01, 15, 00, 00),
+                    FechaFinal = new DateTime(2024, 11, 08, 11, 00, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 2,
+                    IdUsuario = "13825fa6-5c27-4303-ab17-6e13aac24c12",
+                    IdPublicacion = 6
+                },
+                new Reserva
+                {
+                    IdReserva = 14,
+                    FechaInicial = new DateTime(2024, 11, 05, 10, 00, 00),
+                    FechaFinal = new DateTime(2024, 11, 12, 16, 00, 00),
+                    ReservaEstado = ReservaEstado.Cancelado,
+                    NumeroPersonas = 6,
+                    IdUsuario = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
+                    IdPublicacion = 6
+                },
+                new Reserva
+                {
+                    IdReserva = 15,
+                    FechaInicial = new DateTime(2024, 11, 10, 14, 00, 00),
+                    FechaFinal = new DateTime(2024, 11, 15, 13, 00, 00),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    NumeroPersonas = 5,
+                    IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
+                    IdPublicacion = 9
+                }
+            );
+
+
+            // Registros de Resena.
+            modelBuilder.Entity<Resena>().HasData(
+                new Resena
+                {
+                    IdResena = 1,
+                    Opinion = "Muy tranquilo, privado y atención personalizada, muy atentos a nuestras necesidades y solicitudes, la llegada fácil a borde de la carretera lo cual es una ventaja para carros bajitos, la comida deliciosa y un personal atento, amable y respetuoso.",
+                    Fecha = new DateTime(2024, 11, 05, 10, 00, 00),
+                    Calificacion = 4,
+                    MeGusta = 3,
+                    IdReserva = 1
+                },
+                new Resena
+                {
+                    IdResena = 2,
+                    Opinion = "La estancia fue excelente, el lugar es hermoso y muy bien cuidado. La atención del personal fue impecable y siempre estuvieron disponibles para cualquier solicitud. La ubicación es perfecta para quienes buscan paz y tranquilidad.",
+                    Fecha = new DateTime(2024, 11, 07, 14, 30, 00),
+                    Calificacion = 5,
+                    MeGusta = 8,
+                    IdReserva = 4
+                },
+                new Resena
+                {
+                    IdResena = 3,
+                    Opinion = "El alojamiento es bastante bueno, aunque el servicio podría mejorar en términos de tiempo de respuesta. La limpieza estaba bien, pero la comida no cumplió completamente con nuestras expectativas.",
+                    Fecha = new DateTime(2024, 11, 10, 16, 15, 00),
+                    Calificacion = 3,
+                    MeGusta = 2,
+                    IdReserva = 7
+                },
+                new Resena
+                {
+                    IdResena = 4,
+                    Opinion = "Un lugar acogedor con un ambiente muy relajante. El personal es amable y la comida es deliciosa. Sin embargo, hubo algunos problemas con la conexión a internet durante nuestra estancia.",
+                    Fecha = new DateTime(2024, 11, 12, 09, 45, 00),
+                    Calificacion = 4,
+                    MeGusta = 5,
+                    IdReserva = 9
+                },
+                new Resena
+                {
+                    IdResena = 5,
+                    Opinion = "La experiencia fue muy buena en general. Las instalaciones estaban limpias y bien mantenidas. El check-in fue rápido y sin problemas, pero el precio es un poco alto para lo que ofrecen.",
+                    Fecha = new DateTime(2024, 11, 15, 11, 00, 00),
+                    Calificacion = 4,
+                    MeGusta = 6,
+                    IdReserva = 11
+                },
+                new Resena
+                {
+                    IdResena = 6,
+                    Opinion = "El lugar es encantador y muy cómodo. La atención del personal fue muy buena y hicieron todo lo posible para que nuestra estancia fuera agradable. Recomendado para una escapada de fin de semana.",
+                    Fecha = new DateTime(2024, 11, 18, 13, 30, 00),
+                    Calificacion = 5,
+                    MeGusta = 7,
+                    IdReserva = 13
+                },
+                new Resena
+                {
+                    IdResena = 7,
+                    Opinion = "Buena ubicación, pero la habitación necesitaba una mejor limpieza. La comida estaba bien, pero no había muchas opciones en el menú. El personal fue amable, aunque a veces parecía desorganizado.",
+                    Fecha = new DateTime(2024, 11, 20, 15, 00, 00),
+                    Calificacion = 3,
+                    MeGusta = 3,
+                    IdReserva = 15
+                }
+            );
+
+
+            // Registros de Servicio.
+            modelBuilder.Entity<Servicio>().HasData(
+                // Servicios de establecimiento
+                new Servicio
+                {
+                    IdServicio = 1,
+                    NombreServicio = "Piscina",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-water-ladder"
+                },
+                new Servicio
+                {
+                    IdServicio = 2,
+                    NombreServicio = "Piscina techada",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-water-ladder"
+                },
+                new Servicio
+                {
+                    IdServicio = 3,
+                    NombreServicio = "Parqueadero",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-square-parking"
+                },
+                new Servicio
+                {
+                    IdServicio = 4,
+                    NombreServicio = "Restaurante",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-utensils"
+                }, new Servicio
+                {
+                    IdServicio = 5,
+                    NombreServicio = "Bañera de hidromasaje",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bath"
+                },
+                new Servicio
+                {
+                    IdServicio = 6,
+                    NombreServicio = "Spa",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-spa"
+                },
+                new Servicio
+                {
+                    IdServicio = 7,
+                    NombreServicio = "Gimnasio",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-dumbbell"
+                },
+                new Servicio
+                {
+                    IdServicio = 8,
+                    NombreServicio = "Sauna",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-hot-tub-person"
+                },
+                new Servicio
+                {
+                    IdServicio = 9,
+                    NombreServicio = "Sombrillas de playa",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-umbrella-beach"
+                },
+                new Servicio
+                {
+                    IdServicio = 10,
+                    NombreServicio = "Desayuno incluido",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bacon"
+                },
+                new Servicio
+                {
+                    IdServicio = 11,
+                    NombreServicio = "Centro de negocios",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-business-time"
+                },
+                new Servicio
+                {
+                    IdServicio = 12,
+                    NombreServicio = "Acepta mascotas",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-paw"
+                },
+                new Servicio
+                {
+                    IdServicio = 13,
+                    NombreServicio = "Recepción disponible 24 horas",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bell-concierge"
+                },
+                new Servicio
+                {
+                    IdServicio = 14,
+                    NombreServicio = "Servicio de lavandería",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-jug-detergent"
+                }, new Servicio
+                {
+                    IdServicio = 15,
+                    NombreServicio = "Salas de reuniones",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-people-roof"
+                },
+                new Servicio
+                {
+                    IdServicio = 16,
+                    NombreServicio = "Cajero automático",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-money-bills"
+                },
+                new Servicio
+                {
+                    IdServicio = 17,
+                    NombreServicio = "Piscina climatizada",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-water-ladder"
+                },
+                new Servicio
+                {
+                    IdServicio = 18,
+                    NombreServicio = "Alquiler de bicicletas",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-bicycle"
+                },
+                new Servicio
+                {
+                    IdServicio = 19,
+                    NombreServicio = "Sala de juegos",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-table-tennis-paddle-ball"
+                },
+                new Servicio
+                {
+                    IdServicio = 20,
+                    NombreServicio = "Piscina al aire libre",
+                    ServicioTipo = ServicioTipo.Establecimiento,
+                    RutaIcono = "fa-solid fa-person-swimming"
+                },
+
+                // Servicios de habitacion
+                new Servicio
+                {
+                    IdServicio = 21,
+                    NombreServicio = "Wi-Fi",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-wifi"
+                },
+                new Servicio
+                {
+                    IdServicio = 22,
+                    NombreServicio = "Internet",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-network-wired"
+                },
+                new Servicio
+                {
+                    IdServicio = 23,
+                    NombreServicio = "Aire acondicionado",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-wind"
+                },
+                new Servicio
+                {
+                    IdServicio = 24,
+                    NombreServicio = "Cocina",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-kitchen-set"
+                },
+                new Servicio
+                {
+                    IdServicio = 25,
+                    NombreServicio = "Balcón/Terraza",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-house"
+                },
+                new Servicio
+                {
+                    IdServicio = 26,
+                    NombreServicio = "Bañera",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-bath"
+                },
+                new Servicio
+                {
+                    IdServicio = 27,
+                    NombreServicio = "Minibar",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-champagne-glasses"
+                },
+                new Servicio
+                {
+                    IdServicio = 28,
+                    NombreServicio = "Servicio de limpieza",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-broom"
+                },
+                new Servicio
+                {
+                    IdServicio = 29,
+                    NombreServicio = "Secador de pelo",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-wind"
+                },
+                new Servicio
+                {
+                    IdServicio = 30,
+                    NombreServicio = "Teléfono",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-phone"
+                },
+                new Servicio
+                {
+                    IdServicio = 31,
+                    NombreServicio = "Balcón privado",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-house"
+                },
+                new Servicio
+                {
+                    IdServicio = 32,
+                    NombreServicio = "Horno",
+                    ServicioTipo = ServicioTipo.Habitacion,
+                    RutaIcono = "fa-solid fa-fire-burner"
+                },
+
+                // Servicios de accesibilidad
+                new Servicio
+                {
+                    IdServicio = 33,
+                    NombreServicio = "Acceso silla de ruedas",
+                    ServicioTipo = ServicioTipo.Accesibilidad,
+                    RutaIcono = "fa-solid fa-wheelchair"
+                },
+                new Servicio
+                {
+                    IdServicio = 34,
+                    NombreServicio = "Hab. p/ personas con discapacidad",
+                    ServicioTipo = ServicioTipo.Accesibilidad,
+                    RutaIcono = "fa-solid fa-house-user"
+                },
+                new Servicio
+                {
+                    IdServicio = 35,
+                    NombreServicio = "Parqueadero p/ personas con discapacidad",
+                    ServicioTipo = ServicioTipo.Accesibilidad,
+                    RutaIcono = "fa-solid fa-square-parking"
+                }
+            );
+
+
+            // Registros de ServicioAdicional.
+            modelBuilder.Entity<ServicioAdicional>().HasData(
+                new ServicioAdicional { IdServicioAdicional = 1, PrecioServicioAdicional = 50000m, IdServicio = 1, IdPublicacion = 1 },
+                new ServicioAdicional { IdServicioAdicional = 3, PrecioServicioAdicional = 60000m, IdServicio = 2, IdPublicacion = 2 },
+                new ServicioAdicional { IdServicioAdicional = 4, PrecioServicioAdicional = 70000m, IdServicio = 3, IdPublicacion = 3 },
+                new ServicioAdicional { IdServicioAdicional = 5, PrecioServicioAdicional = 80000m, IdServicio = 4, IdPublicacion = 4 },
+                new ServicioAdicional { IdServicioAdicional = 6, PrecioServicioAdicional = 90000m, IdServicio = 5, IdPublicacion = 5 },
+                new ServicioAdicional { IdServicioAdicional = 7, PrecioServicioAdicional = 100000m, IdServicio = 6, IdPublicacion = 6 },
+                new ServicioAdicional { IdServicioAdicional = 8, PrecioServicioAdicional = 110000m, IdServicio = 7, IdPublicacion = 7 },
+                new ServicioAdicional { IdServicioAdicional = 9, PrecioServicioAdicional = 120000m, IdServicio = 8, IdPublicacion = 8 },
+                new ServicioAdicional { IdServicioAdicional = 10, PrecioServicioAdicional = 130000m, IdServicio = 9, IdPublicacion = 9 }
+            );
+
+
+            // Registros de PublicacionServicio.
+            modelBuilder.Entity<PublicacionServicio>().HasData(
+                new PublicacionServicio { IdPublicacionServicio = 1, IdPublicacion = 1, IdServicio = 2 },
+                new PublicacionServicio { IdPublicacionServicio = 2, IdPublicacion = 1, IdServicio = 3 },
+                new PublicacionServicio { IdPublicacionServicio = 3, IdPublicacion = 1, IdServicio = 4 },
+                new PublicacionServicio { IdPublicacionServicio = 4, IdPublicacion = 1, IdServicio = 5 },
+                new PublicacionServicio { IdPublicacionServicio = 5, IdPublicacion = 1, IdServicio = 8 },
+                new PublicacionServicio { IdPublicacionServicio = 6, IdPublicacion = 1, IdServicio = 10 },
+                new PublicacionServicio { IdPublicacionServicio = 7, IdPublicacion = 1, IdServicio = 11 },
+                new PublicacionServicio { IdPublicacionServicio = 8, IdPublicacion = 2, IdServicio = 12 },
+                new PublicacionServicio { IdPublicacionServicio = 9, IdPublicacion = 2, IdServicio = 13 },
+                new PublicacionServicio { IdPublicacionServicio = 10, IdPublicacion = 2, IdServicio = 14 },
+                new PublicacionServicio { IdPublicacionServicio = 11, IdPublicacion = 2, IdServicio = 15 },
+                new PublicacionServicio { IdPublicacionServicio = 12, IdPublicacion = 2, IdServicio = 16 },
+                new PublicacionServicio { IdPublicacionServicio = 13, IdPublicacion = 2, IdServicio = 17 },
+                new PublicacionServicio { IdPublicacionServicio = 14, IdPublicacion = 2, IdServicio = 18 },
+                new PublicacionServicio { IdPublicacionServicio = 15, IdPublicacion = 2, IdServicio = 19 },
+                new PublicacionServicio { IdPublicacionServicio = 16, IdPublicacion = 3, IdServicio = 20 },
+                new PublicacionServicio { IdPublicacionServicio = 17, IdPublicacion = 3, IdServicio = 21 },
+                new PublicacionServicio { IdPublicacionServicio = 18, IdPublicacion = 3, IdServicio = 22 },
+                new PublicacionServicio { IdPublicacionServicio = 19, IdPublicacion = 3, IdServicio = 23 },
+                new PublicacionServicio { IdPublicacionServicio = 20, IdPublicacion = 3, IdServicio = 24 },
+                new PublicacionServicio { IdPublicacionServicio = 21, IdPublicacion = 3, IdServicio = 25 },
+                new PublicacionServicio { IdPublicacionServicio = 22, IdPublicacion = 3, IdServicio = 26 },
+                new PublicacionServicio { IdPublicacionServicio = 23, IdPublicacion = 3, IdServicio = 27 },
+                new PublicacionServicio { IdPublicacionServicio = 24, IdPublicacion = 3, IdServicio = 28 },
+                new PublicacionServicio { IdPublicacionServicio = 25, IdPublicacion = 4, IdServicio = 29 },
+                new PublicacionServicio { IdPublicacionServicio = 26, IdPublicacion = 4, IdServicio = 30 },
+                new PublicacionServicio { IdPublicacionServicio = 27, IdPublicacion = 4, IdServicio = 31 },
+                new PublicacionServicio { IdPublicacionServicio = 28, IdPublicacion = 4, IdServicio = 32 },
+                new PublicacionServicio { IdPublicacionServicio = 29, IdPublicacion = 4, IdServicio = 33 },
+                new PublicacionServicio { IdPublicacionServicio = 30, IdPublicacion = 4, IdServicio = 34 },
+                new PublicacionServicio { IdPublicacionServicio = 31, IdPublicacion = 4, IdServicio = 35 },
+                new PublicacionServicio { IdPublicacionServicio = 32, IdPublicacion = 4, IdServicio = 1 },
+                new PublicacionServicio { IdPublicacionServicio = 33, IdPublicacion = 4, IdServicio = 2 },
+                new PublicacionServicio { IdPublicacionServicio = 34, IdPublicacion = 4, IdServicio = 3 },
+                new PublicacionServicio { IdPublicacionServicio = 35, IdPublicacion = 4, IdServicio = 5 },
+                new PublicacionServicio { IdPublicacionServicio = 36, IdPublicacion = 4, IdServicio = 6 },
+                new PublicacionServicio { IdPublicacionServicio = 37, IdPublicacion = 4, IdServicio = 7 },
+                new PublicacionServicio { IdPublicacionServicio = 38, IdPublicacion = 5, IdServicio = 8 },
+                new PublicacionServicio { IdPublicacionServicio = 39, IdPublicacion = 5, IdServicio = 9 },
+                new PublicacionServicio { IdPublicacionServicio = 40, IdPublicacion = 5, IdServicio = 10 },
+                new PublicacionServicio { IdPublicacionServicio = 41, IdPublicacion = 5, IdServicio = 11 },
+                new PublicacionServicio { IdPublicacionServicio = 42, IdPublicacion = 6, IdServicio = 12 },
+                new PublicacionServicio { IdPublicacionServicio = 43, IdPublicacion = 6, IdServicio = 13 },
+                new PublicacionServicio { IdPublicacionServicio = 44, IdPublicacion = 6, IdServicio = 14 },
+                new PublicacionServicio { IdPublicacionServicio = 45, IdPublicacion = 6, IdServicio = 15 },
+                new PublicacionServicio { IdPublicacionServicio = 46, IdPublicacion = 6, IdServicio = 16 },
+                new PublicacionServicio { IdPublicacionServicio = 47, IdPublicacion = 6, IdServicio = 17 },
+                new PublicacionServicio { IdPublicacionServicio = 48, IdPublicacion = 6, IdServicio = 18 },
+                new PublicacionServicio { IdPublicacionServicio = 49, IdPublicacion = 6, IdServicio = 19 },
+                new PublicacionServicio { IdPublicacionServicio = 50, IdPublicacion = 6, IdServicio = 20 },
+                new PublicacionServicio { IdPublicacionServicio = 51, IdPublicacion = 6, IdServicio = 21 },
+                new PublicacionServicio { IdPublicacionServicio = 52, IdPublicacion = 6, IdServicio = 22 },
+                new PublicacionServicio { IdPublicacionServicio = 53, IdPublicacion = 7, IdServicio = 23 },
+                new PublicacionServicio { IdPublicacionServicio = 54, IdPublicacion = 7, IdServicio = 24 },
+                new PublicacionServicio { IdPublicacionServicio = 55, IdPublicacion = 7, IdServicio = 25 },
+                new PublicacionServicio { IdPublicacionServicio = 56, IdPublicacion = 7, IdServicio = 26 },
+                new PublicacionServicio { IdPublicacionServicio = 57, IdPublicacion = 8, IdServicio = 27 },
+                new PublicacionServicio { IdPublicacionServicio = 58, IdPublicacion = 8, IdServicio = 28 },
+                new PublicacionServicio { IdPublicacionServicio = 59, IdPublicacion = 8, IdServicio = 29 },
+                new PublicacionServicio { IdPublicacionServicio = 60, IdPublicacion = 9, IdServicio = 30 },
+                new PublicacionServicio { IdPublicacionServicio = 61, IdPublicacion = 9, IdServicio = 31 },
+                new PublicacionServicio { IdPublicacionServicio = 62, IdPublicacion = 9, IdServicio = 32 },
+                new PublicacionServicio { IdPublicacionServicio = 63, IdPublicacion = 9, IdServicio = 33 },
+                new PublicacionServicio { IdPublicacionServicio = 64, IdPublicacion = 9, IdServicio = 34 },
+                new PublicacionServicio { IdPublicacionServicio = 65, IdPublicacion = 9, IdServicio = 35 },
+                new PublicacionServicio { IdPublicacionServicio = 66, IdPublicacion = 9, IdServicio = 1 },
+                new PublicacionServicio { IdPublicacionServicio = 67, IdPublicacion = 9, IdServicio = 2 },
+                new PublicacionServicio { IdPublicacionServicio = 68, IdPublicacion = 9, IdServicio = 3 },
+                new PublicacionServicio { IdPublicacionServicio = 69, IdPublicacion = 10, IdServicio = 4 },
+                new PublicacionServicio { IdPublicacionServicio = 70, IdPublicacion = 10, IdServicio = 5 },
+                new PublicacionServicio { IdPublicacionServicio = 71, IdPublicacion = 10, IdServicio = 6 },
+                new PublicacionServicio { IdPublicacionServicio = 72, IdPublicacion = 10, IdServicio = 7 },
+                new PublicacionServicio { IdPublicacionServicio = 73, IdPublicacion = 10, IdServicio = 8 },
+                new PublicacionServicio { IdPublicacionServicio = 74, IdPublicacion = 10, IdServicio = 9 },
+                new PublicacionServicio { IdPublicacionServicio = 75, IdPublicacion = 10, IdServicio = 11 },
+                new PublicacionServicio { IdPublicacionServicio = 76, IdPublicacion = 10, IdServicio = 12 },
+                new PublicacionServicio { IdPublicacionServicio = 77, IdPublicacion = 10, IdServicio = 13 },
+                new PublicacionServicio { IdPublicacionServicio = 78, IdPublicacion = 10, IdServicio = 14 },
+                new PublicacionServicio { IdPublicacionServicio = 79, IdPublicacion = 11, IdServicio = 15 },
+                new PublicacionServicio { IdPublicacionServicio = 80, IdPublicacion = 11, IdServicio = 16 },
+                new PublicacionServicio { IdPublicacionServicio = 81, IdPublicacion = 11, IdServicio = 17 },
+                new PublicacionServicio { IdPublicacionServicio = 82, IdPublicacion = 11, IdServicio = 18 },
+                new PublicacionServicio { IdPublicacionServicio = 83, IdPublicacion = 11, IdServicio = 19 },
+                new PublicacionServicio { IdPublicacionServicio = 84, IdPublicacion = 12, IdServicio = 20 },
+                new PublicacionServicio { IdPublicacionServicio = 85, IdPublicacion = 12, IdServicio = 21 },
+                new PublicacionServicio { IdPublicacionServicio = 86, IdPublicacion = 12, IdServicio = 22 },
+                new PublicacionServicio { IdPublicacionServicio = 87, IdPublicacion = 12, IdServicio = 23 },
+                new PublicacionServicio { IdPublicacionServicio = 88, IdPublicacion = 12, IdServicio = 24 },
+                new PublicacionServicio { IdPublicacionServicio = 89, IdPublicacion = 12, IdServicio = 25 }
+            );
+
+
+            // Registros de Restriccion.
+            modelBuilder.Entity<Restriccion>().HasData(
+                new Restriccion { IdRestriccion = 1, NombreRestriccion = "Mascotas", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 2, NombreRestriccion = "No Fumar", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 3, NombreRestriccion = "Accesibilidad", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 4, NombreRestriccion = "Prohibido Ruido", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 5, NombreRestriccion = "No Fiestas", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 6, NombreRestriccion = "Niños Bienvenidos", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 7, NombreRestriccion = "No Comida", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 8, NombreRestriccion = "Horario Silencioso", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 9, NombreRestriccion = "Uso de Piscina", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 10, NombreRestriccion = "Zonas Comunes", RutaIcono = "" },
+                new Restriccion { IdRestriccion = 11, NombreRestriccion = "No Alcohol", RutaIcono = "" }
+            );
+
+
+            // Registros de PublicacionRestriccion.
+            modelBuilder.Entity<PublicacionRestriccion>().HasData(
+                new PublicacionRestriccion { IdPublicacionRestriccion = 1, IdPublicacion = 1, IdRestriccion = 1 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 2, IdPublicacion = 1, IdRestriccion = 2 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 3, IdPublicacion = 2, IdRestriccion = 3 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 4, IdPublicacion = 3, IdRestriccion = 4 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 5, IdPublicacion = 3, IdRestriccion = 5 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 6, IdPublicacion = 5, IdRestriccion = 6 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 7, IdPublicacion = 7, IdRestriccion = 7 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 8, IdPublicacion = 8, IdRestriccion = 8 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 9, IdPublicacion = 8, IdRestriccion = 9 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 10, IdPublicacion = 9, IdRestriccion = 10 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 11, IdPublicacion = 10, IdRestriccion = 11 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 12, IdPublicacion = 11, IdRestriccion = 1 },
+                new PublicacionRestriccion { IdPublicacionRestriccion = 13, IdPublicacion = 12, IdRestriccion = 2 }
+            );
 
 
 

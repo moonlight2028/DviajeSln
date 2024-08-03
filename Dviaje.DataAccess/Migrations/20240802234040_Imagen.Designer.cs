@@ -3,6 +3,7 @@ using System;
 using Dviaje.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dviaje.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240802234040_Imagen")]
+    partial class Imagen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -368,85 +371,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdPublicacion");
 
                     b.ToTable("FechasNoDisponibles");
-
-                    b.HasData(
-                        new
-                        {
-                            IdFechaNoDisponible = 1,
-                            FechaFinal = new DateTime(2024, 7, 30, 15, 45, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 7, 20, 15, 45, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 1
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 2,
-                            FechaFinal = new DateTime(2024, 8, 7, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 8, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 2
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 3,
-                            FechaFinal = new DateTime(2024, 8, 15, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 8, 10, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 3
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 4,
-                            FechaFinal = new DateTime(2024, 8, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 8, 12, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 4
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 5,
-                            FechaFinal = new DateTime(2024, 8, 25, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 8, 20, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 5
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 6,
-                            FechaFinal = new DateTime(2024, 8, 29, 9, 30, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 8, 22, 8, 30, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 6
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 7,
-                            FechaFinal = new DateTime(2024, 9, 2, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 8, 25, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 7
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 8,
-                            FechaFinal = new DateTime(2024, 9, 10, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 9, 1, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 8
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 9,
-                            FechaFinal = new DateTime(2024, 9, 12, 17, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 9, 5, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 9
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 10,
-                            FechaFinal = new DateTime(2024, 9, 15, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 9, 10, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 10
-                        },
-                        new
-                        {
-                            IdFechaNoDisponible = 11,
-                            FechaFinal = new DateTime(2024, 11, 20, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 11, 12, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 1
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Publicacion", b =>
@@ -1046,86 +970,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdRestriccion");
 
                     b.ToTable("PublicacionesRestricciones");
-
-                    b.HasData(
-                        new
-                        {
-                            IdPublicacionRestriccion = 1,
-                            IdPublicacion = 1,
-                            IdRestriccion = 1
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 2,
-                            IdPublicacion = 1,
-                            IdRestriccion = 2
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 3,
-                            IdPublicacion = 2,
-                            IdRestriccion = 3
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 4,
-                            IdPublicacion = 3,
-                            IdRestriccion = 4
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 5,
-                            IdPublicacion = 3,
-                            IdRestriccion = 5
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 6,
-                            IdPublicacion = 5,
-                            IdRestriccion = 6
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 7,
-                            IdPublicacion = 7,
-                            IdRestriccion = 7
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 8,
-                            IdPublicacion = 8,
-                            IdRestriccion = 8
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 9,
-                            IdPublicacion = 8,
-                            IdRestriccion = 9
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 10,
-                            IdPublicacion = 9,
-                            IdRestriccion = 10
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 11,
-                            IdPublicacion = 10,
-                            IdRestriccion = 11
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 12,
-                            IdPublicacion = 11,
-                            IdRestriccion = 1
-                        },
-                        new
-                        {
-                            IdPublicacionRestriccion = 13,
-                            IdPublicacion = 12,
-                            IdRestriccion = 2
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.PublicacionServicio", b =>
@@ -1149,542 +993,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdServicio");
 
                     b.ToTable("PublicacionesServicios");
-
-                    b.HasData(
-                        new
-                        {
-                            IdPublicacionServicio = 1,
-                            IdPublicacion = 1,
-                            IdServicio = 2
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 2,
-                            IdPublicacion = 1,
-                            IdServicio = 3
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 3,
-                            IdPublicacion = 1,
-                            IdServicio = 4
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 4,
-                            IdPublicacion = 1,
-                            IdServicio = 5
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 5,
-                            IdPublicacion = 1,
-                            IdServicio = 8
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 6,
-                            IdPublicacion = 1,
-                            IdServicio = 10
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 7,
-                            IdPublicacion = 1,
-                            IdServicio = 11
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 8,
-                            IdPublicacion = 2,
-                            IdServicio = 12
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 9,
-                            IdPublicacion = 2,
-                            IdServicio = 13
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 10,
-                            IdPublicacion = 2,
-                            IdServicio = 14
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 11,
-                            IdPublicacion = 2,
-                            IdServicio = 15
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 12,
-                            IdPublicacion = 2,
-                            IdServicio = 16
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 13,
-                            IdPublicacion = 2,
-                            IdServicio = 17
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 14,
-                            IdPublicacion = 2,
-                            IdServicio = 18
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 15,
-                            IdPublicacion = 2,
-                            IdServicio = 19
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 16,
-                            IdPublicacion = 3,
-                            IdServicio = 20
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 17,
-                            IdPublicacion = 3,
-                            IdServicio = 21
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 18,
-                            IdPublicacion = 3,
-                            IdServicio = 22
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 19,
-                            IdPublicacion = 3,
-                            IdServicio = 23
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 20,
-                            IdPublicacion = 3,
-                            IdServicio = 24
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 21,
-                            IdPublicacion = 3,
-                            IdServicio = 25
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 22,
-                            IdPublicacion = 3,
-                            IdServicio = 26
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 23,
-                            IdPublicacion = 3,
-                            IdServicio = 27
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 24,
-                            IdPublicacion = 3,
-                            IdServicio = 28
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 25,
-                            IdPublicacion = 4,
-                            IdServicio = 29
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 26,
-                            IdPublicacion = 4,
-                            IdServicio = 30
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 27,
-                            IdPublicacion = 4,
-                            IdServicio = 31
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 28,
-                            IdPublicacion = 4,
-                            IdServicio = 32
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 29,
-                            IdPublicacion = 4,
-                            IdServicio = 33
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 30,
-                            IdPublicacion = 4,
-                            IdServicio = 34
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 31,
-                            IdPublicacion = 4,
-                            IdServicio = 35
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 32,
-                            IdPublicacion = 4,
-                            IdServicio = 1
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 33,
-                            IdPublicacion = 4,
-                            IdServicio = 2
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 34,
-                            IdPublicacion = 4,
-                            IdServicio = 3
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 35,
-                            IdPublicacion = 4,
-                            IdServicio = 5
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 36,
-                            IdPublicacion = 4,
-                            IdServicio = 6
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 37,
-                            IdPublicacion = 4,
-                            IdServicio = 7
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 38,
-                            IdPublicacion = 5,
-                            IdServicio = 8
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 39,
-                            IdPublicacion = 5,
-                            IdServicio = 9
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 40,
-                            IdPublicacion = 5,
-                            IdServicio = 10
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 41,
-                            IdPublicacion = 5,
-                            IdServicio = 11
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 42,
-                            IdPublicacion = 6,
-                            IdServicio = 12
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 43,
-                            IdPublicacion = 6,
-                            IdServicio = 13
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 44,
-                            IdPublicacion = 6,
-                            IdServicio = 14
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 45,
-                            IdPublicacion = 6,
-                            IdServicio = 15
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 46,
-                            IdPublicacion = 6,
-                            IdServicio = 16
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 47,
-                            IdPublicacion = 6,
-                            IdServicio = 17
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 48,
-                            IdPublicacion = 6,
-                            IdServicio = 18
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 49,
-                            IdPublicacion = 6,
-                            IdServicio = 19
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 50,
-                            IdPublicacion = 6,
-                            IdServicio = 20
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 51,
-                            IdPublicacion = 6,
-                            IdServicio = 21
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 52,
-                            IdPublicacion = 6,
-                            IdServicio = 22
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 53,
-                            IdPublicacion = 7,
-                            IdServicio = 23
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 54,
-                            IdPublicacion = 7,
-                            IdServicio = 24
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 55,
-                            IdPublicacion = 7,
-                            IdServicio = 25
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 56,
-                            IdPublicacion = 7,
-                            IdServicio = 26
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 57,
-                            IdPublicacion = 8,
-                            IdServicio = 27
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 58,
-                            IdPublicacion = 8,
-                            IdServicio = 28
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 59,
-                            IdPublicacion = 8,
-                            IdServicio = 29
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 60,
-                            IdPublicacion = 9,
-                            IdServicio = 30
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 61,
-                            IdPublicacion = 9,
-                            IdServicio = 31
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 62,
-                            IdPublicacion = 9,
-                            IdServicio = 32
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 63,
-                            IdPublicacion = 9,
-                            IdServicio = 33
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 64,
-                            IdPublicacion = 9,
-                            IdServicio = 34
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 65,
-                            IdPublicacion = 9,
-                            IdServicio = 35
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 66,
-                            IdPublicacion = 9,
-                            IdServicio = 1
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 67,
-                            IdPublicacion = 9,
-                            IdServicio = 2
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 68,
-                            IdPublicacion = 9,
-                            IdServicio = 3
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 69,
-                            IdPublicacion = 10,
-                            IdServicio = 4
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 70,
-                            IdPublicacion = 10,
-                            IdServicio = 5
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 71,
-                            IdPublicacion = 10,
-                            IdServicio = 6
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 72,
-                            IdPublicacion = 10,
-                            IdServicio = 7
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 73,
-                            IdPublicacion = 10,
-                            IdServicio = 8
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 74,
-                            IdPublicacion = 10,
-                            IdServicio = 9
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 75,
-                            IdPublicacion = 10,
-                            IdServicio = 11
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 76,
-                            IdPublicacion = 10,
-                            IdServicio = 12
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 77,
-                            IdPublicacion = 10,
-                            IdServicio = 13
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 78,
-                            IdPublicacion = 10,
-                            IdServicio = 14
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 79,
-                            IdPublicacion = 11,
-                            IdServicio = 15
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 80,
-                            IdPublicacion = 11,
-                            IdServicio = 16
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 81,
-                            IdPublicacion = 11,
-                            IdServicio = 17
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 82,
-                            IdPublicacion = 11,
-                            IdServicio = 18
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 83,
-                            IdPublicacion = 11,
-                            IdServicio = 19
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 84,
-                            IdPublicacion = 12,
-                            IdServicio = 20
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 85,
-                            IdPublicacion = 12,
-                            IdServicio = 21
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 86,
-                            IdPublicacion = 12,
-                            IdServicio = 22
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 87,
-                            IdPublicacion = 12,
-                            IdServicio = 23
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 88,
-                            IdPublicacion = 12,
-                            IdServicio = 24
-                        },
-                        new
-                        {
-                            IdPublicacionServicio = 89,
-                            IdPublicacion = 12,
-                            IdServicio = 25
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Resena", b =>
@@ -1717,71 +1025,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdReserva");
 
                     b.ToTable("Resenas");
-
-                    b.HasData(
-                        new
-                        {
-                            IdResena = 1,
-                            Calificacion = 4,
-                            Fecha = new DateTime(2024, 11, 5, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 1,
-                            MeGusta = 3,
-                            Opinion = "Muy tranquilo, privado y atención personalizada, muy atentos a nuestras necesidades y solicitudes, la llegada fácil a borde de la carretera lo cual es una ventaja para carros bajitos, la comida deliciosa y un personal atento, amable y respetuoso."
-                        },
-                        new
-                        {
-                            IdResena = 2,
-                            Calificacion = 5,
-                            Fecha = new DateTime(2024, 11, 7, 14, 30, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 4,
-                            MeGusta = 8,
-                            Opinion = "La estancia fue excelente, el lugar es hermoso y muy bien cuidado. La atención del personal fue impecable y siempre estuvieron disponibles para cualquier solicitud. La ubicación es perfecta para quienes buscan paz y tranquilidad."
-                        },
-                        new
-                        {
-                            IdResena = 3,
-                            Calificacion = 3,
-                            Fecha = new DateTime(2024, 11, 10, 16, 15, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 7,
-                            MeGusta = 2,
-                            Opinion = "El alojamiento es bastante bueno, aunque el servicio podría mejorar en términos de tiempo de respuesta. La limpieza estaba bien, pero la comida no cumplió completamente con nuestras expectativas."
-                        },
-                        new
-                        {
-                            IdResena = 4,
-                            Calificacion = 4,
-                            Fecha = new DateTime(2024, 11, 12, 9, 45, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 9,
-                            MeGusta = 5,
-                            Opinion = "Un lugar acogedor con un ambiente muy relajante. El personal es amable y la comida es deliciosa. Sin embargo, hubo algunos problemas con la conexión a internet durante nuestra estancia."
-                        },
-                        new
-                        {
-                            IdResena = 5,
-                            Calificacion = 4,
-                            Fecha = new DateTime(2024, 11, 15, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 11,
-                            MeGusta = 6,
-                            Opinion = "La experiencia fue muy buena en general. Las instalaciones estaban limpias y bien mantenidas. El check-in fue rápido y sin problemas, pero el precio es un poco alto para lo que ofrecen."
-                        },
-                        new
-                        {
-                            IdResena = 6,
-                            Calificacion = 5,
-                            Fecha = new DateTime(2024, 11, 18, 13, 30, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 13,
-                            MeGusta = 7,
-                            Opinion = "El lugar es encantador y muy cómodo. La atención del personal fue muy buena y hicieron todo lo posible para que nuestra estancia fuera agradable. Recomendado para una escapada de fin de semana."
-                        },
-                        new
-                        {
-                            IdResena = 7,
-                            Calificacion = 3,
-                            Fecha = new DateTime(2024, 11, 20, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdReserva = 15,
-                            MeGusta = 3,
-                            Opinion = "Buena ubicación, pero la habitación necesitaba una mejor limpieza. La comida estaba bien, pero no había muchas opciones en el menú. El personal fue amable, aunque a veces parecía desorganizado."
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Reserva", b =>
@@ -1818,158 +1061,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("Reservas");
-
-                    b.HasData(
-                        new
-                        {
-                            IdReserva = 1,
-                            FechaFinal = new DateTime(2024, 9, 24, 15, 45, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 9, 20, 15, 45, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 1,
-                            IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
-                            NumeroPersonas = 3,
-                            ReservaEstado = 2
-                        },
-                        new
-                        {
-                            IdReserva = 2,
-                            FechaFinal = new DateTime(2024, 9, 30, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 9, 25, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 1,
-                            IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798",
-                            NumeroPersonas = 2,
-                            ReservaEstado = 0
-                        },
-                        new
-                        {
-                            IdReserva = 3,
-                            FechaFinal = new DateTime(2024, 10, 7, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 1,
-                            IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
-                            NumeroPersonas = 4,
-                            ReservaEstado = 1
-                        },
-                        new
-                        {
-                            IdReserva = 4,
-                            FechaFinal = new DateTime(2024, 10, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 10, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 1,
-                            IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7",
-                            NumeroPersonas = 5,
-                            ReservaEstado = 2
-                        },
-                        new
-                        {
-                            IdReserva = 5,
-                            FechaFinal = new DateTime(2024, 10, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 12, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 2,
-                            IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
-                            NumeroPersonas = 2,
-                            ReservaEstado = 0
-                        },
-                        new
-                        {
-                            IdReserva = 6,
-                            FechaFinal = new DateTime(2024, 10, 20, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 15, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 2,
-                            IdUsuario = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
-                            NumeroPersonas = 4,
-                            ReservaEstado = 1
-                        },
-                        new
-                        {
-                            IdReserva = 7,
-                            FechaFinal = new DateTime(2024, 10, 22, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 18, 8, 30, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 2,
-                            IdUsuario = "13825fa6-5c27-4303-ab17-6e13aac24c12",
-                            NumeroPersonas = 3,
-                            ReservaEstado = 2
-                        },
-                        new
-                        {
-                            IdReserva = 8,
-                            FechaFinal = new DateTime(2024, 10, 25, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 20, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 2,
-                            IdUsuario = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
-                            NumeroPersonas = 6,
-                            ReservaEstado = 0
-                        },
-                        new
-                        {
-                            IdReserva = 9,
-                            FechaFinal = new DateTime(2024, 10, 28, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 22, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 3,
-                            IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f",
-                            NumeroPersonas = 2,
-                            ReservaEstado = 2
-                        },
-                        new
-                        {
-                            IdReserva = 10,
-                            FechaFinal = new DateTime(2024, 10, 30, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 25, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 3,
-                            IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
-                            NumeroPersonas = 5,
-                            ReservaEstado = 1
-                        },
-                        new
-                        {
-                            IdReserva = 11,
-                            FechaFinal = new DateTime(2024, 11, 2, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 28, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 4,
-                            IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798",
-                            NumeroPersonas = 4,
-                            ReservaEstado = 2
-                        },
-                        new
-                        {
-                            IdReserva = 12,
-                            FechaFinal = new DateTime(2024, 11, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 10, 30, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 5,
-                            IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7",
-                            NumeroPersonas = 3,
-                            ReservaEstado = 0
-                        },
-                        new
-                        {
-                            IdReserva = 13,
-                            FechaFinal = new DateTime(2024, 11, 8, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 11, 1, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 6,
-                            IdUsuario = "13825fa6-5c27-4303-ab17-6e13aac24c12",
-                            NumeroPersonas = 2,
-                            ReservaEstado = 2
-                        },
-                        new
-                        {
-                            IdReserva = 14,
-                            FechaFinal = new DateTime(2024, 11, 12, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 11, 5, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 6,
-                            IdUsuario = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
-                            NumeroPersonas = 6,
-                            ReservaEstado = 1
-                        },
-                        new
-                        {
-                            IdReserva = 15,
-                            FechaFinal = new DateTime(2024, 11, 15, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaInicial = new DateTime(2024, 11, 10, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdPublicacion = 9,
-                            IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
-                            NumeroPersonas = 5,
-                            ReservaEstado = 2
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Restriccion", b =>
@@ -1996,74 +1087,6 @@ namespace Dviaje.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Restricciones");
-
-                    b.HasData(
-                        new
-                        {
-                            IdRestriccion = 1,
-                            NombreRestriccion = "Mascotas",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 2,
-                            NombreRestriccion = "No Fumar",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 3,
-                            NombreRestriccion = "Accesibilidad",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 4,
-                            NombreRestriccion = "Prohibido Ruido",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 5,
-                            NombreRestriccion = "No Fiestas",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 6,
-                            NombreRestriccion = "Niños Bienvenidos",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 7,
-                            NombreRestriccion = "No Comida",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 8,
-                            NombreRestriccion = "Horario Silencioso",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 9,
-                            NombreRestriccion = "Uso de Piscina",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 10,
-                            NombreRestriccion = "Zonas Comunes",
-                            RutaIcono = ""
-                        },
-                        new
-                        {
-                            IdRestriccion = 11,
-                            NombreRestriccion = "No Alcohol",
-                            RutaIcono = ""
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Servicio", b =>
@@ -2093,253 +1116,6 @@ namespace Dviaje.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Servicios");
-
-                    b.HasData(
-                        new
-                        {
-                            IdServicio = 1,
-                            NombreServicio = "Piscina",
-                            RutaIcono = "fa-solid fa-water-ladder",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 2,
-                            NombreServicio = "Piscina techada",
-                            RutaIcono = "fa-solid fa-water-ladder",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 3,
-                            NombreServicio = "Parqueadero",
-                            RutaIcono = "fa-solid fa-square-parking",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 4,
-                            NombreServicio = "Restaurante",
-                            RutaIcono = "fa-solid fa-utensils",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 5,
-                            NombreServicio = "Bañera de hidromasaje",
-                            RutaIcono = "fa-solid fa-bath",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 6,
-                            NombreServicio = "Spa",
-                            RutaIcono = "fa-solid fa-spa",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 7,
-                            NombreServicio = "Gimnasio",
-                            RutaIcono = "fa-solid fa-dumbbell",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 8,
-                            NombreServicio = "Sauna",
-                            RutaIcono = "fa-solid fa-hot-tub-person",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 9,
-                            NombreServicio = "Sombrillas de playa",
-                            RutaIcono = "fa-solid fa-umbrella-beach",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 10,
-                            NombreServicio = "Desayuno incluido",
-                            RutaIcono = "fa-solid fa-bacon",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 11,
-                            NombreServicio = "Centro de negocios",
-                            RutaIcono = "fa-solid fa-business-time",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 12,
-                            NombreServicio = "Acepta mascotas",
-                            RutaIcono = "fa-solid fa-paw",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 13,
-                            NombreServicio = "Recepción disponible 24 horas",
-                            RutaIcono = "fa-solid fa-bell-concierge",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 14,
-                            NombreServicio = "Servicio de lavandería",
-                            RutaIcono = "fa-solid fa-jug-detergent",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 15,
-                            NombreServicio = "Salas de reuniones",
-                            RutaIcono = "fa-solid fa-people-roof",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 16,
-                            NombreServicio = "Cajero automático",
-                            RutaIcono = "fa-solid fa-money-bills",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 17,
-                            NombreServicio = "Piscina climatizada",
-                            RutaIcono = "fa-solid fa-water-ladder",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 18,
-                            NombreServicio = "Alquiler de bicicletas",
-                            RutaIcono = "fa-solid fa-bicycle",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 19,
-                            NombreServicio = "Sala de juegos",
-                            RutaIcono = "fa-solid fa-table-tennis-paddle-ball",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 20,
-                            NombreServicio = "Piscina al aire libre",
-                            RutaIcono = "fa-solid fa-person-swimming",
-                            ServicioTipo = 2
-                        },
-                        new
-                        {
-                            IdServicio = 21,
-                            NombreServicio = "Wi-Fi",
-                            RutaIcono = "fa-solid fa-wifi",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 22,
-                            NombreServicio = "Internet",
-                            RutaIcono = "fa-solid fa-network-wired",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 23,
-                            NombreServicio = "Aire acondicionado",
-                            RutaIcono = "fa-solid fa-wind",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 24,
-                            NombreServicio = "Cocina",
-                            RutaIcono = "fa-solid fa-kitchen-set",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 25,
-                            NombreServicio = "Balcón/Terraza",
-                            RutaIcono = "fa-solid fa-house",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 26,
-                            NombreServicio = "Bañera",
-                            RutaIcono = "fa-solid fa-bath",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 27,
-                            NombreServicio = "Minibar",
-                            RutaIcono = "fa-solid fa-champagne-glasses",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 28,
-                            NombreServicio = "Servicio de limpieza",
-                            RutaIcono = "fa-solid fa-broom",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 29,
-                            NombreServicio = "Secador de pelo",
-                            RutaIcono = "fa-solid fa-wind",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 30,
-                            NombreServicio = "Teléfono",
-                            RutaIcono = "fa-solid fa-phone",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 31,
-                            NombreServicio = "Balcón privado",
-                            RutaIcono = "fa-solid fa-house",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 32,
-                            NombreServicio = "Horno",
-                            RutaIcono = "fa-solid fa-fire-burner",
-                            ServicioTipo = 0
-                        },
-                        new
-                        {
-                            IdServicio = 33,
-                            NombreServicio = "Acceso silla de ruedas",
-                            RutaIcono = "fa-solid fa-wheelchair",
-                            ServicioTipo = 1
-                        },
-                        new
-                        {
-                            IdServicio = 34,
-                            NombreServicio = "Hab. p/ personas con discapacidad",
-                            RutaIcono = "fa-solid fa-house-user",
-                            ServicioTipo = 1
-                        },
-                        new
-                        {
-                            IdServicio = 35,
-                            NombreServicio = "Parqueadero p/ personas con discapacidad",
-                            RutaIcono = "fa-solid fa-square-parking",
-                            ServicioTipo = 1
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.ServicioAdicional", b =>
@@ -2356,7 +1132,7 @@ namespace Dviaje.DataAccess.Migrations
                     b.Property<int>("IdServicio")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("PrecioServicioAdicional")
+                    b.Property<double>("PrecioServicioAdicional")
                         .HasColumnType("numeric(10,2)");
 
                     b.HasKey("IdServicioAdicional");
@@ -2366,71 +1142,6 @@ namespace Dviaje.DataAccess.Migrations
                     b.HasIndex("IdServicio");
 
                     b.ToTable("ServiciosAdicionales");
-
-                    b.HasData(
-                        new
-                        {
-                            IdServicioAdicional = 1,
-                            IdPublicacion = 1,
-                            IdServicio = 1,
-                            PrecioServicioAdicional = 50000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 3,
-                            IdPublicacion = 2,
-                            IdServicio = 2,
-                            PrecioServicioAdicional = 60000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 4,
-                            IdPublicacion = 3,
-                            IdServicio = 3,
-                            PrecioServicioAdicional = 70000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 5,
-                            IdPublicacion = 4,
-                            IdServicio = 4,
-                            PrecioServicioAdicional = 80000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 6,
-                            IdPublicacion = 5,
-                            IdServicio = 5,
-                            PrecioServicioAdicional = 90000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 7,
-                            IdPublicacion = 6,
-                            IdServicio = 6,
-                            PrecioServicioAdicional = 100000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 8,
-                            IdPublicacion = 7,
-                            IdServicio = 7,
-                            PrecioServicioAdicional = 110000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 9,
-                            IdPublicacion = 8,
-                            IdServicio = 8,
-                            PrecioServicioAdicional = 120000m
-                        },
-                        new
-                        {
-                            IdServicioAdicional = 10,
-                            IdPublicacion = 9,
-                            IdServicio = 9,
-                            PrecioServicioAdicional = 130000m
-                        });
                 });
 
             modelBuilder.Entity("Dviaje.Models.Verificado", b =>
@@ -2985,7 +1696,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9112a3e7-ae14-4111-92c2-c136461f0ad7",
+                            ConcurrencyStamp = "db42ec69-852e-4754-9153-78e817763c2d",
                             Email = "info@colombiaadventure.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -2993,7 +1704,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "COLOMBIAADV",
                             PhoneNumber = "3216549870",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "dffed79a-a2b8-4de2-a2f0-21b2f3a14643",
+                            SecurityStamp = "275e9fc2-af0e-4a41-bbd9-064bcd4a5445",
                             TwoFactorEnabled = false,
                             UserName = "ColombiaAdv",
                             AliadoEstado = 0,
@@ -3007,7 +1718,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d27d8e6-ea22-4c7e-90bf-49d2e358498b",
+                            ConcurrencyStamp = "e7d991cf-ec23-4191-b911-2e724f366711",
                             Email = "contact@bogotatours.co",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3015,7 +1726,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BOGOTATOURS",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "3dacb430-28a4-42cd-9e4d-43d031286881",
+                            SecurityStamp = "fccfc3b2-476a-40f1-a079-3b3c50614efa",
                             TwoFactorEnabled = false,
                             UserName = "BogotaTours",
                             AliadoEstado = 0,
@@ -3029,7 +1740,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "c654adef-5f0c-48e6-946a-52706f8ac520",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2823ee64-18fa-4313-8b2e-83a2920e9aac",
+                            ConcurrencyStamp = "6dbfb752-43f8-4b30-a4c5-5e269927cb24",
                             Email = "hello@medellinexplore.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3037,7 +1748,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MEDELLINEXPLORE",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "0d9acd80-0e55-4695-bc40-ebae3b5c0584",
+                            SecurityStamp = "b28568fe-709d-4205-b0a8-2658a1ac9358",
                             TwoFactorEnabled = false,
                             UserName = "MedellinExplore",
                             AliadoEstado = 0,
@@ -3051,7 +1762,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "8142c33b-ee02-4a13-b0c1-1e941387433d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "075d6250-e9a7-41c0-a0aa-a4a813869305",
+                            ConcurrencyStamp = "5527b730-9738-4621-b8cc-83f113c992c0",
                             Email = "support@cartagenagetaways.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3059,7 +1770,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARTAGENAGETAWAYS",
                             PhoneNumber = "3176543210",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "e2aadabc-29ee-44ec-a5fd-7f4e7d014026",
+                            SecurityStamp = "b6e82f5a-53c3-4ca6-93a2-74f9bbfc5665",
                             TwoFactorEnabled = false,
                             UserName = "CartagenaGetaways",
                             AliadoEstado = 0,
@@ -3073,7 +1784,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "39e10980-4df3-494a-bbe7-410e105f6551",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6493c59e-aa05-4326-97f7-44be6e68017e",
+                            ConcurrencyStamp = "192606d1-898e-4144-ace0-13977608180d",
                             Email = "info@santamartaadventures.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3081,7 +1792,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SANTAMARTAADV",
                             PhoneNumber = "3154321098",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "e70f376e-67bb-4f81-990f-5f7375b7c64b",
+                            SecurityStamp = "42b1d00b-1258-49c0-b9ec-f24286b7bf66",
                             TwoFactorEnabled = false,
                             UserName = "SantaMartaAdv",
                             AliadoEstado = 0,
@@ -3095,7 +1806,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "c3733288-b354-445d-95da-4c655c3220b3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5d24f163-344e-4dbb-9f95-840913f8f60c",
+                            ConcurrencyStamp = "40c477f6-505d-4660-8105-46e5da10911f",
                             Email = "contact@caliexperiences.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3103,7 +1814,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CALIEXP",
                             PhoneNumber = "3132109876",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d32f2fb0-8893-49f3-9312-bf1e123263ab",
+                            SecurityStamp = "e0784ba1-c2c3-4050-9df5-486882cc71fd",
                             TwoFactorEnabled = false,
                             UserName = "CaliExp",
                             AliadoEstado = 0,
@@ -3117,7 +1828,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "de433411-4f97-455b-bb8d-30f0063b029b",
+                            ConcurrencyStamp = "d87ab239-9aa8-4c41-8432-4c562f58f179",
                             Email = "hello@barranquillaescapes.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3125,7 +1836,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BQUILLAESCAPES",
                             PhoneNumber = "3140987654",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "b5672b4f-3b81-40f7-a063-2f3fe3b326e7",
+                            SecurityStamp = "c34861f5-d240-4ca5-97c8-16071a21eb65",
                             TwoFactorEnabled = false,
                             UserName = "BquillaEscapes",
                             AliadoEstado = 0,
@@ -3139,7 +1850,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "06093b46-8117-43f2-b17c-4246f33c8079",
+                            ConcurrencyStamp = "8df16be6-9e8e-4fce-9bbe-828cde8063c1",
                             Email = "support@bucaramangajourneys.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3147,7 +1858,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BUCARAJOURNEYS",
                             PhoneNumber = "3229876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "13f5094d-913d-45da-bb65-26c899807ea9",
+                            SecurityStamp = "21f6c91c-33e3-4fdc-bd3b-dc01a77dfb91",
                             TwoFactorEnabled = false,
                             UserName = "BucaraJourneys",
                             AliadoEstado = 0,
@@ -3161,7 +1872,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d5980e0a-a7b2-426a-9e9e-571f161555dc",
+                            ConcurrencyStamp = "70f88e6f-5f97-4cf1-ad8c-c94816ccd6c6",
                             Email = "info@pereiratravels.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3169,7 +1880,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "PEREIRATRAVELS",
                             PhoneNumber = "3107654321",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "20b2a5f9-fe12-4677-b035-d26a6272f742",
+                            SecurityStamp = "84b6bfe8-fe66-4e2b-a27d-f4d059d5c225",
                             TwoFactorEnabled = false,
                             UserName = "PereiraTravels",
                             AliadoEstado = 0,
@@ -3183,7 +1894,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ab673740-6180-44a6-86cf-2e1330ba7761",
+                            ConcurrencyStamp = "533c43cf-e786-4f9f-856c-bcc8ed7282e9",
                             Email = "contact@manizaleswonders.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3191,7 +1902,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MANIZALESWONDERS",
                             PhoneNumber = "3165432109",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "4ce018eb-6a37-4e2a-9a10-4e58b3331d10",
+                            SecurityStamp = "a3280a47-0cd8-43c3-b5b5-4f1e2d77ea73",
                             TwoFactorEnabled = false,
                             UserName = "ManizalesWonders",
                             AliadoEstado = 0,
@@ -3221,7 +1932,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "59309808-a9ac-4413-8a1d-eed6d6677c06",
+                            ConcurrencyStamp = "c2770f35-eec7-4d30-ba1d-d3133c71ce4e",
                             Email = "andres@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3229,7 +1940,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANDRES",
                             PhoneNumber = "3159725595",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "0e4b81de-9fdd-469e-a3e2-971efb1ae2ee",
+                            SecurityStamp = "4671b455-889b-49ea-bb2e-1eab9f4e4ec0",
                             TwoFactorEnabled = false,
                             UserName = "Andres",
                             Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3238,7 +1949,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "26cfe5c9-00f8-411e-b589-df3405a8b798",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "eb93d8c0-44b8-46d0-8ee9-a715ce7c9117",
+                            ConcurrencyStamp = "17499518-3714-4485-bc2a-249225083ae6",
                             Email = "maria@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3246,7 +1957,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MARIA",
                             PhoneNumber = "3101234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9bcb20f2-49e3-4c0d-b288-2ecbc630a660",
+                            SecurityStamp = "d1129c2f-6c8e-44b8-9a32-8bc2f7779c78",
                             TwoFactorEnabled = false,
                             UserName = "Maria",
                             Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3255,7 +1966,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ba019a5d-c385-4971-8554-f8531d02bbb1",
+                            ConcurrencyStamp = "904a01ba-aded-45ba-8a1a-6194fbd0646b",
                             Email = "carlos@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3263,7 +1974,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARLOS",
                             PhoneNumber = "3189876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "7e888d44-879c-457b-9051-b2fe42259dee",
+                            SecurityStamp = "3cf35e4a-4ad8-4132-8383-cf04ee2c0a8e",
                             TwoFactorEnabled = false,
                             UserName = "Carlos",
                             Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3272,7 +1983,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "e4309639-4588-4553-8c14-5ce4426e0dd7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7b773239-9e1c-4b81-8989-7eb54820ab0a",
+                            ConcurrencyStamp = "9faa103a-fb16-400e-9dd2-87ec45dd02ec",
                             Email = "sofia@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3280,7 +1991,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SOFIA",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "eea0eeab-1684-4313-ad0a-73f0a6c0321b",
+                            SecurityStamp = "49cef4bd-9437-44a9-9be8-e42d05811d42",
                             TwoFactorEnabled = false,
                             UserName = "Sofia",
                             Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3289,7 +2000,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "3a895383-b546-4693-8246-924a9fc5289f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e7741ee9-3191-402a-aca5-9e621ed66669",
+                            ConcurrencyStamp = "1ac2642b-e2c0-4443-9e8c-5e3b0ed3bd44",
                             Email = "luis@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3297,7 +2008,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "LUIS",
                             PhoneNumber = "3112345678",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9caab2cb-8146-4fa3-8556-9ac3886b74fb",
+                            SecurityStamp = "084840d3-6e59-4e22-984d-b79f00b3c254",
                             TwoFactorEnabled = false,
                             UserName = "Luis",
                             Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3306,7 +2017,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d248d9e6-9c1b-4f1d-a8a9-b6e92b5bf012",
+                            ConcurrencyStamp = "3260163f-6a81-4d0a-988e-67288ead02b9",
                             Email = "isabella@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3314,7 +2025,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ISABELLA",
                             PhoneNumber = "3179876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9f19a69c-38ae-439f-9915-4cfa024b03dc",
+                            SecurityStamp = "c5b2b5c4-f178-4af9-88fb-55bed3a6040c",
                             TwoFactorEnabled = false,
                             UserName = "Isabella",
                             Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3323,7 +2034,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "13825fa6-5c27-4303-ab17-6e13aac24c12",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3843f255-a3d7-4d7b-81b1-6a6a37647e2e",
+                            ConcurrencyStamp = "d87b850c-778e-4b7a-872b-695f57946e47",
                             Email = "fernando@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3331,7 +2042,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "FERNANDO",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "89daab96-14ab-4d1e-a63e-67c9535fe7b9",
+                            SecurityStamp = "4b1537d2-9c7e-4c8b-8915-4795de1abfa0",
                             TwoFactorEnabled = false,
                             UserName = "Fernando",
                             Avatar = "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3340,7 +2051,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "51333542-7c56-424b-b61f-70d2ad17f256",
+                            ConcurrencyStamp = "9ab4c3b6-3cce-4cb7-9b5a-1ad4ed53a83e",
                             Email = "ana@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3348,7 +2059,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANA",
                             PhoneNumber = "3149876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "b30810a3-10af-4d26-bb58-f8952b1cf59d",
+                            SecurityStamp = "673119d5-58ce-4d72-af2c-2fffbc0da5cb",
                             TwoFactorEnabled = false,
                             UserName = "Ana",
                             Avatar = "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3357,7 +2068,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2e59aa62-61bd-4c8d-9a3d-13f461696eab",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c65855fa-30ec-4fd2-9f47-571b759ede2a",
+                            ConcurrencyStamp = "c98ca6ee-01fd-410d-aa5b-7d5cc3a2e084",
                             Email = "jorge@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3365,7 +2076,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "JORGE",
                             PhoneNumber = "3151234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "25a46c2c-46bf-40dd-9628-3ea50aa0260f",
+                            SecurityStamp = "b667053c-0dda-450e-892f-b4f66db97e48",
                             TwoFactorEnabled = false,
                             UserName = "Jorge",
                             Avatar = "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
@@ -3374,7 +2085,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aa4e8e79-f4db-41e9-92ed-0a87e0c67154",
+                            ConcurrencyStamp = "d025d057-7f75-4300-85ad-550aa3eac7b9",
                             Email = "gabriela@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3382,7 +2093,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "GABRIELA",
                             PhoneNumber = "3169876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "805f911b-1a52-4b4a-a291-d1151de1b8a0",
+                            SecurityStamp = "934d56e6-1015-442e-a2e3-b328d75d0012",
                             TwoFactorEnabled = false,
                             UserName = "Gabriela",
                             Avatar = "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
