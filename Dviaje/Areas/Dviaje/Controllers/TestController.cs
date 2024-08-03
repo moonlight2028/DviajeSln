@@ -4,27 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
-    public class PqrsController : Controller
+    public class TestController : Controller
     {
-        public IActionResult Pqrs()
+        public IActionResult Tee()
         {
-
             return View();
         }
-
-
 
 
         [HttpPost]
-        public IActionResult Pqrs(AtencionViajero atencionViajero)
+        public IActionResult Tee(AtencionViajero atencionViajero)
         {
             if (!ModelState.IsValid)
             {
-                return View(atencionViajero);
 
+                return View(atencionViajero);
             }
+
 
             return View();
         }
+
+
+
     }
 }

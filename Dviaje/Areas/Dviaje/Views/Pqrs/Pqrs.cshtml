@@ -1,4 +1,4 @@
-﻿@model PqrsVM
+﻿@model AtencionViajero
 
 @{
     ViewData["Title"] = "PQRS";
@@ -71,53 +71,56 @@
                 </div>
                 <!-- Fin del Acordeón -->
 
-                <form action="#" class="contact-form form-validate" novalidate="novalidate" method="post">
+                <form class="contact-form form-validate" asp-controller="Pqrs" asp-action="Pqrs" method="post">
                     <div class="row">
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Nombres" class="required-field" for="firstName">Nombres</label>
-                                <input asp-for="Nombres" type="text" class="form-control" id="firstName" name="firstName" placeholder="Wendy">
-                                <span asp-validation-for="Nombres"></span>
+                                <label asp-for="Nombre" class="required-field"></label>
+                                <input asp-for="Nombre" type="text" class="form-control" placeholder="Wendy" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Apellidos" for="lastName">Apellidos</label>
-                                <input asp-for="Apellidos" type="text" class="form-control" id="lastName" name="lastName" placeholder="Appleseed">
+                                <label asp-for="Apellidos" ></label>
+                                <input asp-for="Apellidos" type="text" class="form-control" placeholder="Appleseed" />
                                 <span asp-validation-for="Apellidos"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Correo" class="required-field" for="email">Correo</label>
-                                <input asp-for="Correo" type="text" class="form-control" id="email" name="email" placeholder="example@mail.com">
+                                <label asp-for="Correo" class="required-field" ></label>
+                                <input asp-for="Correo" type="text" class="form-control" placeholder="example@mail.com" />
                                 <span asp-validation-for="Correo"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Telefono" for="phone">Telefono</label>
-                                <input asp-for="Telefono" type="tel" class="form-control" id="phone" name="phone" placeholder="(021)-454-545">
+                                <label asp-for="Telefono" ></label>
+                                <input asp-for="Telefono" type="tel" class="form-control" placeholder="(021)-454-545" />
                                 <span asp-validation-for="Telefono"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-12 mb-3">
                             <div class="form-group">
-                                <label asp-for="Descripcion" class="required-field" for="message">como podemos ayudarte?</label>
-                                <textarea asp-for="Descripcion" class="form-control" id="message" name="mensaje" rows="4" placeholder="Dinos como podemos mejorar :)"></textarea>
+                                <label asp-for="Descripcion" class="required-field" for="message">Como podemos ayudarte?</label>
+                                <textarea asp-for="Descripcion" class="form-control" id="message" rows="4" placeholder="Dinos como podemos mejorar :)"></textarea>
                                 <span asp-validation-for="Descripcion"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-12 mb-3">
-                            <button type="submit" name="submit" class="btn btn-primary">Enviar</button><br /><br />
-                            <input type="file" id="myFile">
+                            <button type="submit" class="btn btn-primary">Enviar</button><br /><br />
+                            <input type="file" id="myFile" />
                         </div>
                     </div>
+
+
+
                 </form>
             </div>
             <!-- End Contact Form Wrapper -->

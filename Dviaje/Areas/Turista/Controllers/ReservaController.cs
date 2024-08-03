@@ -26,6 +26,11 @@ namespace Dviaje.Areas.Turista.Controllers
         [HttpPost]
         public IActionResult Reserva(Reserva reserva)
         {
+            if (ModelState.IsValid == false)
+            {
+
+                return View(reserva);
+            }
             return View();
         }
 

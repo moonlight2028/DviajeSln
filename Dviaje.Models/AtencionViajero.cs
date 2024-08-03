@@ -32,6 +32,18 @@ namespace Dviaje.Models
         [Column(TypeName = "timestamp")]
         public DateTime FechaRespuesta { get; set; }
 
+        [Required(ErrorMessage = "Ingrese el puto nombre")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El asunto debe tener entre 3 y 50 caracteres.")]
+        public string? Nombre { get; set; }
+
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El asunto debe tener entre 3 y 50 caracteres.")]
+        public string? Apellidos { get; set; }
+
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El asunto debe tener entre 3 y 50 caracteres.")]
+        public string? Correo { get; set; }
+
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El asunto debe tener entre 3 y 50 caracteres.")]
+        public string? Telefono { get; set; }
 
         [Required(ErrorMessage = "El tipo de PQRS es obligatorio.")]
         public AtencionViajeroTipoPqrs AtencionViajeroTipoPqrs { get; set; }
