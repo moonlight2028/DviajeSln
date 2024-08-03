@@ -1864,23 +1864,86 @@ namespace Dviaje.DataAccess.Data
             );
 
 
+            // Registros de Categoria.
+            modelBuilder.Entity<Categoria>().HasData(
+                new Categoria { IdCategoria = 1, NombreCategoria = "Finca", RutaIcono = "fa-solid fa-sign-hanging" },
+                new Categoria { IdCategoria = 2, NombreCategoria = "Apartamento", RutaIcono = "fa-solid fa-house-user" },
+                new Categoria { IdCategoria = 3, NombreCategoria = "Casa", RutaIcono = "fa-solid fa-house" },
+                new Categoria { IdCategoria = 4, NombreCategoria = "Cabaña", RutaIcono = "fa-solid fa-house-chimney" },
+                new Categoria { IdCategoria = 5, NombreCategoria = "Hotel", RutaIcono = "fa-solid fa-hotel" },
+                new Categoria { IdCategoria = 6, NombreCategoria = "Hostal", RutaIcono = "fa-solid fa-hotel" },
+                new Categoria { IdCategoria = 7, NombreCategoria = "Villa", RutaIcono = "fa-solid fa-house-chimney-window" },
+                new Categoria { IdCategoria = 8, NombreCategoria = "Resort", RutaIcono = "fa-solid fa-hotel" },
+                new Categoria { IdCategoria = 9, NombreCategoria = "Piso compartido", RutaIcono = "fa-solid fa-people-roof" },
+                new Categoria { IdCategoria = 10, NombreCategoria = "Villa vacacional", RutaIcono = "fa-solid fa-house-chimney-window" },
+                new Categoria { IdCategoria = 11, NombreCategoria = "Casa de campo", RutaIcono = "fa-solid fa-house-chimney" },
+                new Categoria { IdCategoria = 12, NombreCategoria = "Campamentos", RutaIcono = "fa-solid fa-campground" },
+                new Categoria { IdCategoria = 13, NombreCategoria = "Pensión", RutaIcono = "fa-solid fa-house" },
+                new Categoria { IdCategoria = 14, NombreCategoria = "Motel", RutaIcono = "fa-solid fa-hotel" },
+                new Categoria { IdCategoria = 15, NombreCategoria = "Apartahotel", RutaIcono = "fa-solid fa-hotel" },
+                new Categoria { IdCategoria = 16, NombreCategoria = "Casa rural", RutaIcono = "fa-solid fa-house-chimney" },
+                new Categoria { IdCategoria = 17, NombreCategoria = "Posada", RutaIcono = "fa-solid fa-house" }
+            );
 
 
+            // Registros de Categoria.
+            modelBuilder.Entity<PublicacionCategoria>().HasData(
+                new PublicacionCategoria { IdPublicacionCategoria = 1, IdPublicacion = 1, IdCategoria = 1 },
+                new PublicacionCategoria { IdPublicacionCategoria = 2, IdPublicacion = 1, IdCategoria = 2 },
+                new PublicacionCategoria { IdPublicacionCategoria = 3, IdPublicacion = 1, IdCategoria = 3 },
+                new PublicacionCategoria { IdPublicacionCategoria = 4, IdPublicacion = 1, IdCategoria = 4 },
+                new PublicacionCategoria { IdPublicacionCategoria = 5, IdPublicacion = 2, IdCategoria = 4 },
+                new PublicacionCategoria { IdPublicacionCategoria = 6, IdPublicacion = 2, IdCategoria = 5 },
+                new PublicacionCategoria { IdPublicacionCategoria = 7, IdPublicacion = 2, IdCategoria = 6 },
+                new PublicacionCategoria { IdPublicacionCategoria = 8, IdPublicacion = 3, IdCategoria = 7 },
+                new PublicacionCategoria { IdPublicacionCategoria = 9, IdPublicacion = 4, IdCategoria = 8 },
+                new PublicacionCategoria { IdPublicacionCategoria = 10, IdPublicacion = 5, IdCategoria = 9 },
+                new PublicacionCategoria { IdPublicacionCategoria = 11, IdPublicacion = 5, IdCategoria = 10 },
+                new PublicacionCategoria { IdPublicacionCategoria = 12, IdPublicacion = 5, IdCategoria = 11 },
+                new PublicacionCategoria { IdPublicacionCategoria = 13, IdPublicacion = 5, IdCategoria = 12 },
+                new PublicacionCategoria { IdPublicacionCategoria = 14, IdPublicacion = 5, IdCategoria = 13 },
+                new PublicacionCategoria { IdPublicacionCategoria = 15, IdPublicacion = 5, IdCategoria = 14 },
+                new PublicacionCategoria { IdPublicacionCategoria = 16, IdPublicacion = 6, IdCategoria = 15 },
+                new PublicacionCategoria { IdPublicacionCategoria = 17, IdPublicacion = 6, IdCategoria = 16 },
+                new PublicacionCategoria { IdPublicacionCategoria = 18, IdPublicacion = 7, IdCategoria = 17 },
+                new PublicacionCategoria { IdPublicacionCategoria = 19, IdPublicacion = 8, IdCategoria = 1 },
+                new PublicacionCategoria { IdPublicacionCategoria = 20, IdPublicacion = 9, IdCategoria = 2 },
+                new PublicacionCategoria { IdPublicacionCategoria = 21, IdPublicacion = 9, IdCategoria = 3 },
+                new PublicacionCategoria { IdPublicacionCategoria = 22, IdPublicacion = 9, IdCategoria = 4 },
+                new PublicacionCategoria { IdPublicacionCategoria = 23, IdPublicacion = 10, IdCategoria = 5 },
+                new PublicacionCategoria { IdPublicacionCategoria = 24, IdPublicacion = 10, IdCategoria = 6 },
+                new PublicacionCategoria { IdPublicacionCategoria = 25, IdPublicacion = 11, IdCategoria = 7 },
+                new PublicacionCategoria { IdPublicacionCategoria = 26, IdPublicacion = 12, IdCategoria = 8 }
+            );
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            // Registros de Favorito.
+            modelBuilder.Entity<Favorito>().HasData(
+                new Favorito { IdFavorito = 1, IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", IdPublicacion = 1 },
+                new Favorito { IdFavorito = 2, IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", IdPublicacion = 2 },
+                new Favorito { IdFavorito = 3, IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", IdPublicacion = 3 },
+                new Favorito { IdFavorito = 4, IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", IdPublicacion = 4 },
+                new Favorito { IdFavorito = 5, IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798", IdPublicacion = 5 },
+                new Favorito { IdFavorito = 6, IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798", IdPublicacion = 6 },
+                new Favorito { IdFavorito = 7, IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798", IdPublicacion = 7 },
+                new Favorito { IdFavorito = 8, IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798", IdPublicacion = 8 },
+                new Favorito { IdFavorito = 9, IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798", IdPublicacion = 9 },
+                new Favorito { IdFavorito = 10, IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798", IdPublicacion = 10 },
+                new Favorito { IdFavorito = 11, IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", IdPublicacion = 11 },
+                new Favorito { IdFavorito = 12, IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", IdPublicacion = 11 },
+                new Favorito { IdFavorito = 13, IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", IdPublicacion = 1 },
+                new Favorito { IdFavorito = 14, IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", IdPublicacion = 2 },
+                new Favorito { IdFavorito = 15, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 3 },
+                new Favorito { IdFavorito = 16, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 4 },
+                new Favorito { IdFavorito = 17, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 5 },
+                new Favorito { IdFavorito = 18, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 6 },
+                new Favorito { IdFavorito = 19, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 7 },
+                new Favorito { IdFavorito = 20, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 8 },
+                new Favorito { IdFavorito = 21, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 9 },
+                new Favorito { IdFavorito = 22, IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7", IdPublicacion = 10 },
+                new Favorito { IdFavorito = 23, IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f", IdPublicacion = 11 },
+                new Favorito { IdFavorito = 24, IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f", IdPublicacion = 12 }
+            );
 
 
         }

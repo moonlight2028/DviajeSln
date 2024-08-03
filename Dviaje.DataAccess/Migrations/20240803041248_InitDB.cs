@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dviaje.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Imagen : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -221,6 +221,10 @@ namespace Dviaje.DataAccess.Migrations
                     Respuesta = table.Column<string>(type: "text", maxLength: 250, nullable: true),
                     Asunto = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     FechaRespuesta = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Apellidos = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Correo = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Telefono = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     AtencionViajeroTipoPqrs = table.Column<int>(type: "integer", nullable: false),
                     AtencionViajeroPrioridad = table.Column<int>(type: "integer", nullable: false),
                     IdUsuario = table.Column<string>(type: "text", nullable: false)
@@ -504,7 +508,7 @@ namespace Dviaje.DataAccess.Migrations
                 {
                     IdServicioAdicional = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PrecioServicioAdicional = table.Column<double>(type: "numeric(10,2)", nullable: false),
+                    PrecioServicioAdicional = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
                     IdServicio = table.Column<int>(type: "integer", nullable: false),
                     IdPublicacion = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -562,45 +566,45 @@ namespace Dviaje.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
-                values: new object[] { "01bfd429-16ea-44b3-902c-794e2c78dfa7", 0, 0, "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dHVyaXNtfGVufDB8fDB8fHwy", "db42ec69-852e-4754-9153-78e817763c2d", "Carrera 7 # 45-23", "Aliado", "info@colombiaadventure.com", true, false, null, "INFO@COLOMBIAADVENTURE.COM", "COLOMBIAADV", null, "3216549870", true, "Colombia Adventure", "275e9fc2-af0e-4a41-bbd9-064bcd4a5445", "www.colombiaadventure.com", false, "ColombiaAdv", true });
+                values: new object[] { "01bfd429-16ea-44b3-902c-794e2c78dfa7", 0, 0, "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dHVyaXNtfGVufDB8fDB8fHwy", "46eb8e3e-bf8f-4835-a34a-443927604d23", "Carrera 7 # 45-23", "Aliado", "info@colombiaadventure.com", true, false, null, "INFO@COLOMBIAADVENTURE.COM", "COLOMBIAADV", null, "3216549870", true, "Colombia Adventure", "a1d5ecda-400c-4041-8aad-2f973d6e7e08", "www.colombiaadventure.com", false, "ColombiaAdv", true });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 0, "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww", "c2770f35-eec7-4d30-ba1d-d3133c71ce4e", "Usuario", "andres@gmail.com", true, false, null, "ANDRES@GMAIL.COM", "ANDRES", null, "3159725595", true, "4671b455-889b-49ea-bb2e-1eab9f4e4ec0", false, "Andres" },
-                    { "13825fa6-5c27-4303-ab17-6e13aac24c12", 0, "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww", "d87b850c-778e-4b7a-872b-695f57946e47", "Usuario", "fernando@yahoo.com", true, false, null, "FERNANDO@YAHOO.COM", "FERNANDO", null, "3198765432", true, "4b1537d2-9c7e-4c8b-8915-4795de1abfa0", false, "Fernando" },
-                    { "1c8e89f7-7db6-4cd5-907d-f01b058cd784", 0, "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww", "3260163f-6a81-4d0a-988e-67288ead02b9", "Usuario", "isabella@gmail.com", true, false, null, "ISABELLA@GMAIL.COM", "ISABELLA", null, "3179876543", true, "c5b2b5c4-f178-4af9-88fb-55bed3a6040c", false, "Isabella" },
-                    { "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", 0, "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww", "9ab4c3b6-3cce-4cb7-9b5a-1ad4ed53a83e", "Usuario", "ana@hotmail.com", true, false, null, "ANA@HOTMAIL.COM", "ANA", null, "3149876543", true, "673119d5-58ce-4d72-af2c-2fffbc0da5cb", false, "Ana" },
-                    { "26cfe5c9-00f8-411e-b589-df3405a8b798", 0, "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww", "17499518-3714-4485-bc2a-249225083ae6", "Usuario", "maria@gmail.com", true, false, null, "MARIA@GMAIL.COM", "MARIA", null, "3101234567", true, "d1129c2f-6c8e-44b8-9a32-8bc2f7779c78", false, "Maria" },
-                    { "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", 0, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww", "904a01ba-aded-45ba-8a1a-6194fbd0646b", "Usuario", "carlos@yahoo.com", true, false, null, "CARLOS@YAHOO.COM", "CARLOS", null, "3189876543", true, "3cf35e4a-4ad8-4132-8383-cf04ee2c0a8e", false, "Carlos" },
-                    { "2e59aa62-61bd-4c8d-9a3d-13f461696eab", 0, "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "c98ca6ee-01fd-410d-aa5b-7d5cc3a2e084", "Usuario", "jorge@outlook.com", true, false, null, "JORGE@OUTLOOK.COM", "JORGE", null, "3151234567", true, "b667053c-0dda-450e-892f-b4f66db97e48", false, "Jorge" }
+                    { "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 0, "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww", "1fa5f103-4c09-4dd7-a20d-0a7e4efb8d17", "Usuario", "andres@gmail.com", true, false, null, "ANDRES@GMAIL.COM", "ANDRES", null, "3159725595", true, "3eb7239f-884c-42f0-94bb-722491dbc8dd", false, "Andres" },
+                    { "13825fa6-5c27-4303-ab17-6e13aac24c12", 0, "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww", "163665e0-223f-4da6-9f7c-6c811b683234", "Usuario", "fernando@yahoo.com", true, false, null, "FERNANDO@YAHOO.COM", "FERNANDO", null, "3198765432", true, "3655ea6c-b557-470f-a736-9bb212668b03", false, "Fernando" },
+                    { "1c8e89f7-7db6-4cd5-907d-f01b058cd784", 0, "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww", "661393e6-f04a-41d2-9e06-b87aaf600fec", "Usuario", "isabella@gmail.com", true, false, null, "ISABELLA@GMAIL.COM", "ISABELLA", null, "3179876543", true, "861eaa37-caa8-4d48-b662-07a89ee98089", false, "Isabella" },
+                    { "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", 0, "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww", "be455d8b-6d0b-4c9e-8d1e-91dde83b0bfc", "Usuario", "ana@hotmail.com", true, false, null, "ANA@HOTMAIL.COM", "ANA", null, "3149876543", true, "13b6a84f-634b-4307-a971-50d228a1eeda", false, "Ana" },
+                    { "26cfe5c9-00f8-411e-b589-df3405a8b798", 0, "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww", "a42dd6bf-6706-4472-b01c-6265efac4cbe", "Usuario", "maria@gmail.com", true, false, null, "MARIA@GMAIL.COM", "MARIA", null, "3101234567", true, "7ec0f17b-0cc8-4210-a07d-df8e6a52be01", false, "Maria" },
+                    { "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", 0, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww", "62ef96c4-415d-4a14-a1a3-e3b996f39e22", "Usuario", "carlos@yahoo.com", true, false, null, "CARLOS@YAHOO.COM", "CARLOS", null, "3189876543", true, "7cf4e31c-f047-48f2-8e45-8aeec4bdc2c9", false, "Carlos" },
+                    { "2e59aa62-61bd-4c8d-9a3d-13f461696eab", 0, "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "5986de17-84a6-40f7-a29b-20a5e4017043", "Usuario", "jorge@outlook.com", true, false, null, "JORGE@OUTLOOK.COM", "JORGE", null, "3151234567", true, "be2b617b-d2f7-4dcc-be9f-b5bd29661f80", false, "Jorge" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
-                values: new object[] { "39e10980-4df3-494a-bbe7-410e105f6551", 0, 0, "https://images.unsplash.com/photo-1543746746-46047c4f4bb0?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVyaXNtfGVufDB8fDB8fHwy", "192606d1-898e-4144-ace0-13977608180d", "Centro Histórico, Carrera 2 # 10-55", "Aliado", "info@santamartaadventures.com", true, false, null, "INFO@SANTAMARTAADVENTURES.COM", "SANTAMARTAADV", null, "3154321098", true, "Santa Marta Adventures", "42b1d00b-1258-49c0-b9ec-f24286b7bf66", "www.santamartaadventures.com", false, "SantaMartaAdv", true });
+                values: new object[] { "39e10980-4df3-494a-bbe7-410e105f6551", 0, 0, "https://images.unsplash.com/photo-1543746746-46047c4f4bb0?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVyaXNtfGVufDB8fDB8fHwy", "821d7a3b-feaa-46df-bcbe-e9b838aece9d", "Centro Histórico, Carrera 2 # 10-55", "Aliado", "info@santamartaadventures.com", true, false, null, "INFO@SANTAMARTAADVENTURES.COM", "SANTAMARTAADV", null, "3154321098", true, "Santa Marta Adventures", "a7280f7b-821e-4ed4-ae84-2ded30bade43", "www.santamartaadventures.com", false, "SantaMartaAdv", true });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3a895383-b546-4693-8246-924a9fc5289f", 0, "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww", "1ac2642b-e2c0-4443-9e8c-5e3b0ed3bd44", "Usuario", "luis@outlook.com", true, false, null, "LUIS@OUTLOOK.COM", "LUIS", null, "3112345678", true, "084840d3-6e59-4e22-984d-b79f00b3c254", false, "Luis" });
+                values: new object[] { "3a895383-b546-4693-8246-924a9fc5289f", 0, "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww", "171d1f88-99d3-4c42-94c8-3f10a38d4914", "Usuario", "luis@outlook.com", true, false, null, "LUIS@OUTLOOK.COM", "LUIS", null, "3112345678", true, "732b4c4b-68ed-4bae-9979-0e4ff9fff0e7", false, "Luis" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
                 values: new object[,]
                 {
-                    { "4c03648f-7727-4e5c-b096-fcbe3b9e3059", 0, 0, "https://images.unsplash.com/photo-1492294112339-ea831887e5d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVyaXNtfGVufDB8fDB8fHwy", "d87ab239-9aa8-4c41-8432-4c562f58f179", "Vía 40 # 72-20", "Aliado", "hello@barranquillaescapes.com", true, false, null, "HELLO@BARRANQUILLAESCAPES.COM", "BQUILLAESCAPES", null, "3140987654", true, "Barranquilla Escapes", "c34861f5-d240-4ca5-97c8-16071a21eb65", "www.barranquillaescapes.com", false, "BquillaEscapes", false },
-                    { "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f", 0, 0, "https://images.unsplash.com/photo-1532878056386-1e96eb5221ad?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "533c43cf-e786-4f9f-856c-bcc8ed7282e9", "Centro, Carrera 23 # 17-18", "Aliado", "contact@manizaleswonders.com", true, false, null, "CONTACT@MANIZALESWONDERS.COM", "MANIZALESWONDERS", null, "3165432109", true, "Manizales Wonders", "a3280a47-0cd8-43c3-b5b5-4f1e2d77ea73", "www.manizaleswonders.com", false, "ManizalesWonders", false },
-                    { "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b", 0, 0, "https://images.unsplash.com/photo-1463839346397-8e9946845e6d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "8df16be6-9e8e-4fce-9bbe-828cde8063c1", "Cabecera, Carrera 33 # 45-67", "Aliado", "support@bucaramangajourneys.com", true, false, null, "SUPPORT@BUCARAMANGAJOURNEYS.COM", "BUCARAJOURNEYS", null, "3229876543", true, "Bucaramanga Journeys", "21f6c91c-33e3-4fdc-bd3b-dc01a77dfb91", "www.bucaramangajourneys.com", false, "BucaraJourneys", false },
-                    { "8142c33b-ee02-4a13-b0c1-1e941387433d", 0, 0, "https://images.unsplash.com/photo-1691225409811-a64942a0596a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHVyaXNtfGVufDB8fDB8fHwy", "5527b730-9738-4621-b8cc-83f113c992c0", "Bocagrande, Avenida San Martín # 11-43", "Aliado", "support@cartagenagetaways.com", true, false, null, "SUPPORT@CARTAGENAGETAWAYS.COM", "CARTAGENAGETAWAYS", null, "3176543210", true, "Cartagena Getaways", "b6e82f5a-53c3-4ca6-93a2-74f9bbfc5665", "www.cartagenagetaways.com", false, "CartagenaGetaways", true },
-                    { "96067e6f-c29b-46ab-9ba1-18ec7b6534f4", 0, 0, "https://images.unsplash.com/photo-1519998334409-c7c6b1147f65?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "70f88e6f-5f97-4cf1-ad8c-c94816ccd6c6", "Avenida Circunvalar # 18-10", "Aliado", "info@pereiratravels.com", true, false, null, "INFO@PEREIRATRAVELS.COM", "PEREIRATRAVELS", null, "3107654321", true, "Pereira Travels", "84b6bfe8-fe66-4e2b-a27d-f4d059d5c225", "www.pereiratravels.com", false, "PereiraTravels", false },
-                    { "9cd842af-b711-44cc-aa5e-3863e3c30b76", 0, 0, "https://images.unsplash.com/photo-1678009859747-9f4620e0c355?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVyaXNtfGVufDB8fDB8fHwy", "e7d991cf-ec23-4191-b911-2e724f366711", "Avenida 6 # 12-34", "Aliado", "contact@bogotatours.co", true, false, null, "CONTACT@BOGOTATOURS.CO", "BOGOTATOURS", null, "3123456789", true, "Bogotá Tours", "fccfc3b2-476a-40f1-a079-3b3c50614efa", "www.bogotatours.co", false, "BogotaTours", true },
-                    { "c3733288-b354-445d-95da-4c655c3220b3", 0, 0, "https://images.unsplash.com/photo-1523345863760-5b7f3472d14f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dHVyaXNtfGVufDB8fDB8fHwy", "40c477f6-505d-4660-8105-46e5da10911f", "Barrio San Antonio, Carrera 10 # 5-32", "Aliado", "contact@caliexperiences.com", true, false, null, "CONTACT@CALIEXPERIENCES.COM", "CALIEXP", null, "3132109876", true, "Cali Experiences", "e0784ba1-c2c3-4050-9df5-486882cc71fd", "www.caliexperiences.com", false, "CaliExp", true },
-                    { "c654adef-5f0c-48e6-946a-52706f8ac520", 0, 0, "https://images.unsplash.com/photo-1673213314908-5b1863e742d1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHVyaXNtfGVufDB8fDB8fHwy", "6dbfb752-43f8-4b30-a4c5-5e269927cb24", "Calle 80 # 25-67", "Aliado", "hello@medellinexplore.com", true, false, null, "HELLO@MEDELLINEXPLORE.COM", "MEDELLINEXPLORE", null, "3198765432", true, "Medellín Explore", "b28568fe-709d-4205-b0a8-2658a1ac9358", "www.medellinexplore.com", false, "MedellinExplore", true }
+                    { "4c03648f-7727-4e5c-b096-fcbe3b9e3059", 0, 0, "https://images.unsplash.com/photo-1492294112339-ea831887e5d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVyaXNtfGVufDB8fDB8fHwy", "5bc0b8c4-0b27-4a73-a294-255c93cfdcdb", "Vía 40 # 72-20", "Aliado", "hello@barranquillaescapes.com", true, false, null, "HELLO@BARRANQUILLAESCAPES.COM", "BQUILLAESCAPES", null, "3140987654", true, "Barranquilla Escapes", "bc0bd704-b183-4477-a368-79b56445b183", "www.barranquillaescapes.com", false, "BquillaEscapes", false },
+                    { "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f", 0, 0, "https://images.unsplash.com/photo-1532878056386-1e96eb5221ad?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "86188469-bb42-4828-9e5c-ff72976cd31c", "Centro, Carrera 23 # 17-18", "Aliado", "contact@manizaleswonders.com", true, false, null, "CONTACT@MANIZALESWONDERS.COM", "MANIZALESWONDERS", null, "3165432109", true, "Manizales Wonders", "4799dd6c-e218-4657-b83d-9bd82176a753", "www.manizaleswonders.com", false, "ManizalesWonders", false },
+                    { "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b", 0, 0, "https://images.unsplash.com/photo-1463839346397-8e9946845e6d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "56ae6149-cd78-4c58-b272-03d097fc42dd", "Cabecera, Carrera 33 # 45-67", "Aliado", "support@bucaramangajourneys.com", true, false, null, "SUPPORT@BUCARAMANGAJOURNEYS.COM", "BUCARAJOURNEYS", null, "3229876543", true, "Bucaramanga Journeys", "a84f0232-e336-49a9-9064-5d42a6bfb838", "www.bucaramangajourneys.com", false, "BucaraJourneys", false },
+                    { "8142c33b-ee02-4a13-b0c1-1e941387433d", 0, 0, "https://images.unsplash.com/photo-1691225409811-a64942a0596a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHVyaXNtfGVufDB8fDB8fHwy", "69ad1652-1b12-4676-8c3d-60e4dcfbfe25", "Bocagrande, Avenida San Martín # 11-43", "Aliado", "support@cartagenagetaways.com", true, false, null, "SUPPORT@CARTAGENAGETAWAYS.COM", "CARTAGENAGETAWAYS", null, "3176543210", true, "Cartagena Getaways", "d430d8ff-d7ca-44b5-b2e7-a862beddba29", "www.cartagenagetaways.com", false, "CartagenaGetaways", true },
+                    { "96067e6f-c29b-46ab-9ba1-18ec7b6534f4", 0, 0, "https://images.unsplash.com/photo-1519998334409-c7c6b1147f65?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "f1905572-5c4e-43c5-a2a4-19ea04c08722", "Avenida Circunvalar # 18-10", "Aliado", "info@pereiratravels.com", true, false, null, "INFO@PEREIRATRAVELS.COM", "PEREIRATRAVELS", null, "3107654321", true, "Pereira Travels", "1021075e-e9e0-447b-ba28-864a4f407328", "www.pereiratravels.com", false, "PereiraTravels", false },
+                    { "9cd842af-b711-44cc-aa5e-3863e3c30b76", 0, 0, "https://images.unsplash.com/photo-1678009859747-9f4620e0c355?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVyaXNtfGVufDB8fDB8fHwy", "f245e6b0-430d-4a67-9972-7da188fcc940", "Avenida 6 # 12-34", "Aliado", "contact@bogotatours.co", true, false, null, "CONTACT@BOGOTATOURS.CO", "BOGOTATOURS", null, "3123456789", true, "Bogotá Tours", "55eded71-bff5-4337-8b4d-b13f51486089", "www.bogotatours.co", false, "BogotaTours", true },
+                    { "c3733288-b354-445d-95da-4c655c3220b3", 0, 0, "https://images.unsplash.com/photo-1523345863760-5b7f3472d14f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dHVyaXNtfGVufDB8fDB8fHwy", "6de5ea2c-22cc-4e21-a356-d367d4e4b724", "Barrio San Antonio, Carrera 10 # 5-32", "Aliado", "contact@caliexperiences.com", true, false, null, "CONTACT@CALIEXPERIENCES.COM", "CALIEXP", null, "3132109876", true, "Cali Experiences", "51a92477-97b1-4ec7-bc39-02e6a12d362d", "www.caliexperiences.com", false, "CaliExp", true },
+                    { "c654adef-5f0c-48e6-946a-52706f8ac520", 0, 0, "https://images.unsplash.com/photo-1673213314908-5b1863e742d1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHVyaXNtfGVufDB8fDB8fHwy", "c4e8a238-de65-49bb-a221-97c37622c9e0", "Calle 80 # 25-67", "Aliado", "hello@medellinexplore.com", true, false, null, "HELLO@MEDELLINEXPLORE.COM", "MEDELLINEXPLORE", null, "3198765432", true, "Medellín Explore", "427d2445-69a1-4b48-9028-553a511534b2", "www.medellinexplore.com", false, "MedellinExplore", true }
                 });
 
             migrationBuilder.InsertData(
@@ -608,8 +612,92 @@ namespace Dviaje.DataAccess.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb", 0, "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "d025d057-7f75-4300-85ad-550aa3eac7b9", "Usuario", "gabriela@gmail.com", true, false, null, "GABRIELA@GMAIL.COM", "GABRIELA", null, "3169876543", true, "934d56e6-1015-442e-a2e3-b328d75d0012", false, "Gabriela" },
-                    { "e4309639-4588-4553-8c14-5ce4426e0dd7", 0, "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww", "9faa103a-fb16-400e-9dd2-87ec45dd02ec", "Usuario", "sofia@hotmail.com", true, false, null, "SOFIA@HOTMAIL.COM", "SOFIA", null, "3123456789", true, "49cef4bd-9437-44a9-9be8-e42d05811d42", false, "Sofia" }
+                    { "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb", 0, "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "76dcd80a-96e0-448a-8d3e-8a3f328651e2", "Usuario", "gabriela@gmail.com", true, false, null, "GABRIELA@GMAIL.COM", "GABRIELA", null, "3169876543", true, "5d182410-2dde-47c3-85e9-5f76ce4ab838", false, "Gabriela" },
+                    { "e4309639-4588-4553-8c14-5ce4426e0dd7", 0, "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww", "c16b5e4b-c5c8-40d7-b751-87f511952a4d", "Usuario", "sofia@hotmail.com", true, false, null, "SOFIA@HOTMAIL.COM", "SOFIA", null, "3123456789", true, "5c14647d-f7ec-4dca-9b59-1bdc903875eb", false, "Sofia" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categorias",
+                columns: new[] { "IdCategoria", "NombreCategoria", "RutaIcono" },
+                values: new object[,]
+                {
+                    { 1, "Finca", "fa-solid fa-sign-hanging" },
+                    { 2, "Apartamento", "fa-solid fa-house-user" },
+                    { 3, "Casa", "fa-solid fa-house" },
+                    { 4, "Cabaña", "fa-solid fa-house-chimney" },
+                    { 5, "Hotel", "fa-solid fa-hotel" },
+                    { 6, "Hostal", "fa-solid fa-hotel" },
+                    { 7, "Villa", "fa-solid fa-house-chimney-window" },
+                    { 8, "Resort", "fa-solid fa-hotel" },
+                    { 9, "Piso compartido", "fa-solid fa-people-roof" },
+                    { 10, "Villa vacacional", "fa-solid fa-house-chimney-window" },
+                    { 11, "Casa de campo", "fa-solid fa-house-chimney" },
+                    { 12, "Campamentos", "fa-solid fa-campground" },
+                    { 13, "Pensión", "fa-solid fa-house" },
+                    { 14, "Motel", "fa-solid fa-hotel" },
+                    { 15, "Apartahotel", "fa-solid fa-hotel" },
+                    { 16, "Casa rural", "fa-solid fa-house-chimney" },
+                    { 17, "Posada", "fa-solid fa-house" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Restricciones",
+                columns: new[] { "IdRestriccion", "NombreRestriccion", "RutaIcono" },
+                values: new object[,]
+                {
+                    { 1, "Mascotas", "" },
+                    { 2, "No Fumar", "" },
+                    { 3, "Accesibilidad", "" },
+                    { 4, "Prohibido Ruido", "" },
+                    { 5, "No Fiestas", "" },
+                    { 6, "Niños Bienvenidos", "" },
+                    { 7, "No Comida", "" },
+                    { 8, "Horario Silencioso", "" },
+                    { 9, "Uso de Piscina", "" },
+                    { 10, "Zonas Comunes", "" },
+                    { 11, "No Alcohol", "" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Servicios",
+                columns: new[] { "IdServicio", "NombreServicio", "RutaIcono", "ServicioTipo" },
+                values: new object[,]
+                {
+                    { 1, "Piscina", "fa-solid fa-water-ladder", 2 },
+                    { 2, "Piscina techada", "fa-solid fa-water-ladder", 2 },
+                    { 3, "Parqueadero", "fa-solid fa-square-parking", 2 },
+                    { 4, "Restaurante", "fa-solid fa-utensils", 2 },
+                    { 5, "Bañera de hidromasaje", "fa-solid fa-bath", 2 },
+                    { 6, "Spa", "fa-solid fa-spa", 2 },
+                    { 7, "Gimnasio", "fa-solid fa-dumbbell", 2 },
+                    { 8, "Sauna", "fa-solid fa-hot-tub-person", 2 },
+                    { 9, "Sombrillas de playa", "fa-solid fa-umbrella-beach", 2 },
+                    { 10, "Desayuno incluido", "fa-solid fa-bacon", 2 },
+                    { 11, "Centro de negocios", "fa-solid fa-business-time", 2 },
+                    { 12, "Acepta mascotas", "fa-solid fa-paw", 2 },
+                    { 13, "Recepción disponible 24 horas", "fa-solid fa-bell-concierge", 2 },
+                    { 14, "Servicio de lavandería", "fa-solid fa-jug-detergent", 2 },
+                    { 15, "Salas de reuniones", "fa-solid fa-people-roof", 2 },
+                    { 16, "Cajero automático", "fa-solid fa-money-bills", 2 },
+                    { 17, "Piscina climatizada", "fa-solid fa-water-ladder", 2 },
+                    { 18, "Alquiler de bicicletas", "fa-solid fa-bicycle", 2 },
+                    { 19, "Sala de juegos", "fa-solid fa-table-tennis-paddle-ball", 2 },
+                    { 20, "Piscina al aire libre", "fa-solid fa-person-swimming", 2 },
+                    { 21, "Wi-Fi", "fa-solid fa-wifi", 0 },
+                    { 22, "Internet", "fa-solid fa-network-wired", 0 },
+                    { 23, "Aire acondicionado", "fa-solid fa-wind", 0 },
+                    { 24, "Cocina", "fa-solid fa-kitchen-set", 0 },
+                    { 25, "Balcón/Terraza", "fa-solid fa-house", 0 },
+                    { 26, "Bañera", "fa-solid fa-bath", 0 },
+                    { 27, "Minibar", "fa-solid fa-champagne-glasses", 0 },
+                    { 28, "Servicio de limpieza", "fa-solid fa-broom", 0 },
+                    { 29, "Secador de pelo", "fa-solid fa-wind", 0 },
+                    { 30, "Teléfono", "fa-solid fa-phone", 0 },
+                    { 31, "Balcón privado", "fa-solid fa-house", 0 },
+                    { 32, "Horno", "fa-solid fa-fire-burner", 0 },
+                    { 33, "Acceso silla de ruedas", "fa-solid fa-wheelchair", 1 },
+                    { 34, "Hab. p/ personas con discapacidad", "fa-solid fa-house-user", 1 },
+                    { 35, "Parqueadero p/ personas con discapacidad", "fa-solid fa-square-parking", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -651,19 +739,19 @@ namespace Dviaje.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "AtencionViajeros",
-                columns: new[] { "IdAtencion", "Asunto", "AtencionViajeroPrioridad", "AtencionViajeroTipoPqrs", "Descripcion", "FechaAtencion", "FechaRespuesta", "IdUsuario", "Respuesta" },
+                columns: new[] { "IdAtencion", "Apellidos", "Asunto", "AtencionViajeroPrioridad", "AtencionViajeroTipoPqrs", "Correo", "Descripcion", "FechaAtencion", "FechaRespuesta", "IdUsuario", "Nombre", "Respuesta", "Telefono" },
                 values: new object[,]
                 {
-                    { 1, "Queja por Servicio de Visita Guiada Retrasada el 25 de Julio", 2, 1, "Me gustaría presentar una queja sobre el servicio recibido el pasado 25 de julio de 2024 a través de su plataforma de turismo. Ese día, tenía programada una visita guiada para las 10:00 a.m. en el centro histórico, pero la guía no llegó hasta las 11:30 a.m., sin ninguna explicación por parte del equipo de soporte. Además, la atención recibida fue poco profesional, ya que la guía no pudo responder adecuadamente a mis preguntas sobre los lugares visitados. Agradecería una revisión de este caso y una explicación sobre lo ocurrido, así como las medidas que se tomarán para evitar que situaciones similares se repitan en el futuro. /n Adjunto capturas de pantalla de los correos de confirmación de mi reserva y del pago realizado como referencia.", new DateTime(2024, 7, 25, 10, 30, 50, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 30, 7, 39, 20, 0, DateTimeKind.Unspecified), "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", "Gracias por comunicarse con nosotros y por informarnos sobre su experiencia con nuestro servicio el 25 de julio de 2024. Lamentamos sinceramente los inconvenientes que experimentó durante su visita guiada y cualquier insatisfacción que esto le haya causado. /n Hemos revisado su caso y constatamos que hubo un problema de programación inesperado que retrasó la llegada de la guía. Apreciamos su paciencia y comprensión en esta situación. Hemos tomado medidas para mejorar nuestros procesos de planificación y comunicación con el equipo de guías para asegurarnos de que este tipo de incidentes no se repitan. /n Además, como gesto de disculpa, nos gustaría ofrecerle un reembolso completo del costo de su reserva y un descuento del 20% en su próxima visita con nosotros. Un representante de nuestro equipo se pondrá en contacto con usted en breve para gestionar el reembolso. /n Gracias por su comprensión y por darnos la oportunidad de corregir este error. Valoramos mucho su opinión y esperamos poder servirle mejor en el futuro." },
-                    { 2, "Problemas Técnicos con la Aplicación de Audio-Guía", 2, 1, "Durante mi visita al museo el 20 de julio de 2024, experimenté varios problemas técnicos con la aplicación de audio-guía. La aplicación se cerraba inesperadamente, y no pude escuchar la mayoría de las explicaciones. Adjunto capturas de pantalla de los errores.", new DateTime(2024, 7, 20, 15, 45, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 21, 9, 0, 0, 0, DateTimeKind.Unspecified), "26cfe5c9-00f8-411e-b589-df3405a8b798", "Gracias por informarnos sobre los problemas técnicos que experimentó el 20 de julio de 2024. Hemos identificado el problema y estamos trabajando para solucionarlo. Como compensación, le ofrecemos un pase gratuito para su próxima visita." },
-                    { 3, "Información sobre Tour Ecológico", 2, 0, "Solicito información adicional sobre el tour ecológico programado para el 15 de agosto de 2024. Me gustaría conocer más sobre las actividades incluidas y el equipo necesario.", new DateTime(2024, 7, 15, 12, 10, 30, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 16, 8, 45, 0, 0, DateTimeKind.Unspecified), "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", "Gracias por su interés en nuestro tour ecológico. El tour incluye caminatas guiadas, observación de fauna y flora, y un taller de reciclaje. Se recomienda llevar ropa cómoda, repelente y cámara." },
-                    { 4, "Cancelación de Reserva de Tour Gastronómico", 1, 0, "Deseo cancelar mi reserva para el tour gastronómico del 22 de julio de 2024 debido a un cambio de planes. Adjunto el número de reserva.", new DateTime(2024, 7, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 19, 10, 0, 0, 0, DateTimeKind.Unspecified), "e4309639-4588-4553-8c14-5ce4426e0dd7", "Hemos procesado la cancelación de su reserva para el tour gastronómico del 22 de julio de 2024. Se ha iniciado el reembolso correspondiente, que debería reflejarse en su cuenta en 5-7 días hábiles." },
-                    { 5, "Agradecimiento por Excelente Servicio en Tour de Aventura", 1, 3, "Me gustaría felicitar al equipo por el excelente servicio recibido durante el tour de aventura el 8 de julio de 2024. La guía fue muy profesional y las actividades bien organizadas.", new DateTime(2024, 7, 10, 9, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 11, 8, 15, 0, 0, DateTimeKind.Unspecified), "3a895383-b546-4693-8246-924a9fc5289f", "Gracias por sus amables palabras y por reconocer el esfuerzo de nuestro equipo. Compartiremos sus comentarios con la guía y el resto del equipo. Nos alegra que haya disfrutado de su experiencia." },
-                    { 6, "Retraso en el Servicio de Traslado al Aeropuerto", 1, 1, "El vehículo asignado para el traslado al aeropuerto el 22 de julio de 2024 no llegó a tiempo, y casi perdí mi vuelo. Agradecería una explicación y compensación por este inconveniente.", new DateTime(2024, 7, 22, 11, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 23, 10, 30, 0, 0, DateTimeKind.Unspecified), "01bfd429-16ea-44b3-902c-794e2c78dfa7", "Lamentamos sinceramente el retraso en su traslado al aeropuerto el 22 de julio de 2024. Investigamos el incidente y estamos mejorando nuestros procesos de logística. Le ofrecemos un descuento del 30% en su próximo servicio de traslado." },
-                    { 7, "Consulta sobre Disponibilidad de Tours Privados para Familias", 0, 0, "Me gustaría saber si hay disponibilidad de tours privados para familias en agosto de 2024 y cuáles serían las opciones y precios.", new DateTime(2024, 7, 17, 13, 45, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9cd842af-b711-44cc-aa5e-3863e3c30b76", null },
-                    { 8, "Sugerencia para Mejorar la Aplicación Móvil", 0, 3, "Me gustaría proponer una mejora en su aplicación móvil. Sería útil poder descargar itinerarios y mapas para usarlos sin conexión.", new DateTime(2024, 7, 12, 16, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "c654adef-5f0c-48e6-946a-52706f8ac520", null },
-                    { 9, "Falta de Confirmación de Reserva para Tour de Playa", 0, 2, "No recibí el correo de confirmación para mi reserva del tour de playa el 15 de julio de 2024. Adjunto el recibo de pago como comprobante.", new DateTime(2024, 7, 8, 8, 20, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "8142c33b-ee02-4a13-b0c1-1e941387433d", null },
-                    { 10, "Agradecimiento por Tour Cultural", 0, 3, "Quisiera expresar mi satisfacción por el excelente servicio recibido durante el tour cultural el 3 de julio de 2024. La organización fue impecable y la guía muy conocedora.", new DateTime(2024, 7, 5, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "39e10980-4df3-494a-bbe7-410e105f6551", null }
+                    { 1, null, "Queja por Servicio de Visita Guiada Retrasada el 25 de Julio", 2, 1, null, "Me gustaría presentar una queja sobre el servicio recibido el pasado 25 de julio de 2024 a través de su plataforma de turismo. Ese día, tenía programada una visita guiada para las 10:00 a.m. en el centro histórico, pero la guía no llegó hasta las 11:30 a.m., sin ninguna explicación por parte del equipo de soporte. Además, la atención recibida fue poco profesional, ya que la guía no pudo responder adecuadamente a mis preguntas sobre los lugares visitados. Agradecería una revisión de este caso y una explicación sobre lo ocurrido, así como las medidas que se tomarán para evitar que situaciones similares se repitan en el futuro. /n Adjunto capturas de pantalla de los correos de confirmación de mi reserva y del pago realizado como referencia.", new DateTime(2024, 7, 25, 10, 30, 50, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 30, 7, 39, 20, 0, DateTimeKind.Unspecified), "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", null, "Gracias por comunicarse con nosotros y por informarnos sobre su experiencia con nuestro servicio el 25 de julio de 2024. Lamentamos sinceramente los inconvenientes que experimentó durante su visita guiada y cualquier insatisfacción que esto le haya causado. /n Hemos revisado su caso y constatamos que hubo un problema de programación inesperado que retrasó la llegada de la guía. Apreciamos su paciencia y comprensión en esta situación. Hemos tomado medidas para mejorar nuestros procesos de planificación y comunicación con el equipo de guías para asegurarnos de que este tipo de incidentes no se repitan. /n Además, como gesto de disculpa, nos gustaría ofrecerle un reembolso completo del costo de su reserva y un descuento del 20% en su próxima visita con nosotros. Un representante de nuestro equipo se pondrá en contacto con usted en breve para gestionar el reembolso. /n Gracias por su comprensión y por darnos la oportunidad de corregir este error. Valoramos mucho su opinión y esperamos poder servirle mejor en el futuro.", null },
+                    { 2, null, "Problemas Técnicos con la Aplicación de Audio-Guía", 2, 1, null, "Durante mi visita al museo el 20 de julio de 2024, experimenté varios problemas técnicos con la aplicación de audio-guía. La aplicación se cerraba inesperadamente, y no pude escuchar la mayoría de las explicaciones. Adjunto capturas de pantalla de los errores.", new DateTime(2024, 7, 20, 15, 45, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 21, 9, 0, 0, 0, DateTimeKind.Unspecified), "26cfe5c9-00f8-411e-b589-df3405a8b798", null, "Gracias por informarnos sobre los problemas técnicos que experimentó el 20 de julio de 2024. Hemos identificado el problema y estamos trabajando para solucionarlo. Como compensación, le ofrecemos un pase gratuito para su próxima visita.", null },
+                    { 3, null, "Información sobre Tour Ecológico", 2, 0, null, "Solicito información adicional sobre el tour ecológico programado para el 15 de agosto de 2024. Me gustaría conocer más sobre las actividades incluidas y el equipo necesario.", new DateTime(2024, 7, 15, 12, 10, 30, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 16, 8, 45, 0, 0, DateTimeKind.Unspecified), "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", null, "Gracias por su interés en nuestro tour ecológico. El tour incluye caminatas guiadas, observación de fauna y flora, y un taller de reciclaje. Se recomienda llevar ropa cómoda, repelente y cámara.", null },
+                    { 4, null, "Cancelación de Reserva de Tour Gastronómico", 1, 0, null, "Deseo cancelar mi reserva para el tour gastronómico del 22 de julio de 2024 debido a un cambio de planes. Adjunto el número de reserva.", new DateTime(2024, 7, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 19, 10, 0, 0, 0, DateTimeKind.Unspecified), "e4309639-4588-4553-8c14-5ce4426e0dd7", null, "Hemos procesado la cancelación de su reserva para el tour gastronómico del 22 de julio de 2024. Se ha iniciado el reembolso correspondiente, que debería reflejarse en su cuenta en 5-7 días hábiles.", null },
+                    { 5, null, "Agradecimiento por Excelente Servicio en Tour de Aventura", 1, 3, null, "Me gustaría felicitar al equipo por el excelente servicio recibido durante el tour de aventura el 8 de julio de 2024. La guía fue muy profesional y las actividades bien organizadas.", new DateTime(2024, 7, 10, 9, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 11, 8, 15, 0, 0, DateTimeKind.Unspecified), "3a895383-b546-4693-8246-924a9fc5289f", null, "Gracias por sus amables palabras y por reconocer el esfuerzo de nuestro equipo. Compartiremos sus comentarios con la guía y el resto del equipo. Nos alegra que haya disfrutado de su experiencia.", null },
+                    { 6, null, "Retraso en el Servicio de Traslado al Aeropuerto", 1, 1, null, "El vehículo asignado para el traslado al aeropuerto el 22 de julio de 2024 no llegó a tiempo, y casi perdí mi vuelo. Agradecería una explicación y compensación por este inconveniente.", new DateTime(2024, 7, 22, 11, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 23, 10, 30, 0, 0, DateTimeKind.Unspecified), "01bfd429-16ea-44b3-902c-794e2c78dfa7", null, "Lamentamos sinceramente el retraso en su traslado al aeropuerto el 22 de julio de 2024. Investigamos el incidente y estamos mejorando nuestros procesos de logística. Le ofrecemos un descuento del 30% en su próximo servicio de traslado.", null },
+                    { 7, null, "Consulta sobre Disponibilidad de Tours Privados para Familias", 0, 0, null, "Me gustaría saber si hay disponibilidad de tours privados para familias en agosto de 2024 y cuáles serían las opciones y precios.", new DateTime(2024, 7, 17, 13, 45, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9cd842af-b711-44cc-aa5e-3863e3c30b76", null, null, null },
+                    { 8, null, "Sugerencia para Mejorar la Aplicación Móvil", 0, 3, null, "Me gustaría proponer una mejora en su aplicación móvil. Sería útil poder descargar itinerarios y mapas para usarlos sin conexión.", new DateTime(2024, 7, 12, 16, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "c654adef-5f0c-48e6-946a-52706f8ac520", null, null, null },
+                    { 9, null, "Falta de Confirmación de Reserva para Tour de Playa", 0, 2, null, "No recibí el correo de confirmación para mi reserva del tour de playa el 15 de julio de 2024. Adjunto el recibo de pago como comprobante.", new DateTime(2024, 7, 8, 8, 20, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "8142c33b-ee02-4a13-b0c1-1e941387433d", null, null, null },
+                    { 10, null, "Agradecimiento por Tour Cultural", 0, 3, null, "Quisiera expresar mi satisfacción por el excelente servicio recibido durante el tour cultural el 3 de julio de 2024. La organización fue impecable y la guía muy conocedora.", new DateTime(2024, 7, 5, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "39e10980-4df3-494a-bbe7-410e105f6551", null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -723,6 +811,88 @@ namespace Dviaje.DataAccess.Migrations
                     { 12, 3, "https://DViaje.com/adjuntos/comprobantesde_reserva.jpg" },
                     { 13, 3, "https://DViaje.com/adjuntos/agradecimientosss_tour.jpg" },
                     { 14, 9, "https://DViaje.com/adjuntos/problemaconid_pago.jpg" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Favoritos",
+                columns: new[] { "IdFavorito", "IdPublicacion", "IdUsuario" },
+                values: new object[,]
+                {
+                    { 1, 1, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7" },
+                    { 2, 2, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7" },
+                    { 3, 3, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7" },
+                    { 4, 4, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7" },
+                    { 5, 5, "26cfe5c9-00f8-411e-b589-df3405a8b798" },
+                    { 6, 6, "26cfe5c9-00f8-411e-b589-df3405a8b798" },
+                    { 7, 7, "26cfe5c9-00f8-411e-b589-df3405a8b798" },
+                    { 8, 8, "26cfe5c9-00f8-411e-b589-df3405a8b798" },
+                    { 9, 9, "26cfe5c9-00f8-411e-b589-df3405a8b798" },
+                    { 10, 10, "26cfe5c9-00f8-411e-b589-df3405a8b798" },
+                    { 11, 11, "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1" },
+                    { 12, 11, "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1" },
+                    { 13, 1, "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1" },
+                    { 14, 2, "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1" },
+                    { 15, 3, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 16, 4, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 17, 5, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 18, 6, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 19, 7, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 20, 8, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 21, 9, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 22, 10, "e4309639-4588-4553-8c14-5ce4426e0dd7" },
+                    { 23, 11, "3a895383-b546-4693-8246-924a9fc5289f" },
+                    { 24, 12, "3a895383-b546-4693-8246-924a9fc5289f" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FechasNoDisponibles",
+                columns: new[] { "IdFechaNoDisponible", "FechaFinal", "FechaInicial", "IdPublicacion" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 7, 30, 15, 45, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 20, 15, 45, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, new DateTime(2024, 8, 7, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 3, new DateTime(2024, 8, 15, 18, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 10, 9, 0, 0, 0, DateTimeKind.Unspecified), 3 },
+                    { 4, new DateTime(2024, 8, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 12, 10, 0, 0, 0, DateTimeKind.Unspecified), 4 },
+                    { 5, new DateTime(2024, 8, 25, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 20, 16, 0, 0, 0, DateTimeKind.Unspecified), 5 },
+                    { 6, new DateTime(2024, 8, 29, 9, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 22, 8, 30, 0, 0, DateTimeKind.Unspecified), 6 },
+                    { 7, new DateTime(2024, 9, 2, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 25, 15, 0, 0, 0, DateTimeKind.Unspecified), 7 },
+                    { 8, new DateTime(2024, 9, 10, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 11, 0, 0, 0, DateTimeKind.Unspecified), 8 },
+                    { 9, new DateTime(2024, 9, 12, 17, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 5, 14, 0, 0, 0, DateTimeKind.Unspecified), 9 },
+                    { 10, new DateTime(2024, 9, 15, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 10, 9, 0, 0, 0, DateTimeKind.Unspecified), 10 },
+                    { 11, new DateTime(2024, 11, 20, 14, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 11, 12, 13, 0, 0, 0, DateTimeKind.Unspecified), 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PublicacionesCategorias",
+                columns: new[] { "IdPublicacionCategoria", "IdCategoria", "IdPublicacion" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 1 },
+                    { 4, 4, 1 },
+                    { 5, 4, 2 },
+                    { 6, 5, 2 },
+                    { 7, 6, 2 },
+                    { 8, 7, 3 },
+                    { 9, 8, 4 },
+                    { 10, 9, 5 },
+                    { 11, 10, 5 },
+                    { 12, 11, 5 },
+                    { 13, 12, 5 },
+                    { 14, 13, 5 },
+                    { 15, 14, 5 },
+                    { 16, 15, 6 },
+                    { 17, 16, 6 },
+                    { 18, 17, 7 },
+                    { 19, 1, 8 },
+                    { 20, 2, 9 },
+                    { 21, 3, 9 },
+                    { 22, 4, 9 },
+                    { 23, 5, 10 },
+                    { 24, 6, 10 },
+                    { 25, 7, 11 },
+                    { 26, 8, 12 }
                 });
 
             migrationBuilder.InsertData(
@@ -790,6 +960,174 @@ namespace Dviaje.DataAccess.Migrations
                     { 46, 10, "https://images.unsplash.com/photo-1679420438051-19bd5aad4d67?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
                     { 47, 10, "https://images.unsplash.com/photo-1692308516530-5ffc490476a8?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
                     { 48, 10, "https://images.unsplash.com/photo-1704803269187-d6eb334ea5fe?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PublicacionesRestricciones",
+                columns: new[] { "IdPublicacionRestriccion", "IdPublicacion", "IdRestriccion" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 1, 2 },
+                    { 3, 2, 3 },
+                    { 4, 3, 4 },
+                    { 5, 3, 5 },
+                    { 6, 5, 6 },
+                    { 7, 7, 7 },
+                    { 8, 8, 8 },
+                    { 9, 8, 9 },
+                    { 10, 9, 10 },
+                    { 11, 10, 11 },
+                    { 12, 11, 1 },
+                    { 13, 12, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PublicacionesServicios",
+                columns: new[] { "IdPublicacionServicio", "IdPublicacion", "IdServicio" },
+                values: new object[,]
+                {
+                    { 1, 1, 2 },
+                    { 2, 1, 3 },
+                    { 3, 1, 4 },
+                    { 4, 1, 5 },
+                    { 5, 1, 8 },
+                    { 6, 1, 10 },
+                    { 7, 1, 11 },
+                    { 8, 2, 12 },
+                    { 9, 2, 13 },
+                    { 10, 2, 14 },
+                    { 11, 2, 15 },
+                    { 12, 2, 16 },
+                    { 13, 2, 17 },
+                    { 14, 2, 18 },
+                    { 15, 2, 19 },
+                    { 16, 3, 20 },
+                    { 17, 3, 21 },
+                    { 18, 3, 22 },
+                    { 19, 3, 23 },
+                    { 20, 3, 24 },
+                    { 21, 3, 25 },
+                    { 22, 3, 26 },
+                    { 23, 3, 27 },
+                    { 24, 3, 28 },
+                    { 25, 4, 29 },
+                    { 26, 4, 30 },
+                    { 27, 4, 31 },
+                    { 28, 4, 32 },
+                    { 29, 4, 33 },
+                    { 30, 4, 34 },
+                    { 31, 4, 35 },
+                    { 32, 4, 1 },
+                    { 33, 4, 2 },
+                    { 34, 4, 3 },
+                    { 35, 4, 5 },
+                    { 36, 4, 6 },
+                    { 37, 4, 7 },
+                    { 38, 5, 8 },
+                    { 39, 5, 9 },
+                    { 40, 5, 10 },
+                    { 41, 5, 11 },
+                    { 42, 6, 12 },
+                    { 43, 6, 13 },
+                    { 44, 6, 14 },
+                    { 45, 6, 15 },
+                    { 46, 6, 16 },
+                    { 47, 6, 17 },
+                    { 48, 6, 18 },
+                    { 49, 6, 19 },
+                    { 50, 6, 20 },
+                    { 51, 6, 21 },
+                    { 52, 6, 22 },
+                    { 53, 7, 23 },
+                    { 54, 7, 24 },
+                    { 55, 7, 25 },
+                    { 56, 7, 26 },
+                    { 57, 8, 27 },
+                    { 58, 8, 28 },
+                    { 59, 8, 29 },
+                    { 60, 9, 30 },
+                    { 61, 9, 31 },
+                    { 62, 9, 32 },
+                    { 63, 9, 33 },
+                    { 64, 9, 34 },
+                    { 65, 9, 35 },
+                    { 66, 9, 1 },
+                    { 67, 9, 2 },
+                    { 68, 9, 3 },
+                    { 69, 10, 4 },
+                    { 70, 10, 5 },
+                    { 71, 10, 6 },
+                    { 72, 10, 7 },
+                    { 73, 10, 8 },
+                    { 74, 10, 9 },
+                    { 75, 10, 11 },
+                    { 76, 10, 12 },
+                    { 77, 10, 13 },
+                    { 78, 10, 14 },
+                    { 79, 11, 15 },
+                    { 80, 11, 16 },
+                    { 81, 11, 17 },
+                    { 82, 11, 18 },
+                    { 83, 11, 19 },
+                    { 84, 12, 20 },
+                    { 85, 12, 21 },
+                    { 86, 12, 22 },
+                    { 87, 12, 23 },
+                    { 88, 12, 24 },
+                    { 89, 12, 25 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reservas",
+                columns: new[] { "IdReserva", "FechaFinal", "FechaInicial", "IdPublicacion", "IdUsuario", "NumeroPersonas", "ReservaEstado" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 9, 24, 15, 45, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 20, 15, 45, 0, 0, DateTimeKind.Unspecified), 1, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 3, 2 },
+                    { 2, new DateTime(2024, 9, 30, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 25, 10, 0, 0, 0, DateTimeKind.Unspecified), 1, "26cfe5c9-00f8-411e-b589-df3405a8b798", 2, 0 },
+                    { 3, new DateTime(2024, 10, 7, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 1, 14, 0, 0, 0, DateTimeKind.Unspecified), 1, "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", 4, 1 },
+                    { 4, new DateTime(2024, 10, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 10, 16, 0, 0, 0, DateTimeKind.Unspecified), 1, "e4309639-4588-4553-8c14-5ce4426e0dd7", 5, 2 },
+                    { 5, new DateTime(2024, 10, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 12, 11, 0, 0, 0, DateTimeKind.Unspecified), 2, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 2, 0 },
+                    { 6, new DateTime(2024, 10, 20, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 15, 9, 0, 0, 0, DateTimeKind.Unspecified), 2, "1c8e89f7-7db6-4cd5-907d-f01b058cd784", 4, 1 },
+                    { 7, new DateTime(2024, 10, 22, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 18, 8, 30, 0, 0, DateTimeKind.Unspecified), 2, "13825fa6-5c27-4303-ab17-6e13aac24c12", 3, 2 },
+                    { 8, new DateTime(2024, 10, 25, 16, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 20, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", 6, 0 },
+                    { 9, new DateTime(2024, 10, 28, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 22, 14, 0, 0, 0, DateTimeKind.Unspecified), 3, "3a895383-b546-4693-8246-924a9fc5289f", 2, 2 },
+                    { 10, new DateTime(2024, 10, 30, 13, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 25, 12, 0, 0, 0, DateTimeKind.Unspecified), 3, "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 5, 1 },
+                    { 11, new DateTime(2024, 11, 2, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 28, 9, 0, 0, 0, DateTimeKind.Unspecified), 4, "26cfe5c9-00f8-411e-b589-df3405a8b798", 4, 2 },
+                    { 12, new DateTime(2024, 11, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 30, 11, 0, 0, 0, DateTimeKind.Unspecified), 5, "e4309639-4588-4553-8c14-5ce4426e0dd7", 3, 0 },
+                    { 13, new DateTime(2024, 11, 8, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 11, 1, 15, 0, 0, 0, DateTimeKind.Unspecified), 6, "13825fa6-5c27-4303-ab17-6e13aac24c12", 2, 2 },
+                    { 14, new DateTime(2024, 11, 12, 16, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 11, 5, 10, 0, 0, 0, DateTimeKind.Unspecified), 6, "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", 6, 1 },
+                    { 15, new DateTime(2024, 11, 15, 13, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 11, 10, 14, 0, 0, 0, DateTimeKind.Unspecified), 9, "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", 5, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ServiciosAdicionales",
+                columns: new[] { "IdServicioAdicional", "IdPublicacion", "IdServicio", "PrecioServicioAdicional" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, 50000m },
+                    { 3, 2, 2, 60000m },
+                    { 4, 3, 3, 70000m },
+                    { 5, 4, 4, 80000m },
+                    { 6, 5, 5, 90000m },
+                    { 7, 6, 6, 100000m },
+                    { 8, 7, 7, 110000m },
+                    { 9, 8, 8, 120000m },
+                    { 10, 9, 9, 130000m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Resenas",
+                columns: new[] { "IdResena", "Calificacion", "Fecha", "IdReserva", "MeGusta", "Opinion" },
+                values: new object[,]
+                {
+                    { 1, 4, new DateTime(2024, 11, 5, 10, 0, 0, 0, DateTimeKind.Unspecified), 1, 3, "Muy tranquilo, privado y atención personalizada, muy atentos a nuestras necesidades y solicitudes, la llegada fácil a borde de la carretera lo cual es una ventaja para carros bajitos, la comida deliciosa y un personal atento, amable y respetuoso." },
+                    { 2, 5, new DateTime(2024, 11, 7, 14, 30, 0, 0, DateTimeKind.Unspecified), 4, 8, "La estancia fue excelente, el lugar es hermoso y muy bien cuidado. La atención del personal fue impecable y siempre estuvieron disponibles para cualquier solicitud. La ubicación es perfecta para quienes buscan paz y tranquilidad." },
+                    { 3, 3, new DateTime(2024, 11, 10, 16, 15, 0, 0, DateTimeKind.Unspecified), 7, 2, "El alojamiento es bastante bueno, aunque el servicio podría mejorar en términos de tiempo de respuesta. La limpieza estaba bien, pero la comida no cumplió completamente con nuestras expectativas." },
+                    { 4, 4, new DateTime(2024, 11, 12, 9, 45, 0, 0, DateTimeKind.Unspecified), 9, 5, "Un lugar acogedor con un ambiente muy relajante. El personal es amable y la comida es deliciosa. Sin embargo, hubo algunos problemas con la conexión a internet durante nuestra estancia." },
+                    { 5, 4, new DateTime(2024, 11, 15, 11, 0, 0, 0, DateTimeKind.Unspecified), 11, 6, "La experiencia fue muy buena en general. Las instalaciones estaban limpias y bien mantenidas. El check-in fue rápido y sin problemas, pero el precio es un poco alto para lo que ofrecen." },
+                    { 6, 5, new DateTime(2024, 11, 18, 13, 30, 0, 0, DateTimeKind.Unspecified), 13, 7, "El lugar es encantador y muy cómodo. La atención del personal fue muy buena y hicieron todo lo posible para que nuestra estancia fuera agradable. Recomendado para una escapada de fin de semana." },
+                    { 7, 3, new DateTime(2024, 11, 20, 15, 0, 0, 0, DateTimeKind.Unspecified), 15, 3, "Buena ubicación, pero la habitación necesitaba una mejor limpieza. La comida estaba bien, pero no había muchas opciones en el menú. El personal fue amable, aunque a veces parecía desorganizado." }
                 });
 
             migrationBuilder.CreateIndex(
