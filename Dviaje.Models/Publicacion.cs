@@ -54,5 +54,10 @@ namespace Dviaje.Models
 
         [ForeignKey("IdAliado")]
         public Aliado? Aliado { get; set; }
+
+
+        // Propiedades de navegación
+        public ICollection<PublicacionCategoria> PublicacionCategorias { get; set; } = new List<PublicacionCategoria>();
+        public ICollection<PublicacionImagen> PublicacionImagenes { get; set; } = new List<PublicacionImagen>();
     }
 }

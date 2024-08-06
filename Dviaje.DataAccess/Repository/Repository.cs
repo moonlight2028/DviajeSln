@@ -10,14 +10,15 @@ namespace Dviaje.DataAccess.Repository
         private readonly ApplicationDbContext _db;
         internal DbSet<T> dbSet;
 
+
         public Repository(ApplicationDbContext db)
         {
             _db = db;
             this.dbSet = _db.Set<T>();
         }
 
-        public async Task AddAsync(T entity) => await dbSet.AddAsync(entity);
 
+        public async Task AddAsync(T entity) => await dbSet.AddAsync(entity);
 
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? incluideProperties = null)
         {
@@ -36,9 +37,6 @@ namespace Dviaje.DataAccess.Repository
             }
 
             return await consulta.ToListAsync();
-
-
-
         }
 
         public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null, string? incluideProperties = null, bool tracking = false)
@@ -58,10 +56,8 @@ namespace Dviaje.DataAccess.Repository
             }
 
             return await consulta.FirstOrDefaultAsync();
-
         }
 
         public void Remove(T entity) => dbSet.Remove(entity);
-
     }
 }

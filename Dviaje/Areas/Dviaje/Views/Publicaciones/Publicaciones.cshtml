@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<PublicacionPublicacionesVM>
+
+@{
     ViewData["Title"] = "Publicaciones";
 }
 
@@ -16,6 +18,104 @@
     <link rel="stylesheet" href="~/css/page/publicaciones.css">
 }
 
+@foreach(var publicacion in Model)
+{
+    <p>@publicacion.IdPublicacion</p> 
+    <p>@publicacion.AliadoId</p> 
+    <p>@publicacion.AvatarAliado</p> 
+    <p>@publicacion.NombreAliado</p> 
+    <p>@publicacion.Precio</p>    
+    <p>@publicacion.Titulo</p>    
+    <p>@publicacion.Direccion</p>    
+    <p>@publicacion.Descripcion</p>  
+    <p>@publicacion.TotalPublicacionesAliado</p>
+    <p>@publicacion.TotalResenas</p>
+
+
+    <p>////////////////////////////////</p>
+    if(publicacion.Categorias == null || publicacion.Categorias.Count() == 0){
+        <p>No tenemos categorias</p>
+    }
+    else
+    {
+        foreach(var categoria in publicacion.Categorias)
+        {
+            <p>@categoria.NombreCategoria</p>
+        }
+    }
+
+    <p>////////////////////////////////</p>
+
+    <p>////////////////////////////////</p>
+    if(publicacion.Imagenes == null || publicacion.Imagenes.Count() == 0)
+    {
+        <p>No tengo imagenes</p>
+    }
+    else
+    {
+        foreach (var imagen in publicacion.Imagenes)
+        {
+            <p>@imagen</p>
+        }
+    }
+    <p>////////////////////////////////</p>
+
+    <p>-----------------------------------------------------------------------------</p>
+}
+
+
+
+
+
+
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 <div class="p-2">
     <!-- Buscar formulario -->

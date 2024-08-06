@@ -16,5 +16,9 @@ namespace Dviaje.Models
         [Required(ErrorMessage = "La ruta del ícono es obligatoria.")]
         [StringLength(255, ErrorMessage = "La ruta del ícono debe tener hasta 255 caracteres.")]
         public string? RutaIcono { get; set; }
+
+
+        // Propiedades de navegación
+        public ICollection<PublicacionCategoria> PublicacionesCategorias { get; set; } = new List<PublicacionCategoria>();
     }
 }

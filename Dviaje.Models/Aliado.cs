@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dviaje.Models
 {
@@ -25,6 +25,9 @@ namespace Dviaje.Models
 
         [Required(ErrorMessage = "El campo Verificado es obligatorio.")]
         public bool Verificado { get; set; }
+
+
+        public int NumeroPublicaciones { get; set; }
 
 
         [Required]

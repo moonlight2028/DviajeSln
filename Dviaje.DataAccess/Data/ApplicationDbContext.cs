@@ -216,7 +216,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "INFO@COLOMBIAADVENTURE.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3216549870",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 4
                 },
                 new Aliado
                 {
@@ -233,7 +234,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "CONTACT@BOGOTATOURS.CO",
                     EmailConfirmed = true,
                     PhoneNumber = "3123456789",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 445
                 },
                 new Aliado
                 {
@@ -250,7 +252,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "HELLO@MEDELLINEXPLORE.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3198765432",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 89
                 },
                 new Aliado
                 {
@@ -267,7 +270,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "SUPPORT@CARTAGENAGETAWAYS.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3176543210",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 478
                 },
                 new Aliado
                 {
@@ -284,7 +288,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "INFO@SANTAMARTAADVENTURES.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3154321098",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 48
                 },
                 new Aliado
                 {
@@ -301,7 +306,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "CONTACT@CALIEXPERIENCES.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3132109876",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 8
                 },
                 new Aliado
                 {
@@ -318,7 +324,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "HELLO@BARRANQUILLAESCAPES.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3140987654",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 7
                 },
                 new Aliado
                 {
@@ -335,7 +342,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "SUPPORT@BUCARAMANGAJOURNEYS.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3229876543",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 76
                 },
                 new Aliado
                 {
@@ -352,7 +360,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "INFO@PEREIRATRAVELS.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3107654321",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 3
                 },
                 new Aliado
                 {
@@ -369,7 +378,8 @@ namespace Dviaje.DataAccess.Data
                     NormalizedEmail = "CONTACT@MANIZALESWONDERS.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3165432109",
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    NumeroPublicaciones = 7
                 }
             );
 
@@ -1160,6 +1170,114 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacionImagen = 48,
                     Ruta = "https://images.unsplash.com/photo-1704803269187-d6eb334ea5fe?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     IdPublicacion = 10
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 49,
+                    Ruta = "https://images.unsplash.com/photo-1643234804946-7ae71ca3aea3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 50,
+                    Ruta = "https://images.unsplash.com/photo-1688321998704-e5bba733728c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 51,
+                    Ruta = "https://images.unsplash.com/photo-1622343782402-94ea774c4f61?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 52,
+                    Ruta = "https://images.unsplash.com/photo-1707073687377-fbda787a7db9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 53,
+                    Ruta = "https://images.unsplash.com/photo-1646672571916-453b48d71710?q=80&w=1978&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 54,
+                    Ruta = "https://images.unsplash.com/photo-1649807944854-a7b57dd6afb5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 55,
+                    Ruta = "https://images.unsplash.com/photo-1577741553317-7f231343599a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 7
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 56,
+                    Ruta = "https://images.unsplash.com/photo-1573435708546-32beaff245c1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 11
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 57,
+                    Ruta = "https://images.unsplash.com/photo-1708187181457-8bafec80833a?q=80&w=2077&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 11
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 58,
+                    Ruta = "https://images.unsplash.com/photo-1683384546413-d207b5677dc0?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 11
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 59,
+                    Ruta = "https://images.unsplash.com/photo-1610228328499-53c36a14dbc1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 11
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 60,
+                    Ruta = "https://images.unsplash.com/photo-1656371559747-1ca93a271206?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 11
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 61,
+                    Ruta = "https://images.unsplash.com/photo-1635222722123-fd2b74b6bc9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 11
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 62,
+                    Ruta = "https://images.unsplash.com/photo-1707073687052-0edc1463d1f8?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 12
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 63,
+                    Ruta = "https://images.unsplash.com/photo-1705373069474-e01b8b18b6f6?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 12
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 64,
+                    Ruta = "https://images.unsplash.com/photo-1688254708497-732d5a8d923b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 12
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 65,
+                    Ruta = "https://images.unsplash.com/photo-1663948017079-2906ed90a5d6?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 12
+                },
+                new PublicacionImagen
+                {
+                    IdPublicacionImagen = 66,
+                    Ruta = "https://images.unsplash.com/photo-1573435708534-6b6dbc589bfc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdPublicacion = 12
                 }
             );
 
