@@ -3,6 +3,7 @@ using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Dviaje.DataAccess.Repository
 {
@@ -17,16 +18,21 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-        public async Task<List<PublicacionPublicacionesVM>> GetPublicacionesAsync(int page, int pageSize)
+        //Información de las tarjetas de publicación de la vista de publicaciones.
+        public async Task<List<PublicacionTarjetaVM>> GetPublicacionesAsync(int page, int pageSize, Expression<Func<Publicacion, object>>? orderBy = null)
         {
-            List<PublicacionPublicacionesVM> publicaciones = await _db.Publicaciones
+            IQueryable<Publicacion> query = _db.Publicaciones
                 .Include(p => p.Aliado)
                 .Include(p => p.PublicacionCategorias)
                     .ThenInclude(pc => pc.Categoria)
-                .Include(p => p.PublicacionImagenes)
+                .Include(p => p.PublicacionImagenes);
+
+            query = orderBy != null ? query.OrderBy(orderBy) : query.OrderByDescending(p => p.Puntuacion);
+
+            List<PublicacionTarjetaVM> publicaciones = await query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .Select(p => new PublicacionPublicacionesVM
+                .Select(p => new PublicacionTarjetaVM
                 {
                     IdPublicacion = p.IdPublicacion,
                     AliadoId = p.Aliado != null ? p.Aliado.Id : null,
@@ -35,6 +41,7 @@ namespace Dviaje.DataAccess.Repository
                     Precio = p.Precio,
                     Titulo = p.Titulo,
                     Direccion = p.Direccion,
+                    Calificacion = p.Puntuacion,
                     Descripcion = p.Descripcion,
                     TotalPublicacionesAliado = p.Aliado != null ? p.Aliado.NumeroPublicaciones : 0,
                     TotalResenas = p.NumeroResenas,
@@ -43,12 +50,19 @@ namespace Dviaje.DataAccess.Repository
                         NombreCategoria = pc.Categoria != null ? pc.Categoria.NombreCategoria : null,
                         RutaIcono = pc.Categoria != null ? pc.Categoria.RutaIcono : null
                     }).ToList() : null,
-                    Imagenes = p.PublicacionImagenes != null ? p.PublicacionImagenes.Select(pi => pi.Ruta).ToList() : null
+                    Imagenes = p.PublicacionImagenes != null ? p.PublicacionImagenes.Select(pi => new PublicacionImagenVM
+                    {
+                        Ruta = pi.Ruta,
+                        Alt = pi.Alt
+                    }).ToList() : null
                 }).ToListAsync();
 
             return publicaciones;
         }
 
+
+        // Publicaciones totales de la vista de publicaciones.
+        public async Task<int> GetTotalPublicacionesAsync() => await _db.Publicaciones.CountAsync();
 
         public void Update(Publicacion publicacion)
         {

@@ -16,14 +16,37 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        public async Task<IActionResult> Publicaciones()
+        public async Task<IActionResult> Publicaciones(int? pagina, string? ordenar)
         {
-            List<PublicacionPublicacionesVM> publicaciones = await _unitOfWork.PublicacionRepository.GetPublicacionesAsync(1, 20);
+            // Paginación.
+            int numeroPublicaciones = 10;
+            int publicacionesTotales = await _unitOfWork.PublicacionRepository.GetTotalPublicacionesAsync();
+            int paginasTotales = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(publicacionesTotales) / Convert.ToDecimal(numeroPublicaciones)));
 
-            return View(publicaciones);
+            // Filtro ordenar
+            ordenar = ordenar == null ? "" : ordenar.ToUpper();
+
+            // Validaciones.
+            if (pagina is null or <= 0) pagina = 1;
+            if (pagina > paginasTotales) pagina = 1;
+
+            // Lista de publicaciones
+            List<PublicacionTarjetaVM> listaPublicaciones = ordenar switch
+            {
+                "PRECIOMAYOR" => await _unitOfWork.PublicacionRepository.GetPublicacionesAsync((int)pagina, numeroPublicaciones, orderBy: p => -p.Precio),
+                "PRECIOMENOR" => await _unitOfWork.PublicacionRepository.GetPublicacionesAsync((int)pagina, numeroPublicaciones, orderBy: p => p.Precio),
+                _ => await _unitOfWork.PublicacionRepository.GetPublicacionesAsync((int)pagina, numeroPublicaciones),
+            };
+
+
+            return View(new PublicacionesVM
+            {
+                PublicacionTarjetas = listaPublicaciones,
+                Paginacion = new PaginacionVM { ResultadosMostrados = numeroPublicaciones, ResultadosTotales = publicacionesTotales, PaginasTotales = paginasTotales, PaginaActual = (int)pagina }
+            });
         }
 
-        public IActionResult Publicacion()
+        public IActionResult Publicacion(int? id)
         {
             return View();
         }

@@ -2,7 +2,7 @@
 import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
 
 export const swipersTarjetasPublicacion = () => {
-    var swiperCarrusel = new Swiper(".swiper-carrusel", {
+    let swiperCarrusel = new Swiper(".swiper-carrusel", {
         lazy: true,
         loop: true,
         grabCursor: true,
@@ -16,7 +16,7 @@ export const swipersTarjetasPublicacion = () => {
         },
     });
 
-    var swiperCategorias = new Swiper(".swiper-categorias", {
+    let swiperCategorias = new Swiper(".swiper-categorias", {
         lazy: true,
         slidesPerView: "auto",
         spaceBetween: 5,

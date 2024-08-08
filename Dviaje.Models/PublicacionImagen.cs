@@ -14,6 +14,10 @@ namespace Dviaje.Models
         public string? Ruta { get; set; }
 
 
+        [StringLength(100)]
+        public string? Alt { get; set; }
+
+
         [Required(ErrorMessage = "El ID de la publicación es obligatorio.")]
         [Range(1, int.MaxValue, ErrorMessage = "El ID de la publicación debe ser mayor que 0.")]
         public int IdPublicacion { get; set; }

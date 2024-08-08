@@ -1,6 +1,5 @@
 ﻿using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -8,18 +7,19 @@ namespace Dviaje.Areas.Turista.Controllers
     {
 
         [Area("Turista")]
-        public IActionResult Resena ()
+        public IActionResult Resena()
         {
             return View();
 
         }
+
 
         [HttpPost]
         public IActionResult Crear(int publicacionId, Resena resena)
         {
             if (ModelState.IsValid)
             {
-               // resena.PublicacionId = publicacionId;
+                // resena.PublicacionId = publicacionId;
                 //_context.Add(resena);
                 //_context.SaveChanges();
             }

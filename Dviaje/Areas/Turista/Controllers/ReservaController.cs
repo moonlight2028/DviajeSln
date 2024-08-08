@@ -18,7 +18,7 @@ namespace Dviaje.Areas.Turista.Controllers
             this._db = _db;
         }
 
-        public IActionResult Reserva()
+        public IActionResult Reserva(int? idPublicacion)
         {
             return View();
         }

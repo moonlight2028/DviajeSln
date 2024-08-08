@@ -1,6 +1,6 @@
 ﻿namespace Dviaje.Models.VM
 {
-    public class PublicacionPublicacionesVM
+    public class PublicacionTarjetaVM
     {
         public int IdPublicacion { get; set; }
 
@@ -26,6 +26,6 @@
 
         public List<Categoria>? Categorias { get; set; }
 
-        public List<string?>? Imagenes { get; set; }
+        public List<PublicacionImagenVM>? Imagenes { get; set; }
     }
 }

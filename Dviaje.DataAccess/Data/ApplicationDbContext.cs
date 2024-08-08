@@ -886,397 +886,463 @@ namespace Dviaje.DataAccess.Data
                 {
                     IdPublicacionImagen = 1,
                     Ruta = "https://images.unsplash.com/photo-1707343848552-893e05dba6ac?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Vista panorámica de la playa con arena blanca y aguas cristalinas en una soleada tarde de verano",
                     IdPublicacion = 1
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 2,
                     Ruta = "https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Sendero en un bosque denso lleno de árboles altos",
                     IdPublicacion = 1
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 3,
                     Ruta = "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1421&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Antiguo castillo medieval situado en lo alto de una colina",
                     IdPublicacion = 1
                 },
 
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 4,
-                    Ruta = "https://unsplash.com/es/fotos/avion-en-el-cielo-durante-la-hora-dorada-M0AWNxnLaMw",
+                    Ruta = "https://images.unsplash.com/photo-1433086966358-54859d0ed716?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Cascada en medio de un bosque tropical exuberante",
                     IdPublicacion = 1
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 5,
                     Ruta = "https://images.unsplash.com/photo-1504598318550-17eba1008a68?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Calle adoquinada en una ciudad histórica con edificios coloridos",
                     IdPublicacion = 1
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 6,
                     Ruta = "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Tranquilo lago reflejando majestuosas montañas en el fondo",
                     IdPublicacion = 2
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 7,
                     Ruta = "https://images.unsplash.com/photo-1473163928189-364b2c4e1135?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Puente colgante sobre un cañón profundo y pintoresco",
                     IdPublicacion = 2
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 8,
                     Ruta = "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Mercado local vibrante con frutas exóticas y artesanías",
                     IdPublicacion = 2
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 9,
                     Ruta = "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Ruinas de una antigua civilización en un paisaje desértico",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 10,
                     Ruta = "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Jardín botánico con una impresionante variedad de flores",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 11,
                     Ruta = "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Playa aislada con palmeras y aguas turquesas cristalinas",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 12,
                     Ruta = "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Puesta de sol espectacular sobre el océano en un día despejado",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 13,
                     Ruta = "https://images.unsplash.com/photo-1719937206491-ed673f64be1f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Vistas impresionantes de un río serpenteante en el valle",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 14,
                     Ruta = "https://images.unsplash.com/photo-1499063078284-f78f7d89616a?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Acantilados dramáticos con vistas al mar abierto",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 15,
                     Ruta = "https://images.unsplash.com/photo-1522199710521-72d69614c702?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Pueblo pintoresco en la ladera de una montaña",
                     IdPublicacion = 3
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 16,
                     Ruta = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Glaciares brillando bajo la luz del sol en un paisaje helado",
                     IdPublicacion = 4
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 17,
                     Ruta = "https://images.unsplash.com/photo-1512757776214-26d36777b513?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Selva tropical densa con una ligera niebla matutina",
                     IdPublicacion = 4
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 18,
                     Ruta = "https://images.unsplash.com/photo-1496950866446-3253e1470e8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Campos de lavanda en flor bajo un cielo azul claro",
                     IdPublicacion = 4
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 19,
                     Ruta = "https://images.unsplash.com/photo-1476900543704-4312b78632f8?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Viñedos ondulantes que cubren colinas soleadas",
                     IdPublicacion = 4
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 20,
                     Ruta = "https://images.unsplash.com/photo-1707344088547-3cf7cea5ca49?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Desierto dorado bajo un cielo despejado y azul",
                     IdPublicacion = 4
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 21,
                     Ruta = "https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Isla tropical con playas de arena blanca y palmeras",
                     IdPublicacion = 5
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 22,
                     Ruta = "https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1368&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Camino rural bordeado de girasoles bajo un cielo despejado",
                     IdPublicacion = 5
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 23,
                     Ruta = "https://images.unsplash.com/photo-1568849676085-51415703900f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Cañón con formaciones rocosas y un río al fondo",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 24,
                     Ruta = "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Templo antiguo rodeado de naturaleza exuberante",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 25,
                     Ruta = "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Parque nacional con una vasta pradera verde y montañas",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 26,
                     Ruta = "https://images.unsplash.com/photo-1504150558240-0b4fd8946624?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Ciudad moderna con rascacielos al atardecer",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 27,
                     Ruta = "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Vista aérea de un arrecife de coral en aguas turquesas",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 28,
                     Ruta = "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Bahía serena con barcos veleros flotando tranquilamente",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 29,
                     Ruta = "https://images.unsplash.com/photo-1500301111609-42f1aa6df72a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Volcán activo con humo saliendo del cráter",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 30,
                     Ruta = "https://images.unsplash.com/photo-1500815845799-7748ca339f27?q=80&w=1527&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Camino de montaña cubierto de flores silvestres en primavera",
                     IdPublicacion = 6
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 31,
                     Ruta = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Carretera costera con impresionantes vistas al mar",
                     IdPublicacion = 8
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 32,
                     Ruta = "https://images.unsplash.com/photo-1526784725085-c69e947bf92e?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Campo de tulipanes multicolores en un día soleado",
                     IdPublicacion = 8
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 33,
                     Ruta = "https://images.unsplash.com/photo-1471623320832-752e8bbf8413?q=80&w=1410&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Lago congelado rodeado de montañas nevadas",
                     IdPublicacion = 8
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 34,
                     Ruta = "https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=1492&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Pueblo pesquero con barcos amarrados en el puerto",
                     IdPublicacion = 8
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 35,
                     Ruta = "https://images.unsplash.com/photo-1491800943052-1059ce1e1012?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Ruinas romanas en un paisaje mediterráneo",
                     IdPublicacion = 8
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 36,
                     Ruta = "https://images.unsplash.com/photo-1551918120-9739cb430c6d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Selva amazónica vista desde arriba",
                     IdPublicacion = 8
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 37,
                     Ruta = "https://images.unsplash.com/photo-1548625149-720134d51a3a?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Desierto con dunas de arena y un oasis en el horizonte",
                     IdPublicacion = 9
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 38,
                     Ruta = "https://images.unsplash.com/photo-1492693429561-1c283eb1b2e8?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Granja en el campo con colinas ondulantes de fondo",
                     IdPublicacion = 9
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 39,
                     Ruta = "https://images.unsplash.com/photo-1532347922424-c652d9b7208e?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Plaza de una ciudad europea con una fuente central",
                     IdPublicacion = 9
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 40,
                     Ruta = "https://images.unsplash.com/photo-1567069160354-f25b26e62fa1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Atardecer sobre el puente Golden Gate en San Francisco",
                     IdPublicacion = 9
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 41,
                     Ruta = "https://images.unsplash.com/photo-1705588217460-d548807940ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Panorama de un fiordo noruego con aguas tranquilas",
                     IdPublicacion = 9
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 42,
                     Ruta = "https://images.unsplash.com/photo-1558352541-95f7ac02fff2?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Camino de tierra serpenteante en un bosque de pinos",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 43,
                     Ruta = "https://images.unsplash.com/photo-1558461670-abf3421e18b6?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Catedral gótica en el centro de una ciudad histórica",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 44,
                     Ruta = "https://images.unsplash.com/photo-1480497209098-7b9e9555bcee?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Costa rocosa con olas rompiendo contra los acantilados",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 45,
                     Ruta = "https://images.unsplash.com/photo-1502489597346-dad15683d4c2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Vista de un valle alpino con pastizales verdes",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 46,
                     Ruta = "https://images.unsplash.com/photo-1679420438051-19bd5aad4d67?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Auroras boreales iluminando el cielo en el Ártico",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 47,
                     Ruta = "https://images.unsplash.com/photo-1692308516530-5ffc490476a8?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Pueblo medieval rodeado por murallas antiguas",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 48,
                     Ruta = "https://images.unsplash.com/photo-1704803269187-d6eb334ea5fe?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Río bordeado por árboles en pleno otoño",
                     IdPublicacion = 10
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 49,
                     Ruta = "https://images.unsplash.com/photo-1643234804946-7ae71ca3aea3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Cabaña rústica en un paisaje montañoso",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 50,
                     Ruta = "https://images.unsplash.com/photo-1688321998704-e5bba733728c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Mercado al aire libre con puestos de comida local",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 51,
                     Ruta = "https://images.unsplash.com/photo-1622343782402-94ea774c4f61?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Vista del horizonte de Nueva York desde el agua",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 52,
                     Ruta = "https://images.unsplash.com/photo-1707073687377-fbda787a7db9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Sendero costero con vistas al océano Atlántico",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 53,
                     Ruta = "https://images.unsplash.com/photo-1646672571916-453b48d71710?q=80&w=1978&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Campo de arrozales en terrazas al atardecer",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 54,
                     Ruta = "https://images.unsplash.com/photo-1649807944854-a7b57dd6afb5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Parque nacional con formaciones rocosas únicas",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 55,
                     Ruta = "https://images.unsplash.com/photo-1577741553317-7f231343599a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Isla volcánica con playas de arena negra",
                     IdPublicacion = 7
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 56,
                     Ruta = "https://images.unsplash.com/photo-1573435708546-32beaff245c1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Jardines palaciegos con estatuas clásicas y fuentes",
                     IdPublicacion = 11
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 57,
                     Ruta = "https://images.unsplash.com/photo-1708187181457-8bafec80833a?q=80&w=2077&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Cueva iluminada por luces de colores en su interior",
                     IdPublicacion = 11
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 58,
                     Ruta = "https://images.unsplash.com/photo-1683384546413-d207b5677dc0?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Viejo faro en un acantilado con vistas al océano",
                     IdPublicacion = 11
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 59,
                     Ruta = "https://images.unsplash.com/photo-1610228328499-53c36a14dbc1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Carretera escénica a través de colinas de té",
                     IdPublicacion = 11
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 60,
                     Ruta = "https://images.unsplash.com/photo-1656371559747-1ca93a271206?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Paisaje ártico con icebergs flotando en el agua",
                     IdPublicacion = 11
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 61,
                     Ruta = "https://images.unsplash.com/photo-1635222722123-fd2b74b6bc9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Puente de madera cruzando un río en un bosque",
                     IdPublicacion = 11
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 62,
                     Ruta = "https://images.unsplash.com/photo-1707073687052-0edc1463d1f8?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Murallas antiguas rodeando una ciudad medieval",
                     IdPublicacion = 12
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 63,
                     Ruta = "https://images.unsplash.com/photo-1705373069474-e01b8b18b6f6?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Jardines japoneses con estanques y bonsáis",
                     IdPublicacion = 12
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 64,
                     Ruta = "https://images.unsplash.com/photo-1688254708497-732d5a8d923b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Vistas panorámicas de una ciudad desde una colina",
                     IdPublicacion = 12
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 65,
                     Ruta = "https://images.unsplash.com/photo-1663948017079-2906ed90a5d6?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Desfiladero con paredes de roca y un río serpenteante",
                     IdPublicacion = 12
                 },
                 new PublicacionImagen
                 {
                     IdPublicacionImagen = 66,
                     Ruta = "https://images.unsplash.com/photo-1573435708534-6b6dbc589bfc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    Alt = "Ruinas mayas en medio de la selva",
                     IdPublicacion = 12
                 }
             );
