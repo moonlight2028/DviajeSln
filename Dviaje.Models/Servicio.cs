@@ -14,7 +14,7 @@ namespace Dviaje.Models
 
 
         [Required(ErrorMessage = "El tipo de servicio es obligatorio.")]
-        public ServicioTipo ServicioTipo { get; set; }
+        public ServicioTipo? ServicioTipo { get; set; }
 
 
         [Required(ErrorMessage = "La ruta del ícono es obligatoria.")]

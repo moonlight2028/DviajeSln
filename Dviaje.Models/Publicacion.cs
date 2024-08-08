@@ -59,5 +59,8 @@ namespace Dviaje.Models
         // Propiedades de navegación
         public ICollection<PublicacionCategoria> PublicacionCategorias { get; set; } = new List<PublicacionCategoria>();
         public ICollection<PublicacionImagen> PublicacionImagenes { get; set; } = new List<PublicacionImagen>();
+        public ICollection<PublicacionServicio> PublicacionServicios { get; set; } = new List<PublicacionServicio>();
+        public ICollection<PublicacionRestriccion> PublicacionRestricciones { get; set; } = new List<PublicacionRestriccion>();
+        public ICollection<ServicioAdicional> ServicioAdicionales { get; set; } = new List<ServicioAdicional>();
     }
 }

@@ -60,8 +60,66 @@ namespace Dviaje.DataAccess.Repository
             return publicaciones;
         }
 
+        // Detalles de publicación.
+        public async Task<PublicacionVM?> GetPublicacionAsync(int idPublicacion)
+        {
+            PublicacionVM? publicacion = await _db.Publicaciones
+                .Include(p => p.Aliado)
+                .Include(p => p.PublicacionCategorias)
+                    .ThenInclude(p => p.Categoria)
+                .Include(p => p.PublicacionServicios)
+                    .ThenInclude(p => p.Servicio)
+                .Include(p => p.PublicacionRestricciones)
+                    .ThenInclude(p => p.Restriccion)
+                .Include(p => p.ServicioAdicionales)
+                    .ThenInclude(p => p.Servicio)
+                .Where(p => p.IdPublicacion == idPublicacion)
+                .Select(p => new PublicacionVM
+                {
+                    IdPublicacion = p.IdPublicacion,
+                    Titulo = p.Titulo,
+                    Descripcion = p.Descripcion,
+                    Ubicacion = p.Direccion,
+                    Precio = p.Precio,
+                    IdAliado = p.Aliado != null ? p.Aliado.Id : null,
+                    AvatarAliado = p.Aliado != null ? p.Aliado.Avatar : null,
+                    NombreAliado = p.Aliado != null ? p.Aliado.UserName : null,
+                    PublicacionesAliado = p.Aliado != null ? p.Aliado.NumeroPublicaciones : 0,
+                    Puntuacion = p.Puntuacion,
+                    NumeroResenas = p.NumeroResenas,
+                    Imagenes = p.PublicacionImagenes.Select(pi => new PublicacionImagenVM
+                    {
+                        Ruta = pi.Ruta,
+                        Alt = pi.Alt
+                    }).ToList(),
+                    Categorias = p.PublicacionCategorias.Select(pc => new Categoria
+                    {
+                        NombreCategoria = pc.Categoria != null ? pc.Categoria.NombreCategoria : null,
+                        RutaIcono = pc.Categoria != null ? pc.Categoria.RutaIcono : null
+                    }).ToList(),
+                    Servicios = p.ServicioAdicionales.Select(ps => new Servicio
+                    {
+                        NombreServicio = ps.Servicio != null ? ps.Servicio.NombreServicio : null,
+                        ServicioTipo = ps.Servicio != null ? ps.Servicio.ServicioTipo : null,
+                        RutaIcono = ps.Servicio != null ? ps.Servicio.RutaIcono : null
+                    }).ToList(),
+                    Restricciones = p.PublicacionRestricciones.Select(pr => pr.Restriccion).ToList(),
+                    ServiciosAdicionales = p.ServicioAdicionales.Select(psa => new ServicioAdicional
+                    {
+                        PrecioServicioAdicional = psa.PrecioServicioAdicional,
+                        Servicio = new Servicio
+                        {
+                            NombreServicio = psa.Servicio != null ? psa.Servicio.NombreServicio : null,
+                            ServicioTipo = psa.Servicio != null ? psa.Servicio.ServicioTipo : null,
+                            RutaIcono = psa.Servicio != null ? psa.Servicio.RutaIcono : null
+                        }
+                    }).ToList()
+                }).FirstOrDefaultAsync();
 
-        // Publicaciones totales de la vista de publicaciones.
+            return publicacion;
+        }
+
+        // Publicaciones totales.
         public async Task<int> GetTotalPublicacionesAsync() => await _db.Publicaciones.CountAsync();
 
         public void Update(Publicacion publicacion)

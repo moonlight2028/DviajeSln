@@ -7,6 +7,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
     {
         void Update(Publicacion publicacion);
         Task<List<PublicacionTarjetaVM>> GetPublicacionesAsync(int page, int pageSize, Expression<Func<Publicacion, object>>? orderBy = null);
+        Task<PublicacionVM?> GetPublicacionAsync(int idPublicacion);
         Task<int> GetTotalPublicacionesAsync();
     }
 }
