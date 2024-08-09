@@ -1,4 +1,5 @@
 ﻿using Dviaje.Models;
+using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers

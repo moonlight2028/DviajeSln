@@ -2,6 +2,7 @@ using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository;
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Services;
+using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 //EmailServicio
-
 builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
 
 // UnitOfWork
