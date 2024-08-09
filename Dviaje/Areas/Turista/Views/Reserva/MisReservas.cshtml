@@ -1,1 +1,37 @@
-﻿<h1>VISTA MisReservas</h1>
+﻿@model IEnumerable<Dviaje.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Mis Reservas";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Mis Reservas</h2>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center" role="alert">
+            No tienes reservas aún. ¡Explora nuestras ofertas y reserva tu próxima aventura!
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var reserva in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@reserva.Publicacion?.Titulo</h5>
+                            <p class="card-text">
+                                <strong>Fecha Inicial:</strong> @reserva.FechaInicial.ToString("dd/MM/yyyy")<br />
+                                <strong>Fecha Final:</strong> @reserva.FechaFinal.ToString("dd/MM/yyyy")<br />
+                                <strong>Número de Personas:</strong> @reserva.NumeroPersonas<br />
+                                <strong>Estado:</strong> @reserva.ReservaEstado.ToString()
+                            </p>
+                            <a asp-action="MiReserva" asp-route-id="@reserva.IdReserva" class="btn btn-outline-primary">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
