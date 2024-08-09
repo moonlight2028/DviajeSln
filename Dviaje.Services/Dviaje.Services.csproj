@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Dviaje.Models\Dviaje.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="IServices\" />
-  </ItemGroup>
-
 </Project>
