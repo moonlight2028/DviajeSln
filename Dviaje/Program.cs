@@ -26,6 +26,10 @@ builder.Services.AddRazorPages();
 // Servicios
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+//EmailServicio
+
+builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
+
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
