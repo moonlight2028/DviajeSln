@@ -270,205 +270,122 @@
 
     <!-- Servicios -->
     <section class="flex flex-col gap-2 w-full  sm:max-w-lg">
-        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                <span class="text-sm font-medium">
-                    Servicios de Habitación
-                </span>
+        @if (Model.ServiciosHabitacion != null && Model.ServiciosHabitacion.Any())
+        {
+            <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                    <span class="text-sm font-medium">
+                        Servicios de Habitación
+                    </span>
 
-                <span class="transition  group-open:-rotate-180">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-            </summary>
+                    <span class="transition  group-open:-rotate-180">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+                </summary>
 
-            <!-- Lista servicios -->
-            <div class="border-t border-gray-200 bg-white">
-                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
+                <!-- Lista servicios -->
+                <div class="border-t border-gray-200 bg-white">
+                    <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                        @foreach (var servicio in Model.ServiciosHabitacion)
+                        {
+                            <div>
+                                <i class="@servicio.Icono"></i>
+                                <span class="text-sm text-gray-700">@servicio.Nombre</span>
+                            </div>
+                        }
                     </div>
                 </div>
+                <!-- Fin Lista servicios -->
+            </details>
+        }
 
-            </div>
-            <!-- Fin Lista servicios -->
-        </details>
+        @if (Model.ServiciosEstablecimiento != null && Model.ServiciosEstablecimiento.Any())
+        {
+            <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                    <span class="text-sm font-medium">
+                        Servicios de Habitación
+                    </span>
 
-        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                <span class="text-sm font-medium">
-                    Servicios de Establecimiento
-                </span>
+                    <span class="transition  group-open:-rotate-180">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+                </summary>
 
-                <span class="transition  group-open:-rotate-180">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-            </summary>
-
-            <!-- Lista servicios -->
-            <div class="border-t border-gray-200 bg-white">
-                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
+                <!-- Lista servicios -->
+                <div class="border-t border-gray-200 bg-white">
+                    <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                        @foreach (var servicio in Model.ServiciosEstablecimiento)
+                        {
+                            <div>
+                                <i class="@servicio.Icono"></i>
+                                <span class="text-sm text-gray-700">@servicio.Nombre</span>
+                            </div>
+                        }
                     </div>
                 </div>
+                <!-- Fin Lista servicios -->
+            </details>
+        }
 
-            </div>
-            <!-- Fin Lista servicios -->
-        </details>
+        @if (Model.ServiciosAccesibilidad != null && Model.ServiciosAccesibilidad.Any())
+        {
+            <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                    <span class="text-sm font-medium">
+                        Servicios de Habitación
+                    </span>
 
-        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                <span class="text-sm font-medium">
-                    Servicios de Accesibilidad
-                </span>
+                    <span class="transition  group-open:-rotate-180">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+                </summary>
 
-                <span class="transition  group-open:-rotate-180">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-            </summary>
-
-            <!-- Lista servicios -->
-            <div class="border-t border-gray-200 bg-white">
-                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
+                <!-- Lista servicios -->
+                <div class="border-t border-gray-200 bg-white">
+                    <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                        @foreach (var servicio in Model.ServiciosAccesibilidad)
+                        {
+                            <div>
+                                <i class="@servicio.Icono"></i>
+                                <span class="text-sm text-gray-700">@servicio.Nombre</span>
+                            </div>
+                        }
                     </div>
                 </div>
+                <!-- Fin Lista servicios -->
+            </details>
+        }
 
-            </div>
-            <!-- Fin Lista servicios -->
-        </details>
 
-        <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-            <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                <span class="text-sm font-medium">
-                    Restricciones
-                </span>
+        @if (Model.Restricciones != null && Model.Restricciones.Any())
+        {
+            <details class="group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+                    <span class="text-sm font-medium">
+                        Restricciones
+                    </span>
 
-                <span class="transition  group-open:-rotate-180">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-            </summary>
+                    <span class="transition  group-open:-rotate-180">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+                </summary>
 
-            <!-- Lista servicios -->
-            <div class="border-t border-gray-200 bg-white">
-                <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i>
-                        <span class="text-sm text-gray-700">
-                            Servico Nombre
-                        </span>
+                <!-- Lista servicios -->
+                <div class="border-t border-gray-200 bg-white">
+                    <div class="flex items-center justify-evenly flex-wrap gap-2 p-4">
+                        @foreach (var restriccion in Model.Restricciones)
+                        {
+                            <div>
+                                <i class="@restriccion.RutaIcono"></i>
+                                <span class="text-sm text-gray-700">@restriccion.NombreRestriccion</span>
+                            </div>
+                        }
                     </div>
                 </div>
-
-            </div>
-            <!-- Fin Lista servicios -->
-        </details>
+                <!-- Fin Lista servicios -->
+            </details>
+        }
     </section>
     <!-- Fin Servicios -->
 </section>
@@ -510,106 +427,61 @@
 </section>
 <!-- Fin Mosaico imágenes -->
 <!-- Servicio adicionales -->
-<section class="w-full max-w-7xl mb-10 mx-auto lg:p-5 lg:my-10">
-    <form class="flex flex-col gap-4 relative lg:flex-row lg:gap-0">
-        <div class="absolute w-full h-52 bg-gradient-to-r from-cyan-700 via-cyan-600 to-cyan-500 -z-10 lg:w-[50%] lg:right-0 lg:rounded-xl lg:rounded-tl-[4rem] b-s-93">
-        </div>
-
-        <div class="flex flex-col items-center justify-center gap-5 w-full h-52 text-white lg:order-2 lg:w-[600px]">
-            <div>
-                <h2 class="text-4xl font-semibold">Servicios Adicionales</h2>
-                <p class="text-gray-100 text-lg">
-                    Elige los servicios adicionales que prefieras
-                </p>
+@if (Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
+{
+    <section class="w-full max-w-7xl mb-10 mx-auto lg:p-5 lg:my-10">
+        <form class="flex flex-col gap-4 relative lg:flex-row lg:gap-0">
+            <div class="absolute w-full h-52 bg-gradient-to-r from-cyan-700 via-cyan-600 to-cyan-500 -z-10 lg:w-[50%] lg:right-0 lg:rounded-xl lg:rounded-tl-[4rem] b-s-93">
             </div>
 
-            <div class="flex gap-4 sm:flex-col sm:gap-1">
-                <div class="flex items-center">
-                    <span data-precio="valor" class="text-2xl font-semibold">99.999.999</span>
-                    <span class="text-lg text-gray-100">$cop</span>
+            <div class="flex flex-col items-center justify-center gap-5 w-full h-52 text-white lg:order-2 lg:w-[600px]">
+                <div>
+                    <h2 class="text-4xl font-semibold">Servicios Adicionales</h2>
+                    <p class="text-gray-100 text-lg">
+                        Elige los servicios adicionales que prefieras
+                    </p>
                 </div>
 
-                <button type="submit"
-                        class="group w-full text-center inline-block rounded-full bg-gradient-to-r from-orange-700 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75">
-                    <span class="block rounded-full bg-cyan-600 px-8 py-2 text-lg font-semibold group-hover:bg-transparent">
-                        Reservar
-                    </span>
-                </button>
-            </div>
-        </div>
+                <div class="flex gap-4 sm:flex-col sm:gap-1">
+                    <div class="flex items-center">
+                        <span data-precio="valor" class="text-2xl font-semibold">@Model.Precio.ToString("C0")</span>
+                        <span class="text-lg text-gray-100">COP</span>
+                    </div>
 
-        <!-- Servicios adicionales checkbox -->
-        <div class="bg-white bg-opacity-80 grid grid-cols-2 gap-2 p-5 mx-5 rounded-2xl sm:grid-cols-3 lg:mt-10 lg:mx-0 backdrop-blur-xl b-s-13">
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
-            </div>
-            <div>
-                <label for="servicioUno" data-servicio="adicional"
-                       class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
-                    <i class="fa-solid fa-bell-concierge text-4xl text-cyan-400"></i>
-                    <span>Servicio adicional</span>
-                </label>
-                <input type="checkbox" value="15856" id="servicioUno" class="hidden">
+                    <button type="submit"
+                    class="group w-full text-center inline-block rounded-full bg-gradient-to-r from-orange-700 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75">
+                        <span class="block rounded-full bg-cyan-600 px-8 py-2 text-lg font-semibold group-hover:bg-transparent">
+                            Reservar
+                        </span>
+                    </button>
+                </div>
             </div>
 
-        </div>
-        <!-- Fin Servicios adicionales checkbox -->
-    </form>
-</section>
-<!-- Servicio adicionales -->
+            <!-- Servicios adicionales checkbox -->
+            <div class="bg-white bg-opacity-80 grid grid-cols-2 gap-2 p-5 mx-5 rounded-2xl sm:grid-cols-3 lg:mt-10 lg:mx-0 backdrop-blur-xl b-s-13">
+                @foreach (var servicioAdicional in Model.ServiciosAdicionales)
+                {
+                    <div>
+                        <label for="@servicioAdicional.IdServicioAdicional" data-servicio="adicional"
+                               class="flex items-center justify-center gap-2 text-xl p-4 border border-cyan-400 rounded-xl shadow-xl transition-all cursor-pointer">
+                            <i class="@servicioAdicional.Servicio.RutaIcono text-4xl text-cyan-400"></i>
+                            <span>@servicioAdicional.Servicio.NombreServicio</span>
+                        </label>
+                        <input type="checkbox" value="@servicioAdicional.PrecioServicioAdicional" id="@servicioAdicional.IdServicioAdicional" class="hidden">
+                    </div>
+                }
+            </div>
+            <!-- Fin Servicios adicionales checkbox -->
+        </form>
+    </section>
+    <!-- Servicio adicionales -->
+
+
+}
+
+
+
+
 <!-- Top reseñas -->
 <section class="text-white bg-zinc-950 py-10 px-5">
     <h2 class="text-4xl font-semibold">Reseñas</h2>

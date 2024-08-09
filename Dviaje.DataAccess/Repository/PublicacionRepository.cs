@@ -1,9 +1,9 @@
-﻿using Dviaje.DataAccess.Data;
+﻿using System.Linq.Expressions;
+using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Dviaje.DataAccess.Repository
 {
@@ -97,12 +97,27 @@ namespace Dviaje.DataAccess.Repository
                         NombreCategoria = pc.Categoria != null ? pc.Categoria.NombreCategoria : null,
                         RutaIcono = pc.Categoria != null ? pc.Categoria.RutaIcono : null
                     }).ToList(),
-                    Servicios = p.ServicioAdicionales.Select(ps => new Servicio
-                    {
-                        NombreServicio = ps.Servicio != null ? ps.Servicio.NombreServicio : null,
-                        ServicioTipo = ps.Servicio != null ? ps.Servicio.ServicioTipo : null,
-                        RutaIcono = ps.Servicio != null ? ps.Servicio.RutaIcono : null
-                    }).ToList(),
+                    ServiciosHabitacion = p.ServicioAdicionales
+                        .Where(ps => ps.Servicio != null ? ps.Servicio.ServicioTipo == ServicioTipo.Habitacion : false)
+                        .Select(ps => new ServicioVM
+                        {
+                            Nombre = ps.Servicio != null ? ps.Servicio.NombreServicio : null,
+                            Icono = ps.Servicio != null ? ps.Servicio.RutaIcono : null
+                        }).ToList(),
+                    ServiciosEstablecimiento = p.ServicioAdicionales
+                        .Where(ps => ps.Servicio != null ? ps.Servicio.ServicioTipo == ServicioTipo.Establecimiento : false)
+                        .Select(ps => new ServicioVM
+                        {
+                            Nombre = ps.Servicio != null ? ps.Servicio.NombreServicio : null,
+                            Icono = ps.Servicio != null ? ps.Servicio.RutaIcono : null
+                        }).ToList(),
+                    ServiciosAccesibilidad = p.ServicioAdicionales
+                        .Where(ps => ps.Servicio != null ? ps.Servicio.ServicioTipo == ServicioTipo.Accesibilidad : false)
+                        .Select(ps => new ServicioVM
+                        {
+                            Nombre = ps.Servicio != null ? ps.Servicio.NombreServicio : null,
+                            Icono = ps.Servicio != null ? ps.Servicio.RutaIcono : null
+                        }).ToList(),
                     Restricciones = p.PublicacionRestricciones.Select(pr => pr.Restriccion).ToList(),
                     ServiciosAdicionales = p.ServicioAdicionales.Select(psa => new ServicioAdicional
                     {

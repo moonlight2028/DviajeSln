@@ -2016,17 +2016,17 @@ namespace Dviaje.DataAccess.Data
 
             // Registros de Restriccion.
             modelBuilder.Entity<Restriccion>().HasData(
-                new Restriccion { IdRestriccion = 1, NombreRestriccion = "Mascotas", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 2, NombreRestriccion = "No Fumar", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 3, NombreRestriccion = "Accesibilidad", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 4, NombreRestriccion = "Prohibido Ruido", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 5, NombreRestriccion = "No Fiestas", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 6, NombreRestriccion = "Niños Bienvenidos", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 7, NombreRestriccion = "No Comida", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 8, NombreRestriccion = "Horario Silencioso", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 9, NombreRestriccion = "Uso de Piscina", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 10, NombreRestriccion = "Zonas Comunes", RutaIcono = "" },
-                new Restriccion { IdRestriccion = 11, NombreRestriccion = "No Alcohol", RutaIcono = "" }
+                new Restriccion { IdRestriccion = 1, NombreRestriccion = "Mascotas", RutaIcono = "fa-solid fa-paw" },
+                new Restriccion { IdRestriccion = 2, NombreRestriccion = "No Fumar", RutaIcono = "fa-solid fa-ban-smoking" },
+                new Restriccion { IdRestriccion = 3, NombreRestriccion = "Accesibilidad", RutaIcono = "fa-solid fa-wheelchair" },
+                new Restriccion { IdRestriccion = 4, NombreRestriccion = "Prohibido Ruido", RutaIcono = "fa-solid fa-volume-xmark" },
+                new Restriccion { IdRestriccion = 5, NombreRestriccion = "No Fiestas", RutaIcono = "fa-solid fa-champagne-glasses" },
+                new Restriccion { IdRestriccion = 6, NombreRestriccion = "No Niños", RutaIcono = "fa-solid fa-children" },
+                new Restriccion { IdRestriccion = 7, NombreRestriccion = "No Comida", RutaIcono = "fa-solid fa-plate-wheat" },
+                new Restriccion { IdRestriccion = 8, NombreRestriccion = "Horario Silencioso", RutaIcono = "fa-solid fa-bell-slash" },
+                new Restriccion { IdRestriccion = 9, NombreRestriccion = "Uso de Piscina", RutaIcono = "fa-solid fa-water-ladder" },
+                new Restriccion { IdRestriccion = 10, NombreRestriccion = "Zonas Comunes", RutaIcono = "fa-solid fa-tree-city" },
+                new Restriccion { IdRestriccion = 11, NombreRestriccion = "No Alcohol", RutaIcono = "fa-solid fa-martini-glass-citrus" }
             );
 
 
