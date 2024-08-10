@@ -2,6 +2,7 @@
 using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -10,28 +11,27 @@ namespace Dviaje.Areas.Turista.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-
         public ReservaController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         // GET: Turista/Reserva/Reserva
-        public IActionResult Reserva(int? idPublicacion)
+        public async Task<IActionResult> Reserva(int? idPublicacion)
         {
             if (idPublicacion == null)
             {
                 return NotFound();
             }
 
-            var publicacion = _unitOfWork.Publicacion.GetFirstOrDefault(p => p.IdPublicacion == idPublicacion);
+            var publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == idPublicacion);
 
             if (publicacion == null)
             {
                 return NotFound();
             }
 
-            //modelo para la vista con datos iniciales
+            // Modelo para la vista con datos iniciales
             var reserva = new Reserva
             {
                 IdPublicacion = publicacion.IdPublicacion,
@@ -47,39 +47,40 @@ namespace Dviaje.Areas.Turista.Controllers
         // POST: Turista/Reserva/Reserva
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Reserva(Reserva reserva)
+        public async Task<IActionResult> Reserva(Reserva reserva)
         {
             if (!ModelState.IsValid)
             {
                 // Recargar la publicación en caso de error para mostrarse en la vista
-                reserva.Publicacion = _unitOfWork.Publicacion.GetFirstOrDefault(p => p.IdPublicacion == reserva.IdPublicacion);
+                reserva.Publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == reserva.IdPublicacion);
                 return View(reserva);
             }
 
-            _unitOfWork.Reserva.Add(reserva);
-            _unitOfWork.Save();
+            await _unitOfWork.ReservaRepository.AddAsync(reserva);
+            await _unitOfWork.Save();
             return RedirectToAction(nameof(MisReservas));
         }
 
         // GET: Turista/Reserva/MisReservas
-        public IActionResult MisReservas()
+        public async Task<IActionResult> MisReservas()
         {
-            // Obtener el Id del usuario actual 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var reservas = _unitOfWork.Reserva.GetAll(r => r.IdUsuario == userId, includeProperties: "Publicacion");
+            var reservas = await _unitOfWork.ReservaRepository.GetAllAsync(r => r.IdUsuario == userId);
+            reservas = reservas.Include(r => r.Publicacion); // Incluye la propiedad relacionada
+
             return View(reservas);
         }
 
         // GET: Turista/Reserva/MiReserva/5
-        public IActionResult MiReserva(int? id)
+        public async Task<IActionResult> MiReserva(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = _unitOfWork.Reserva.GetFirstOrDefault(r => r.IdReserva == id, includeProperties: "Publicacion,Usuario");
+            var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == id, includeProperties: "Publicacion,Usuario");
 
             if (reserva == null)
             {
@@ -90,17 +91,17 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Método opcional para cancelar una reserva
-        public IActionResult CancelarReserva(int id)
+        public async Task<IActionResult> CancelarReserva(int id)
         {
-            var reserva = _unitOfWork.Reserva.GetFirstOrDefault(r => r.IdReserva == id);
+            var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == id);
 
             if (reserva == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Reserva.Remove(reserva);
-            _unitOfWork.Save();
+            _unitOfWork.ReservaRepository.Remove(reserva);
+            await _unitOfWork.Save();
             return RedirectToAction(nameof(MisReservas));
         }
     }
