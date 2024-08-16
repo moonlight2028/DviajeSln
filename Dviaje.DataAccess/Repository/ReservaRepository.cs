@@ -22,19 +22,38 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ReservaTarjetaVM>?> GetReservaTarjetas()
         {
             var consulta = await _db.Reservas
-                .Include(r => r.Publicacion) 
+                .Include(r => r.Publicacion)
                 .Select(r => new ReservaTarjetaVM
                 {
                     IdReserva = r.IdReserva,
-                    TituloPublicacion =r.Publicacion != null? r.Publicacion.Titulo : null,
+                    TituloPublicacion = r.Publicacion != null ? r.Publicacion.Titulo : null,
                     FechaInicio = r.FechaInicial,
                     FechaFinal = r.FechaFinal,
-                    Imagen = "" 
+                    Imagen = ""
                 })
-                .ToListAsync(); 
+                .ToListAsync();
 
             return consulta;
         }
+
+        public async Task<ReservaTarjetaVM?> GetReservaTarjetaPorId(int id)
+        {
+            var consulta = await _db.Reservas
+                .Include(r => r.Publicacion)
+                .Where(r => r.IdReserva == id)
+                .Select(r => new ReservaTarjetaVM
+                {
+                    IdReserva = r.IdReserva,
+                    TituloPublicacion = r.Publicacion != null ? r.Publicacion.Titulo : null,
+                    FechaInicio = r.FechaInicial,
+                    FechaFinal = r.FechaFinal,
+                    Imagen = ""
+                })
+                .FirstOrDefaultAsync();
+
+            return consulta;
+        }
+
 
     }
 }

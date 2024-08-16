@@ -1,8 +1,6 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -64,13 +62,16 @@ namespace Dviaje.Areas.Turista.Controllers
         // GET: Turista/Reserva/MisReservas
         public async Task<IActionResult> MisReservas()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reservas = await _unitOfWork.ReservaRepository.GetReservaTarjetas();
 
-            var reservas = await _unitOfWork.ReservaRepository.GetAllAsync(r => r.IdUsuario == userId);
-            reservas = reservas.Include(r => r.Publicacion); // Incluye la propiedad relacionada
+            if (reservas == null || !reservas.Any())
+            {
+                return View("NoReservas"); // Si no tienes reservas (en proceso)
+            }
 
             return View(reservas);
         }
+
 
         // GET: Turista/Reserva/MiReserva/5
         public async Task<IActionResult> MiReserva(int? id)
@@ -80,7 +81,8 @@ namespace Dviaje.Areas.Turista.Controllers
                 return NotFound();
             }
 
-            var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == id, includeProperties: "Publicacion,Usuario");
+            // Llamada al nuevo método GetReservaTarjetaPorId
+            var reserva = await _unitOfWork.ReservaRepository.GetReservaTarjetaPorId(id.Value);
 
             if (reserva == null)
             {
@@ -89,6 +91,8 @@ namespace Dviaje.Areas.Turista.Controllers
 
             return View(reserva);
         }
+
+
 
         // Método opcional para cancelar una reserva
         public async Task<IActionResult> CancelarReserva(int id)
