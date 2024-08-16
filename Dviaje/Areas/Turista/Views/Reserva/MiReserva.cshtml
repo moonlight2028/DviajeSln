@@ -1,1 +1,28 @@
-﻿<h1>VISTA MiReserva</h1>
+﻿@model Dviaje.Models.VM.ReservaTarjetaVM
+
+@{
+    ViewData["Title"] = "Detalle de la Reserva";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Detalle de la Reserva</h2>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            @* colocar imagen *@
+            @if (!string.IsNullOrEmpty(Model.Imagen))
+            {
+                <img src="@Model.Imagen" alt="@Model.TituloPublicacion" class="img-fluid mb-3" />
+            }
+
+            <h5 class="card-title">@Model.TituloPublicacion</h5>
+            <p class="card-text">
+                <strong>Fecha de Inicio:</strong> @Model.FechaInicio.ToString("dd/MM/yyyy")<br />
+                <strong>Fecha Final:</strong> @Model.FechaFinal.ToString("dd/MM/yyyy")<br />
+                <strong>Número de Personas:</strong> @Model.IdReserva <br /> @* ajustar propiedad número de personas *@
+            </p>
+
+            <a href="javascript:history.back()" class="btn btn-primary">Volver</a>
+        </div>
+    </div>
+</div>
