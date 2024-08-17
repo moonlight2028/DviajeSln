@@ -7,8 +7,6 @@ namespace Dviaje.ViewComponents
     {
         public IViewComponentResult Invoke(PaginacionVM paginacionVM)
         {
-            //PaginacionVM paginacion = paginacionVM;
-
             return View(paginacionVM);
         }
     }

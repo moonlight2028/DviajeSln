@@ -24,6 +24,9 @@ namespace Dviaje.Models
         [ForeignKey("IdAliado")]
         public Aliado? Aliado { get; set; }
 
+
+        /*
+         * Evaluar logica verificado
         // Motivo
         [Required(ErrorMessage = "El motivo es obligatorio.")]
         public string Motivo { get; set; }
@@ -36,6 +39,7 @@ namespace Dviaje.Models
 
         // Información adicional sobre la propiedad
         public string? DetallesPropiedad { get; set; }
+        */
     }
 
 

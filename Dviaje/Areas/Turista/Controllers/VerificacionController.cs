@@ -41,10 +41,12 @@ namespace Dviaje.Areas.Turista.Controllers
                     IdAliado = userId,
                     FechaSolicitud = DateTime.Now,
                     VerificadoEstado = VerificadoEstado.Pendiente,
+                    /*
                     Motivo = verificacionVM.Motivo,
                     Direccion = verificacionVM.Direccion,
                     DocumentosAdjuntos = verificacionVM.DocumentosAdjuntos,
                     DetallesPropiedad = verificacionVM.DetallesPropiedad
+                    */
                 };
 
                 await _unitOfWork.VerificadoRepository.AddAsync(verificado);
