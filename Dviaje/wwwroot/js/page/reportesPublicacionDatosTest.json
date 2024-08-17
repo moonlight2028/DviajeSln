@@ -1,0 +1,44 @@
+[
+    {
+        "publicacionesPorMes":[
+            {
+                "anio": 2024,
+                "publicaciones" : [456,654,165,161,651,561,654,646]
+            },
+            {
+                "anio": 2023,
+                "publicaciones" : [489,615,168,174,864,231,867,853,216,789,845,615]
+            }
+        ]
+    },
+    {
+        "topCategorias": ["categoria", "adsfdsa", "dafs", "adsfda", "Adsf"],
+        "porcentajes" : [10,50,20,10,10]
+    },
+    {
+        "publicacionesActivasMeses" : ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"],
+        "publicacionesActivas" : [489,615,168,174,864,231,867,853],
+        "publicacionesInactivas" : [456,654,165,161,651,561,654,646]
+    },
+    {
+        "preciosMeses" : ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"],
+        "precios" : [445689,614655,564168,154674,884564,2456431,2322867,846553]
+    },
+    {
+        "tituloPublicaciones" : ["Descubre los Encantos Ocultos", "Aventuras Inolvidables", "Guía Completa para Explorar", "Escapadas Perfectas", "Rutas y Experiencias Únicas"],
+        "notas" : [4.8, 4.3, 4.1, 3.5, 3.3],
+        "links": [
+            "https://example.com/link1",
+            "https://example.com/link2",
+            "https://example.com/link3",
+            "https://example.com/link4",
+            "https://example.com/link5"
+        ]
+    },
+    {
+        "publicacionesNuevas": 4561,
+        "publicacionesSemanaAnterior" : 15684,
+        "publicacionesPublicadasHoy" : 15,
+        "publicacionesPublicadasAyer" : 5
+    }
+]

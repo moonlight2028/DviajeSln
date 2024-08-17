@@ -24,7 +24,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 // Soporte para páginas razor
 builder.Services.AddRazorPages();
 
-// Servicios
+// Servicios EmailSender temporal Para Identity en los registros
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 //EmailServicio

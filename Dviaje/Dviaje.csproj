@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administrador\Controllers\" />
     <Folder Include="Areas\Moderador\Controllers\" />
     <Folder Include="Areas\Turista\Views\Atencion Viajero\" />
     <Folder Include="wwwroot\img\" />
