@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Dviaje.Areas.Admin.Controllers.UsuarioViewModel>
+
+<h2>Lista de Usuarios</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuarioVM in Model)
+        {
+            <tr>
+                <td>@usuarioVM.Usuario.UserName</td>
+                <td>@usuarioVM.Usuario.Email</td>
+                <td>@usuarioVM.Roles</td>
+                <td>
+                    <a href="@Url.Action("CambiarRol", new { id = usuarioVM.Usuario.Id, nuevoRol = "Aliado" })" class="btn btn-primary">Cambiar a Aliado</a>
+                    <a href="@Url.Action("BanearUsuario", new { id = usuarioVM.Usuario.Id })" class="btn btn-warning">Banear</a>
+                    <a href="@Url.Action("EliminarUsuario", new { id = usuarioVM.Usuario.Id })" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
