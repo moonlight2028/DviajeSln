@@ -16,6 +16,8 @@ namespace Dviaje.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
+
+
         public async Task<IActionResult> UserTable()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAllAsync();
