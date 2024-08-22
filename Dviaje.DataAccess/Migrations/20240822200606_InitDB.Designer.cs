@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dviaje.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240809011754_AddIconosRestricciones")]
-    partial class AddIconosRestricciones
+    [Migration("20240822200606_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -3591,7 +3591,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ec45526-1553-4eb8-95ff-13c600357dc5",
+                            ConcurrencyStamp = "c0ae3fee-3b7d-499a-8a38-1108e43b63a4",
                             Email = "info@colombiaadventure.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3599,7 +3599,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "COLOMBIAADV",
                             PhoneNumber = "3216549870",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "da6e810d-532f-4751-b0fe-7bac73094027",
+                            SecurityStamp = "75387963-3cfd-4795-b9b1-f04564825215",
                             TwoFactorEnabled = false,
                             UserName = "ColombiaAdv",
                             AliadoEstado = 0,
@@ -3614,7 +3614,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "9cd842af-b711-44cc-aa5e-3863e3c30b76",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ebfc152-6d04-4fc0-b697-9f6dc872a8c2",
+                            ConcurrencyStamp = "16bea68d-b2ae-4ee2-b004-efe01420fd0d",
                             Email = "contact@bogotatours.co",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3622,7 +3622,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BOGOTATOURS",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "b971379c-4194-482c-b89a-3dedb5e96a5b",
+                            SecurityStamp = "2fafdab1-df0f-4f35-bb21-3e3851ce0739",
                             TwoFactorEnabled = false,
                             UserName = "BogotaTours",
                             AliadoEstado = 0,
@@ -3637,7 +3637,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "c654adef-5f0c-48e6-946a-52706f8ac520",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f9722292-7b87-4ea2-9ab5-4d4caa691585",
+                            ConcurrencyStamp = "13d63b9b-d769-4c62-a117-65491e080f36",
                             Email = "hello@medellinexplore.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3645,7 +3645,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MEDELLINEXPLORE",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "12cecf8f-f287-480a-9cb9-8e4a66204e66",
+                            SecurityStamp = "cd74b2b0-b423-4a39-97af-5fcfba8a1881",
                             TwoFactorEnabled = false,
                             UserName = "MedellinExplore",
                             AliadoEstado = 0,
@@ -3660,7 +3660,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "8142c33b-ee02-4a13-b0c1-1e941387433d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a1d413f6-e5b7-4b82-9b02-de9cf8ac61d6",
+                            ConcurrencyStamp = "bb96a81d-b742-45e5-a39a-957757523ad7",
                             Email = "support@cartagenagetaways.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3668,7 +3668,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARTAGENAGETAWAYS",
                             PhoneNumber = "3176543210",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "cc99bdbe-8b40-405f-be79-41a709682234",
+                            SecurityStamp = "66d2c7b2-9f22-4150-96a3-154d01c71963",
                             TwoFactorEnabled = false,
                             UserName = "CartagenaGetaways",
                             AliadoEstado = 0,
@@ -3683,7 +3683,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "39e10980-4df3-494a-bbe7-410e105f6551",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3905e128-31e2-4f11-a6d9-1d0844c6d2ba",
+                            ConcurrencyStamp = "980ed84f-b7c9-4de2-9bbc-7aee113fce06",
                             Email = "info@santamartaadventures.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3691,7 +3691,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SANTAMARTAADV",
                             PhoneNumber = "3154321098",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "4dc29a07-b8a7-444f-b870-fdc64d78014d",
+                            SecurityStamp = "b23095ae-e5b6-465b-9eef-640c632da320",
                             TwoFactorEnabled = false,
                             UserName = "SantaMartaAdv",
                             AliadoEstado = 0,
@@ -3706,7 +3706,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "c3733288-b354-445d-95da-4c655c3220b3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "082678c7-e1fb-4654-b633-d94aaebc1f0e",
+                            ConcurrencyStamp = "7691c21e-3291-4a6f-a873-85b809d60863",
                             Email = "contact@caliexperiences.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3714,7 +3714,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CALIEXP",
                             PhoneNumber = "3132109876",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d1e3e51e-cb2b-4295-9a74-d59585a0ee42",
+                            SecurityStamp = "3a70e024-bacd-464b-ac43-0bf297e1d469",
                             TwoFactorEnabled = false,
                             UserName = "CaliExp",
                             AliadoEstado = 0,
@@ -3729,7 +3729,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "4c03648f-7727-4e5c-b096-fcbe3b9e3059",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "578331a9-89d5-4684-b10e-669c8aa01188",
+                            ConcurrencyStamp = "44d8bfb7-f19d-4f6d-9810-37a9b89e0638",
                             Email = "hello@barranquillaescapes.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3737,7 +3737,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BQUILLAESCAPES",
                             PhoneNumber = "3140987654",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "00413503-56de-4dc1-bcca-1bd0313b957e",
+                            SecurityStamp = "c02f7fe8-a328-4f3b-820e-5657e7d6da65",
                             TwoFactorEnabled = false,
                             UserName = "BquillaEscapes",
                             AliadoEstado = 0,
@@ -3752,7 +3752,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "43d4ff2b-8836-4094-9c27-9a95bea6c141",
+                            ConcurrencyStamp = "59fda35c-f765-4373-bbe6-3ace903d3814",
                             Email = "support@bucaramangajourneys.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3760,7 +3760,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "BUCARAJOURNEYS",
                             PhoneNumber = "3229876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "8b47b025-a77c-4659-9ae8-d61520372a19",
+                            SecurityStamp = "415d6aee-5702-472b-b18a-8f749bc9ccf8",
                             TwoFactorEnabled = false,
                             UserName = "BucaraJourneys",
                             AliadoEstado = 0,
@@ -3775,7 +3775,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "93a4866c-b1f9-4141-a50c-98ac0c3075e9",
+                            ConcurrencyStamp = "16fe6a6b-384f-48a4-9a88-3e7802d031fe",
                             Email = "info@pereiratravels.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3783,7 +3783,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "PEREIRATRAVELS",
                             PhoneNumber = "3107654321",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "621d8d6c-25e2-4260-bb8f-5b4c62eabc4a",
+                            SecurityStamp = "8d1d2007-6b83-4d42-a1f5-ffe92ed13efa",
                             TwoFactorEnabled = false,
                             UserName = "PereiraTravels",
                             AliadoEstado = 0,
@@ -3798,7 +3798,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b75531fb-1d50-4226-a43b-8b1fa93fe47f",
+                            ConcurrencyStamp = "9f563690-012d-4331-995b-ab446095ecb3",
                             Email = "contact@manizaleswonders.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3806,7 +3806,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MANIZALESWONDERS",
                             PhoneNumber = "3165432109",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "ae527a1b-c074-4af6-a828-a01dc3265a42",
+                            SecurityStamp = "b95aff20-efdc-4274-b9b0-02260ec9380e",
                             TwoFactorEnabled = false,
                             UserName = "ManizalesWonders",
                             AliadoEstado = 0,
@@ -3837,7 +3837,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7a1b5c72-f8f1-4dcd-871b-dae490b4e99a",
+                            ConcurrencyStamp = "f1473c81-00b5-407c-946f-f2086b7ae34d",
                             Email = "andres@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3845,7 +3845,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANDRES",
                             PhoneNumber = "3159725595",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "601c97a2-c792-4b67-9251-b9ac8d88ba87",
+                            SecurityStamp = "6aa91463-a07f-4e65-bd22-ca38572b0e34",
                             TwoFactorEnabled = false,
                             UserName = "Andres",
                             Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3854,7 +3854,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "26cfe5c9-00f8-411e-b589-df3405a8b798",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f9bf114e-7697-4f16-80e5-251cc751f8e9",
+                            ConcurrencyStamp = "937e5601-4dd7-4c98-bb83-526a25d96b77",
                             Email = "maria@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3862,7 +3862,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "MARIA",
                             PhoneNumber = "3101234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "a0a6d3d3-b1c2-410d-b383-7d712eb32aef",
+                            SecurityStamp = "0d2bf3f6-7d34-4fb4-9432-773623a0e373",
                             TwoFactorEnabled = false,
                             UserName = "Maria",
                             Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3871,7 +3871,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0eb00d76-0b61-4ef4-a560-9bbd891d19c9",
+                            ConcurrencyStamp = "556dc5ec-4f62-4a41-8213-c84d3f867352",
                             Email = "carlos@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3879,7 +3879,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "CARLOS",
                             PhoneNumber = "3189876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6ac366e2-82fd-43f2-a4c4-58805990a151",
+                            SecurityStamp = "cfc0400f-8605-4995-8536-5981a753c4de",
                             TwoFactorEnabled = false,
                             UserName = "Carlos",
                             Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3888,7 +3888,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "e4309639-4588-4553-8c14-5ce4426e0dd7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3a3196b0-73ea-412e-b3f8-211f9550eacb",
+                            ConcurrencyStamp = "1c9e2871-6a54-472c-ba67-23baee7f062e",
                             Email = "sofia@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3896,7 +3896,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "SOFIA",
                             PhoneNumber = "3123456789",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "b3e4d73c-4478-42fa-8c8a-0e85b960ba13",
+                            SecurityStamp = "0f340663-7149-4c2b-bfb2-953ae357e419",
                             TwoFactorEnabled = false,
                             UserName = "Sofia",
                             Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3905,7 +3905,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "3a895383-b546-4693-8246-924a9fc5289f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "be2b7edc-92ad-4812-a8e6-cf107afd54bb",
+                            ConcurrencyStamp = "2f55fa86-5fcd-4970-a433-41642361fe15",
                             Email = "luis@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3913,7 +3913,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "LUIS",
                             PhoneNumber = "3112345678",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "5e34edd6-76f4-438a-a7c3-c24fe74f3d70",
+                            SecurityStamp = "689bcdcb-0584-42cd-8d01-25f19c846d9e",
                             TwoFactorEnabled = false,
                             UserName = "Luis",
                             Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3922,7 +3922,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "1c8e89f7-7db6-4cd5-907d-f01b058cd784",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4634a850-63a9-4c8e-a5af-a313b88fa219",
+                            ConcurrencyStamp = "b4990d0d-1537-481c-b323-c5739addab24",
                             Email = "isabella@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3930,7 +3930,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ISABELLA",
                             PhoneNumber = "3179876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "4c14e58f-7f17-40a0-835a-fffab0b25c1e",
+                            SecurityStamp = "ab186568-bd95-4203-8178-5f1779fb6bee",
                             TwoFactorEnabled = false,
                             UserName = "Isabella",
                             Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3939,7 +3939,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "13825fa6-5c27-4303-ab17-6e13aac24c12",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5320132d-1268-4c15-af3c-ef8325b69a15",
+                            ConcurrencyStamp = "4914584f-d1df-4987-b88c-3e0cbcb62f88",
                             Email = "fernando@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3947,7 +3947,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "FERNANDO",
                             PhoneNumber = "3198765432",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9c18899d-2334-4c96-beb4-33ed34c4e8c6",
+                            SecurityStamp = "55602b18-4893-4db3-9635-87299ad0f320",
                             TwoFactorEnabled = false,
                             UserName = "Fernando",
                             Avatar = "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3956,7 +3956,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f68b53c1-bf75-47c4-9b5f-f5dd8df521c7",
+                            ConcurrencyStamp = "c03d76b5-9089-419d-b818-12153e414bae",
                             Email = "ana@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3964,7 +3964,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "ANA",
                             PhoneNumber = "3149876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "9b92879b-3ede-4377-94cd-e2365450e9dd",
+                            SecurityStamp = "46a45df9-6b60-451e-9601-83baf17155f9",
                             TwoFactorEnabled = false,
                             UserName = "Ana",
                             Avatar = "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww"
@@ -3973,7 +3973,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "2e59aa62-61bd-4c8d-9a3d-13f461696eab",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6399499b-7270-4bed-a176-aa5a34155fc4",
+                            ConcurrencyStamp = "8b68402f-6505-4976-8ce7-a940afe8cabe",
                             Email = "jorge@outlook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3981,7 +3981,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "JORGE",
                             PhoneNumber = "3151234567",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "fcaabf90-de4f-485b-a6b8-26a474fd5ebb",
+                            SecurityStamp = "dcee4a28-639a-4adf-86e5-2bd2eb8f556c",
                             TwoFactorEnabled = false,
                             UserName = "Jorge",
                             Avatar = "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
@@ -3990,7 +3990,7 @@ namespace Dviaje.DataAccess.Migrations
                         {
                             Id = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d1216ce2-e3ca-4ca0-93ee-868f95df6c31",
+                            ConcurrencyStamp = "2fb7796f-e4d3-4085-a0a0-0b98af49c08c",
                             Email = "gabriela@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -3998,7 +3998,7 @@ namespace Dviaje.DataAccess.Migrations
                             NormalizedUserName = "GABRIELA",
                             PhoneNumber = "3169876543",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "7df18cae-3b03-42ab-a925-e5528aeab080",
+                            SecurityStamp = "4061b705-c858-496a-8326-8b1ba66070b7",
                             TwoFactorEnabled = false,
                             UserName = "Gabriela",
                             Avatar = "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"

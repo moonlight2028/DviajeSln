@@ -42,7 +42,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
             return View(new PublicacionesVM
             {
                 PublicacionTarjetas = listaPublicaciones,
-                Paginacion = new PaginacionVM { ResultadosMostrados = numeroPublicaciones, ResultadosTotales = publicacionesTotales, PaginasTotales = paginasTotales, PaginaActual = (int)pagina }
+                Paginacion = new PaginacionVM { ResultadosMostrados = numeroPublicaciones, ResultadosTotales = publicacionesTotales, PaginasTotales = paginasTotales }
             });
         }
 

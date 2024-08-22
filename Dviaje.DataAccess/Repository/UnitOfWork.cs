@@ -58,7 +58,7 @@ namespace Dviaje.DataAccess.Repository
 
             FavoritoRepository = new FavoritoRepository(_db);
 
-            UsuarioRepository = new UsuaioRpository(_db);
+            UsuarioRepository = new UsuarioRepository(_db);
 
             ResenaRepository = new ResenaRepository(_db);
 

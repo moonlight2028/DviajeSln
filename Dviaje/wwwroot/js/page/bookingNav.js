@@ -22,6 +22,37 @@ export const bookingFechaValidacion = () => {
 export const bookingBotonesFiltros = () => {
     const botonesBookingFiltros = document.querySelectorAll('[data-booking="btn-filtro"]');
 
+    // URL
+    let url = new URL(window.location.href);
+    let parametros = new URLSearchParams(url.search);
+
+    // Parametros del filtro
+    let valoresTextDefault = [];
+    let spanOpcionesBtns = document.querySelector("[data-booking='btn-span-options']");
+
+    // Asignacion de parametros
+    if(parametros.has("ordenar")){
+        switch (parametros.get("ordenar").toUpperCase()) {
+            case "PRECIOMENOR":
+                valoresTextDefault = ["Precio Menor", "Precio Mayor", "Puntuación"];
+                break;
+            case "PRECIOMAYOR":
+                valoresTextDefault = ["Precio Mayor", "Precio Menor", "Puntuación"];
+                break;
+            default:
+                valoresTextDefault = ["Puntuación", "Precio Mayor", "Precio Menor"];
+                break;
+        }
+    }else{
+        valoresTextDefault = ["Puntuación", "Precio Mayor", "Precio Menor"];
+    }
+    
+    // Cargando valores
+    document.querySelector("[data-booking='btn-span-select']").textContent = valoresTextDefault[0];
+    spanOpcionesBtns.innerHTML = `<span class="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer">${valoresTextDefault[1]}</span>
+<span class="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer">${valoresTextDefault[2]}</span>`;
+
+    // Evento btn general
     botonesBookingFiltros.forEach(element => {
         element.addEventListener("click", (e) => {
             e.preventDefault();
@@ -45,9 +76,19 @@ export const bookingBotonesFiltros = () => {
             }
         });
     });
+
+    // Evento opciones
+    spanOpcionesBtns.addEventListener("click", (e) => {
+        let valorClick = e.target.textContent.toLowerCase().replace(/\s+/g, '').trim();
+        console.log(valorClick);
+        parametros.set("ordenar",valorClick);
+        url.search = parametros.toString();
+
+        window.location.href = url;
+    })
 }
 
-export const bookingModalFiltros = ()=>{
+export const bookingModalFiltros = () => {
     const modalFiltros = document.getElementById("booking-filtrar-modal");
     const btnBookingFiltrar = document.getElementById("booking-btn-filtrar");
 
@@ -56,7 +97,7 @@ export const bookingModalFiltros = ()=>{
             modalFiltros.classList.add("hidden");
         }
     });
-    
+
     btnBookingFiltrar.addEventListener("click", (e) => {
         e.preventDefault();
         modalFiltros.classList.remove("hidden");

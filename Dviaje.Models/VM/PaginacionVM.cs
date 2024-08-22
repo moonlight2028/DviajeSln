@@ -5,6 +5,5 @@
         public int ResultadosMostrados { get; set; }
         public int ResultadosTotales { get; set; }
         public int PaginasTotales { get; set; }
-        public int PaginaActual { get; set; }
     }
 }
