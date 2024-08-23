@@ -15,9 +15,6 @@ namespace Dviaje.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
-
-
         public async Task<IActionResult> UserTable()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAllAsync();
@@ -86,6 +83,9 @@ namespace Dviaje.Areas.Admin.Controllers
         public IActionResult GenerarReporte()
         {
             // lógica para generar un reporte en PDF o gráficos
+
+
+
             return View();
         }
     }

@@ -9,5 +9,10 @@ namespace Dviaje.Areas.Administrador.Controllers
         {
             return View();
         }
+
+        public IActionResult Pqrs()
+        {
+            return View();
+        }
     }
 }
