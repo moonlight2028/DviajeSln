@@ -52,7 +52,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
             if (id is null or <= 0) return RedirectToAction(nameof(Publicaciones));
 
             // Publicacion
-            PublicacionVM publicacionBuscada = await _unitOfWork.PublicacionRepository.GetPublicacionAsync((int)id);
+            PublicacionVM? publicacionBuscada = await _unitOfWork.PublicacionRepository.GetPublicacionAsync((int)id);
             if (publicacionBuscada == null) return RedirectToAction(nameof(Publicaciones));
 
             return View(publicacionBuscada);
