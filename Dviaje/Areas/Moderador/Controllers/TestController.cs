@@ -1,4 +1,5 @@
-﻿using Dviaje.Models.VM;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +10,13 @@ namespace Dviaje.Areas.Moderador.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TestController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public TestController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IActionResult> Usuarios()
@@ -41,6 +44,26 @@ namespace Dviaje.Areas.Moderador.Controllers
             // Pasa la lista a la vista
             return View(usuariosConRoles);
         }
+
+
+        // Con LINQ usando el metodo de sintaxis con metodos
+        public async Task<IActionResult> UsuariosConLINQMetodos()
+        {
+            List<UsuariosTestVM> listaUsuarios = await _unitOfWork.UsuariosTest.ListaDeUsuarios();
+
+            // Pasa la lista a la vista
+            return View(listaUsuarios);
+        }
+
+        // Con LINQ usando la sintaxis parecida a SQL
+        public async Task<IActionResult> UsuariosConLINQSQL()
+        {
+            List<UsuariosTestVM> listaUsuarios = await _unitOfWork.UsuariosTest.ListaDeUsuariosDos();
+
+            // Pasa la lista a la vista
+            return View(listaUsuarios);
+        }
+
 
     }
 

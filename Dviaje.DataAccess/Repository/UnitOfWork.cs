@@ -43,6 +43,9 @@ namespace Dviaje.DataAccess.Repository
 
         public IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; private set; }
 
+        // Test usuarios
+        public IUsuariosTest UsuariosTest { get; private set; }
+
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -83,6 +86,9 @@ namespace Dviaje.DataAccess.Repository
             PublicacionCategoriaRepository = new PublicacionCategoriaRepository(_db);
 
             FechaNoDisponibleRepository = new FechaNoDiponibleRepository(_db);
+
+            //Test usuairos
+            UsuariosTest = new UsuarioTest(_db);
 
         }
         public async Task Save() => await _db.SaveChangesAsync();

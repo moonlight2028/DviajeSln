@@ -21,6 +21,9 @@
         IPublicacionCategoriaRepository PublicacionCategoriaRepository { get; }
         IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; }
 
+        // Test usuairos
+        IUsuariosTest UsuariosTest { get; }
+
         Task Save();
 
     }
