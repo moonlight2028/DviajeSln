@@ -3,7 +3,7 @@
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
-    public class HomeController : Controller
+    public class InicioController : Controller
     {
         public IActionResult Index()
         {

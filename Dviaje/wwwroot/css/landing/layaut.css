@@ -1,0 +1,48 @@
+/* Barra de navegación principal */
+.nav-main {
+    padding: 10px 20px;
+    max-width: 1536px;
+    margin: 0 auto;
+}
+
+    .nav-main ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-main .nav-main-items {
+        display: none;
+    }
+
+        .nav-main .nav-main-items a:hover {
+            color: var(--color-primario-500);
+        }
+
+@media (min-width: 1024px) {
+    .nav-main .nav-main-items {
+        display: flex;
+        gap: 10px;
+    }
+}
+
+.nav-main .nav-main-botones {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-main .nav-main-logo {
+    height: 50px;
+}
+
+.nav-main .icono-menu {
+    font-size: 30px;
+    color: var(--color-primario-500);
+    cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+    .nav-main .icono-menu {
+        display: none;
+    }
+}

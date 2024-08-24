@@ -3,7 +3,6 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<div class="sm:flex sm:gap-2">
 @if (SignInManager.IsSignedIn(User))
 {
     <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
@@ -14,14 +13,12 @@
 }
 else
 {
-    <a class="rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-medium text-white shadow" id="register" asp-area="Identity" asp-page="/Account/Login">
-        Ingresar
-    </a>
-        
-    <div class="hidden sm:flex">
-    <a class="rounded-xl bg-gray-100 px-5 py-2.5 text-sm font-medium text-orange-500" id="login" asp-area="Identity" asp-page="/Account/Register">
-            Registrarse
+    <li>
+        <a id="register" asp-area="Identity" asp-page="/Account/Login">
+            <button class="button-23">Ingresar</button>
         </a>
-    </div>
+    </li>
+    <li>
+        <a class="button-87-main" id="login" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
+    </li>
 }
-</div>

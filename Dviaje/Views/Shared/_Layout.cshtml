@@ -1,66 +1,57 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Dviaje</title>
     
-    @RenderSection("Styles", required: false)
-
-
-     <!-- Bootstrap v5.3.3 -->
+    @* Bootstrap v5.3.3 *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-    @*Tailwind v3.4.4 *@
-    <link rel="stylesheet" href="~/lib/tailwind/output.css" />
+    @* Fuente Poppins *@
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    @* Font awesome v6.6.0 *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
+    @* Reseteo de estilos *@
+    <link rel="stylesheet" href="~/css/general/reset.css" />
+    
+    @* Utilidades *@
+    <link rel="stylesheet" href="~/css/general/utilidades.css" />
 
+    @* Estilos del layaut *@
+    <link rel="stylesheet" href="~/css/landing/layaut.css" />
+    
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header class="bg-white">
-        <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
-                <div class="md:flex md:items-center md:gap-12">
-                    <a class="block text-teal-600 w-32" href="#">
-                        <img src="~/img/logoDViaje.webp" alt="">
+    <header>
+        <nav class="nav-main">
+            <ul>
+                <li>
+                    <a asp-area="Dviaje" asp-controller="Inicio">
+                        <!-- Optimizar imagen del logo -->
+                        <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
                     </a>
+                </li>
+                <!-- Items de escritorio -->
+                <div class="nav-main-items">
+                    <li><a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
+                    <li><a asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
+                    <li><a href="">Item</a></li>
+                    <li><a href="">Item</a></li>
                 </div>
-
-                <div class="hidden md:block">
-                    <nav aria-label="Global">
-                        <ul class="flex items-center gap-6 text-sm">
-                            <li>
-                                <a class="text-gray-500 transition hover:text-gray-500/75" asp-area="Dviaje" asp-controller="Home" asp-action="Index">Inicio</a>
-                            </li>
-                            <li>
-                                <a class="text-gray-500 transition hover:text-gray-500/75" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a>
-                            </li>
-                            <li>
-                                <a class="text-gray-500 transition hover:text-gray-500/75" asp-area="Dviaje" asp-controller="Resena" asp-action="Reseñas">Reseñas</a>
-                            </li>
-                            <li>
-                                <a class="text-gray-500 transition hover:text-gray-500/75" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    @*Login*@
+                <div class="nav-main-botones">
                     <partial name="_LoginPartial" />
-
-                    <div class="block md:hidden">
-                        <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
+                    
+                    <!-- Boton mobile -->
+                    <li class="icono-menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </li>
                 </div>
-            </div>
-        </div>
+            </ul>
+        </nav>
     </header>
 
 

@@ -1,0 +1,56 @@
+﻿/* Variables */
+:root {
+    --color-primario-300: #fdba74;
+    --color-primario-400: #fb923c;
+    --color-primario-500: #f97316;
+    --color-primario-600: #ea580c;
+    --color-primario-700: #c2410c;
+    --color-primario-800: #9a3412;
+    --color-primario-900: #7c2d12;
+    --color-secundario-200: #a5f3fc;
+    --color-secundario-300: #67e8f9;
+    --color-secundario-400: #22d3ee;
+    --color-secundario-500: #06b6d4;
+    --color-secundario-600: #0891b2;
+    --color-secundario-700: #0e7490;
+    --color-secundario-800: #155e75;
+    --color-secundario-900: #164e63;
+    --color-secundario-950: #083344;
+}
+
+
+/* Box model HTML */
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+
+/* Eliminación de estilos default */
+ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+
+/* Estilos del body */
+body {
+    font-family: 'Poppins', sans-serif;
+}
