@@ -1,5 +1,6 @@
 ﻿/* Variables */
 :root {
+    /* Naranjas */
     --color-primario-300: #fdba74;
     --color-primario-400: #fb923c;
     --color-primario-500: #f97316;
@@ -7,6 +8,7 @@
     --color-primario-700: #c2410c;
     --color-primario-800: #9a3412;
     --color-primario-900: #7c2d12;
+    /* Azules cyan */
     --color-secundario-200: #a5f3fc;
     --color-secundario-300: #67e8f9;
     --color-secundario-400: #22d3ee;
@@ -16,6 +18,8 @@
     --color-secundario-800: #155e75;
     --color-secundario-900: #164e63;
     --color-secundario-950: #083344;
+    /* Rojo */
+    --color-terciario-500: #ef4444;
 }
 
 

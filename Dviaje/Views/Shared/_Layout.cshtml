@@ -51,6 +51,15 @@
                     </li>
                 </div>
             </ul>
+            <ul class="items-mobile">
+                <li><a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
+                <li><a asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
+                <li><a href="">Item</a></li>
+                <li><a href="">Item</a></li>
+                <div class="items-mobile-btns">
+                    <partial name="_LoginPartial" />
+                </div>
+            </ul>
         </nav>
     </header>
 
@@ -253,6 +262,8 @@
 
     
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/landing/layaut.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

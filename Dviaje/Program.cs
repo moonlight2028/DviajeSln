@@ -55,6 +55,6 @@ app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Dviaje}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Dviaje}/{controller=Inicio}/{action=Index}/{id?}");
 
 app.Run();
