@@ -9,7 +9,7 @@
 
     <div class="card mb-4 shadow-sm">
         <div class="card-body">
-            @* colocar imagen *@
+            @* Colocar imagen *@
             @if (!string.IsNullOrEmpty(Model.Imagen))
             {
                 <img src="@Model.Imagen" alt="@Model.TituloPublicacion" class="img-fluid mb-3" />
@@ -19,10 +19,28 @@
             <p class="card-text">
                 <strong>Fecha de Inicio:</strong> @Model.FechaInicio.ToString("dd/MM/yyyy")<br />
                 <strong>Fecha Final:</strong> @Model.FechaFinal.ToString("dd/MM/yyyy")<br />
-                <strong>Número de Personas:</strong> @Model.IdReserva <br /> @* ajustar propiedad número de personas *@
+                <strong>Número de Personas:</strong> @Model.NumeroPersonas <br /> 
             </p>
 
-            <a href="javascript:history.back()" class="btn btn-primary">Volver</a>
+            <div class="d-flex justify-content-between">
+                <a href="javascript:history.back()" class="btn btn-primary">Volver</a>
+
+                @* Comprobar si la reserva se puede cancelar (por ejemplo, si faltan más de 8 días) *@
+                @{
+                    var diasParaReserva = (Model.FechaInicio - DateTime.Now).TotalDays;
+                }
+
+                @if (diasParaReserva >= 8)
+                {
+                    <form asp-action="CancelarReserva" asp-route-reservaId="@Model.IdReserva" method="post">
+                        <button type="submit" class="btn btn-danger">Cancelar Reserva</button>
+                    </form>
+                }
+                else
+                {
+                    <p class="text-danger">La reserva no se puede cancelar, faltan menos de 8 días.</p>
+                }
+            </div>
         </div>
     </div>
 </div>

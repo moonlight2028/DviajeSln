@@ -1,5 +1,6 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
+using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Turista.Controllers
@@ -8,10 +9,12 @@ namespace Dviaje.Areas.Turista.Controllers
     public class ReservaController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEnvioEmail _envioEmail;
 
-        public ReservaController(IUnitOfWork unitOfWork)
+        public ReservaController(IUnitOfWork unitOfWork, IEnvioEmail envioEmail)
         {
             _unitOfWork = unitOfWork;
+            _envioEmail = envioEmail;
         }
 
         // GET: Turista/Reserva/Reserva
@@ -49,13 +52,26 @@ namespace Dviaje.Areas.Turista.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Recargar la publicación en caso de error para mostrarse en la vista
                 reserva.Publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == reserva.IdPublicacion);
                 return View(reserva);
             }
 
             await _unitOfWork.ReservaRepository.AddAsync(reserva);
             await _unitOfWork.Save();
+
+            // Enviar correo de confirmación al turista
+            var turista = await _unitOfWork.UsuariosTest.GetAsync(u => u.Id == reserva.IdUsuario);
+            var aliado = await _unitOfWork.UsuariosTest.GetAsync(u => u.Id == reserva.Publicacion.IdAliado);
+
+            string asunto = "Confirmación de Reserva";
+            string cuerpoCorreoTurista = $"Hola {turista.Avatar}, tu reserva para {reserva.Publicacion.Titulo} ha sido confirmada.";
+            string cuerpoCorreoAliado = $"Hola {aliado.Avatar}, se ha realizado una nueva reserva para tu publicación {reserva.Publicacion.Titulo}.";
+
+            await _envioEmail.EnviarEmail(asunto, turista.Email, turista.Avatar, cuerpoCorreoTurista, "<p>" + cuerpoCorreoTurista + "</p>");
+            await _envioEmail.EnviarEmail(asunto, aliado.Email, aliado.Avatar, cuerpoCorreoAliado, "<p>" + cuerpoCorreoAliado + "</p>");
+
+            TempData["Success"] = "Reserva realizada exitosamente y correos enviados.";
+
             return RedirectToAction(nameof(MisReservas));
         }
 
@@ -94,19 +110,28 @@ namespace Dviaje.Areas.Turista.Controllers
 
 
 
-        // Método opcional para cancelar una reserva
-        public async Task<IActionResult> CancelarReserva(int id)
+        // cancelar una reserva
+        public async Task<IActionResult> CancelarReserva(int reservaId)
         {
-            var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == id);
-
+            var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == reservaId);
             if (reserva == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.ReservaRepository.Remove(reserva);
+            var diasParaReserva = (reserva.FechaInicial - DateTime.Now).TotalDays;
+            if (diasParaReserva < 8)
+            {
+                TempData["Error"] = "No se puede cancelar la reserva, faltan menos de 8 días.";
+                return RedirectToAction("MisReservas"); // Redirigir a las reservas del usuario
+            }
+
+            reserva.ReservaEstado = ReservaEstado.Cancelado;
+            _unitOfWork.ReservaRepository.Update(reserva);
             await _unitOfWork.Save();
-            return RedirectToAction(nameof(MisReservas));
+            TempData["Success"] = "Reserva cancelada exitosamente.";
+
+            return RedirectToAction("MisReservas");
         }
     }
 }
