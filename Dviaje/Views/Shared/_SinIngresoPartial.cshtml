@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <li>
+        <a class="nav-main-a" id="register" asp-area="Identity" asp-page="/Account/Login">
+            <button class="button-23">Ingresar</button>
+        </a>
+    </li>
+    <li>
+        <a class="button-87-main nav-main-a" id="login" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
+    </li>
+}

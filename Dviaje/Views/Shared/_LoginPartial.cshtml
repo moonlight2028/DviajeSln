@@ -5,20 +5,26 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+    // Menu desplegable avatar
+    <div class="desplegable">
+        <div class="avatar" data-desplegable="avatar">
+            <img src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww" alt="Alternate Text" class="img-f" />
+        </div>
 
-    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-    </form>
-}
-else
-{
-    <li>
-        <a id="register" asp-area="Identity" asp-page="/Account/Login">
-            <button class="button-23">Ingresar</button>
-        </a>
-    </li>
-    <li>
-        <a class="button-87-main" id="login" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
-    </li>
+        <ul class="desplegable-items" data-desplegable-items="avatar">
+            <li>
+                <a class="h-p-500 desplegable-items-icons" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                    <i class="fa-solid fa-user-gear"></i>
+                    Administrar Cuenta
+                </a>
+            </li>
+            <div class="hr"></div>
+            <form class="cerrar-sesion h-p-500" id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Inicio", new { area = "" })">
+                <button id="logout" type="submit">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Cerrar sesión
+                </button>
+            </form>
+        </ul>
+    </div>
 }

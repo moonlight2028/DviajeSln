@@ -67,3 +67,16 @@
     border-color: var(--color-primario-400);
     transform: scale(.96);
 }
+
+/* Imagenes */
+.img-f {
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+/* Hovers */
+.h-p-500:hover {
+    color: var(--color-primario-500) !important;
+}
