@@ -5,114 +5,58 @@
     ViewData["Title"] = "Ingresar";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/autenticacion/login.css" />
+}
 
-<section class="bg-white">
-    <div class="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section class="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
-            <img alt=""
-                 src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-                 class="absolute inset-0 h-full w-full object-cover opacity-80" />
-
-            <div class="hidden lg:relative lg:block lg:p-12">
-                <a class="block w-fit" href="#">
-                    <img src="~/img/logoDViaje.webp" alt="" class="h-20">
-                </a>
-
-                <h2 class="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-                    Bienvenido a DViaje
-                </h2>
-
-                <p class="mt-4 leading-relaxed text-white/90">
-                    ¡Bienvenidos a la experiencia definitiva en turismo por Cundinamarca! Descubre con
-                    nosotros la riqueza cultural, la belleza natural y la aventura que espera en cada rincón
-                    de esta región mágica.
-                </p>
-            </div>
-        </section>
-
-        <section class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-            <div class="max-w-xl lg:max-w-3xl">
-                <div class="relative -mt-16 block lg:hidden">
-                    <a class="block w-fit" href="#">
-                        <img src="~/img/logoDViaje.webp" alt="" class="h-14">
-                    </a>
-
-                    <h1 class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                        Bienvenido a DViaje
-                    </h1>
-
-                    <p class="mt-4 leading-relaxed text-gray-500">
-                        ¡Bienvenidos a la experiencia definitiva en turismo por Cundinamarca! Descubre con
-                        nosotros la riqueza cultural, la belleza natural y la aventura que espera en cada rincón
-                        de esta región mágica.
-                    </p>
-                </div>
-
-                <form id="account" method="post" class="mt-8 grid grid-cols-6 gap-6">
-                    <div class="col-span-6">
-                        <label asp-for="Input.Email"
-                               class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-                            <input asp-for="Input.Email" type="email" autocomplete="username" aria-required="true"
-                                   class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
-                                   placeholder="Username" />
-
-                            <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                                Correo
-                            </span>
-                        </label>
-                        <span asp-validation-for="Input.Email" class="text-red-500 px-3 block"></span>
-                    </div>
-
-                    <div class="col-span-6">
-                        <label asp-for="Input.Password"
-                               class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-                            <input asp-for="Input.Password" type="password" autocomplete="username" aria-required="true"
-                                   class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
-                                   placeholder="Contraseña" />
-
-                            <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                                Contraseña
-                            </span>
-                        </label>
-                        <span asp-validation-for="Input.Password" class="text-red-500 px-3 block"></span>
-                    </div>
-
-                    <label asp-for="Input.RememberMe" class="flex cursor-pointer items-start gap-2">
-                        <div class="flex items-center">
-                            &#8203;
-                            <input asp-for="Input.RememberMe" type="checkbox"
-                                   class="size-4 rounded border-gray-300 focus:border-orange-500 focus:text-orange-500 focus:outline-orange-500"
-                                   id="recordar" />
-                        </div>
-
-                        <div>
-                            <strong class="font-normal text-gray-500 text-sm">¿Recuérdame?</strong>
-                        </div>
-                    </label>
-
-                    <div class="col-span-6">
-                        <button id="login-submit" type="submit" class="group inline-block w-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75">
-                            <span class="flex justify-center rounded-full bg-white py-2 text-base font-medium group-hover:bg-transparent text-orange-500 group-hover:text-white">
-                                Iniciar sesión
-                            </span>
-                        </button>
-
-                        <div class="flex flex-col my-2">
-                            <div  class="mt-4 text-sm text-gray-500 sm:mt-0">
-                                ¿Olvidaste tu contraseña?
-                                <a id="forgot-password" asp-page="./ForgotPassword" class="text-gray-700 underline">Recuperar contraseña</a>.
-                            </div>
-
-                            <p class="mt-4 text-sm text-gray-500 sm:mt-0">
-                                ¿No tienes una cuenta?
-                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-gray-700 underline">Crea cuenta</a>.
-                            </p>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
+<section class="ingreso">
+    @* Banner *@
+    <div class="ingreso-img">
+        <img alt="Imagen representativa de Dviaje"
+             src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+             class="img-f" />
     </div>
+
+    <form id="account" method="post" class="ingreso-form">
+        <h1>Bienvenido a Dviaje</h1>
+
+        @* Inputs *@
+        <div class="ingreso-form-inputs">
+            <div>
+                <label asp-for="Input.Email" class="input-label">
+                    <input asp-for="Input.Email" type="email" autocomplete="on" aria-required="true" class="input-field" placeholder="Correo" />
+                    <span class="input-placeholder">Correo</span>
+                </label>
+                <span asp-validation-for="Input.Email" class="validation-message"></span>
+            </div>
+            <div>
+                <label asp-for="Input.Password" class="input-label">
+                    <input asp-for="Input.Password" type="password" autocomplete="on" aria-required="true" class="input-field" placeholder="Contraseña" />
+                    <span class="input-placeholder">Contraseña</span>
+                </label>
+                <span asp-validation-for="Input.Password" class="validation-message"></span>
+            </div>
+        </div>
+        
+        <div class="recuerdame">
+            <input asp-for="Input.RememberMe" type="checkbox" class="custom-checkbox" />
+            <label asp-for="Input.RememberMe">¿Recuérdame?</label>
+        </div>
+        
+        <button id="login-submit" type="submit" class="button-87-main">Iniciar sesión</button>
+        
+        @* Opciones adicionales *@
+        <div class="opciones">
+            <div>
+                <span>¿Olvidaste tu contraseña?</span>
+                <a id="forgot-password" asp-page="./ForgotPassword"> Recuperar contraseña</a>.
+            </div>
+            <div>
+                <span>¿No tienes una cuenta?</span>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Crea cuenta.</a>
+            </div>
+        </div>
+    </form>
 </section>
 
 

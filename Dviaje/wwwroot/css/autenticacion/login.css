@@ -1,0 +1,217 @@
+﻿/* Formulario */
+.ingreso {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    width: 100%;
+    max-width: 1536px;
+    margin: 0 auto;
+    height: calc(100dvh - 70px);
+    color: var(--color-gris-700);
+    font-size:.8rem;
+}
+
+@media (min-width: 768px) {
+    .ingreso {
+        flex-direction: row-reverse;
+        justify-content:center;
+        align-items:center;
+    }
+}
+
+.ingreso-img {
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: -10;
+}
+
+@media (min-width: 768px) {
+    .ingreso-img {
+        height: 100%;
+        position: relative;
+        z-index: auto;
+        padding:20px;
+    }
+
+    .ingreso-img img{
+        border-radius: 30px;
+    }
+}
+
+.ingreso-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    height: 70%;
+    background-color: var(--color-default);
+    border-radius: 50px 0 0;
+}
+
+@media (min-width: 768px) {
+    .ingreso-form {
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+    .ingreso-form h1{
+        text-align:center;
+        font-weight:600;
+        font-size:2rem;
+    }
+
+    .ingreso-form .ingreso-form-inputs {
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+
+
+.input-label {
+    position: relative;
+    display: block;
+    border-radius: 1rem;
+    border: 1px solid var(--color-gris-200);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .input-label:focus-within {
+        border-color: var(--color-primario-500);
+        box-shadow: 0 0 0 1px var(--color-primario-500);
+    }
+
+.input-field {
+    width: 100%;
+    border: none;
+    border-radius: 1rem;
+    background: transparent;
+    padding: 0.5rem 1rem;
+    outline: none;
+    box-shadow: none;
+    font-size: 1rem;
+    color: var(--color-default-black);
+}
+
+.input-placeholder {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    background-color: var(--color-default);
+    color: var(--color-default-black);
+    transition: all 0.2s;
+    pointer-events: none;
+}
+
+.input-field::placeholder {
+    color: transparent;
+
+}
+
+.input-field:placeholder-shown + .input-placeholder {
+    top: 50%;
+    font-size: 1rem;
+    transform: translateY(-50%);
+    color: var(--color-gris-700);
+}
+
+.input-field:focus + .input-placeholder {
+    top: 0;
+    font-size: .8rem;
+    transform: translateY(-50%);
+    padding: 0 5px;
+    background-color: var(--color-default);
+    color: var(--color-primario-500);
+}
+
+.validation-message {
+    color: var(--color-terciario-500);
+    padding-left: 1rem;
+    display: block;
+    font-size: 0.875rem;
+}
+
+.recuerdame {
+    display:flex;
+    align-items:center;
+    justify-content:start;
+    gap: 5px;
+}
+
+.recuerdame label {
+    cursor: pointer;
+}
+
+.custom-checkbox {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--color-gris-200);
+    border-radius: 0.25rem;
+    background-color: white;
+    transition: background-color 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+    .custom-checkbox:checked {
+        background-color: var(--color-primario-500);
+        border-color: var(--color-primario-500);
+        position: relative;
+    }
+
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 4px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+.button-87-main {
+    width:100%;
+    font-size:1rem;
+}
+
+.opciones {
+    text-align:center;
+}
+
+.opciones a {
+    text-decoration: underline;
+}
+
+    .opciones a:hover {
+        color: var(--color-primario-500);
+    }
+
+h1, .ingreso-form-inputs, .recuerdame, .button-87-main, .opciones, .ingreso-form-condiciones {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Formulario de registro */
+.ingreso-form-condiciones{
+    text-align:center;
+}
+
+.ingreso-form-condiciones a {
+    text-decoration: underline;
+}
+
+    .ingreso-form-condiciones a:hover {
+        color: var(--color-primario-500);
+    }

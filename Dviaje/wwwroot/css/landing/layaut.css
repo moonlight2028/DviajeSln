@@ -6,124 +6,173 @@
     margin: 0 auto;
 }
 
-    .nav-main ul {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+.nav-main-ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-    .nav-main .nav-main-items {
-        display: none;
-    }
+.nav-main-items {
+    display: none;
+}
 
-        .nav-main .nav-main-items a:hover{
-            color: var(--color-primario-500);
-        }
+    .nav-main-items a:hover {
+        color: var(--color-primario-500);
+    }
 
 @media (min-width: 1024px) {
-    .nav-main .nav-main-items {
+    .nav-main-items {
         display: flex;
         gap: 10px;
     }
 }
 
-.nav-main .nav-main-botones {
+.nav-main-botones {
     display: flex;
+    align-items: center;
     gap: 10px;
 }
 
-.nav-main .nav-main-botones li a{
+.nav-main-a {
     display: none;
 }
 
+.configuracion {
+    color: var(--color-primario-500);
+    font-size: 25px;
+}
+
+    .configuracion:hover {
+        color: var(--color-terciario-500);
+    }
+
 @media (min-width: 640px) {
-    .nav-main .nav-main-botones li a {
+    .nav-main-a{
         display: block;
     }
 }
 
-.nav-main .nav-main-logo {
+.nav-main-logo {
     height: 50px;
 }
 
-.nav-main .icono-menu {
-    font-size: 30px;
-    color: var(--color-primario-500);
-    cursor: pointer;
+.desplegable {
+    position:relative;
 }
 
-    .nav-main .icono-menu:hover {
-        color: var(--color-terciario-500);
-    }
-
-.nav-main .icono-menu-show {
-    font-size: 30px;
-    color: var(--color-terciario-500);
-    cursor: pointer;
-}
-
-@media (min-width: 1024px) {
-    .nav-main .icono-menu {
-        display: none;
-    }
-}
-
-/* Items mobile */
-.items-mobile {
-    display: none !important;
+.desplegable-items {
+    display: none;
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.items-mobile-show {
+.desplegable-items-show {
     position: absolute;
-    top: 60px;
-    right: 20px;
+    top: 50px;
+    right: 0;
+    padding: 15px;
+    background-color: blue;
+    position: absolute;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 350px;
-    padding: 10px;
     opacity: 1;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    background-color: #fff;
+    background-color: var(--color-default);
     border-radius: 20px;
-    /* b-s-11 */
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
-@media (min-width: 640px) {
-    .items-mobile-show {
-        width: fit-content;
-        padding: 10px 50px;
-    }
+.desplegable-items-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-gris-700);
+    white-space: nowrap;
+    flex-wrap: nowrap;
 }
 
-@media (min-width: 1024px) {
-    .items-mobile, .items-mobile-show {
-        display: none !important;
-    }
+.d-c-t-500 {
+    color: var(--color-terciario-500) !important;
+    border-color: var(--color-terciario-500) !important;
 }
 
-/* Fix hover */
-.items-mobile li a:hover {
+.nav-mobile-icono {
+    font-size: 1.7rem;
     color: var(--color-primario-500);
 }
 
-.items-mobile-btns {
-    width: 100%;
-}
-
-    .items-mobile-btns li a button {
-        width:100%;
-        margin-bottom: 10px;
+    .nav-mobile-icono:hover {
+        color: var(--color-terciario-500);
+        cursor:pointer;
     }
 
+.nav-mobile-ingreso {
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
 @media (min-width: 640px) {
-    .items-mobile-btns {
+    .nav-mobile-ingreso {
         display: none;
     }
 }
 
+.nav-mobile-ingreso li a{
+    display: block;
+}
 
+.nav-mobile-ingreso li a button{
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .nav-mobile-icono, .desplegable [data-desplegable-items="menu-mobile"] {
+        display: none !important;
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 1px solid var(--color-primario-500);
+    overflow: hidden;
+}
+
+    .avatar:hover {
+        border: 2px solid var(--color-terciario-500);
+        cursor: pointer;
+    }
+
+.hr {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-gris-200);
+}
+
+@media (min-width: 640px) {
+    .hr-butones-ingreso {
+        display:none;
+    }
+}
+
+.cerrar-sesion {
+    width: 100%;
+}
+
+.cerrar-sesion button{
+    padding:0;
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+    .cerrar-sesion button:hover {
+        color: var(--color-primario-500);
+    }

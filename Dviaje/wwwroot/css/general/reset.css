@@ -20,6 +20,13 @@
     --color-secundario-950: #083344;
     /* Rojo */
     --color-terciario-500: #ef4444;
+    /* Blanco */
+    --color-default: #fff;
+    /* Negro */
+    --color-default-black: #000;
+    /* Grises */
+    --color-gris-200: #e5e7eb;
+    --color-gris-700: #374151;
 }
 
 
