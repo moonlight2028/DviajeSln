@@ -17,9 +17,6 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
         public async Task<IActionResult> Pqrs()
         {
-            await _email.EnviarEmail("sex", "joansebastianft9@gmail.com", "sexNow", "todas mias", "<h1>nigga</h1>");
-
-
             return View();
         }
 
