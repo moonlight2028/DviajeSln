@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
@@ -95,17 +96,34 @@ namespace Dviaje.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            // Lista de roles.
+            // Campo temporal no va en la versión final.
+            [ValidateNever]
+            public IEnumerable<string> ListaRoles { get; set; }
+
+            // Lista de roles seleccionados.
+            // Campo temporal no va en la versión final.
+            public List<string> RolesSeleccionados { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            // Obtencion de los roles.
+            Input = new()
+            {
+                ListaRoles = _roleManager.Roles.Select(r => r.Name)
+            };
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            var hola = Input.RolesSeleccionados;
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -114,17 +132,23 @@ namespace Dviaje.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                // Corregir
-                //user.Verificado = false;
-                //user.AliadoEstado = AliadoEstado.NoDisponible;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Asignando el rol
-                    await _userManager.AddToRoleAsync(user, RolesUtility.RoleTurista);
+                    if (Input.RolesSeleccionados == null)
+                    {
+                        // Asignando el rol default.
+                        await _userManager.AddToRoleAsync(user, RolesUtility.RoleTurista);
+                    }
+                    else
+                    {
+                        // Asignando roles elegidos.
+                        await _userManager.AddToRolesAsync(user, Input.RolesSeleccionados);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
