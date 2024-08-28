@@ -24,10 +24,19 @@
                                 <strong>Fecha:</strong> @resena.Fecha.ToString("dd/MM/yyyy")<br />
                                 <strong>Calificación:</strong> @resena.Calificacion<br />
                                 <strong>Opinión:</strong> @resena.Opinion<br />
-                                <strong>Me Gusta:</strong> @resena.MeGusta
                             </p>
-                            <a asp-action="Editar" asp-route-id="@resena.IdResena" class="btn btn-outline-secondary">Editar</a>
-                            <a asp-action="Eliminar" asp-route-id="@resena.IdResena" class="btn btn-outline-danger">Eliminar</a>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <a asp-action="Editar" asp-route-id="@resena.IdResena" class="btn btn-outline-secondary">Editar</a>
+                                    <a asp-action="Eliminar" asp-route-id="@resena.IdResena" class="btn btn-outline-danger">Eliminar</a>
+                                </div>
+                                <div>
+                                    <button class="like-button" data-like="resena" data-resena-id="@resena.IdResena">
+                                        <i class="fa-regular fa-thumbs-up"></i>
+                                    </button>
+                                    <span id="me-gusta-count-@resena.IdResena">@resena.MeGusta</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,6 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -16,10 +14,10 @@ namespace Dviaje.Areas.Turista.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async  Task<IActionResult> Resena(int reservaId)
+        public async Task<IActionResult> Resena(int reservaId)
         {
             // Obtener todas las reseñas para una reserva específica
-            var resenas = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva==reservaId);
+            var resenas = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == reservaId);
             return View();
         }
 
@@ -98,6 +96,26 @@ namespace Dviaje.Areas.Turista.Controllers
 
             return RedirectToAction("Index", new { reservaId = resena.IdReserva });
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> MeGusta(int id)
+        {
+            var resena = await _unitOfWork.ResenaRepository.GetAsync(r => r.IdResena == id);
+            if (resena == null)
+            {
+                return NotFound();
+            }
+
+            resena.MeGusta += 1;
+            _unitOfWork.ResenaRepository.Update(resena);
+            await _unitOfWork.Save();
+
+            return Json(new { meGusta = resena.MeGusta });
+        }
+
+
 
     }
 }

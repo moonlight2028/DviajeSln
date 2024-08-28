@@ -46,5 +46,7 @@ namespace Dviaje.Models
 
         [ForeignKey("IdPublicacion")]
         public Publicacion? Publicacion { get; set; }
+
+
     }
 }
