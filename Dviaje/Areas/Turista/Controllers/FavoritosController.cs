@@ -1,4 +1,4 @@
-﻿using Dviaje.Models.VM;
+﻿using Dviaje.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Turista.Controllers
@@ -6,11 +6,19 @@ namespace Dviaje.Areas.Turista.Controllers
     [Area("Turista")]
     public class FavoritosController : Controller
     {
-        public IActionResult Favoritos()
-        {
-            List<FavoritoVM> list = new List<FavoritoVM>();
+        private readonly IUnitOfWork _unitOfWork;
 
-            return View(list);
+
+        // Inyección en el controlador.
+        public FavoritosController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+
+        public IActionResult Favoritos(int? pagina)
+        {
+            return View();
         }
     }
 }

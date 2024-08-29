@@ -43,6 +43,8 @@ namespace Dviaje.DataAccess.Repository
 
         public IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; private set; }
 
+        public IAliadoRepository AliadoRepository { get; private set; }
+
         // Test usuarios
         public IUsuariosTest UsuariosTest { get; private set; }
 
@@ -87,11 +89,12 @@ namespace Dviaje.DataAccess.Repository
 
             FechaNoDisponibleRepository = new FechaNoDiponibleRepository(_db);
 
+            AliadoRepository = new AliadoRepository(_db);
+
             //Test usuairos
             UsuariosTest = new UsuarioTest(_db);
-
         }
-        public async Task Save() => await _db.SaveChangesAsync();
 
+        public async Task Save() => await _db.SaveChangesAsync();
     }
 }

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <Content Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <EmbeddedResource Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <None Remove="Areas\Turista\Views\Atencion Viajero\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
@@ -29,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Turista\Views\Atencion Viajero\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

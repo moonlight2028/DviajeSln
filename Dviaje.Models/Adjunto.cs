@@ -9,16 +9,17 @@ namespace Dviaje.Models
         public int IdAdjunto { get; set; }
 
 
-        [Required(ErrorMessage = "La ruta del adjunto es obligatoria.")]
-        [StringLength(255, ErrorMessage = "La ruta del adjunto no puede tener más de 255 caracteres.")]
+        [Required]
+        [StringLength(255)]
         public string? RutaAdjunto { get; set; }
 
 
-        [Required(ErrorMessage = "El ID de atención es obligatorio.")]
-        public int IdAtencion { get; set; }
+        [Required]
+        public int IdMensaje { get; set; }
 
 
-        [ForeignKey("IdAtencion")]
-        public AtencionViajero? AtencionViajero { get; set; }
+        [ForeignKey("IdMensaje")]
+        public Mensaje? Mensaje { get; set; }
+
     }
 }

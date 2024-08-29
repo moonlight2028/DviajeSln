@@ -1,19 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
     public class ReseñasController : Controller
     {
-        [HttpGet("Dviaje/Reseñas/Reseñas")]
-        public IActionResult Reseñas()
+        private readonly IUnitOfWork _unitOfWork;
+
+
+        // Inyección en el controlador.
+        public ReseñasController(IUnitOfWork unitOfWork)
         {
-            return View();
+            _unitOfWork = unitOfWork;
         }
 
 
-        [HttpGet("Dviaje/Reseñas/Reseñas/{idPublicacion?}")]
-        public IActionResult Reseñas(int? idPublicacion)
+        public IActionResult Reseñas(int? idPublicacion, int? idPagina)
         {
             return View();
         }

@@ -20,6 +20,8 @@
         ICategoriaRepository CategoriaRepository { get; }
         IPublicacionCategoriaRepository PublicacionCategoriaRepository { get; }
         IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; }
+        IAliadoRepository AliadoRepository { get; }
+
 
         // Test usuairos
         IUsuariosTest UsuariosTest { get; }

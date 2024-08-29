@@ -1,8 +1,8 @@
 ﻿namespace Dviaje.Models
 {
-    public enum AtencionViajeroPrioridad
+    public enum AtencionViajeroEstado
     {
-        Pendiente,
+        EsperaRespuestaUsuario,
         Proceso,
         Completado
     }

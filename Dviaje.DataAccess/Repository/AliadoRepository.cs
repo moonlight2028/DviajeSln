@@ -5,25 +5,19 @@ using Dviaje.Models.VM;
 
 namespace Dviaje.DataAccess.Repository
 {
-    public class FavoritoRepository : Repository<Favorito>, IFavoritoRepository
+    public class AliadoRepository : Repository<Aliado>, IAliadoRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public FavoritoRepository(ApplicationDbContext db) : base(db)
+        public AliadoRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public Task<List<PublicacionTarjetaVM>>? ObtenerFavoritos(int pagina = 0)
+        // Consulta para obtener el perfil del aliado.
+        public Task<AliadoPerfilPublicoVM>? ObtenerPerfilAliadoAsync(string idAliado)
         {
             throw new NotImplementedException();
         }
-
-        public void Update(Favorito favorito)
-        {
-            _db.Favoritos.Update(favorito);
-        }
-
-
     }
 }

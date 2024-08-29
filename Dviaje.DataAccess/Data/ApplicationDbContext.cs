@@ -415,6 +415,7 @@ namespace Dviaje.DataAccess.Data
 
 
             // Registros de AtencionViajero.
+            /*
             modelBuilder.Entity<AtencionViajero>().HasData(
                 new AtencionViajero
                 {
@@ -425,7 +426,7 @@ namespace Dviaje.DataAccess.Data
                     Asunto = "Queja por Servicio de Visita Guiada Retrasada el 25 de Julio",
                     FechaRespuesta = new DateTime(2024, 07, 30, 07, 39, 20),
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Completado,
                     IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7"
                 },
                 new AtencionViajero
@@ -437,7 +438,7 @@ namespace Dviaje.DataAccess.Data
                     Asunto = "Problemas Técnicos con la Aplicación de Audio-Guía",
                     FechaRespuesta = new DateTime(2024, 07, 21, 09, 00, 00),
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Completado,
                     IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798"
                 },
                 new AtencionViajero
@@ -449,7 +450,7 @@ namespace Dviaje.DataAccess.Data
                     Asunto = "Información sobre Tour Ecológico",
                     FechaRespuesta = new DateTime(2024, 07, 16, 08, 45, 00),
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Completado,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Completado,
                     IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1"
                 },
                 new AtencionViajero
@@ -461,7 +462,7 @@ namespace Dviaje.DataAccess.Data
                     Asunto = "Cancelación de Reserva de Tour Gastronómico",
                     FechaRespuesta = new DateTime(2024, 07, 19, 10, 00, 00),
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Proceso,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Proceso,
                     IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7"
                 },
                 new AtencionViajero
@@ -473,7 +474,7 @@ namespace Dviaje.DataAccess.Data
                     Asunto = "Agradecimiento por Excelente Servicio en Tour de Aventura",
                     FechaRespuesta = new DateTime(2024, 07, 11, 08, 15, 00),
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Proceso,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Proceso,
                     IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f"
                 },
                 new AtencionViajero
@@ -485,7 +486,7 @@ namespace Dviaje.DataAccess.Data
                     Asunto = "Retraso en el Servicio de Traslado al Aeropuerto",
                     FechaRespuesta = new DateTime(2024, 07, 23, 10, 30, 00),
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Proceso,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Proceso,
                     IdUsuario = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
                 },
                 new AtencionViajero
@@ -495,7 +496,7 @@ namespace Dviaje.DataAccess.Data
                     Descripcion = "Me gustaría saber si hay disponibilidad de tours privados para familias en agosto de 2024 y cuáles serían las opciones y precios.",
                     Asunto = "Consulta sobre Disponibilidad de Tours Privados para Familias",
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
                     IdUsuario = "9cd842af-b711-44cc-aa5e-3863e3c30b76"
                 },
                 new AtencionViajero
@@ -505,7 +506,7 @@ namespace Dviaje.DataAccess.Data
                     Descripcion = "Me gustaría proponer una mejora en su aplicación móvil. Sería útil poder descargar itinerarios y mapas para usarlos sin conexión.",
                     Asunto = "Sugerencia para Mejorar la Aplicación Móvil",
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
                     IdUsuario = "c654adef-5f0c-48e6-946a-52706f8ac520"
                 },
                 new AtencionViajero
@@ -515,7 +516,7 @@ namespace Dviaje.DataAccess.Data
                     Descripcion = "No recibí el correo de confirmación para mi reserva del tour de playa el 15 de julio de 2024. Adjunto el recibo de pago como comprobante.",
                     Asunto = "Falta de Confirmación de Reserva para Tour de Playa",
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Reclamo,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
                     IdUsuario = "8142c33b-ee02-4a13-b0c1-1e941387433d"
                 },
                 new AtencionViajero
@@ -525,13 +526,14 @@ namespace Dviaje.DataAccess.Data
                     Descripcion = "Quisiera expresar mi satisfacción por el excelente servicio recibido durante el tour cultural el 3 de julio de 2024. La organización fue impecable y la guía muy conocedora.",
                     Asunto = "Agradecimiento por Tour Cultural",
                     AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
-                    AtencionViajeroPrioridad = AtencionViajeroPrioridad.Pendiente,
+                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
                     IdUsuario = "39e10980-4df3-494a-bbe7-410e105f6551"
                 }
             );
-
+            */
 
             // Registros de Adjunto.
+            /*
             modelBuilder.Entity<Adjunto>().HasData(
                 new Adjunto
                 {
@@ -618,7 +620,7 @@ namespace Dviaje.DataAccess.Data
                     IdAtencion = 9,
                 }
             );
-
+            */
 
             // Registros de Verificado.
             modelBuilder.Entity<Verificado>().HasData(
