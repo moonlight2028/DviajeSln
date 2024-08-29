@@ -10,6 +10,7 @@ namespace Dviaje.Models
 
 
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime Fecha { get; set; }
 
 

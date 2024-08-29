@@ -1,6 +1,6 @@
 ﻿namespace Dviaje.Models.VM
 {
-    public class ResenasTarjetaVM
+    public class ResenaTarjetaVM
     {
     }
 }

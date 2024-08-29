@@ -14,7 +14,17 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-        public Task<List<ResenasTarjetaVM>>? ObtenerResenasAsync(int idPublicacion, int? elementoPorPagina = null, int paginaActual = 0)
+        public Task<List<ResenaTarjetaVM>>? ObtenerResenasAsync(int idPublicacion, int? elementoPorPagina = null, int paginaActual = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ResenaTarjetaVM>>? ObtenerMisResenasAsync(int idUsuario, int? elementoPorPagina = null, int paginaActual = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ResenaDispobibleTarjetaVM>>? ObtenerMisResenasDisponiblesAsync(int idUsuario, int? elementoPorPagina = null, int paginaActual = 0)
         {
             throw new NotImplementedException();
         }

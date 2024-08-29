@@ -20,5 +20,20 @@ namespace Dviaje.Areas.Turista.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ActionName("Favorito")]
+        public IActionResult CrearFavorito(int? idPublicacion)
+        {
+            return Ok();
+        }
+
+        [HttpDelete]
+        [ActionName("Favorito")]
+        public IActionResult EliminarFavorito(int? idPublicacion)
+        {
+            return Ok();
+        }
+
     }
 }

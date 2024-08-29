@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
 {
@@ -10,6 +9,7 @@ namespace Dviaje.Models
 
 
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime FechaAtencion { get; set; }
 
 
@@ -24,13 +24,6 @@ namespace Dviaje.Models
 
         [Required]
         public AtencionViajeroEstado AtencionViajeroEstado { get; set; }
-
-
-        public string? IdUsuario { get; set; }
-
-
-        [ForeignKey("IdUsuario")]
-        public Usuario? Usuario { get; set; }
 
 
         // Propiedades de navegación

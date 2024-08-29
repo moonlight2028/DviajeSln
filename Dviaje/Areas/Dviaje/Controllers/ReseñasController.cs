@@ -16,7 +16,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        public IActionResult Reseñas(int? idPublicacion, int? idPagina)
+        public IActionResult Reseñas(int? idPublicacion, int? paginaActual)
         {
             return View();
         }

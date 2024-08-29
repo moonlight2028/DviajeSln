@@ -14,6 +14,7 @@ namespace Dviaje.DataAccess.Data
         public DbSet<Restriccion> Restricciones { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<AtencionViajero> AtencionViajeros { get; set; }
+        public DbSet<Mensaje> Mensajes { get; set; }
         public DbSet<Adjunto> Adjuntos { get; set; }
         public DbSet<Verificado> Verificados { get; set; }
         public DbSet<Publicacion> Publicaciones { get; set; }
@@ -384,6 +385,83 @@ namespace Dviaje.DataAccess.Data
             );
 
 
+            // Registro de Moderadores
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario
+                {
+                    Id = "51503d52-0841-49c0-a737-0e7a4c624f16",
+                    Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "Carlos",
+                    NormalizedUserName = "CARLOS",
+                    Email = "carlosModerador@gmail.com",
+                    NormalizedEmail = "CARLOSMODERADOR@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumber = "3159725596",
+                    PhoneNumberConfirmed = true
+                },
+                new Usuario
+                {
+                    Id = "df48dcf8-198f-4c4a-878c-d50e6eb0cf7a",
+                    Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "Maria",
+                    NormalizedUserName = "MARIA",
+                    Email = "mariaModerador@gmail.com",
+                    NormalizedEmail = "MARIAMODERADOR@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumber = "3159725597",
+                    PhoneNumberConfirmed = true
+                },
+                new Usuario
+                {
+                    Id = "f4613409-a53e-446d-854d-db0f9d652864",
+                    Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "Jorge",
+                    NormalizedUserName = "JORGE",
+                    Email = "jorgeModerador@gmail.com",
+                    NormalizedEmail = "JORGEMODERADOR@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumber = "3159725598",
+                    PhoneNumberConfirmed = true
+                },
+                new Usuario
+                {
+                    Id = "ea4e325c-b58a-47e4-8c29-f69bb0d5b7e8",
+                    Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "Ana",
+                    NormalizedUserName = "ANA",
+                    Email = "anaModerador@gmail.com",
+                    NormalizedEmail = "ANAMODERADOR@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumber = "3159725599",
+                    PhoneNumberConfirmed = true
+                },
+                new Usuario
+                {
+                    Id = "d88d60a8-a9c5-484a-9c1c-af2e5d3447a0",
+                    Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "Luis",
+                    NormalizedUserName = "LUIS",
+                    Email = "luisModerador@gmail.com",
+                    NormalizedEmail = "LUISMODERADOR@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumber = "3159725600",
+                    PhoneNumberConfirmed = true
+                },
+                new Usuario
+                {
+                    Id = "fd0953f0-b46b-4070-9958-4a841eba3af7",
+                    Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "Sofia",
+                    NormalizedUserName = "SOFIA",
+                    Email = "sofiaModerador@gmail.com",
+                    NormalizedEmail = "SOFIAMODERADOR@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumber = "3159725601",
+                    PhoneNumberConfirmed = true
+                }
+            );
+
+
             // Asignación rol Turista a Aliados.
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> { UserId = "01bfd429-16ea-44b3-902c-794e2c78dfa7", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
@@ -414,7 +492,62 @@ namespace Dviaje.DataAccess.Data
             );
 
 
+            // Asignación rol Moderador a Moderadores.
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = "51503d52-0841-49c0-a737-0e7a4c624f16", RoleId = "4751f532-04d5-497f-b48d-b9e26bcffe6f" },
+                new IdentityUserRole<string> { UserId = "df48dcf8-198f-4c4a-878c-d50e6eb0cf7a", RoleId = "4751f532-04d5-497f-b48d-b9e26bcffe6f" },
+                new IdentityUserRole<string> { UserId = "f4613409-a53e-446d-854d-db0f9d652864", RoleId = "4751f532-04d5-497f-b48d-b9e26bcffe6f" },
+                new IdentityUserRole<string> { UserId = "ea4e325c-b58a-47e4-8c29-f69bb0d5b7e8", RoleId = "4751f532-04d5-497f-b48d-b9e26bcffe6f" },
+                new IdentityUserRole<string> { UserId = "d88d60a8-a9c5-484a-9c1c-af2e5d3447a0", RoleId = "4751f532-04d5-497f-b48d-b9e26bcffe6f" },
+                new IdentityUserRole<string> { UserId = "fd0953f0-b46b-4070-9958-4a841eba3af7", RoleId = "4751f532-04d5-497f-b48d-b9e26bcffe6f" }
+            );
+
+
             // Registros de AtencionViajero.
+            modelBuilder.Entity<AtencionViajero>().HasData(
+                new AtencionViajero
+                {
+                    IdAtencion = 1,
+                    FechaAtencion = new DateTime(2024, 07, 25, 10, 30, 50),
+                    Asunto = "Queja por Servicio de Visita Guiada Retrasada el 25 de Julio",
+                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
+                    AtencionViajeroEstado = AtencionViajeroEstado.Completado,
+                }
+            );
+
+
+            // Registros de Mensajes.
+            modelBuilder.Entity<Mensaje>().HasData(
+                new Mensaje
+                {
+                    IdMensaje = 1,
+                    Fecha = new DateTime(2024, 07, 25, 10, 30, 50),
+                    MensajeDescripcion = "Me gustaría presentar una queja sobre el servicio recibido el pasado 25 de julio de 2024 a través de su plataforma de turismo. Ese día, tenía programada una visita guiada para las 10:00 a.m. en el centro histórico, pero la guía no llegó hasta las 11:30 a.m., sin ninguna explicación por parte del equipo de soporte. Además, la atención recibida fue poco profesional, ya que la guía no pudo responder adecuadamente a mis preguntas sobre los lugares visitados. Agradecería una revisión de este caso y una explicación sobre lo ocurrido, así como las medidas que se tomarán para evitar que situaciones similares se repitan en el futuro. /n Adjunto capturas de pantalla de los correos de confirmación de mi reserva y del pago realizado como referencia.",
+                    IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7",
+                    IdAtencionViajero = 1
+                },
+                new Mensaje
+                {
+                    IdMensaje = 2,
+                    Fecha = new DateTime(2024, 07, 26, 10, 30, 50),
+                    MensajeDescripcion = "Gracias por comunicarse con nosotros y por informarnos sobre su experiencia con nuestro servicio el 25 de julio de 2024. Lamentamos sinceramente los inconvenientes que experimentó durante su visita guiada y cualquier insatisfacción que esto le haya causado. /n Hemos revisado su caso y constatamos que hubo un problema de programación inesperado que retrasó la llegada de la guía. Apreciamos su paciencia y comprensión en esta situación. Hemos tomado medidas para mejorar nuestros procesos de planificación y comunicación con el equipo de guías para asegurarnos de que este tipo de incidentes no se repitan. /n Además, como gesto de disculpa, nos gustaría ofrecerle un reembolso completo del costo de su reserva y un descuento del 20% en su próxima visita con nosotros. Un representante de nuestro equipo se pondrá en contacto con usted en breve para gestionar el reembolso. /n Gracias por su comprensión y por darnos la oportunidad de corregir este error. Valoramos mucho su opinión y esperamos poder servirle mejor en el futuro.",
+                    IdUsuario = "fd0953f0-b46b-4070-9958-4a841eba3af7",
+                    IdAtencionViajero = 1
+                }
+            );
+
+
+            // Registros de Adjuntos.
+            modelBuilder.Entity<Adjunto>().HasData(
+                new Adjunto
+                {
+                    IdAdjunto = 1,
+                    RutaAdjunto = "https://DViaje.com/adjuntos/queja_tourrtt.jpg",
+                    IdMensaje = 1,
+                }
+            );
+
+
             /*
             modelBuilder.Entity<AtencionViajero>().HasData(
                 new AtencionViajero
@@ -624,103 +757,103 @@ namespace Dviaje.DataAccess.Data
 
             // Registros de Verificado.
             modelBuilder.Entity<Verificado>().HasData(
-                new Verificado
-                {
-                    IdVerificado = 1,
-                    FechaSolicitud = new DateTime(2024, 07, 08, 08, 20, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 15, 10, 10, 54),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
-                },
-                new Verificado
-                {
-                    IdVerificado = 2,
-                    FechaSolicitud = new DateTime(2024, 07, 10, 09, 00, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 18, 11, 30, 00),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = "9cd842af-b711-44cc-aa5e-3863e3c30b76"
-                },
-                new Verificado
-                {
-                    IdVerificado = 3,
-                    FechaSolicitud = new DateTime(2024, 07, 12, 14, 45, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 20, 16, 25, 00),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520"
-                },
-                new Verificado
-                {
-                    IdVerificado = 4,
-                    FechaSolicitud = new DateTime(2024, 07, 15, 10, 30, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 22, 12, 00, 00),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = "8142c33b-ee02-4a13-b0c1-1e941387433d"
-                },
-                new Verificado
-                {
-                    IdVerificado = 5,
-                    FechaSolicitud = new DateTime(2024, 07, 18, 11, 00, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 25, 14, 15, 00),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551"
-                },
-                new Verificado
-                {
-                    IdVerificado = 6,
-                    FechaSolicitud = new DateTime(2024, 07, 20, 09, 15, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 27, 10, 30, 00),
-                    VerificadoEstado = VerificadoEstado.Aprobado,
-                    IdAliado = "c3733288-b354-445d-95da-4c655c3220b3"
-                },
-                new Verificado
-                {
-                    IdVerificado = 7,
-                    FechaSolicitud = new DateTime(2024, 07, 22, 13, 20, 00),
-                    FechaRespuesta = new DateTime(2024, 07, 29, 15, 45, 00),
-                    VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = "4c03648f-7727-4e5c-b096-fcbe3b9e3059"
-                },
-                new Verificado
-                {
-                    IdVerificado = 8,
-                    FechaSolicitud = new DateTime(2024, 07, 25, 08, 00, 00),
-                    FechaRespuesta = new DateTime(2024, 08, 01, 09, 30, 00),
-                    VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b"
-                },
-                new Verificado
-                {
-                    IdVerificado = 9,
-                    FechaSolicitud = new DateTime(2024, 07, 28, 10, 45, 00),
-                    FechaRespuesta = new DateTime(2024, 08, 04, 12, 00, 00),
-                    VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4"
-                },
-                new Verificado
-                {
-                    IdVerificado = 10,
-                    FechaSolicitud = new DateTime(2024, 07, 30, 11, 30, 00),
-                    FechaRespuesta = new DateTime(2024, 08, 06, 14, 15, 00),
-                    VerificadoEstado = VerificadoEstado.Rechazado,
-                    IdAliado = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f"
-                },
-                new Verificado
-                {
-                    IdVerificado = 11,
-                    FechaSolicitud = new DateTime(2024, 08, 03, 09, 00, 00),
-                    FechaRespuesta = null,
-                    VerificadoEstado = VerificadoEstado.Pendiente,
-                    IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4"
-                },
-                new Verificado
-                {
-                    IdVerificado = 12,
-                    FechaSolicitud = new DateTime(2024, 08, 03, 09, 00, 00),
-                    FechaRespuesta = null,
-                    VerificadoEstado = VerificadoEstado.Pendiente,
-                    IdAliado = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f"
-                }
-            );
+                            new Verificado
+                            {
+                                IdVerificado = 1,
+                                FechaSolicitud = new DateTime(2024, 07, 08, 08, 20, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 15, 10, 10, 54),
+                                VerificadoEstado = VerificadoEstado.Aprobado,
+                                IdAliado = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 2,
+                                FechaSolicitud = new DateTime(2024, 07, 10, 09, 00, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 18, 11, 30, 00),
+                                VerificadoEstado = VerificadoEstado.Aprobado,
+                                IdAliado = "9cd842af-b711-44cc-aa5e-3863e3c30b76"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 3,
+                                FechaSolicitud = new DateTime(2024, 07, 12, 14, 45, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 20, 16, 25, 00),
+                                VerificadoEstado = VerificadoEstado.Aprobado,
+                                IdAliado = "c654adef-5f0c-48e6-946a-52706f8ac520"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 4,
+                                FechaSolicitud = new DateTime(2024, 07, 15, 10, 30, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 22, 12, 00, 00),
+                                VerificadoEstado = VerificadoEstado.Aprobado,
+                                IdAliado = "8142c33b-ee02-4a13-b0c1-1e941387433d"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 5,
+                                FechaSolicitud = new DateTime(2024, 07, 18, 11, 00, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 25, 14, 15, 00),
+                                VerificadoEstado = VerificadoEstado.Aprobado,
+                                IdAliado = "39e10980-4df3-494a-bbe7-410e105f6551"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 6,
+                                FechaSolicitud = new DateTime(2024, 07, 20, 09, 15, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 27, 10, 30, 00),
+                                VerificadoEstado = VerificadoEstado.Aprobado,
+                                IdAliado = "c3733288-b354-445d-95da-4c655c3220b3"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 7,
+                                FechaSolicitud = new DateTime(2024, 07, 22, 13, 20, 00),
+                                FechaRespuesta = new DateTime(2024, 07, 29, 15, 45, 00),
+                                VerificadoEstado = VerificadoEstado.Rechazado,
+                                IdAliado = "4c03648f-7727-4e5c-b096-fcbe3b9e3059"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 8,
+                                FechaSolicitud = new DateTime(2024, 07, 25, 08, 00, 00),
+                                FechaRespuesta = new DateTime(2024, 08, 01, 09, 30, 00),
+                                VerificadoEstado = VerificadoEstado.Rechazado,
+                                IdAliado = "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 9,
+                                FechaSolicitud = new DateTime(2024, 07, 28, 10, 45, 00),
+                                FechaRespuesta = new DateTime(2024, 08, 04, 12, 00, 00),
+                                VerificadoEstado = VerificadoEstado.Rechazado,
+                                IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 10,
+                                FechaSolicitud = new DateTime(2024, 07, 30, 11, 30, 00),
+                                FechaRespuesta = new DateTime(2024, 08, 06, 14, 15, 00),
+                                VerificadoEstado = VerificadoEstado.Rechazado,
+                                IdAliado = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 11,
+                                FechaSolicitud = new DateTime(2024, 08, 03, 09, 00, 00),
+                                FechaRespuesta = null,
+                                VerificadoEstado = VerificadoEstado.Pendiente,
+                                IdAliado = "96067e6f-c29b-46ab-9ba1-18ec7b6534f4"
+                            },
+                            new Verificado
+                            {
+                                IdVerificado = 12,
+                                FechaSolicitud = new DateTime(2024, 08, 03, 09, 00, 00),
+                                FechaRespuesta = null,
+                                VerificadoEstado = VerificadoEstado.Pendiente,
+                                IdAliado = "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f"
+                            }
+                        );
 
 
             // Registros de Publicacion.
