@@ -1,6 +1,7 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -40,10 +41,24 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(paginatedResenas);
         }
 
-        public IActionResult MisReseñas(int? paginaActual)
+        public async Task<IActionResult> MisReseñas(int? paginaActual)
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var resenas = await _unitOfWork.ResenaRepository.ObtenerMisResenasAsync(userId, paginaActual ?? 1, 10);
+
+            if (resenas == null || !resenas.Any())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(resenas);
         }
+
 
         public IActionResult Crear(int reservaId)
         {
