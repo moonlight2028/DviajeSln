@@ -42,6 +42,8 @@ namespace Dviaje.DataAccess.Repository
                 consulta = consulta
                     .Skip((paginaActual - 1) * elementosPorPagina.Value)
                     .Take(elementosPorPagina.Value);
+                paginaActual = paginaActual < 1 ? 1 : paginaActual;
+
             }
 
             return await consulta.ToListAsync();
@@ -74,6 +76,8 @@ namespace Dviaje.DataAccess.Repository
                 consulta = consulta
                     .Skip((paginaActual - 1) * elementosPorPagina.Value)
                     .Take(elementosPorPagina.Value);
+                paginaActual = paginaActual < 1 ? 1 : paginaActual;
+
             }
 
             return await consulta.ToListAsync();
