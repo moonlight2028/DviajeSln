@@ -24,7 +24,7 @@ namespace Dviaje.Areas.Turista.Controllers
 
             var resenas = await _unitOfWork.ResenaRepository.ObtenerResenasAsync(idPublicacion);
 
-            if (resenas == null)
+            if (resenas == null || !resenas.Any())
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -49,16 +49,20 @@ namespace Dviaje.Areas.Turista.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var resenas = await _unitOfWork.ResenaRepository.ObtenerMisResenasAsync(userId, paginaActual ?? 1, 10);
+            var resenas = await _unitOfWork.ResenaRepository.ObtenerMisResenasAsync(userId, 10, paginaActual ?? 1);
 
             if (resenas == null || !resenas.Any())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SinReseñas");
             }
 
             return View(resenas);
         }
 
+        public IActionResult SinReseñas()
+        {
+            return View();
+        }
 
         public IActionResult Crear(int reservaId)
         {
@@ -100,7 +104,7 @@ namespace Dviaje.Areas.Turista.Controllers
         [ActionName("MeGusta")]
         public async Task<IActionResult> EliminarMeGusta(int id)
         {
-
+            // Implementar la lógica de eliminación de "Me gusta"
             return Ok();
         }
     }
