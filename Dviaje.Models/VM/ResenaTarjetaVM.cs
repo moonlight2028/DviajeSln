@@ -3,7 +3,6 @@
     public class ResenaTarjetaVM
     {
 
-      
 
         public int IdResena {  get; set; }
 
@@ -20,10 +19,6 @@
         public string? AvatarUrl { get; set; }
 
         
-
-
-
-
 
     }
 }
