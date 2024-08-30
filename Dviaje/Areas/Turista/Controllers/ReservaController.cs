@@ -17,7 +17,6 @@ namespace Dviaje.Areas.Turista.Controllers
             _envioEmail = envioEmail;
         }
 
-        // GET: Turista/Reserva/Reserva
         public async Task<IActionResult> Reserva(int? idPublicacion)
         {
             if (idPublicacion == null)

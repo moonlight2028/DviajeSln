@@ -3,9 +3,6 @@ using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Dviaje.DataAccess.Repository
 {
@@ -85,6 +82,11 @@ namespace Dviaje.DataAccess.Repository
         public void Update(Resena resena)
         {
             _db.Resenas.Update(resena);
+        }
+
+        public Task<bool> ValiadacionUsuarioResena(string idUsuario, int idReserva)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -45,6 +45,8 @@ namespace Dviaje.DataAccess.Repository
 
         public IAliadoRepository AliadoRepository { get; private set; }
 
+        public IResenaMeGustaRepository ResenaMeGustaRepository { get; private set; }
+
         // Test usuarios
         public IUsuariosTest UsuariosTest { get; private set; }
 
@@ -90,6 +92,8 @@ namespace Dviaje.DataAccess.Repository
             FechaNoDisponibleRepository = new FechaNoDiponibleRepository(_db);
 
             AliadoRepository = new AliadoRepository(_db);
+
+            ResenaMeGustaRepository = new ResenaMeGustaRepository(_db);
 
             //Test usuairos
             UsuariosTest = new UsuarioTest(_db);

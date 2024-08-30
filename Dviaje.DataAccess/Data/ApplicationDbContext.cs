@@ -28,6 +28,7 @@ namespace Dviaje.DataAccess.Data
         public DbSet<PublicacionCategoria> PublicacionesCategorias { get; set; }
         public DbSet<FechaNoDisponible> FechasNoDisponibles { get; set; }
         public DbSet<ServicioAdicional> ServiciosAdicionales { get; set; }
+        public DbSet<ResenaMeGusta> ResenasMeGusta { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
@@ -46,6 +47,9 @@ namespace Dviaje.DataAccess.Data
             modelBuilder.Entity<Servicio>().HasIndex(s => s.NombreServicio).IsUnique();
             modelBuilder.Entity<Restriccion>().HasIndex(r => r.NombreRestriccion).IsUnique();
             modelBuilder.Entity<Categoria>().HasIndex(c => c.NombreCategoria).IsUnique();
+            modelBuilder.Entity<ResenaMeGusta>()
+                .HasIndex(r => new { r.IdResena, r.IdUsuario })
+                .IsUnique();
 
 
             // Registro de Datos

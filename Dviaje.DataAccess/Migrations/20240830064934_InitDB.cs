@@ -570,6 +570,32 @@ namespace Dviaje.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ResenasMeGusta",
+                columns: table => new
+                {
+                    IdResenaMeGusta = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdResena = table.Column<int>(type: "integer", nullable: false),
+                    IdUsuario = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResenasMeGusta", x => x.IdResenaMeGusta);
+                    table.ForeignKey(
+                        name: "FK_ResenasMeGusta_AspNetUsers_IdUsuario",
+                        column: x => x.IdUsuario,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ResenasMeGusta_Resenas_IdResena",
+                        column: x => x.IdResena,
+                        principalTable: "Resenas",
+                        principalColumn: "IdResena",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -584,54 +610,54 @@ namespace Dviaje.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "NumeroPublicaciones", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
-                values: new object[] { "01bfd429-16ea-44b3-902c-794e2c78dfa7", 0, 0, "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dHVyaXNtfGVufDB8fDB8fHwy", "b7360f27-5fb3-4eb7-ab75-f76a9c1c18c8", "Carrera 7 # 45-23", "Aliado", "info@colombiaadventure.com", true, false, null, "INFO@COLOMBIAADVENTURE.COM", "COLOMBIAADV", 4, null, "3216549870", true, "Colombia Adventure", "f7f7fc0d-370e-478d-ba44-e5b8c51f8fae", "www.colombiaadventure.com", false, "ColombiaAdv", true });
+                values: new object[] { "01bfd429-16ea-44b3-902c-794e2c78dfa7", 0, 0, "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dHVyaXNtfGVufDB8fDB8fHwy", "f9e343a6-2577-4978-a1b0-b072a529a3c8", "Carrera 7 # 45-23", "Aliado", "info@colombiaadventure.com", true, false, null, "INFO@COLOMBIAADVENTURE.COM", "COLOMBIAADV", 4, null, "3216549870", true, "Colombia Adventure", "8c5b4d7e-af69-4130-ab51-014990bc358a", "www.colombiaadventure.com", false, "ColombiaAdv", true });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 0, "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww", "f8221964-fd26-4c1a-a06b-50742f7bfb65", "Usuario", "andres@gmail.com", true, false, null, "ANDRES@GMAIL.COM", "ANDRES", null, "3159725595", true, "976f1946-44e3-4c5f-ad7d-b7a5903293ac", false, "Andres" },
-                    { "13825fa6-5c27-4303-ab17-6e13aac24c12", 0, "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww", "b2ea5323-a603-4182-b390-6ab160c06d0e", "Usuario", "fernando@yahoo.com", true, false, null, "FERNANDO@YAHOO.COM", "FERNANDO", null, "3198765432", true, "b739ecff-bf06-4265-84ae-145f448de40d", false, "Fernando" },
-                    { "1c8e89f7-7db6-4cd5-907d-f01b058cd784", 0, "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww", "272d500a-9723-4263-8323-b9d2c07412e5", "Usuario", "isabella@gmail.com", true, false, null, "ISABELLA@GMAIL.COM", "ISABELLA", null, "3179876543", true, "18203354-7a43-4954-9c95-f0d69b4200fa", false, "Isabella" },
-                    { "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", 0, "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww", "bc7f7f75-5c46-43eb-9109-dc9b67d52945", "Usuario", "ana@hotmail.com", true, false, null, "ANA@HOTMAIL.COM", "ANA", null, "3149876543", true, "a6523cc9-67ae-4e1e-9d92-f90a6db8a294", false, "Ana" },
-                    { "26cfe5c9-00f8-411e-b589-df3405a8b798", 0, "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww", "ee590abc-4a88-487a-b1f9-519e8eb0a422", "Usuario", "maria@gmail.com", true, false, null, "MARIA@GMAIL.COM", "MARIA", null, "3101234567", true, "ac544ddc-1ef6-4a81-9c48-ef7d9282c212", false, "Maria" },
-                    { "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", 0, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww", "29fc78ac-fc4e-4009-9877-d00b82eedb6b", "Usuario", "carlos@yahoo.com", true, false, null, "CARLOS@YAHOO.COM", "CARLOS", null, "3189876543", true, "f0db9279-9ec9-42b6-9dd6-5d78aa2680ae", false, "Carlos" },
-                    { "2e59aa62-61bd-4c8d-9a3d-13f461696eab", 0, "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "f9b264f2-f629-43b8-9298-bdb33333e7e0", "Usuario", "jorge@outlook.com", true, false, null, "JORGE@OUTLOOK.COM", "JORGE", null, "3151234567", true, "4b875146-2bcb-4352-bbb1-46cbc1568f90", false, "Jorge" }
+                    { "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", 0, "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww", "fe5ee8d5-6abf-4f53-996d-9a28b8f750f6", "Usuario", "andres@gmail.com", true, false, null, "ANDRES@GMAIL.COM", "ANDRES", null, "3159725595", true, "ad17de56-2062-41e6-bb7a-3f2a01a4516c", false, "Andres" },
+                    { "13825fa6-5c27-4303-ab17-6e13aac24c12", 0, "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww", "d55c1f93-5eba-4adf-a346-a3a2573e48a7", "Usuario", "fernando@yahoo.com", true, false, null, "FERNANDO@YAHOO.COM", "FERNANDO", null, "3198765432", true, "3fada490-919d-427d-8691-426012260bf7", false, "Fernando" },
+                    { "1c8e89f7-7db6-4cd5-907d-f01b058cd784", 0, "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww", "2f07fafa-6bef-4973-b5a2-1653728fd31e", "Usuario", "isabella@gmail.com", true, false, null, "ISABELLA@GMAIL.COM", "ISABELLA", null, "3179876543", true, "b0dbac05-ea00-4385-9f44-5bf374ed8223", false, "Isabella" },
+                    { "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", 0, "https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fHww", "7300c8f9-84fc-49e1-b238-dd4d4f440047", "Usuario", "ana@hotmail.com", true, false, null, "ANA@HOTMAIL.COM", "ANA", null, "3149876543", true, "6e115365-65d4-4db4-ba15-07dc310845c5", false, "Ana" },
+                    { "26cfe5c9-00f8-411e-b589-df3405a8b798", 0, "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww", "29fd4643-ce3f-4984-9932-6cca55d43c8d", "Usuario", "maria@gmail.com", true, false, null, "MARIA@GMAIL.COM", "MARIA", null, "3101234567", true, "51e9836e-fd14-4b41-aafe-17031a29d5b5", false, "Maria" },
+                    { "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", 0, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww", "d3686b99-9c70-4123-879e-07b74df1cc67", "Usuario", "carlos@yahoo.com", true, false, null, "CARLOS@YAHOO.COM", "CARLOS", null, "3189876543", true, "d633bf62-4ddd-450b-8c50-e69e79b22cb1", false, "Carlos" },
+                    { "2e59aa62-61bd-4c8d-9a3d-13f461696eab", 0, "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "4bc51b04-4e0d-44dd-a85d-de729a2a654b", "Usuario", "jorge@outlook.com", true, false, null, "JORGE@OUTLOOK.COM", "JORGE", null, "3151234567", true, "c8a36ce3-d28c-47d0-a21d-c4fa5d079b7f", false, "Jorge" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "NumeroPublicaciones", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
-                values: new object[] { "39e10980-4df3-494a-bbe7-410e105f6551", 0, 0, "https://images.unsplash.com/photo-1543746746-46047c4f4bb0?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVyaXNtfGVufDB8fDB8fHwy", "f5117f50-8e4e-4c91-a87d-c154471cc011", "Centro Histórico, Carrera 2 # 10-55", "Aliado", "info@santamartaadventures.com", true, false, null, "INFO@SANTAMARTAADVENTURES.COM", "SANTAMARTAADV", 48, null, "3154321098", true, "Santa Marta Adventures", "117b1f01-ba16-40a1-aaaa-5137ff1792eb", "www.santamartaadventures.com", false, "SantaMartaAdv", true });
+                values: new object[] { "39e10980-4df3-494a-bbe7-410e105f6551", 0, 0, "https://images.unsplash.com/photo-1543746746-46047c4f4bb0?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVyaXNtfGVufDB8fDB8fHwy", "8e6d2a8b-b4f0-4c5c-9f91-03578c89428d", "Centro Histórico, Carrera 2 # 10-55", "Aliado", "info@santamartaadventures.com", true, false, null, "INFO@SANTAMARTAADVENTURES.COM", "SANTAMARTAADV", 48, null, "3154321098", true, "Santa Marta Adventures", "9e9a34f9-7a4d-44cd-a322-9382fe02e72c", "www.santamartaadventures.com", false, "SantaMartaAdv", true });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3a895383-b546-4693-8246-924a9fc5289f", 0, "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww", "ab74896e-8500-4ee1-9a4d-56b0d46658ca", "Usuario", "luis@outlook.com", true, false, null, "LUIS@OUTLOOK.COM", "LUIS", null, "3112345678", true, "652fe3ff-726f-48ff-b1bf-6d1935d29490", false, "Luis" });
+                values: new object[] { "3a895383-b546-4693-8246-924a9fc5289f", 0, "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww", "ef5c6c56-8836-45ce-b959-41c03a492540", "Usuario", "luis@outlook.com", true, false, null, "LUIS@OUTLOOK.COM", "LUIS", null, "3112345678", true, "e439a694-deab-4636-bd4c-e4e5af118fae", false, "Luis" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "NumeroPublicaciones", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
-                values: new object[] { "4c03648f-7727-4e5c-b096-fcbe3b9e3059", 0, 0, "https://images.unsplash.com/photo-1492294112339-ea831887e5d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVyaXNtfGVufDB8fDB8fHwy", "f0487d9d-bfb2-43de-b33c-c786b442745f", "Vía 40 # 72-20", "Aliado", "hello@barranquillaescapes.com", true, false, null, "HELLO@BARRANQUILLAESCAPES.COM", "BQUILLAESCAPES", 7, null, "3140987654", true, "Barranquilla Escapes", "0b606600-97de-47c3-bacf-20c63667f172", "www.barranquillaescapes.com", false, "BquillaEscapes", false });
+                values: new object[] { "4c03648f-7727-4e5c-b096-fcbe3b9e3059", 0, 0, "https://images.unsplash.com/photo-1492294112339-ea831887e5d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVyaXNtfGVufDB8fDB8fHwy", "5e3607b9-5b39-4827-b8c8-d8ddd6826090", "Vía 40 # 72-20", "Aliado", "hello@barranquillaescapes.com", true, false, null, "HELLO@BARRANQUILLAESCAPES.COM", "BQUILLAESCAPES", 7, null, "3140987654", true, "Barranquilla Escapes", "882877d3-4cc7-47f1-b0fc-11428f62b4ce", "www.barranquillaescapes.com", false, "BquillaEscapes", false });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "51503d52-0841-49c0-a737-0e7a4c624f16", 0, "crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww", "5ca33740-306c-4df1-851a-d28041e81691", "Usuario", "carlosModerador@gmail.com", true, false, null, "CARLOSMODERADOR@GMAIL.COM", "CARLOSMODERADOR", null, "3159725596", true, "f4af1f2e-5966-4b43-bbe4-495d86e1629d", false, "CarlosModerador" });
+                values: new object[] { "51503d52-0841-49c0-a737-0e7a4c624f16", 0, "crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww", "4fe5c8d6-dc92-460d-9d41-08ff14260472", "Usuario", "carlosModerador@gmail.com", true, false, null, "CARLOSMODERADOR@GMAIL.COM", "CARLOSMODERADOR", null, "3159725596", true, "4c2e36ff-ee86-401a-9e54-a4f00878c786", false, "CarlosModerador" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AliadoEstado", "Aliado_Avatar", "ConcurrencyStamp", "Direccion", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "NumeroPublicaciones", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RazonSocial", "SecurityStamp", "SitioWeb", "TwoFactorEnabled", "UserName", "Verificado" },
                 values: new object[,]
                 {
-                    { "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f", 0, 0, "https://images.unsplash.com/photo-1532878056386-1e96eb5221ad?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "6118b491-adb5-4166-87f4-ae8cc6de8cb8", "Centro, Carrera 23 # 17-18", "Aliado", "contact@manizaleswonders.com", true, false, null, "CONTACT@MANIZALESWONDERS.COM", "MANIZALESWONDERS", 7, null, "3165432109", true, "Manizales Wonders", "a5daf38c-087c-4778-8568-72e97005ff2d", "www.manizaleswonders.com", false, "ManizalesWonders", false },
-                    { "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b", 0, 0, "https://images.unsplash.com/photo-1463839346397-8e9946845e6d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "d1d5e0f0-2769-41a0-8b8b-9082b30987ea", "Cabecera, Carrera 33 # 45-67", "Aliado", "support@bucaramangajourneys.com", true, false, null, "SUPPORT@BUCARAMANGAJOURNEYS.COM", "BUCARAJOURNEYS", 76, null, "3229876543", true, "Bucaramanga Journeys", "8425f530-b6d5-4704-9777-b14f9e55fa9b", "www.bucaramangajourneys.com", false, "BucaraJourneys", false },
-                    { "8142c33b-ee02-4a13-b0c1-1e941387433d", 0, 0, "https://images.unsplash.com/photo-1691225409811-a64942a0596a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHVyaXNtfGVufDB8fDB8fHwy", "163a3ab7-4114-4f7c-8b48-5c89c9692023", "Bocagrande, Avenida San Martín # 11-43", "Aliado", "support@cartagenagetaways.com", true, false, null, "SUPPORT@CARTAGENAGETAWAYS.COM", "CARTAGENAGETAWAYS", 478, null, "3176543210", true, "Cartagena Getaways", "59fc42b0-f92c-465f-b90a-a50dd8bf8c35", "www.cartagenagetaways.com", false, "CartagenaGetaways", true },
-                    { "96067e6f-c29b-46ab-9ba1-18ec7b6534f4", 0, 0, "https://images.unsplash.com/photo-1519998334409-c7c6b1147f65?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "cf813555-f25b-4804-95e4-1c703196be10", "Avenida Circunvalar # 18-10", "Aliado", "info@pereiratravels.com", true, false, null, "INFO@PEREIRATRAVELS.COM", "PEREIRATRAVELS", 3, null, "3107654321", true, "Pereira Travels", "5fcbb410-d3e9-4f65-ac14-7377cce54a28", "www.pereiratravels.com", false, "PereiraTravels", false },
-                    { "9cd842af-b711-44cc-aa5e-3863e3c30b76", 0, 0, "https://images.unsplash.com/photo-1678009859747-9f4620e0c355?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVyaXNtfGVufDB8fDB8fHwy", "45495929-be17-45e5-9f9d-a3a146fdb0c1", "Avenida 6 # 12-34", "Aliado", "contact@bogotatours.co", true, false, null, "CONTACT@BOGOTATOURS.CO", "BOGOTATOURS", 445, null, "3123456789", true, "Bogotá Tours", "a773a454-cb5c-4dce-a471-931dbd8d0d15", "www.bogotatours.co", false, "BogotaTours", true },
-                    { "c3733288-b354-445d-95da-4c655c3220b3", 0, 0, "https://images.unsplash.com/photo-1523345863760-5b7f3472d14f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dHVyaXNtfGVufDB8fDB8fHwy", "adb883d1-2d99-4fb5-8311-f45dc54dc9b8", "Barrio San Antonio, Carrera 10 # 5-32", "Aliado", "contact@caliexperiences.com", true, false, null, "CONTACT@CALIEXPERIENCES.COM", "CALIEXP", 8, null, "3132109876", true, "Cali Experiences", "f2c14a76-8822-4aa0-8ea0-5a80cdf2acb7", "www.caliexperiences.com", false, "CaliExp", true },
-                    { "c654adef-5f0c-48e6-946a-52706f8ac520", 0, 0, "https://images.unsplash.com/photo-1673213314908-5b1863e742d1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHVyaXNtfGVufDB8fDB8fHwy", "ac447e8a-94e3-4f2a-99c1-48889f4d24c4", "Calle 80 # 25-67", "Aliado", "hello@medellinexplore.com", true, false, null, "HELLO@MEDELLINEXPLORE.COM", "MEDELLINEXPLORE", 89, null, "3198765432", true, "Medellín Explore", "76c211c5-dbbf-4183-911e-8a297b9cabfd", "www.medellinexplore.com", false, "MedellinExplore", true }
+                    { "5cf9f86f-36db-4d17-8ec3-cad66cd7f10f", 0, 0, "https://images.unsplash.com/photo-1532878056386-1e96eb5221ad?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "2d1323cc-5e0a-44d6-87df-f567a1b29987", "Centro, Carrera 23 # 17-18", "Aliado", "contact@manizaleswonders.com", true, false, null, "CONTACT@MANIZALESWONDERS.COM", "MANIZALESWONDERS", 7, null, "3165432109", true, "Manizales Wonders", "3fca92c6-05c0-43bd-bdaf-8ded28dba045", "www.manizaleswonders.com", false, "ManizalesWonders", false },
+                    { "6e291ab8-a9b5-4a7a-afbc-bbbd71b6291b", 0, 0, "https://images.unsplash.com/photo-1463839346397-8e9946845e6d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "ffc360ab-38df-4500-80d8-68ee51e20e8a", "Cabecera, Carrera 33 # 45-67", "Aliado", "support@bucaramangajourneys.com", true, false, null, "SUPPORT@BUCARAMANGAJOURNEYS.COM", "BUCARAJOURNEYS", 76, null, "3229876543", true, "Bucaramanga Journeys", "561ac65c-094a-4ee2-8fbc-5de290cc30b6", "www.bucaramangajourneys.com", false, "BucaraJourneys", false },
+                    { "8142c33b-ee02-4a13-b0c1-1e941387433d", 0, 0, "https://images.unsplash.com/photo-1691225409811-a64942a0596a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHVyaXNtfGVufDB8fDB8fHwy", "da581c7b-5ad8-446d-9f54-e5965d01fa3a", "Bocagrande, Avenida San Martín # 11-43", "Aliado", "support@cartagenagetaways.com", true, false, null, "SUPPORT@CARTAGENAGETAWAYS.COM", "CARTAGENAGETAWAYS", 478, null, "3176543210", true, "Cartagena Getaways", "52ca61b4-6f9e-4bf5-af2d-db30b4abcec6", "www.cartagenagetaways.com", false, "CartagenaGetaways", true },
+                    { "96067e6f-c29b-46ab-9ba1-18ec7b6534f4", 0, 0, "https://images.unsplash.com/photo-1519998334409-c7c6b1147f65?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHR1cmlzbXxlbnwwfHwwfHx8Mg%3D%3D", "b981b3c4-7cf4-49fa-9674-5f2ab900123e", "Avenida Circunvalar # 18-10", "Aliado", "info@pereiratravels.com", true, false, null, "INFO@PEREIRATRAVELS.COM", "PEREIRATRAVELS", 3, null, "3107654321", true, "Pereira Travels", "9ae9e651-b3a2-4c07-bb95-953e1fbd95af", "www.pereiratravels.com", false, "PereiraTravels", false },
+                    { "9cd842af-b711-44cc-aa5e-3863e3c30b76", 0, 0, "https://images.unsplash.com/photo-1678009859747-9f4620e0c355?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVyaXNtfGVufDB8fDB8fHwy", "3049e617-b202-4acb-b8a2-3ea114e9d972", "Avenida 6 # 12-34", "Aliado", "contact@bogotatours.co", true, false, null, "CONTACT@BOGOTATOURS.CO", "BOGOTATOURS", 445, null, "3123456789", true, "Bogotá Tours", "699b7459-626b-4ea8-8eda-cc12c21e109c", "www.bogotatours.co", false, "BogotaTours", true },
+                    { "c3733288-b354-445d-95da-4c655c3220b3", 0, 0, "https://images.unsplash.com/photo-1523345863760-5b7f3472d14f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dHVyaXNtfGVufDB8fDB8fHwy", "d63b695e-5dac-4d46-a90f-0f63b3e0453b", "Barrio San Antonio, Carrera 10 # 5-32", "Aliado", "contact@caliexperiences.com", true, false, null, "CONTACT@CALIEXPERIENCES.COM", "CALIEXP", 8, null, "3132109876", true, "Cali Experiences", "3ce23e8b-5824-43d1-995e-52803ad9770f", "www.caliexperiences.com", false, "CaliExp", true },
+                    { "c654adef-5f0c-48e6-946a-52706f8ac520", 0, 0, "https://images.unsplash.com/photo-1673213314908-5b1863e742d1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHVyaXNtfGVufDB8fDB8fHwy", "55e83fcf-2c2f-4153-b124-4b03b4ad9c7a", "Calle 80 # 25-67", "Aliado", "hello@medellinexplore.com", true, false, null, "HELLO@MEDELLINEXPLORE.COM", "MEDELLINEXPLORE", 89, null, "3198765432", true, "Medellín Explore", "f8684ed6-5f17-479b-bcbf-81f279937834", "www.medellinexplore.com", false, "MedellinExplore", true }
                 });
 
             migrationBuilder.InsertData(
@@ -639,13 +665,13 @@ namespace Dviaje.DataAccess.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb", 0, "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "7b618fb0-5db3-4006-a6be-cb463a29affc", "Usuario", "gabriela@gmail.com", true, false, null, "GABRIELA@GMAIL.COM", "GABRIELA", null, "3169876543", true, "24834081-5efc-40ef-8a21-c320ef558e37", false, "Gabriela" },
-                    { "d88d60a8-a9c5-484a-9c1c-af2e5d3447a0", 0, "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww", "d8991888-e2ae-44cd-b543-73afe335d469", "Usuario", "luisModerador@gmail.com", true, false, null, "LUISMODERADOR@GMAIL.COM", "LUISMODERADOR", null, "3159725600", true, "e6135383-492a-4261-a969-2cec44f11871", false, "LuisModerador" },
-                    { "df48dcf8-198f-4c4a-878c-d50e6eb0cf7a", 0, "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww", "bc3561e6-4b18-48ca-a363-3af5d0b0d9c3", "Usuario", "mariaModerador@gmail.com", true, false, null, "MARIAMODERADOR@GMAIL.COM", "MARIAMODERADOR", null, "3159725597", true, "6f896bb8-f911-4720-b052-fe022a85b00c", false, "MariaModerador" },
-                    { "e4309639-4588-4553-8c14-5ce4426e0dd7", 0, "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww", "86780b2a-83de-48dc-a173-be9bdde29f3d", "Usuario", "sofia@hotmail.com", true, false, null, "SOFIA@HOTMAIL.COM", "SOFIA", null, "3123456789", true, "e83aa217-f3a2-49d8-a20c-c5a1d4becbe9", false, "Sofia" },
-                    { "ea4e325c-b58a-47e4-8c29-f69bb0d5b7e8", 0, "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww", "f7d1f4c3-b616-439f-90c9-b8343b513222", "Usuario", "anaModerador@gmail.com", true, false, null, "ANAMODERADOR@GMAIL.COM", "ANAMODERADOR", null, "3159725599", true, "5ca95f99-da61-4210-a9eb-041f8d5f5721", false, "AnaModerador" },
-                    { "f4613409-a53e-446d-854d-db0f9d652864", 0, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww", "70aa306e-fa93-4ecc-8d11-8b1f11f6d619", "Usuario", "jorgeModerador@gmail.com", true, false, null, "JORGEMODERADOR@GMAIL.COM", "JORGEMODERADOR", null, "3159725598", true, "2df8d3e6-5f0c-4e80-a391-f1965b381b47", false, "JorgeModerador" },
-                    { "fd0953f0-b46b-4070-9958-4a841eba3af7", 0, "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww", "6c1ea071-e240-4bf9-bd39-77fb265671ce", "Usuario", "sofiaModerador@gmail.com", true, false, null, "SOFIAMODERADOR@GMAIL.COM", "SOFIAMODERADOR", null, "3159725601", true, "49dc58cd-4574-453e-a233-047dd88e8e7b", false, "SofiaModerador" }
+                    { "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb", 0, "https://images.unsplash.com/photo-1706885093487-7eda37b48a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D", "abebd15f-3e72-481b-9def-26430fc80ff5", "Usuario", "gabriela@gmail.com", true, false, null, "GABRIELA@GMAIL.COM", "GABRIELA", null, "3169876543", true, "cbdca7c6-f036-453c-961c-7d6a8f75f5f3", false, "Gabriela" },
+                    { "d88d60a8-a9c5-484a-9c1c-af2e5d3447a0", 0, "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww", "618997ec-bfff-436a-b376-f85550fc70e1", "Usuario", "luisModerador@gmail.com", true, false, null, "LUISMODERADOR@GMAIL.COM", "LUISMODERADOR", null, "3159725600", true, "bb01009a-e78b-4283-a715-50b3fed042a5", false, "LuisModerador" },
+                    { "df48dcf8-198f-4c4a-878c-d50e6eb0cf7a", 0, "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww", "eb254926-2f9f-4a94-9484-811e90e3bd73", "Usuario", "mariaModerador@gmail.com", true, false, null, "MARIAMODERADOR@GMAIL.COM", "MARIAMODERADOR", null, "3159725597", true, "2846b401-f699-4adf-9652-2ed25a70a6dd", false, "MariaModerador" },
+                    { "e4309639-4588-4553-8c14-5ce4426e0dd7", 0, "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww", "6294d862-84cc-4eb4-a3de-ee6e349b1e8e", "Usuario", "sofia@hotmail.com", true, false, null, "SOFIA@HOTMAIL.COM", "SOFIA", null, "3123456789", true, "8f5d97f2-b1db-4ced-97ec-1577c335a700", false, "Sofia" },
+                    { "ea4e325c-b58a-47e4-8c29-f69bb0d5b7e8", 0, "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww", "ed8d810b-d2bb-4a7d-a774-a7fbab6fce0c", "Usuario", "anaModerador@gmail.com", true, false, null, "ANAMODERADOR@GMAIL.COM", "ANAMODERADOR", null, "3159725599", true, "c63ed683-284b-496b-83be-39cd597574b8", false, "AnaModerador" },
+                    { "f4613409-a53e-446d-854d-db0f9d652864", 0, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww", "255f34eb-71a7-4b78-93e7-5d76a684770f", "Usuario", "jorgeModerador@gmail.com", true, false, null, "JORGEMODERADOR@GMAIL.COM", "JORGEMODERADOR", null, "3159725598", true, "3f15f612-7e40-4075-8434-3391b3021439", false, "JorgeModerador" },
+                    { "fd0953f0-b46b-4070-9958-4a841eba3af7", 0, "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww", "446d6d34-3dc2-4d21-9590-07fbea56e704", "Usuario", "sofiaModerador@gmail.com", true, false, null, "SOFIAMODERADOR@GMAIL.COM", "SOFIAMODERADOR", null, "3159725601", true, "f44bd72c-9396-4f43-9bf3-f6373ab225ca", false, "SofiaModerador" }
                 });
 
             migrationBuilder.InsertData(
@@ -1315,6 +1341,17 @@ namespace Dviaje.DataAccess.Migrations
                 column: "IdReserva");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ResenasMeGusta_IdResena_IdUsuario",
+                table: "ResenasMeGusta",
+                columns: new[] { "IdResena", "IdUsuario" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ResenasMeGusta_IdUsuario",
+                table: "ResenasMeGusta",
+                column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservas_IdPublicacion",
                 table: "Reservas",
                 column: "IdPublicacion");
@@ -1395,7 +1432,7 @@ namespace Dviaje.DataAccess.Migrations
                 name: "PublicacionesServicios");
 
             migrationBuilder.DropTable(
-                name: "Resenas");
+                name: "ResenasMeGusta");
 
             migrationBuilder.DropTable(
                 name: "ServiciosAdicionales");
@@ -1416,13 +1453,16 @@ namespace Dviaje.DataAccess.Migrations
                 name: "Restricciones");
 
             migrationBuilder.DropTable(
-                name: "Reservas");
+                name: "Resenas");
 
             migrationBuilder.DropTable(
                 name: "Servicios");
 
             migrationBuilder.DropTable(
                 name: "AtencionViajeros");
+
+            migrationBuilder.DropTable(
+                name: "Reservas");
 
             migrationBuilder.DropTable(
                 name: "Publicaciones");

@@ -21,7 +21,7 @@
         IPublicacionCategoriaRepository PublicacionCategoriaRepository { get; }
         IFechaNoDisponibleRepository FechaNoDisponibleRepository { get; }
         IAliadoRepository AliadoRepository { get; }
-
+        IResenaMeGustaRepository ResenaMeGustaRepository { get; }
 
         // Test usuairos
         IUsuariosTest UsuariosTest { get; }

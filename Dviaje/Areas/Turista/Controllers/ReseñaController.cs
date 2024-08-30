@@ -25,20 +25,12 @@ namespace Dviaje.Areas.Turista.Controllers
             return View();
         }
 
-
-
-
-
         public IActionResult Crear(int reservaId)
         {
             // Crear una nueva reseña asociada a una reserva
-            var resena = new Resena { IdReserva = reservaId, Fecha = DateTime.Now };
+            var resena = new Resena { IdReserva = reservaId };
             return View(resena);
         }
-
-
-
-
 
         [HttpPost]
         public IActionResult Crear(Resena resena)
@@ -54,14 +46,12 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(resena);
         }
 
-
-
-
-
-
         [HttpPost]
-        public async Task<IActionResult> MeGusta(int id)
+        [ActionName("MeGusta")]
+        public async Task<IActionResult> CrearMeGusta(int id)
         {
+            /*
+             * Referencia borrar despues
             var resena = await _unitOfWork.ResenaRepository.GetAsync(r => r.IdResena == id);
             if (resena == null)
             {
@@ -71,11 +61,16 @@ namespace Dviaje.Areas.Turista.Controllers
             resena.MeGusta += 1;
             _unitOfWork.ResenaRepository.Update(resena);
             await _unitOfWork.Save();
-
-            return Json(new { meGusta = resena.MeGusta });
+            */
+            return Ok();
         }
 
-
+        [HttpDelete]
+        [ActionName("MeGusta")]
+        public async Task<IActionResult> EliminarMeGusta(int id)
+        {
+            return Ok();
+        }
 
     }
 }
