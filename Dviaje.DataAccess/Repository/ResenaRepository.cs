@@ -2,6 +2,10 @@
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Dviaje.DataAccess.Repository
 {
@@ -14,19 +18,68 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-        public Task<List<ResenaTarjetaVM>>? ObtenerResenasAsync(int idPublicacion, int? elementoPorPagina = null, int paginaActual = 0)
+        public async Task<List<ResenaTarjetaVM>> ObtenerResenasAsync(int idPublicacion, int? elementosPorPagina = null, int paginaActual = 0)
         {
-            throw new NotImplementedException();
+            var consulta = _db.Resenas
+                .Include(r => r.Reserva)
+                .ThenInclude(r => r.Usuario)
+                .Include(r => r.Reserva.Publicacion)
+                .Where(r => r.Reserva.IdPublicacion == idPublicacion)
+                .Select(r => new ResenaTarjetaVM
+                {
+                    IdResena = r.IdResena,
+                    Opinion = r.Opinion,
+                    Calificacion = r.Calificacion,
+                    MeGusta = r.MeGusta,
+                    Fecha = r.Fecha,
+                    NombreUsuario = r.Reserva.Usuario.UserName,
+                    AvatarUrl = r.Reserva.Usuario.Avatar,
+                    TituloPublicacion = r.Reserva.Publicacion.Titulo,
+                    PuntuacionPublicacion = r.Reserva.Publicacion.Puntuacion
+                })
+                .OrderByDescending(r => r.Calificacion)
+                .AsQueryable();
+
+            if (elementosPorPagina.HasValue)
+            {
+                consulta = consulta
+                    .Skip((paginaActual - 1) * elementosPorPagina.Value)
+                    .Take(elementosPorPagina.Value);
+            }
+
+            return await consulta.ToListAsync();
         }
 
-        public Task<List<ResenaTarjetaVM>>? ObtenerMisResenasAsync(int idUsuario, int? elementoPorPagina = null, int paginaActual = 0)
+        public async Task<List<ResenaTarjetaVM>> ObtenerMisResenasAsync(string idUsuario, int? elementosPorPagina = null, int paginaActual = 0)
         {
-            throw new NotImplementedException();
-        }
+            var consulta = _db.Resenas
+                .Include(r => r.Reserva)
+                .ThenInclude(r => r.Usuario)
+                .Include(r => r.Reserva.Publicacion)
+                .Where(r => r.Reserva.Usuario.Id == idUsuario) // Filtra por el ID del usuario
+                .Select(r => new ResenaTarjetaVM
+                {
+                    IdResena = r.IdResena,
+                    Opinion = r.Opinion,
+                    Calificacion = r.Calificacion,
+                    MeGusta = r.MeGusta,
+                    Fecha = r.Fecha,
+                    NombreUsuario = r.Reserva.Usuario.UserName,
+                    AvatarUrl = r.Reserva.Usuario.Avatar,
+                    TituloPublicacion = r.Reserva.Publicacion.Titulo,
+                    PuntuacionPublicacion = r.Reserva.Publicacion.Puntuacion
+                })
+                .OrderByDescending(r => r.Calificacion)
+                .AsQueryable();
 
-        public Task<List<ResenaDispobibleTarjetaVM>>? ObtenerMisResenasDisponiblesAsync(int idUsuario, int? elementoPorPagina = null, int paginaActual = 0)
-        {
-            throw new NotImplementedException();
+            if (elementosPorPagina.HasValue)
+            {
+                consulta = consulta
+                    .Skip((paginaActual - 1) * elementosPorPagina.Value)
+                    .Take(elementosPorPagina.Value);
+            }
+
+            return await consulta.ToListAsync();
         }
 
         public void Update(Resena resena)
