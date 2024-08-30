@@ -14,10 +14,30 @@ namespace Dviaje.Areas.Turista.Controllers
             _unitOfWork = unitOfWork;
         }
 
-
-        public IActionResult Disponibles(int? paginaActual)
+        public async Task<IActionResult> Disponibles(int idPublicacion, int? paginaActual = 1)
         {
-            return View();
+            if (idPublicacion == 0)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            var resenas = await _unitOfWork.ResenaRepository.ObtenerResenasAsync(idPublicacion);
+
+            if (resenas == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            int pageSize = 10;
+            var paginatedResenas = resenas
+                .Skip((paginaActual.Value - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.PaginaActual = paginaActual.Value;
+            ViewBag.TotalPaginas = (int)Math.Ceiling(resenas.Count() / (double)pageSize);
+
+            return View(paginatedResenas);
         }
 
         public IActionResult MisReseñas(int? paginaActual)
@@ -27,7 +47,6 @@ namespace Dviaje.Areas.Turista.Controllers
 
         public IActionResult Crear(int reservaId)
         {
-            // Crear una nueva reseña asociada a una reserva
             var resena = new Resena { IdReserva = reservaId };
             return View(resena);
         }
@@ -37,7 +56,6 @@ namespace Dviaje.Areas.Turista.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Guardar la nueva reseña en la base de datos
                 _unitOfWork.ResenaRepository.AddAsync(resena);
                 _unitOfWork.Save();
                 return RedirectToAction("Index", new { reservaId = resena.IdReserva });
@@ -50,8 +68,6 @@ namespace Dviaje.Areas.Turista.Controllers
         [ActionName("MeGusta")]
         public async Task<IActionResult> CrearMeGusta(int id)
         {
-            /*
-             * Referencia borrar despues
             var resena = await _unitOfWork.ResenaRepository.GetAsync(r => r.IdResena == id);
             if (resena == null)
             {
@@ -61,16 +77,16 @@ namespace Dviaje.Areas.Turista.Controllers
             resena.MeGusta += 1;
             _unitOfWork.ResenaRepository.Update(resena);
             await _unitOfWork.Save();
-            */
-            return Ok();
+
+            return Ok(new { success = true, newCount = resena.MeGusta });
         }
 
         [HttpDelete]
         [ActionName("MeGusta")]
         public async Task<IActionResult> EliminarMeGusta(int id)
         {
+
             return Ok();
         }
-
     }
 }
