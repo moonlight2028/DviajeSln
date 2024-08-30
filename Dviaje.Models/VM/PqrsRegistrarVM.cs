@@ -5,5 +5,7 @@
         public AtencionViajero? AtencionViajero { get; set; }
 
         public Mensaje? Mensaje { get; set; }
+
+
     }
 }

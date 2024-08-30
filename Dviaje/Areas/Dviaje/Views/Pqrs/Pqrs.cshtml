@@ -1,4 +1,4 @@
-﻿@model AtencionViajero
+﻿@model PqrsRegistrarVM
 
 @{
     ViewData["Title"] = "PQRS";
@@ -8,7 +8,7 @@
 }
 
 
-@* <div class="container">
+ <div class="container">
     <div class="contact__wrapper shadow-lg mt-n9">
         <div class="row no-gutters">
             <div class="col-lg-5 contact-info__wrapper gradient-brand-color p-5 order-lg-2">
@@ -58,10 +58,10 @@
                         <p>
                             P: ¿Cómo puedo hacer una reserva? <br />
                             R: Para hacer una reserva, simplemente navega a la sección de "Reservas" en nuestra página web, selecciona el destino y las fechas de tu viaje, y sigue las instrucciones para completar tu reserva.
-                            <br /><br />
+                            <br />
                             P: ¿Es seguro pagar en línea?<br />
                             R: Sí, nuestra página utiliza tecnologías de encriptación avanzadas para garantizar que tus datos personales y de pago estén seguros.
-                            <br /><br />
+                            <br />
                             P: ¿Puedo cancelar o modificar mi reserva?<br />
                             R: Sí, puedes cancelar o modificar tu reserva a través de la sección "Mi Cuenta" en nuestra página web. Ten en cuenta que pueden aplicarse políticas de cancelación y cargos adicionales.
                         </p>
@@ -73,49 +73,49 @@
                     <div class="row">
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Nombre" class="required-field"></label>
-                                <input asp-for="Nombre" type="text" class="form-control" placeholder="Wendy" />
-                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                                <label asp-for="Mensaje.Nombre" class="required-field"></label>
+                                <input asp-for="Mensaje.Nombre" type="text" class="form-control" placeholder="Wendy" />
+                                <span asp-validation-for="Mensaje.Nombre" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Apellidos" ></label>
-                                <input asp-for="Apellidos" type="text" class="form-control" placeholder="Appleseed" />
-                                <span asp-validation-for="Apellidos"></span>
+                                <label asp-for="Mensaje.Apellidos" ></label>
+                                <input asp-for="Mensaje.Apellidos" type="text" class="form-control" placeholder="Appleseed" />
+                                <span asp-validation-for="Mensaje.Apellidos"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Correo" class="required-field" ></label>
-                                <input asp-for="Correo" type="text" class="form-control" placeholder="example@mail.com" />
-                                <span asp-validation-for="Correo"></span>
+                                <label asp-for="Mensaje.Correo" class="required-field" ></label>
+                                <input asp-for="Mensaje.Correo" type="text" class="form-control" placeholder="example@mail.com" />
+                                <span asp-validation-for="Mensaje.Correo"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-6 mb-3">
                             <div class="form-group">
-                                <label asp-for="Telefono" ></label>
-                                <input asp-for="Telefono" type="tel" class="form-control" placeholder="(021)-454-545" />
-                                <span asp-validation-for="Telefono"></span>
+                                <label asp-for="Mensaje.Telefono" ></label>
+                                <input asp-for="Mensaje.Telefono" type="tel" class="form-control" placeholder="(021)-454-545" />
+                                <span asp-validation-for="Mensaje.Telefono"></span>
                             </div>
                         </div>
 
                         <div class="col-sm-12 mb-3">
                             <div class="form-group">
-                                <label asp-for="Descripcion" class="required-field" for="message">Como podemos ayudarte?</label>
-                                <textarea asp-for="Descripcion" class="form-control" id="message" rows="4" placeholder="Dinos como podemos mejorar :)"></textarea>
-                                <span asp-validation-for="Descripcion"></span>
+                                <label asp-for="Mensaje.MensajeDescripcion" class="required-field" for="message">Como podemos ayudarte?</label>
+                                <textarea asp-for="Mensaje.MensajeDescripcion" class="form-control" id="message" rows="4" placeholder="Dinos como podemos mejorar :)"></textarea>
+                                <span asp-validation-for="Mensaje.MensajeDescripcion"></span>
                             </div>
                         </div>
 
-                        <div class="col-sm-12 mb-3">
+                        <!--<div class="col-sm-12 mb-3">
                             <button type="submit" class="btn btn-primary">Enviar</button><br /><br />
                             <input type="file" id="myFile" />
                         </div>
-                    </div>
+                        </div>-->
 
 
 
@@ -125,4 +125,4 @@
 
         </div>
     </div>
-</div> *@
+</div> 
