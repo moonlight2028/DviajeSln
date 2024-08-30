@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
 {
@@ -9,8 +10,8 @@ namespace Dviaje.Models
 
 
         [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime FechaAtencion { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTimeOffset FechaAtencion { get; set; }
 
 
         [Required(ErrorMessage = "El asunto es obligatorio.")]

@@ -10,8 +10,8 @@ namespace Dviaje.Models
 
 
         [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Fecha { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTimeOffset Fecha { get; set; }
 
 
         [Column(TypeName = "text")]

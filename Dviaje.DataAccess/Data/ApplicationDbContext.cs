@@ -39,7 +39,6 @@ namespace Dviaje.DataAccess.Data
 
 
             // Restricción para campos únicos
-            modelBuilder.Entity<Usuario>().HasIndex(u => u.Avatar).IsUnique();
             modelBuilder.Entity<Aliado>().HasIndex(a => a.RazonSocial).IsUnique();
             modelBuilder.Entity<Aliado>().HasIndex(a => a.Direccion).IsUnique();
             modelBuilder.Entity<Adjunto>().HasIndex(a => a.RutaAdjunto).IsUnique();
@@ -47,7 +46,6 @@ namespace Dviaje.DataAccess.Data
             modelBuilder.Entity<Servicio>().HasIndex(s => s.NombreServicio).IsUnique();
             modelBuilder.Entity<Restriccion>().HasIndex(r => r.NombreRestriccion).IsUnique();
             modelBuilder.Entity<Categoria>().HasIndex(c => c.NombreCategoria).IsUnique();
-
 
 
             // Registro de Datos
@@ -182,21 +180,6 @@ namespace Dviaje.DataAccess.Data
                     PhoneNumber = "3169876543",
                     PhoneNumberConfirmed = true
                 }
-            );
-
-
-            // Asignación rol Turista a usuarios.
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> { UserId = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "26cfe5c9-00f8-411e-b589-df3405a8b798", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "e4309639-4588-4553-8c14-5ce4426e0dd7", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "3a895383-b546-4693-8246-924a9fc5289f", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "1c8e89f7-7db6-4cd5-907d-f01b058cd784", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "13825fa6-5c27-4303-ab17-6e13aac24c12", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "2e59aa62-61bd-4c8d-9a3d-13f461696eab", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
-                new IdentityUserRole<string> { UserId = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" }
             );
 
 
@@ -390,9 +373,9 @@ namespace Dviaje.DataAccess.Data
                 new Usuario
                 {
                     Id = "51503d52-0841-49c0-a737-0e7a4c624f16",
-                    Avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww",
-                    UserName = "Carlos",
-                    NormalizedUserName = "CARLOS",
+                    Avatar = "crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww",
+                    UserName = "CarlosModerador",
+                    NormalizedUserName = "CARLOSMODERADOR",
                     Email = "carlosModerador@gmail.com",
                     NormalizedEmail = "CARLOSMODERADOR@GMAIL.COM",
                     EmailConfirmed = true,
@@ -403,8 +386,8 @@ namespace Dviaje.DataAccess.Data
                 {
                     Id = "df48dcf8-198f-4c4a-878c-d50e6eb0cf7a",
                     Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww",
-                    UserName = "Maria",
-                    NormalizedUserName = "MARIA",
+                    UserName = "MariaModerador",
+                    NormalizedUserName = "MARIAMODERADOR",
                     Email = "mariaModerador@gmail.com",
                     NormalizedEmail = "MARIAMODERADOR@GMAIL.COM",
                     EmailConfirmed = true,
@@ -415,8 +398,8 @@ namespace Dviaje.DataAccess.Data
                 {
                     Id = "f4613409-a53e-446d-854d-db0f9d652864",
                     Avatar = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    UserName = "Jorge",
-                    NormalizedUserName = "JORGE",
+                    UserName = "JorgeModerador",
+                    NormalizedUserName = "JORGEMODERADOR",
                     Email = "jorgeModerador@gmail.com",
                     NormalizedEmail = "JORGEMODERADOR@GMAIL.COM",
                     EmailConfirmed = true,
@@ -427,8 +410,8 @@ namespace Dviaje.DataAccess.Data
                 {
                     Id = "ea4e325c-b58a-47e4-8c29-f69bb0d5b7e8",
                     Avatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww",
-                    UserName = "Ana",
-                    NormalizedUserName = "ANA",
+                    UserName = "AnaModerador",
+                    NormalizedUserName = "ANAMODERADOR",
                     Email = "anaModerador@gmail.com",
                     NormalizedEmail = "ANAMODERADOR@GMAIL.COM",
                     EmailConfirmed = true,
@@ -439,8 +422,8 @@ namespace Dviaje.DataAccess.Data
                 {
                     Id = "d88d60a8-a9c5-484a-9c1c-af2e5d3447a0",
                     Avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww",
-                    UserName = "Luis",
-                    NormalizedUserName = "LUIS",
+                    UserName = "LuisModerador",
+                    NormalizedUserName = "LUISMODERADOR",
                     Email = "luisModerador@gmail.com",
                     NormalizedEmail = "LUISMODERADOR@GMAIL.COM",
                     EmailConfirmed = true,
@@ -451,14 +434,29 @@ namespace Dviaje.DataAccess.Data
                 {
                     Id = "fd0953f0-b46b-4070-9958-4a841eba3af7",
                     Avatar = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww",
-                    UserName = "Sofia",
-                    NormalizedUserName = "SOFIA",
+                    UserName = "SofiaModerador",
+                    NormalizedUserName = "SOFIAMODERADOR",
                     Email = "sofiaModerador@gmail.com",
                     NormalizedEmail = "SOFIAMODERADOR@GMAIL.COM",
                     EmailConfirmed = true,
                     PhoneNumber = "3159725601",
                     PhoneNumberConfirmed = true
                 }
+            );
+
+
+            // Asignación rol Turista a usuarios.
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "26cfe5c9-00f8-411e-b589-df3405a8b798", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "e4309639-4588-4553-8c14-5ce4426e0dd7", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "3a895383-b546-4693-8246-924a9fc5289f", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "1c8e89f7-7db6-4cd5-907d-f01b058cd784", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "13825fa6-5c27-4303-ab17-6e13aac24c12", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "230d9aeb-6bca-4faa-b867-2d49e1a8c12e", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "2e59aa62-61bd-4c8d-9a3d-13f461696eab", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" },
+                new IdentityUserRole<string> { UserId = "ca0a0328-0f5b-4ff3-b40e-6ffa8d145abb", RoleId = "1717add7-89b4-4bf7-990f-a9f10f18aa39" }
             );
 
 
@@ -547,213 +545,6 @@ namespace Dviaje.DataAccess.Data
                 }
             );
 
-
-            /*
-            modelBuilder.Entity<AtencionViajero>().HasData(
-                new AtencionViajero
-                {
-                    IdAtencion = 1,
-                    FechaAtencion = new DateTime(2024, 07, 25, 10, 30, 50),
-                    Descripcion = "Me gustaría presentar una queja sobre el servicio recibido el pasado 25 de julio de 2024 a través de su plataforma de turismo. Ese día, tenía programada una visita guiada para las 10:00 a.m. en el centro histórico, pero la guía no llegó hasta las 11:30 a.m., sin ninguna explicación por parte del equipo de soporte. Además, la atención recibida fue poco profesional, ya que la guía no pudo responder adecuadamente a mis preguntas sobre los lugares visitados. Agradecería una revisión de este caso y una explicación sobre lo ocurrido, así como las medidas que se tomarán para evitar que situaciones similares se repitan en el futuro. /n Adjunto capturas de pantalla de los correos de confirmación de mi reserva y del pago realizado como referencia.",
-                    Respuesta = "Gracias por comunicarse con nosotros y por informarnos sobre su experiencia con nuestro servicio el 25 de julio de 2024. Lamentamos sinceramente los inconvenientes que experimentó durante su visita guiada y cualquier insatisfacción que esto le haya causado. /n Hemos revisado su caso y constatamos que hubo un problema de programación inesperado que retrasó la llegada de la guía. Apreciamos su paciencia y comprensión en esta situación. Hemos tomado medidas para mejorar nuestros procesos de planificación y comunicación con el equipo de guías para asegurarnos de que este tipo de incidentes no se repitan. /n Además, como gesto de disculpa, nos gustaría ofrecerle un reembolso completo del costo de su reserva y un descuento del 20% en su próxima visita con nosotros. Un representante de nuestro equipo se pondrá en contacto con usted en breve para gestionar el reembolso. /n Gracias por su comprensión y por darnos la oportunidad de corregir este error. Valoramos mucho su opinión y esperamos poder servirle mejor en el futuro.",
-                    Asunto = "Queja por Servicio de Visita Guiada Retrasada el 25 de Julio",
-                    FechaRespuesta = new DateTime(2024, 07, 30, 07, 39, 20),
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Completado,
-                    IdUsuario = "11bc73ce-dbe2-4370-bc92-0d57e5b366d7"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 2,
-                    FechaAtencion = new DateTime(2024, 07, 20, 15, 45, 00),
-                    Descripcion = "Durante mi visita al museo el 20 de julio de 2024, experimenté varios problemas técnicos con la aplicación de audio-guía. La aplicación se cerraba inesperadamente, y no pude escuchar la mayoría de las explicaciones. Adjunto capturas de pantalla de los errores.",
-                    Respuesta = "Gracias por informarnos sobre los problemas técnicos que experimentó el 20 de julio de 2024. Hemos identificado el problema y estamos trabajando para solucionarlo. Como compensación, le ofrecemos un pase gratuito para su próxima visita.",
-                    Asunto = "Problemas Técnicos con la Aplicación de Audio-Guía",
-                    FechaRespuesta = new DateTime(2024, 07, 21, 09, 00, 00),
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Completado,
-                    IdUsuario = "26cfe5c9-00f8-411e-b589-df3405a8b798"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 3,
-                    FechaAtencion = new DateTime(2024, 07, 15, 12, 10, 30),
-                    Descripcion = "Solicito información adicional sobre el tour ecológico programado para el 15 de agosto de 2024. Me gustaría conocer más sobre las actividades incluidas y el equipo necesario.",
-                    Respuesta = "Gracias por su interés en nuestro tour ecológico. El tour incluye caminatas guiadas, observación de fauna y flora, y un taller de reciclaje. Se recomienda llevar ropa cómoda, repelente y cámara.",
-                    Asunto = "Información sobre Tour Ecológico",
-                    FechaRespuesta = new DateTime(2024, 07, 16, 08, 45, 00),
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Completado,
-                    IdUsuario = "2c49ebc9-3bcd-4f22-a87e-186a1c0c55e1"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 4,
-                    FechaAtencion = new DateTime(2024, 07, 18, 14, 00, 00),
-                    Descripcion = "Deseo cancelar mi reserva para el tour gastronómico del 22 de julio de 2024 debido a un cambio de planes. Adjunto el número de reserva.",
-                    Respuesta = "Hemos procesado la cancelación de su reserva para el tour gastronómico del 22 de julio de 2024. Se ha iniciado el reembolso correspondiente, que debería reflejarse en su cuenta en 5-7 días hábiles.",
-                    Asunto = "Cancelación de Reserva de Tour Gastronómico",
-                    FechaRespuesta = new DateTime(2024, 07, 19, 10, 00, 00),
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Proceso,
-                    IdUsuario = "e4309639-4588-4553-8c14-5ce4426e0dd7"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 5,
-                    FechaAtencion = new DateTime(2024, 07, 10, 09, 30, 00),
-                    Descripcion = "Me gustaría felicitar al equipo por el excelente servicio recibido durante el tour de aventura el 8 de julio de 2024. La guía fue muy profesional y las actividades bien organizadas.",
-                    Respuesta = "Gracias por sus amables palabras y por reconocer el esfuerzo de nuestro equipo. Compartiremos sus comentarios con la guía y el resto del equipo. Nos alegra que haya disfrutado de su experiencia.",
-                    Asunto = "Agradecimiento por Excelente Servicio en Tour de Aventura",
-                    FechaRespuesta = new DateTime(2024, 07, 11, 08, 15, 00),
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Proceso,
-                    IdUsuario = "3a895383-b546-4693-8246-924a9fc5289f"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 6,
-                    FechaAtencion = new DateTime(2024, 07, 22, 11, 15, 00),
-                    Descripcion = "El vehículo asignado para el traslado al aeropuerto el 22 de julio de 2024 no llegó a tiempo, y casi perdí mi vuelo. Agradecería una explicación y compensación por este inconveniente.",
-                    Respuesta = "Lamentamos sinceramente el retraso en su traslado al aeropuerto el 22 de julio de 2024. Investigamos el incidente y estamos mejorando nuestros procesos de logística. Le ofrecemos un descuento del 30% en su próximo servicio de traslado.",
-                    Asunto = "Retraso en el Servicio de Traslado al Aeropuerto",
-                    FechaRespuesta = new DateTime(2024, 07, 23, 10, 30, 00),
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Queja,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Proceso,
-                    IdUsuario = "01bfd429-16ea-44b3-902c-794e2c78dfa7"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 7,
-                    FechaAtencion = new DateTime(2024, 07, 17, 13, 45, 00),
-                    Descripcion = "Me gustaría saber si hay disponibilidad de tours privados para familias en agosto de 2024 y cuáles serían las opciones y precios.",
-                    Asunto = "Consulta sobre Disponibilidad de Tours Privados para Familias",
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Pregunta,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
-                    IdUsuario = "9cd842af-b711-44cc-aa5e-3863e3c30b76"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 8,
-                    FechaAtencion = new DateTime(2024, 07, 12, 16, 00, 00),
-                    Descripcion = "Me gustaría proponer una mejora en su aplicación móvil. Sería útil poder descargar itinerarios y mapas para usarlos sin conexión.",
-                    Asunto = "Sugerencia para Mejorar la Aplicación Móvil",
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
-                    IdUsuario = "c654adef-5f0c-48e6-946a-52706f8ac520"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 9,
-                    FechaAtencion = new DateTime(2024, 07, 08, 08, 20, 00),
-                    Descripcion = "No recibí el correo de confirmación para mi reserva del tour de playa el 15 de julio de 2024. Adjunto el recibo de pago como comprobante.",
-                    Asunto = "Falta de Confirmación de Reserva para Tour de Playa",
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Reclamo,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
-                    IdUsuario = "8142c33b-ee02-4a13-b0c1-1e941387433d"
-                },
-                new AtencionViajero
-                {
-                    IdAtencion = 10,
-                    FechaAtencion = new DateTime(2024, 07, 05, 10, 00, 00),
-                    Descripcion = "Quisiera expresar mi satisfacción por el excelente servicio recibido durante el tour cultural el 3 de julio de 2024. La organización fue impecable y la guía muy conocedora.",
-                    Asunto = "Agradecimiento por Tour Cultural",
-                    AtencionViajeroTipoPqrs = AtencionViajeroTipoPqrs.Sugerencia,
-                    AtencionViajeroPrioridad = AtencionViajeroEstado.Pendiente,
-                    IdUsuario = "39e10980-4df3-494a-bbe7-410e105f6551"
-                }
-            );
-            */
-
-            // Registros de Adjunto.
-            /*
-            modelBuilder.Entity<Adjunto>().HasData(
-                new Adjunto
-                {
-                    IdAdjunto = 1,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/queja_tourrtt.jpg",
-                    IdAtencion = 1,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 2,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/queja_tour.jpg",
-                    IdAtencion = 2,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 3,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/confirmacion_pago.pdf",
-                    IdAtencion = 3,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 4,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/itinerario_tour.pdf",
-                    IdAtencion = 3,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 5,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/felicitacion_tour.jpg",
-                    IdAtencion = 4,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 6,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/reembolso_traslado.pdf",
-                    IdAtencion = 4,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 7,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/informacion_tour.pdf",
-                    IdAtencion = 9,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 8,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/sugerencia_app.jpg",
-                    IdAtencion = 6,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 9,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/comprobante_reserva.jpg",
-                    IdAtencion = 7,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 10,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/agradecimiento_tour.jpg",
-                    IdAtencion = 1,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 11,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/problema_pago.jpg",
-                    IdAtencion = 8,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 12,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/comprobantesde_reserva.jpg",
-                    IdAtencion = 3,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 13,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/agradecimientosss_tour.jpg",
-                    IdAtencion = 3,
-                },
-                new Adjunto
-                {
-                    IdAdjunto = 14,
-                    RutaAdjunto = "https://DViaje.com/adjuntos/problemaconid_pago.jpg",
-                    IdAtencion = 9,
-                }
-            );
-            */
 
             // Registros de Verificado.
             modelBuilder.Entity<Verificado>().HasData(
@@ -1718,6 +1509,7 @@ namespace Dviaje.DataAccess.Data
                     IdPublicacion = 9
                 }
             );
+
 
 
             // Registros de Resena.
