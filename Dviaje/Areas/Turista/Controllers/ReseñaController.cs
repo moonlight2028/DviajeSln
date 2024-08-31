@@ -58,7 +58,7 @@ namespace Dviaje.Areas.Turista.Controllers
             // Pendiente
             //ViewBag.TotalPaginas = (int)Math.Ceiling(disponibles.Count() / (double)pageSize);
 
-            return View(paginatedDisponibles);
+            return View();
         }
 
         // Muestra las reseñas hechas por el usuario
@@ -113,25 +113,18 @@ namespace Dviaje.Areas.Turista.Controllers
         // Incrementa el contador de "Me Gusta" en una reseña
         [HttpPost]
         [ActionName("MeGusta")]
-        public async Task<IActionResult> CrearMeGusta(int id)
+        public async Task<IActionResult> CrearMeGusta()
         {
-            var resena = await _unitOfWork.ResenaRepository.GetAsync(r => r.IdResena == id);
-            if (resena == null)
-            {
-                return NotFound();
-            }
+            // Obtener usuario
+            // Registrar informacion en ResenaMeGusta
 
-            resena.MeGusta += 1;
-            _unitOfWork.ResenaRepository.Update(resena);
-            await _unitOfWork.Save();
-
-            return Ok(new { success = true, newCount = resena.MeGusta });
+            return Ok();
         }
 
         // Elimina un "Me Gusta" en una reseña
         [HttpDelete]
         [ActionName("MeGusta")]
-        public async Task<IActionResult> EliminarMeGusta(int id)
+        public async Task<IActionResult> EliminarMeGusta()
         {
             // Implementar la lógica de eliminación de "Me gusta"
             return Ok();
