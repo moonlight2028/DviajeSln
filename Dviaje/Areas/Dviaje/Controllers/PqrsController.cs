@@ -22,12 +22,19 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
         public async Task<IActionResult> Pqrs()
         {
+
+            ViewBag.SesionInicaida = false;
+            //Validar si l usuario valido session
+            //Si la sesion esta iniciada cambiar el viebag a verdadero
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Pqrs(PqrsRegistrarVM pqrsRegistrarVM)
         {
+
+
             return View();
         }
 

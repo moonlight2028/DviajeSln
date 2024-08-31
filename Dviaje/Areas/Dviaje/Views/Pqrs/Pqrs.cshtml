@@ -71,37 +71,43 @@
 
                 <form class="contact-form form-validate" asp-controller="Pqrs" asp-action="Pqrs" method="post">
                     <div class="row">
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Mensaje.Nombre" class="required-field"></label>
-                                <input asp-for="Mensaje.Nombre" type="text" class="form-control" placeholder="Wendy" />
-                                <span asp-validation-for="Mensaje.Nombre" class="text-danger"></span>
-                            </div>
-                        </div>
 
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Mensaje.Apellidos" ></label>
-                                <input asp-for="Mensaje.Apellidos" type="text" class="form-control" placeholder="Appleseed" />
-                                <span asp-validation-for="Mensaje.Apellidos"></span>
-                            </div>
-                        </div>
+                        @if ((bool?)ViewBag.SesionInicaida == false)
+                        {
 
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Mensaje.Correo" class="required-field" ></label>
-                                <input asp-for="Mensaje.Correo" type="text" class="form-control" placeholder="example@mail.com" />
-                                <span asp-validation-for="Mensaje.Correo"></span>
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Mensaje.Nombre" class="required-field"></label>
+                                    <input asp-for="Mensaje.Nombre" type="text" class="form-control" placeholder="Wendy" />
+                                    <span asp-validation-for="Mensaje.Nombre" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label asp-for="Mensaje.Telefono" ></label>
-                                <input asp-for="Mensaje.Telefono" type="tel" class="form-control" placeholder="(021)-454-545" />
-                                <span asp-validation-for="Mensaje.Telefono"></span>
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Mensaje.Apellidos"></label>
+                                    <input asp-for="Mensaje.Apellidos" type="text" class="form-control" placeholder="Appleseed" />
+                                    <span asp-validation-for="Mensaje.Apellidos"></span>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Mensaje.Correo" class="required-field"></label>
+                                    <input asp-for="Mensaje.Correo" type="text" class="form-control" placeholder="example@mail.com" />
+                                    <span asp-validation-for="Mensaje.Correo"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Mensaje.Telefono"></label>
+                                    <input asp-for="Mensaje.Telefono" type="tel" class="form-control" placeholder="(021)-454-545" />
+                                    <span asp-validation-for="Mensaje.Telefono"></span>
+                                </div>
+                            </div>
+
+                        }
 
                         <div class="col-sm-12 mb-3">
                             <div class="form-group">
@@ -111,17 +117,17 @@
                             </div>
                         </div>
 
-                        <!--<div class="col-sm-12 mb-3">
+                        @* Pendiente  *@
+                         
+                        <div class="col-sm-12 mb-3">
                             <button type="submit" class="btn btn-primary">Enviar</button><br /><br />
                             <input type="file" id="myFile" />
                         </div>
-                        </div>-->
 
 
 
                 </form>
             </div>
-            <!-- End Contact Form Wrapper -->
 
         </div>
     </div>
