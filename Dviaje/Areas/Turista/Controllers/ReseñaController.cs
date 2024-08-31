@@ -1,8 +1,7 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
+﻿using System.Security.Claims;
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
-using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -20,11 +19,15 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> Disponibles(int? paginaActual = 1)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
+
             if (userId == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
+
+
+            /*
             var reservas = await _unitOfWork.ReservaRepository
                 .GetAllAsync(r => r.IdUsuario == userId && r.FechaFinal <= DateTime.Now, includeProperties: "Publicacion");
 
@@ -49,9 +52,11 @@ namespace Dviaje.Areas.Turista.Controllers
                 .Skip((paginaActual.Value - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
+            */
 
             ViewBag.PaginaActual = paginaActual.Value;
-            ViewBag.TotalPaginas = (int)Math.Ceiling(disponibles.Count() / (double)pageSize);
+            // Pendiente
+            //ViewBag.TotalPaginas = (int)Math.Ceiling(disponibles.Count() / (double)pageSize);
 
             return View(paginatedDisponibles);
         }
@@ -59,13 +64,16 @@ namespace Dviaje.Areas.Turista.Controllers
         // Muestra las reseñas hechas por el usuario
         public async Task<IActionResult> MisReseñas(int? paginaActual)
         {
+            // Validacion pagina
+            if (paginaActual == null || paginaActual < 1) paginaActual = 1;
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
             if (userId == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var resenas = await _unitOfWork.ResenaRepository.ObtenerMisResenasAsync(userId, 10, paginaActual ?? 1);
+            var resenas = await _unitOfWork.ResenaRepository.ObtenerMisResenasAsync(userId, 10, Convert.ToInt16(paginaActual));
 
             if (resenas == null || !resenas.Any())
             {

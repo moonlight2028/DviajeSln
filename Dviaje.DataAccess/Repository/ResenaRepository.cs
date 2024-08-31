@@ -92,5 +92,16 @@ namespace Dviaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<ResenaDisponibleTarjetaVM>> ObtenerMisResenasDisponiblesAsync(string idUsuario, int? elementosPorPagina = null, int paginaActual = 0)
+        {
+            // Segun el id del usuario Si tiene reservas y estan aprovadas y si ya paso la fecha final
+            // Retorna la lista las reservas que cumplen la condicion de arriba
+
+
+
+
+            throw new NotImplementedException();
+        }
     }
 }
