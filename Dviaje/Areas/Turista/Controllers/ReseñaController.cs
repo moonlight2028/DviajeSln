@@ -25,35 +25,6 @@ namespace Dviaje.Areas.Turista.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
-
-            /*
-            var reservas = await _unitOfWork.ReservaRepository
-                .GetAllAsync(r => r.IdUsuario == userId && r.FechaFinal <= DateTime.Now, includeProperties: "Publicacion");
-
-            if (reservas == null || !reservas.Any())
-            {
-                return RedirectToAction("SinResenas");
-            }
-
-            var disponibles = reservas.Select(r => new ResenaDisponibleTarjetaVM
-            {
-                IdReserva = r.IdReserva,
-                TituloPublicacion = r.Publicacion.Titulo,
-                DescripcionPublicacion = r.Publicacion.Descripcion,
-                FechaInicio = r.FechaInicial,
-                FechaFin = r.FechaFinal,
-                ImagenUrl = r.Publicacion.Imagen,
-                PuedeReseñar = !r.Resena.Any() // Verifica si la reserva ya tiene una reseña
-            }).ToList();
-
-            int pageSize = 10;
-            var paginatedDisponibles = disponibles
-                .Skip((paginaActual.Value - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            */
-
             ViewBag.PaginaActual = paginaActual.Value;
             // Pendiente
             //ViewBag.TotalPaginas = (int)Math.Ceiling(disponibles.Count() / (double)pageSize);

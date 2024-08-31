@@ -48,5 +48,9 @@ namespace Dviaje.Models
         public Publicacion? Publicacion { get; set; }
 
 
+
+       
+
+
     }
 }

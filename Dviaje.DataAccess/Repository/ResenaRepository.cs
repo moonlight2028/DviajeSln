@@ -93,15 +93,54 @@ namespace Dviaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<ResenaDisponibleTarjetaVM>> ObtenerMisResenasDisponiblesAsync(string idUsuario, int? elementosPorPagina = null, int paginaActual = 0)
-        {
-            // Segun el id del usuario Si tiene reservas y estan aprovadas y si ya paso la fecha final
-            // Retorna la lista las reservas que cumplen la condicion de arriba
+        public async Task<List<ResenaDisponibleTarjetaVM>> ObtenerMisResenasDisponiblesAsync(
+            string idUsuario,
+            int? elementosPorPagina = null,
+            int paginaActual = 0)
+                {
+                    var consulta = _db.Reservas
+                        .Where(r => r.IdUsuario == idUsuario && r.FechaFinal <= DateTime.Now)
+                        .Join(
+                            _db.Resenas,
+                            reserva => reserva.IdReserva,
+                            resena => resena.IdReserva,
+                            (reserva, resena) => new { reserva, resena }
+                        )
+                        .Join(
+                            _db.Publicaciones, 
+                            x => x.reserva.IdPublicacion,
+                            publicacion => publicacion.IdPublicacion,
+                            (x, publicacion) => new
+                            {
+                                x.reserva,
+                                x.resena,
+                                publicacion,
+                                ImagenUrl = publicacion.PublicacionImagenes
+   
+                                    .Select(img => img.Ruta) // Selecciona la URL de la imagen
+                                    .FirstOrDefault() // Obtiene la primera URL
+                            }
+                        )
+                        .Select(x => new ResenaDisponibleTarjetaVM
+                        {
+                            TituloPublicacion = x.publicacion.Titulo,
+                            FechaInicio = x.reserva.FechaInicial,
+                            FechaFin = x.reserva.FechaFinal,
+                            ImagenUrl = x.ImagenUrl
+                        });
+
+                    // Aplicar paginación
+                    if (elementosPorPagina.HasValue && elementosPorPagina.Value > 0)
+                    {
+                        consulta = consulta
+                            .Skip((paginaActual - 1) * elementosPorPagina.Value)
+                            .Take(elementosPorPagina.Value);
+                    }
+
+                    // Ejecutar la consulta y obtener los resultados
+                    return await consulta.ToListAsync();
+                }
 
 
-
-
-            throw new NotImplementedException();
-        }
     }
 }
