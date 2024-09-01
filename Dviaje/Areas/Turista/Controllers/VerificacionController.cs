@@ -1,5 +1,4 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
+﻿using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +11,10 @@ namespace Dviaje.Areas.Turista.Controllers
     [Authorize(Roles = "Turista")]
     public class VerificacionController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IEnvioEmail _envioEmail;
 
-        public VerificacionController(IUnitOfWork unitOfWork, IEnvioEmail envioEmail)
+        public VerificacionController(IEnvioEmail envioEmail)
         {
-            _unitOfWork = unitOfWork;
             _envioEmail = envioEmail;
         }
 
@@ -35,23 +32,24 @@ namespace Dviaje.Areas.Turista.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+                /*
                 var verificado = new Verificado
                 {
                     IdAliado = userId,
                     FechaSolicitud = DateTime.Now,
                     VerificadoEstado = VerificadoEstado.Pendiente,
-                    /*
+                    
                     Motivo = verificacionVM.Motivo,
                     Direccion = verificacionVM.Direccion,
                     DocumentosAdjuntos = verificacionVM.DocumentosAdjuntos,
                     DetallesPropiedad = verificacionVM.DetallesPropiedad
-                    */
-                };
-
+                    
+            };
+                */
+                /*
                 await _unitOfWork.VerificadoRepository.AddAsync(verificado);
                 await _unitOfWork.Save();
-
+                */
                 // Enviar correo electrónico usando SendGrid
                 var cuerpoCorreo = $"El usuario {User.Identity.Name} ha solicitado ser aliado. Por favor revisa la solicitud.";
                 await _envioEmail.EnviarEmail("Nueva solicitud de verificación de aliado", "admin@dviaje.com", "Administrador", cuerpoCorreo, cuerpoCorreo);
@@ -66,6 +64,7 @@ namespace Dviaje.Areas.Turista.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CambiarEstado(int id, VerificadoEstado estado)
         {
+            /*
             var verificado = await _unitOfWork.VerificadoRepository.GetAsync(v => v.IdVerificado == id);
             if (verificado == null)
             {
@@ -78,6 +77,7 @@ namespace Dviaje.Areas.Turista.Controllers
             await _unitOfWork.Save();
 
             TempData["Success"] = "El estado de la verificación ha sido actualizado.";
+            */
             return RedirectToAction("ListaSolicitudes", "Admin");
         }
     }

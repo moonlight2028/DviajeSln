@@ -1,6 +1,4 @@
 using Dviaje.DataAccess.Data;
-using Dviaje.DataAccess.Repository;
-using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Services;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Identity;
@@ -12,9 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Conexión a la base de datos
+// Conexión a la base de datos para Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(10, 4, 32)))
 );
 
 // Identity personalizado
@@ -30,8 +29,8 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 //EmailServicio
 builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
 
-// UnitOfWork
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// Inyección de Repositorios
+
 
 var app = builder.Build();
 

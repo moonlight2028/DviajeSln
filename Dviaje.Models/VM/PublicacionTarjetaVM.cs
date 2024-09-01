@@ -24,7 +24,9 @@
 
         public string? Descripcion { get; set; }
 
+        /*
         public List<Categoria>? Categorias { get; set; }
+        */
 
         public List<PublicacionImagenVM>? Imagenes { get; set; }
     }

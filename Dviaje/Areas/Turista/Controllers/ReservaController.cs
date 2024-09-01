@@ -1,6 +1,4 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
-using Dviaje.Services.IServices;
+﻿using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Turista.Controllers
@@ -8,12 +6,10 @@ namespace Dviaje.Areas.Turista.Controllers
     [Area("Turista")]
     public class ReservaController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IEnvioEmail _envioEmail;
 
-        public ReservaController(IUnitOfWork unitOfWork, IEnvioEmail envioEmail)
+        public ReservaController(IEnvioEmail envioEmail)
         {
-            _unitOfWork = unitOfWork;
             _envioEmail = envioEmail;
         }
 
@@ -24,14 +20,17 @@ namespace Dviaje.Areas.Turista.Controllers
                 return NotFound();
             }
 
-            var publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == idPublicacion);
+            //var publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == idPublicacion);
 
+            /*
             if (publicacion == null)
             {
                 return NotFound();
             }
+            */
 
             // Modelo para la vista con datos iniciales
+            /*
             var reserva = new Reserva
             {
                 IdPublicacion = publicacion.IdPublicacion,
@@ -40,20 +39,22 @@ namespace Dviaje.Areas.Turista.Controllers
                 FechaFinal = DateTime.Now.AddDays(1),
                 NumeroPersonas = 1
             };
-
-            return View(reserva);
+            */
+            return View(/*reserva*/);
         }
 
         // POST: Turista/Reserva/Reserva
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reserva(Reserva reserva)
+        public async Task<IActionResult> Reserva(/*Reserva reserva*/)
         {
+            /*
             if (!ModelState.IsValid)
             {
                 reserva.Publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == reserva.IdPublicacion);
                 return View(reserva);
             }
+            
 
             await _unitOfWork.ReservaRepository.AddAsync(reserva);
             await _unitOfWork.Save();
@@ -70,27 +71,29 @@ namespace Dviaje.Areas.Turista.Controllers
             await _envioEmail.EnviarEmail(asunto, aliado.Email, aliado.Avatar, cuerpoCorreoAliado, "<p>" + cuerpoCorreoAliado + "</p>");
 
             TempData["Success"] = "Reserva realizada exitosamente y correos enviados.";
-
+            */
             return RedirectToAction(nameof(MisReservas));
         }
 
         // GET: Turista/Reserva/MisReservas
         public async Task<IActionResult> MisReservas()
         {
+            /*
             var reservas = await _unitOfWork.ReservaRepository.GetReservaTarjetas();
 
             if (reservas == null || !reservas.Any())
             {
                 return View("NoReservas"); // Si no tienes reservas (en proceso)
             }
-
-            return View(reservas);
+            */
+            return View(/*reservas*/);
         }
 
 
         // GET: Turista/Reserva/MiReserva/5
         public async Task<IActionResult> MiReserva(int? id)
         {
+            /*
             if (id == null)
             {
                 return NotFound();
@@ -104,7 +107,8 @@ namespace Dviaje.Areas.Turista.Controllers
                 return NotFound();
             }
 
-            return View(reserva);
+            */
+            return View(/*reserva*/);
         }
 
 
@@ -112,6 +116,7 @@ namespace Dviaje.Areas.Turista.Controllers
         // cancelar una reserva
         public async Task<IActionResult> CancelarReserva(int reservaId)
         {
+            /*
             var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == reservaId);
             if (reserva == null)
             {
@@ -129,7 +134,7 @@ namespace Dviaje.Areas.Turista.Controllers
             _unitOfWork.ReservaRepository.Update(reserva);
             await _unitOfWork.Save();
             TempData["Success"] = "Reserva cancelada exitosamente.";
-
+            */
             return RedirectToAction("MisReservas");
         }
     }

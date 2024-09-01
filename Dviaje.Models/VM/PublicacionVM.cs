@@ -17,8 +17,10 @@
         public List<ServicioVM>? ServiciosEstablecimiento { get; set; }
         public List<ServicioVM>? ServiciosAccesibilidad { get; set; }
         public List<PublicacionImagenVM>? Imagenes { get; set; }
+        /*
         public List<Categoria>? Categorias { get; set; }
         public List<Restriccion>? Restricciones { get; set; }
         public List<ServicioAdicional>? ServiciosAdicionales { get; set; }
+        */
     }
 }

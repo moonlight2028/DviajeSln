@@ -1,18 +1,13 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
     public class ReseñasController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-
         // Inyección en el controlador.
-        public ReseñasController(IUnitOfWork unitOfWork)
+        public ReseñasController()
         {
-            _unitOfWork = unitOfWork;
         }
 
 

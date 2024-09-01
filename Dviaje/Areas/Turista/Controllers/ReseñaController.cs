@@ -1,18 +1,13 @@
-﻿using System.Security.Claims;
-using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
     public class ReseñaController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public ReseñaController(IUnitOfWork unitOfWork)
+        public ReseñaController()
         {
-            _unitOfWork = unitOfWork;
         }
 
         // Muestra las reservas pasadas donde el usuario aún no ha hecho reseñas
@@ -43,15 +38,15 @@ namespace Dviaje.Areas.Turista.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            /*
             var resenas = await _unitOfWork.ResenaRepository.ObtenerMisResenasAsync(userId, 10, Convert.ToInt16(paginaActual));
 
             if (resenas == null || !resenas.Any())
             {
                 return RedirectToAction("SinResenas");
             }
-
-            return View(resenas);
+            */
+            return View(/*resenas*/);
         }
 
         // Muestra la vista "SinResenas" si no hay reseñas disponibles
@@ -63,22 +58,23 @@ namespace Dviaje.Areas.Turista.Controllers
         // Muestra la vista para crear una nueva reseña
         public IActionResult Crear(int reservaId)
         {
-            var resena = new Resena { IdReserva = reservaId };
-            return View(resena);
+            //var resena = new Resena { IdReserva = reservaId };
+            return View(/*resena*/);
         }
 
         // Guarda la reseña creada en la base de datos
         [HttpPost]
-        public IActionResult Crear(Resena resena)
+        public IActionResult Crear(/*Resena resena*/)
         {
+            /*
             if (ModelState.IsValid)
             {
                 _unitOfWork.ResenaRepository.AddAsync(resena);
                 _unitOfWork.Save();
                 return RedirectToAction("Index", new { reservaId = resena.IdReserva });
             }
-
-            return View(resena);
+            */
+            return View(/*resena*/);
         }
 
         // Incrementa el contador de "Me Gusta" en una reseña

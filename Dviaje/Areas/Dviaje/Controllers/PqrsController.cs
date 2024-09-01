@@ -1,5 +1,4 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models.VM;
+﻿using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,14 +8,12 @@ namespace Dviaje.Areas.Dviaje.Controllers
     public class PqrsController : Controller
     {
         private IEnvioEmail _email;
-        private IUnitOfWork _unitOfWork;
 
 
         // Inyección en el controlador.
-        public PqrsController(IEnvioEmail email, IUnitOfWork unitOfWork)
+        public PqrsController(IEnvioEmail email)
         {
             _email = email;
-            _unitOfWork = unitOfWork;
         }
 
 

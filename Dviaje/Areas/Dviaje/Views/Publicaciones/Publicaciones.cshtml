@@ -1,4 +1,4 @@
-﻿@model PublicacionesVM
+﻿@* @model PublicacionesVM
 
 @{
     ViewData["Title"] = "Publicaciones";
@@ -487,8 +487,8 @@
         <!-- Fin Tarjeta publicación -->
     </section>
     <!-- Fin Publicaciones -->
-    
-    @* Componente de paginación. *@
+
+    <!-- Componente de paginación. -->
     <div 
         id="pagination-wrapper"
         data-paginacion-total="@(Model.Paginacion != null ? Model.Paginacion.PaginasTotales : 0)"
@@ -502,4 +502,4 @@
 
 @section Scripts{
     <script src="~/js/page/publicaciones.js" type="module"></script>
-}
+} *@
