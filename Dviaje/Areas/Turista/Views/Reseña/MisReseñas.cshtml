@@ -1,4 +1,4 @@
-﻿@model List<ResenaTarjetaVM>
+﻿@* @model List<ResenaTarjetaVM>
 
 @{
     ViewBag.Title = "Mis Reseñas";
@@ -21,7 +21,7 @@
         @foreach (var item in Model)
         {
             <div class="resena-item">
-                @* <h3>@item.Reserva.Titulo</h3>  *@
+                 <h3>@item.Reserva.Titulo</h3> 
                 <p>@item.Opinion</p>
                 <small>@item.Fecha.ToShortDateString()</small>
                 <p>Calificación: @item.Calificacion</p>
@@ -31,10 +31,11 @@
     </div>
 
     <div class="pagination">
-        @* @Html.PagedListPager(Model, page => Url.Action("MisReseñas", new { paginaActual = page })) *@
+        @Html.PagedListPager(Model, page => Url.Action("MisReseñas", new { paginaActual = page }))
     </div>
 }
 else
 {
     <p>No has realizado ninguna reseña.</p>
 }
+ *@

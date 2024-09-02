@@ -7,10 +7,11 @@ namespace Dviaje.Areas.Dviaje.Controllers
     [Area("Dviaje")]
     public class PqrsController : Controller
     {
+        // Repositorios necesitados
         private IEnvioEmail _email;
 
 
-        // Inyección en el controlador.
+        // Inyección de repositorios
         public PqrsController(IEnvioEmail email)
         {
             _email = email;
@@ -19,21 +20,30 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
         public async Task<IActionResult> Pqrs()
         {
-
             ViewBag.SesionInicaida = false;
-            //Validar si l usuario valido session
-            //Si la sesion esta iniciada cambiar el viebag a verdadero
+
+            // Validar si el usuario inició sesión
+
+
+            // Si la sesión está iniciada, cambiar el ViewBag a verdadero
+
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Pqrs(PqrsRegistrarVM pqrsRegistrarVM)
+        public async Task<IActionResult> Pqrs(PqrsVM pqrs)
         {
+            // Validar Modelo
 
+            // Completar datos faltantes al modelo desde el controlador.
+
+            // Consulta de registro
 
             return View();
         }
+
+
 
     }
 }

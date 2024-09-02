@@ -36,16 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Moderador\Controllers\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
-
-	<ItemGroup>
-		<UpToDateCheckBuilt Include="wwwroot/lib/tailwind/input.css" Set="Css" />
-		<UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
-	</ItemGroup>
-
-	<Target Name="Tailwind" BeforeTargets="Build">
-		<Exec Command=".\tailwindcss-v3-4-4 -i wwwroot/lib/tailwind/input.css -o wwwroot/lib/tailwind/output.css --minify" />
-	</Target>
 
 </Project>

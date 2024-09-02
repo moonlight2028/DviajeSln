@@ -1,4 +1,5 @@
-﻿@model Dviaje.Models.VM.ReservaTarjetaVM
+﻿@* 
+@model Dviaje.Models.VM.ReservaTarjetaVM
 
 @{
     ViewData["Title"] = "Detalle de la Reserva";
@@ -9,7 +10,7 @@
 
     <div class="card mb-4 shadow-sm">
         <div class="card-body">
-            @* Colocar imagen *@
+            Colocar imagen 
             @if (!string.IsNullOrEmpty(Model.Imagen))
             {
                 <img src="@Model.Imagen" alt="@Model.TituloPublicacion" class="img-fluid mb-3" />
@@ -25,7 +26,7 @@
             <div class="d-flex justify-content-between">
                 <a href="javascript:history.back()" class="btn btn-primary">Volver</a>
 
-                @* Comprobar si la reserva se puede cancelar (por ejemplo, si faltan más de 8 días) *@
+                Comprobar si la reserva se puede cancelar (por ejemplo, si faltan más de 8 días)
                 @{
                     var diasParaReserva = (Model.FechaInicio - DateTime.Now).TotalDays;
                 }
@@ -44,3 +45,4 @@
         </div>
     </div>
 </div>
+ *@

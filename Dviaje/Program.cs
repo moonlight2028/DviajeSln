@@ -1,9 +1,13 @@
 using Dviaje.DataAccess.Data;
+using Dviaje.DataAccess.Repository;
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Services;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     new MySqlServerVersion(new Version(10, 4, 32)))
+);
+
+// Conexión a la base de datos para los repositorios
+builder.Services.AddScoped<IDbConnection>(cr =>
+    new MySqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 // Identity personalizado
@@ -30,7 +39,7 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
 
 // Inyección de Repositorios
-
+builder.Services.AddScoped<IPublicacionesRepository, PublicacionesRepository>();
 
 var app = builder.Build();
 
