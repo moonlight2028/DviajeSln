@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Dviaje.Models.Resena>
+﻿@model IEnumerable<Dviaje.Models.VM.ResenaDisponibleTarjetaVM>
 
 @{
-    ViewData["Title"] = "Reseñas";
+    ViewData["Title"] = "Reseñas Disponibles";
 }
 
 @section Styles {
@@ -11,38 +11,55 @@
 }
 
 
-<div class="grid-container">
-    @foreach (var resena in Model)
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Reservas Disponibles para Reseñar</h2>
+
+    @if (!Model.Any())
     {
-        <div class="card">
-            <div class="status">
-                @resena.Calificacion estrellas
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">Reseña @resena.IdResena</h3>
-                <p>@resena.Opinion</p>
-            </div>
-            <div class="card-footer">
-                <span>@resena.MeGusta Me gusta(s)</span>
-                <a href="@Url.Action("Detalle", "Resena", new { id = resena.IdResena })" class="card-link">Ver más →</a>
-            </div>
+        <div class="alert alert-info text-center" role="alert">
+            No tienes reservas disponibles para reseñar.
         </div>
     }
-</div>
-
-<div class="pagination">
-    @if (ViewBag.PaginaActual > 1)
+    else
     {
-        <a href="@Url.Action("Disponibles", new { paginaActual = ViewBag.PaginaActual - 1 })">Anterior</a>
-    }
+        <div class="grid-container">
+            @foreach (var item in Model)
+            {
+                <div class="card">
+                    <div class="status">Disponible para reseñar</div>
 
-    @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
-    {
-        <a href="@Url.Action("Disponibles", new { paginaActual = i })" @(i == ViewBag.PaginaActual ? "class=active" : "")>@i</a>
-    }
+                    <div class="card-content">
+                        <img src="@item.ImagenUrl" class="img-fluid mb-3" alt="@item.TituloPublicacion" style="width: 100%; height: auto; border-radius: 10px;" />
+                        <h5 class="card-title">@item.TituloPublicacion</h5>
+                        <p>
+                            <strong>Fecha de Inicio:</strong> @item.FechaInicio.ToString("dd/MM/yyyy")<br />
+                            <strong>Fecha Fin:</strong> @item.FechaFin.ToString("dd/MM/yyyy")
+                        </p>
+                    </div>
 
-    @if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
-    {
-        <a href="@Url.Action("Disponibles", new { paginaActual = ViewBag.PaginaActual + 1 })">Siguiente</a>
+                    <div class="card-footer">
+                        <a href="@Url.Action("Crear", "Reseña", new { reservaId = item.IdReserva })" class="card-link">Reseñar</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @* Paginación *@
+        <div class="pagination">
+            @if (ViewBag.PaginaActual > 1)
+            {
+                <a href="@Url.Action("Disponibles", new { paginaActual = ViewBag.PaginaActual - 1 })">&laquo; Anterior</a>
+            }
+
+            @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+            {
+                <a href="@Url.Action("Disponibles", new { paginaActual = i })" class="@(i == ViewBag.PaginaActual ? "active" : "")">@i</a>
+            }
+
+            @if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
+            {
+                <a href="@Url.Action("Disponibles", new { paginaActual = ViewBag.PaginaActual + 1 })">Siguiente &raquo;</a>
+            }
+        </div>
     }
 </div>

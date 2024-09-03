@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-using Dviaje.DataAccess.Repository.IRepository;
+﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
@@ -19,17 +19,25 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> Disponibles(int? paginaActual = 1)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
-
-            if (userId == null)
+            if (string.IsNullOrEmpty(userId))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.PaginaActual = paginaActual.Value;
-            // Pendiente
-            //ViewBag.TotalPaginas = (int)Math.Ceiling(disponibles.Count() / (double)pageSize);
+            // Obtener las reseñas disponibles para el usuario
+            var disponibles = await _unitOfWork.ResenaRepository.ObtenerMisResenasDisponiblesAsync(userId, 10, paginaActual ?? 1);
 
-            return View();
+            if (disponibles == null || !disponibles.Any())
+            {
+                return RedirectToAction("SinReseñas");
+            }
+
+            // Configuración de la paginación
+            int pageSize = 10;
+            ViewBag.PaginaActual = paginaActual.Value;
+            ViewBag.TotalPaginas = (int)Math.Ceiling((double)disponibles.Count / pageSize);
+
+            return View(disponibles);
         }
 
         // Muestra las reseñas hechas por el usuario
