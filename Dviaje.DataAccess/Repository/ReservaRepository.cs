@@ -14,7 +14,7 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-        public async Task<IEnumerable<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario)
+        public async Task<List<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario)
         {
             var sql = @"
                 SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.Estado AS ReservaEstado,
@@ -25,7 +25,9 @@ namespace Dviaje.DataAccess.Repository
                 INNER JOIN Usuarios u ON p.IdAliado = u.IdUsuario
                 WHERE r.IdUsuario = @IdUsuario";
 
-            return await _db.QueryAsync<ReservaTarjetaV2VM>(sql, new { IdUsuario = idUsuario });
+            var resultado = await _db.QueryAsync<ReservaTarjetaV2VM>(sql, new { IdUsuario = idUsuario });
+
+            return resultado.ToList();
         }
 
         public async Task<ReservaTarjetaV3VM> GetReservaByIdAsync(int idReserva)
