@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
+using Dviaje.Models.VM;
 using System.Data;
 
 namespace Dviaje.DataAccess.Repository
@@ -14,59 +14,59 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-        public async Task<Reserva> GetReservaConDetallesAsync(int idReserva)
+        public async Task<IEnumerable<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario)
         {
-            var sql = @"SELECT * FROM Reservas 
-                        INNER JOIN Publicaciones ON Reservas.IdPublicacion = Publicaciones.IdPublicacion
-                        INNER JOIN Usuarios ON Reservas.IdUsuario = Usuarios.Id
-                        WHERE Reservas.IdReserva = @IdReserva";
-            var reserva = await _db.QueryFirstOrDefaultAsync<Reserva, Publicacion, Usuario, Reserva>(sql, (reserva, publicacion, usuario) =>
-            {
-                reserva.Publicacion = publicacion;
-                reserva.Usuario = usuario;
-                return reserva;
-            }, new { IdReserva = idReserva }, splitOn: "IdPublicacion,Id");
+            var sql = @"
+                SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.Estado AS ReservaEstado,
+                       p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion,
+                       u.IdUsuario AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS VerificadoAliado
+                FROM Reservas r
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN Usuarios u ON p.IdAliado = u.IdUsuario
+                WHERE r.IdUsuario = @IdUsuario";
 
-            return reserva;
+            return await _db.QueryAsync<ReservaTarjetaV2VM>(sql, new { IdUsuario = idUsuario });
         }
 
-        public async Task<IEnumerable<Reserva>> GetReservasPorUsuarioAsync(string userId, string estado)
+        public async Task<ReservaTarjetaV3VM> GetReservaByIdAsync(int idReserva)
         {
-            var sql = @"SELECT * FROM Reservas 
-                        INNER JOIN Publicaciones ON Reservas.IdPublicacion = Publicaciones.IdPublicacion
-                        WHERE Reservas.IdUsuario = @UserId";
+            var sql = @"
+                SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.Estado AS ReservaEstado,
+                       p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Ubicacion,
+                       u.IdUsuario AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
+                       (SELECT TOP 5 pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden) AS Imagen
+                FROM Reservas r
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN Usuarios u ON p.IdAliado = u.IdUsuario
+                WHERE r.IdReserva = @IdReserva";
 
-            if (!string.IsNullOrEmpty(estado))
-            {
-                sql += " AND Reservas.ReservaEstado = @Estado";
-            }
-
-            return await _db.QueryAsync<Reserva, Publicacion, Reserva>(sql, (reserva, publicacion) =>
-            {
-                reserva.Publicacion = publicacion;
-                return reserva;
-            }, new { UserId = userId, Estado = estado }, splitOn: "IdPublicacion");
+            return await _db.QueryFirstOrDefaultAsync<ReservaTarjetaV3VM>(sql, new { IdReserva = idReserva });
         }
 
-        public async Task AddAsync(Reserva reserva)
+        public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
-            var sql = @"INSERT INTO Reservas (IdUsuario, IdPublicacion, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, ReservaEstado) 
-                        VALUES (@IdUsuario, @IdPublicacion, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @ReservaEstado)";
-            await _db.ExecuteAsync(sql, reserva);
+            var sql = @"
+                INSERT INTO Reservas (FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
+                VALUES (@FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion)";
+
+            var result = await _db.ExecuteAsync(sql, reservaCrearVM);
+
+            //  lógica para manejar los servicios adicionales (prueba)
+
+            return result > 0;
         }
 
-        public async Task Update(Reserva reserva)
+        public async Task<bool> CancelarReservaAsync(int idReserva)
         {
-            var sql = @"UPDATE Reservas SET FechaInicial = @FechaInicial, FechaFinal = @FechaFinal, NumeroPersonas = @NumeroPersonas, 
-                        PrecioTotal = @PrecioTotal, ReservaEstado = @ReservaEstado 
-                        WHERE IdReserva = @IdReserva";
-            await _db.ExecuteAsync(sql, reserva);
+            var sql = "UPDATE Reservas SET Estado = 'Cancelado' WHERE IdReserva = @IdReserva";
+            var result = await _db.ExecuteAsync(sql, new { IdReserva = idReserva });
+            return result > 0;
         }
 
-        public async Task<Reserva> GetAsync(Func<Reserva, bool> predicate)
+        public Task<bool> SaveAsync()
         {
-            var sql = @"SELECT * FROM Reservas WHERE IdReserva = @IdReserva";
-            return (await _db.QueryAsync<Reserva>(sql)).FirstOrDefault(predicate);
+            // No implementation needed for Dapper
+            return Task.FromResult(true);
         }
     }
 }

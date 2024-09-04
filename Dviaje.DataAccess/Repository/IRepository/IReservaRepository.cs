@@ -1,6 +1,13 @@
-﻿namespace Dviaje.DataAccess.Repository.IRepository
+﻿using Dviaje.Models.VM;
+
+namespace Dviaje.DataAccess.Repository.IRepository
 {
     public interface IReservaRepository
     {
+        Task<IEnumerable<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario);
+        Task<ReservaTarjetaV3VM> GetReservaByIdAsync(int idReserva);
+        Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM);
+        Task<bool> CancelarReservaAsync(int idReserva);
+        Task<bool> SaveAsync();
     }
 }
