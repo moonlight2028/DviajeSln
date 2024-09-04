@@ -14,19 +14,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,16 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Moderador\Controllers\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
-
-	<ItemGroup>
-		<UpToDateCheckBuilt Include="wwwroot/lib/tailwind/input.css" Set="Css" />
-		<UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
-	</ItemGroup>
-
-	<Target Name="Tailwind" BeforeTargets="Build">
-		<Exec Command=".\tailwindcss-v3-4-4 -i wwwroot/lib/tailwind/input.css -o wwwroot/lib/tailwind/output.css --minify" />
-	</Target>
 
 </Project>

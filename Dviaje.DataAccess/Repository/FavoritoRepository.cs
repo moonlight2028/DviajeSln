@@ -1,28 +1,20 @@
-﻿using Dviaje.DataAccess.Data;
-using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
-using Dviaje.Models.VM;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using System.Data;
 
 namespace Dviaje.DataAccess.Repository
 {
-    public class FavoritoRepository : Repository<Favorito>, IFavoritoRepository
+    public class FavoritoRepository : IFavoritosRepository
     {
-        private readonly ApplicationDbContext _db;
+        // Conexión de la base de datos
+        private readonly IDbConnection _db;
 
-        public FavoritoRepository(ApplicationDbContext db) : base(db)
+
+        // Constructor e inyección de la conexión a la base de datos
+        public FavoritoRepository(IDbConnection db)
         {
             _db = db;
         }
 
-        public Task<List<PublicacionTarjetaVM>>? ObtenerFavoritos(int pagina = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Favorito favorito)
-        {
-            _db.Favoritos.Update(favorito);
-        }
 
 
     }

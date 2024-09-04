@@ -6,15 +6,23 @@ using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Conexión a la base de datos
+// Conexión a la base de datos para Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(10, 4, 32)))
+);
+
+// Conexión a la base de datos para los repositorios
+builder.Services.AddScoped<IDbConnection>(cr =>
+    new MySqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 // Identity personalizado
@@ -30,8 +38,13 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 //EmailServicio
 builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
 
-// UnitOfWork
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// Inyección de Repositorios
+builder.Services.AddScoped<IFavoritosRepository, FavoritoRepository>();
+builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();
+builder.Services.AddScoped<IPqrsRepository, PqrsRepository>();
+builder.Services.AddScoped<IPublicacionesRepository, PublicacionesRepository>();
+builder.Services.AddScoped<IResenasRepository, ResenaRepository>();
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 
 var app = builder.Build();
 

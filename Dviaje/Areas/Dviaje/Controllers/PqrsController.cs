@@ -1,5 +1,4 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models.VM;
+﻿using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,32 +7,38 @@ namespace Dviaje.Areas.Dviaje.Controllers
     [Area("Dviaje")]
     public class PqrsController : Controller
     {
+        // Repositorios necesitados
         private IEnvioEmail _email;
-        private IUnitOfWork _unitOfWork;
 
 
-        // Inyección en el controlador.
-        public PqrsController(IEnvioEmail email, IUnitOfWork unitOfWork)
+        // Inyección de repositorios
+        public PqrsController(IEnvioEmail email)
         {
             _email = email;
-            _unitOfWork = unitOfWork;
         }
 
 
         public async Task<IActionResult> Pqrs()
         {
-
             ViewBag.SesionInicaida = false;
-            //Validar si l usuario valido session
-            //Si la sesion esta iniciada cambiar el viebag a verdadero
+
+            // Validar si el usuario inició sesión
+
+
+            // Si la sesión está iniciada, cambiar el ViewBag a verdadero
+
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Pqrs(PqrsRegistrarVM pqrsRegistrarVM)
+        public async Task<IActionResult> Pqrs(PqrsVM pqrs)
         {
+            // Validar Modelo
 
+            // Completar datos faltantes al modelo desde el controlador.
+
+            // Consulta de registro
 
             return View();
         }

@@ -1,25 +1,20 @@
-﻿@model PublicacionesVM
+﻿@model List<PublicacionTarjetaVM>
 
 @{
     ViewData["Title"] = "Publicaciones";
 }
 
-@section Styles{
+@section Styles {
     <!-- Swiper v11 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <!-- Font-awesome v6.5.2 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
-    <!-- Utilidades -->
-    <link rel="stylesheet" href="~/css/page/utilidades.css">
-
     <!-- Estilos custom -->
-    <link rel="stylesheet" href="~/css/page/publicaciones.css">
+    <link rel="stylesheet" href="~/css/publicaciones/publicaciones.css">
 }
 
+
 <div class="p-2">
-    <!-- Buscar formulario -->
+@*     <!-- Buscar formulario -->
     <form action="" class="w-full my-10">
         <!-- Barra de busqueda -->
         <div class="flex flex-col gap-4 max-w-7xl p-2 rounded-3xl mx-auto overflow-hidden sm:p-4 lg:flex-row lg:p-2   b-s-11">
@@ -332,10 +327,14 @@
             <!-- Fin Filtros -->
         </div>
     </form>
-    <!-- Fin Buscar formulario -->
+    <!-- Fin Buscar formulario --> *@
+
+
 
     <!-- Publicaciones -->
     <section class="flex flex-col items-center gap-2 max-w-screen-2xl mx-auto">
+        
+        @* 
         <!-- Fitro ordenar publicaciones -->
         <section class="relative ml-auto mb-5">
             <button class="inline-flex items-center overflow-hidden rounded-md border bg-white group hover:border-orange-500"
@@ -355,10 +354,12 @@
             </div>
         </section>
         <!-- Fin Fitro ordenar publicaciones -->
-        
+         *@
+
+
         <!-- Tarjetas de publicaciones. -->
-        @if(Model.PublicacionTarjetas != null && Model.PublicacionTarjetas.Any()){
-            foreach(var publicacion in Model.PublicacionTarjetas)
+        @if(Model != null && Model.Any()){
+            foreach(var publicacion in Model)
             {
                 <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
                     <!-- Imágenes publicación -->
@@ -425,7 +426,7 @@
 
                                 <!-- Calificación -->
                                 <section class="flex items-center justify-start gap-2">
-                                    <span class="font-semibold text-4xl">@publicacion.Calificacion</span>
+                                    <span class="font-semibold text-4xl">@publicacion.Puntuacion</span>
 
                                     <a asp-area="Dviaje" asp-controller="Reseñas" asp-action="Reseñas" asp-route-idPublicacion="@publicacion.IdPublicacion" class="mt-1 group">
                                         <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
@@ -434,7 +435,7 @@
                                             <i class="fa-regular fa-star"></i>
                                             <i class="fa-regular fa-star"></i>
                                             <i class="fa-regular fa-star"></i>
-                                            <div style="width: @($"{(publicacion.Calificacion / 5) * 100}%")"
+                                            <div style="width: @($"{(publicacion.Puntuacion / 5) * 100}%")"
                                                  class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
                                                 <i class="fa-solid fa-star"></i>
                                                 <i class="fa-solid fa-star"></i>
@@ -443,7 +444,7 @@
                                                 <i class="fa-solid fa-star"></i>
                                             </div>
                                         </div>
-                                        <span class="text-sm text-gray-500 group-hover:text-black">(@publicacion.TotalResenas.ToString("N0") Reseñas)</span>
+                                        <span class="text-sm text-gray-500 group-hover:text-black">(@publicacion.NumeroResenas.ToString("N0") Reseñas)</span>
                                     </a>
                                 </section>
                             </div>
@@ -487,14 +488,16 @@
         <!-- Fin Tarjeta publicación -->
     </section>
     <!-- Fin Publicaciones -->
-    
-    @* Componente de paginación. *@
-    <div 
+
+    <!-- Componente de paginación. -->
+
+
+@*     <div 
         id="pagination-wrapper"
         data-paginacion-total="@(Model.Paginacion != null ? Model.Paginacion.PaginasTotales : 0)"
         data-paginacion-resultados-mostrados="@(Model.Paginacion != null ? Model.Paginacion.ResultadosMostrados : 0)"
         paginacion-resultados-totales="@(Model.Paginacion != null ? Model.Paginacion.ResultadosTotales : 0)">
-    </div>
+    </div> *@
 
 
 

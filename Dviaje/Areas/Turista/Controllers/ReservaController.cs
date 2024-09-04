@@ -1,5 +1,4 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
+﻿using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,129 +7,86 @@ namespace Dviaje.Areas.Turista.Controllers
     [Area("Turista")]
     public class ReservaController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IEnvioEmail _envioEmail;
 
-        public ReservaController(IUnitOfWork unitOfWork, IEnvioEmail envioEmail)
+        public ReservaController(IEnvioEmail envioEmail)
         {
-            _unitOfWork = unitOfWork;
             _envioEmail = envioEmail;
         }
 
-        public async Task<IActionResult> Reserva(int? idPublicacion)
+
+        public async Task<IActionResult> Reservar(int? idPublicacion)
         {
-            if (idPublicacion == null)
-            {
-                return NotFound();
-            }
+            // Validacion ruta de pagina
 
-            var publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == idPublicacion);
+            ReservaCrearVM reservaFormulario = new ReservaCrearVM { IdPublicacion = (int)idPublicacion };
 
-            if (publicacion == null)
-            {
-                return NotFound();
-            }
+            // Consulta
+            // Cargar servicios adicionales de la publicacion
+            reservaFormulario.ServiciosAdicionales = null;
 
-            // Modelo para la vista con datos iniciales
-            var reserva = new Reserva
-            {
-                IdPublicacion = publicacion.IdPublicacion,
-                Publicacion = publicacion,
-                FechaInicial = DateTime.Now,
-                FechaFinal = DateTime.Now.AddDays(1),
-                NumeroPersonas = 1
-            };
-
-            return View(reserva);
+            return View(reservaFormulario);
         }
 
-        // POST: Turista/Reserva/Reserva
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reserva(Reserva reserva)
+        public async Task<IActionResult> Reservar(ReservaCrearVM reservaFormCrear)
         {
-            if (!ModelState.IsValid)
-            {
-                reserva.Publicacion = await _unitOfWork.PublicacionRepository.GetAsync(p => p.IdPublicacion == reserva.IdPublicacion);
-                return View(reserva);
-            }
+            // Validar Modelo
 
-            await _unitOfWork.ReservaRepository.AddAsync(reserva);
-            await _unitOfWork.Save();
+            // Obtener Id Usuario
 
-            // Enviar correo de confirmación al turista
-            var turista = await _unitOfWork.UsuariosTest.GetAsync(u => u.Id == reserva.IdUsuario);
-            var aliado = await _unitOfWork.UsuariosTest.GetAsync(u => u.Id == reserva.Publicacion.IdAliado);
+            // Validar si existe la publicación
+            // Validar si la publicacion si tiene los servicios adicionales
+            // Si no pasa las validaciones retornar a Publicaciones
 
-            string asunto = "Confirmación de Reserva";
-            string cuerpoCorreoTurista = $"Hola {turista.Avatar}, tu reserva para {reserva.Publicacion.Titulo} ha sido confirmada.";
-            string cuerpoCorreoAliado = $"Hola {aliado.Avatar}, se ha realizado una nueva reserva para tu publicación {reserva.Publicacion.Titulo}.";
+            // LLenar campos faltantes del modelo y calcular precio total
 
-            await _envioEmail.EnviarEmail(asunto, turista.Email, turista.Avatar, cuerpoCorreoTurista, "<p>" + cuerpoCorreoTurista + "</p>");
-            await _envioEmail.EnviarEmail(asunto, aliado.Email, aliado.Avatar, cuerpoCorreoAliado, "<p>" + cuerpoCorreoAliado + "</p>");
-
-            TempData["Success"] = "Reserva realizada exitosamente y correos enviados.";
+            // Consulta
+            // Registrar en la tabla Reservas
+            // Si tiene ServiciosAdicionales registrar en la tabla ReservasServiciosAdicionales
 
             return RedirectToAction(nameof(MisReservas));
         }
 
-        // GET: Turista/Reserva/MisReservas
-        public async Task<IActionResult> MisReservas()
+        public async Task<IActionResult> MisReservas(int? pagina, string? estado)
         {
-            var reservas = await _unitOfWork.ReservaRepository.GetReservaTarjetas();
+            // Consulta
+            List<ReservaTarjetaV2VM>? listaReservas = null;
 
-            if (reservas == null || !reservas.Any())
-            {
-                return View("NoReservas"); // Si no tienes reservas (en proceso)
-            }
+            return View(listaReservas);
+        }
 
-            return View(reservas);
+        public async Task<IActionResult> MiReserva(int? idReserva)
+        {
+            // Consulta
+            ReservaTarjetaV3VM reservaDetalles = null;
+
+            return View(reservaDetalles);
         }
 
 
-        // GET: Turista/Reserva/MiReserva/5
-        public async Task<IActionResult> MiReserva(int? id)
+        // Endpoints para JS
+        [HttpGet]
+        public IActionResult ReservaTarjeta(int? idReserva)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            // Validacion ruta de pagina
 
-            // Llamada al nuevo método GetReservaTarjetaPorId
-            var reserva = await _unitOfWork.ReservaRepository.GetReservaTarjetaPorId(id.Value);
+            // Obtener el ID del usuario autenticado
 
-            if (reserva == null)
-            {
-                return NotFound();
-            }
+            // Cosulta
+            // Validar si el Id del usuario es igual al registrado en la reserva
+            ReservaTarjetaVM? resenaTarjeta = null;
 
-            return View(reserva);
+            // Retornar JSON, si es null retornar NoContent
+
+            return Ok();
         }
 
-
-
-        // cancelar una reserva
+        [HttpDelete]
         public async Task<IActionResult> CancelarReserva(int reservaId)
         {
-            var reserva = await _unitOfWork.ReservaRepository.GetAsync(r => r.IdReserva == reservaId);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-
-            var diasParaReserva = (reserva.FechaInicial - DateTime.Now).TotalDays;
-            if (diasParaReserva < 8)
-            {
-                TempData["Error"] = "No se puede cancelar la reserva, faltan menos de 8 días.";
-                return RedirectToAction("MisReservas"); // Redirigir a las reservas del usuario
-            }
-
-            reserva.ReservaEstado = ReservaEstado.Cancelado;
-            _unitOfWork.ReservaRepository.Update(reserva);
-            await _unitOfWork.Save();
-            TempData["Success"] = "Reserva cancelada exitosamente.";
-
-            return RedirectToAction("MisReservas");
+            return Ok();
         }
+
     }
 }
