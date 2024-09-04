@@ -1,4 +1,4 @@
-﻿using Dviaje.Models.VM;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Turista.Controllers
