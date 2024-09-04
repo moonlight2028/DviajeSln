@@ -3,6 +3,6 @@
     public class AdjuntosVM
     {
         public string? RutaAdjunto { get; set; }
-        public string? IdMensaje { get; set; }
+        public int IdMensaje { get; set; }
     }
 }

@@ -238,12 +238,19 @@ namespace Dviaje.DataAccess.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("Banner")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
                     b.Property<string>("Direccion")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.Property<int>("NumeroPublicaciones")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Puntuacion")
+                        .HasColumnType("decimal(2,1)");
 
                     b.Property<string>("RazonSocial")
                         .HasMaxLength(40)

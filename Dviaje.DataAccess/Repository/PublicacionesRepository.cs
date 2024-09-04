@@ -10,13 +10,15 @@ namespace Dviaje.DataAccess.Repository
         // Conexión de la base de datos
         private readonly IDbConnection _db;
 
+
         // Constructor e inyección de la conexión a la base de datos
         public PublicacionesRepository(IDbConnection db)
         {
             _db = db;
         }
 
-        // Metodos de consultas
+
+        // Retorna todas las publicaciones registradas
         public async Task<int> PublicacionesTotales()
         {
             string consulta = "SELECT COUNT(*) FROM publicaciones";
@@ -108,7 +110,7 @@ namespace Dviaje.DataAccess.Repository
             return publicaciones.ToList();
         }
 
-        public async Task<PublicacionVM?> ObtenerPublicacionPorIdAsync(string idPublicacion)
+        public async Task<PublicacionVM?> ObtenerPublicacionPorIdAsync(int idPublicacion)
         {
             // // Consulta para obtener la publicación
             string consultaPublicacion = @"

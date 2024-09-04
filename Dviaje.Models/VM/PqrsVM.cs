@@ -3,14 +3,14 @@
     public class PqrsVM
     {
         // Campos de la tabla AtencionViajeros
-        public string? IdAtencionViajero { get; set; }
+        public int IdAtencionViajero { get; set; }
         public DateTime? FechaAtencion { get; set; }
         public AtencionesViajerosTipoPqrs AtencionesViajerosTipoPqrs { get; set; }
         public AtencionesViajerosEstado AtencionesViajerosEstado { get; set; }
 
 
         // Campos de la tabla Mensajes
-        public string? IdMensaje { get; set; }
+        public int IdMensaje { get; set; }
         public DateTime? FechaMensaje { get; set; }
         public string? Descripcion { get; set; }
         public string? Nombre { get; set; }
@@ -19,7 +19,7 @@
         public string? Telefono { get; set; }
 
 
-        // Archivos adjuntos
+        // Campos de la tabla Adjuntos
         public List<AdjuntosVM>? Adjuntos { get; set; }
     }
 }

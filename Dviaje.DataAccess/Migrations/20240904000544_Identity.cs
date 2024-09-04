@@ -44,6 +44,8 @@ namespace Dviaje.DataAccess.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Avatar = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Banner = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     RazonSocial = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SitioWeb = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
@@ -53,6 +55,7 @@ namespace Dviaje.DataAccess.Migrations
                     Verificado = table.Column<bool>(type: "tinyint(1)", nullable: true),
                     NumeroPublicaciones = table.Column<int>(type: "int", nullable: true),
                     AliadoEstado = table.Column<int>(type: "int", nullable: true),
+                    Puntuacion = table.Column<decimal>(type: "decimal(2,1)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)

@@ -18,7 +18,6 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        // Metodos
         public async Task<IActionResult> Publicaciones(int? pagina, string? ordenar)
         {
             // Validacion ruta de pagina
@@ -46,18 +45,38 @@ namespace Dviaje.Areas.Dviaje.Controllers
             return View(listaPublicaciones);
         }
 
-        public async Task<IActionResult> Publicacion(string? id)
+        public async Task<IActionResult> Publicacion(int? id)
         {
             // Validacion ruta de pagina
             if (id is null) return RedirectToAction(nameof(Publicaciones));
 
             // Publicación
-            PublicacionVM? publicacionBuscada = await _publicacionesRepository.ObtenerPublicacionPorIdAsync(id);
+            PublicacionVM? publicacionBuscada = await _publicacionesRepository.ObtenerPublicacionPorIdAsync((int)id);
 
             // Validación
             if (publicacionBuscada is null) return RedirectToAction(nameof(Publicaciones));
 
             return View(publicacionBuscada);
         }
+
+
+        // Endpoints para JS
+        [HttpGet]
+        public IActionResult ListaPublicaciones(string? idUsuario, int? pagina)
+        {
+            // Validacion ruta de idUsuario
+
+            // Agregar logica de paginacion para las PublicacionesTarjetas con sus validaciones, en esta logica se necesita otra consulta
+
+            /* Consulta
+             * La lista de PublicacionTarjetaV2VM debe tener paginacion
+            */
+            List<PublicacionTarjetaV2VM> listaPublicaciones = null; // Consulta
+
+            // Retornar JSON, si es null retornar NoContent
+
+            return Ok();
+        }
+
     }
 }

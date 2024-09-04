@@ -39,7 +39,12 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
 
 // Inyección de Repositorios
+builder.Services.AddScoped<IFavoritosRepository, FavoritoRepository>();
+builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();
+builder.Services.AddScoped<IPqrsRepository, PqrsRepository>();
 builder.Services.AddScoped<IPublicacionesRepository, PublicacionesRepository>();
+builder.Services.AddScoped<IResenasRepository, ResenaRepository>();
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 
 var app = builder.Build();
 

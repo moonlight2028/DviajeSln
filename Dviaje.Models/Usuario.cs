@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dviaje.Models
 {
@@ -7,6 +8,10 @@ namespace Dviaje.Models
     {
         [StringLength(255)]
         public string? Avatar { get; set; }
+
+
+        [StringLength(255)]
+        public string? Banner { get; set; }
 
 
         [StringLength(40)]
@@ -30,5 +35,9 @@ namespace Dviaje.Models
 
         [Required]
         public AliadoEstado AliadoEstado { get; set; }
+
+
+        [Column(TypeName = "decimal(2,1)")]
+        public decimal Puntuacion { get; set; }
     }
 }
