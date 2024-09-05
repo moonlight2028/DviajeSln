@@ -1,112 +1,158 @@
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
     public class ReseñaController : Controller
     {
-        public ReseñaController()
+        private readonly IResenasRepository _resenaRepository;
+
+        public ReseñaController(IResenasRepository resenaRepository)
         {
+            _resenaRepository = resenaRepository;
         }
 
+        // GET: Muestra las reseñas disponibles para que el usuario pueda reseñar
         public async Task<IActionResult> Disponibles(int? pagina)
         {
-            // Validacion ruta de pagina
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            // Obtener el ID del usuario autenticado
+            var paginaActual = pagina ?? 1;
+            var resenasDisponibles = await _resenaRepository.ObtenerResenasDisponiblesAsync(userId, paginaActual);
 
-            // Agregar logica de paginacion, en esta logica se necesita otra consulta
-
-            // Validar en la consulta si la reserva esta en estado Aprovado
-            // Validar en la consulta si la fecha final ya se cumplio
-            // Validar si en la tabla Resenas no hay un registro con el idReserva de la reserva
-            // Ordenar donde salga primero la fecha final más reciente
-            // La consulta tiene que tener paginación
-            List<ResenaDisponibleTarjetaVM>? resenasDisponibles = null; // Consulta
+            if (resenasDisponibles == null || !resenasDisponibles.Any())
+            {
+                return View("SinResenas");
+            }
 
             return View(resenasDisponibles);
         }
 
+        // GET: Muestra las reseñas realizadas por el usuario
         public async Task<IActionResult> MisReseñas(int? pagina)
         {
-            // Validacion ruta de pagina
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            // obtener el ID del usuario autenticado
+            var paginaActual = pagina ?? 1;
+            var resenas = await _resenaRepository.ObtenerMisResenasAsync(userId, paginaActual);
 
-            // Agregar logica de paginacion, en esta logica se necesita otra consulta
-
-            // Consulta
-            // No cargar el dato AvatarTurista
-            List<ResenasTarjetaVM> resenas = null;
+            if (resenas == null || !resenas.Any())
+            {
+                return View("SinResenas");
+            }
 
             return View(resenas);
         }
 
+        // GET: Crea una nueva reseña asociada a una reserva
         public IActionResult Crear(int? IdReserva)
         {
-            // Validacion ruta de pagina
+            if (!IdReserva.HasValue)
+            {
+                return RedirectToAction(nameof(Disponibles));
+            }
 
-            // Obtener el ID del usuario autenticado
+            var resenaFormulario = new ResenaCrearVM
+            {
+                IdReserva = IdReserva.Value,
+                Fecha = DateTime.Now // Fecha actual para la reseña
+            };
 
-            // Consulta
-            // Validar si la reserva existe y la realizo el usuario si no retornar a Disponibles
-
-            ResenaCrearVM formulario = new ResenaCrearVM { IdReserva = (int)IdReserva };
-
-            return View(formulario);
+            return View(resenaFormulario);
         }
 
+        // POST: Guarda la nueva reseña
         [HttpPost]
-        public IActionResult Crear(ResenaCrearVM resenaCrear)
+        public async Task<IActionResult> Crear(ResenaCrearVM resenaCrear)
         {
-            // Validacion ruta de pagina
+            if (!ModelState.IsValid)
+            {
+                return View(resenaCrear);
+            }
 
-            // Validar modelo
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            // obtener el ID del usuario autenticado
+            var validacion = await _resenaRepository.ValidarReservaParaResenaAsync(resenaCrear.IdReserva, userId);
 
-            // Consulta
-            // Validar si la reserva esta en estado Aprovado
-            // Validar si la fecha final ya se cumplio
-            // Validar si en la tabla Resenas no hay un registro con el idReserva de la reserva
-            // Si si no pasa las valiaciones retornar a MisReseñas
-            // Ejecutar consulta crear Resena
+            if (!validacion)
+            {
+                return RedirectToAction(nameof(MisReseñas));
+            }
 
-            return RedirectToAction(nameof(MisReseñas), new { pagina = 1 });
+            var success = await _resenaRepository.CrearResenaAsync(resenaCrear);
+            if (success)
+            {
+                return RedirectToAction(nameof(MisReseñas));
+            }
+
+            return View(resenaCrear);
         }
 
-
-        // Endpoints para JS
+        // POST: Incrementa el contador de "Me Gusta" en una reseña
         [HttpPost]
         [ActionName("MeGusta")]
         public async Task<IActionResult> CrearMeGusta(int? idResena)
         {
-            // Validar idResena
+            if (!idResena.HasValue)
+            {
+                return BadRequest();
+            }
 
-            // Obtener el id del usuario
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
 
-            // Consulta
-            // Valiadar que exista la Reseña
-            // Valiadar que no exista ya un registro en la tabla ResenasMeGusta
-            // Crear consulta para registrar en la tabla ResenasMeGusta
+            var success = await _resenaRepository.AgregarMeGustaAsync(idResena.Value, userId);
 
-            return Ok();
+            if (success)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
+        // DELETE: Elimina el "Me Gusta" en una reseña
         [HttpDelete]
         [ActionName("MeGusta")]
         public async Task<IActionResult> EliminarMeGusta(int? idResena)
         {
-            // Validar idResena
+            if (!idResena.HasValue)
+            {
+                return BadRequest();
+            }
 
-            // Obtener el id del usuario
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
 
-            // Consulta
-            // Valiadar que exista la Reseña
-            // Crear consulta para eliminar registro en la tabla ResenasMeGusta
+            var success = await _resenaRepository.EliminarMeGustaAsync(idResena.Value, userId);
 
-            return Ok();
+            if (success)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }
