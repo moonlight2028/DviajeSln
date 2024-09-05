@@ -15,6 +15,20 @@ namespace Dviaje.Areas.Turista.Controllers
             _resenaRepository = resenaRepository;
         }
 
+
+        public async Task<IActionResult> TopResenas(int cantidad = 10)
+        {
+            var resenasTop = await _resenaRepository.ObtenerResenasTopAsync(cantidad);
+
+            if (resenasTop == null || !resenasTop.Any())
+            {
+                return View("SinResenas");
+            }
+
+            return View(resenasTop);
+        }
+
+
         // GET: Muestra las reseñas disponibles para que el usuario pueda reseñar
         public async Task<IActionResult> Disponibles(int? pagina)
         {

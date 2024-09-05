@@ -106,5 +106,17 @@ namespace Dviaje.DataAccess.Repository
             var result = await _db.ExecuteAsync(sql, new { IdResena = idResena, IdUsuario = idUsuario });
             return result > 0;
         }
+
+        // Método para obtener las reseñas con más "Me Gusta"
+        public async Task<List<ResenasTarjetaVM>> ObtenerResenasTopAsync(int cantidad)
+        {
+            var sql = @"
+                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
+                FROM Resenas rs
+                ORDER BY rs.MeGusta DESC
+                LIMIT @Cantidad";
+
+            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { Cantidad = cantidad })).ToList();
+        }
     }
 }
