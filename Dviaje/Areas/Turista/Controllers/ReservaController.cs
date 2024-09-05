@@ -12,61 +12,60 @@ namespace Dviaje.Areas.Turista.Controllers
         private readonly IReservaRepository _reservaRepository;
         private readonly IEnvioEmail _envioEmail;
 
-        // Constructor con inyección de dependencias para acceder al repositorio de reservas y al servicio de envío de correos
+        // Constructor con inyección de dependencias para el repositorio de reservas y el servicio de envío de correos
         public ReservaController(IReservaRepository reservaRepository, IEnvioEmail envioEmail)
         {
             _reservaRepository = reservaRepository;
             _envioEmail = envioEmail;
         }
 
-        // GET: Muestra el formulario de reserva para una publicación específica
+        // GET: Muestra el formulario para reservar una publicación específica
         public async Task<IActionResult> Reservar(int? idPublicacion)
         {
-            // Si no se proporciona un id de publicación, redirige a la página de publicaciones
+            // Verifica si el ID de publicación es válido
             if (!idPublicacion.HasValue)
             {
-                return RedirectToAction("Index", "Publicaciones");
+                return RedirectToAction("Index", "Publicaciones"); // Redirige si no hay una publicación seleccionada
             }
 
-            // Crea un nuevo ViewModel de ReservaCrearVM para pasar datos a la vista
+            // Inicializa un ViewModel de ReservaCrearVM para la vista
             var reservaFormulario = new ReservaCrearVM
             {
                 IdPublicacion = idPublicacion.Value,
-                ServiciosAdicionales = new List<ServicioAdicionalVM>() // Cargar servicios adicionales si es necesario
+                ServiciosAdicionales = new List<ServicioAdicionalVM>() // Cargar servicios adicionales 
             };
 
-            // Aquí se podrían cargar servicios adicionales específicos de la publicación si es necesario
+
 
             return View(reservaFormulario);
         }
 
-        // POST: Registra una nueva reserva en la base de datos
+        // POST: Crea y guarda una nueva reserva en la base de datos
         [HttpPost]
         public async Task<IActionResult> Reservar(ReservaCrearVM reservaFormCrear)
         {
-            // Verifica que el modelo de datos sea válido
+            // Verifica si el modelo es válido
             if (!ModelState.IsValid)
             {
-                return View(reservaFormCrear); // Si no es válido, vuelve a mostrar el formulario con los errores
+                return View(reservaFormCrear); // Devuelve el formulario con errores
             }
 
             // Obtiene el ID del usuario autenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            reservaFormCrear.IdUsuario = userId; // Asigna el ID del usuario al ViewModel, nescita corrieccion para saber si es string o int 
-            //help xdxdxd
+            reservaFormCrear.IdUsuario = userId; // Asigna el ID del usuario (string) al ViewModel
 
-            // Llama al método del repositorio para registrar la reserva en la base de datos
+            // Llama al método del repositorio para registrar la reserva
             var success = await _reservaRepository.RegistrarReservaAsync(reservaFormCrear);
 
-            // Si el registro es exitoso, redirige a la lista de reservas
+            // Si la reserva es exitosa
             if (success)
             {
-                // Aquí podrías implementar la lógica para enviar correos de confirmación
+                // Opción para enviar correos de confirmación
                 // await _envioEmail.EnviarCorreoDeReservaAsync(...);
-                return RedirectToAction(nameof(MisReservas));
+                return RedirectToAction(nameof(MisReservas)); // Redirige a la lista de reservas
             }
 
-            return View(reservaFormCrear); // Si el registro falla, muestra de nuevo el formulario
+            return View(reservaFormCrear); // Si falla, muestra nuevamente el formulario
         }
 
         // GET: Muestra la lista de reservas del usuario autenticado
@@ -75,7 +74,7 @@ namespace Dviaje.Areas.Turista.Controllers
             // Obtiene el ID del usuario autenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Llama al método del repositorio para obtener todas las reservas del usuario
+            // Obtiene todas las reservas del usuario a través del repositorio
             var reservas = await _reservaRepository.GetAllReservasAsync(userId);
 
             // Si no hay reservas, muestra la vista "SinReservas"
@@ -84,21 +83,21 @@ namespace Dviaje.Areas.Turista.Controllers
                 return View("SinReservas");
             }
 
-            // Aquí podrías implementar la lógica de paginación si es necesario
+            //  implementar paginación,  hacerlo aquí
 
-            return View(reservas); // Muestra la lista de reservas
+            return View(reservas); // Muestra la lista de reservas del usuario
         }
 
         // GET: Muestra los detalles de una reserva específica
         public async Task<IActionResult> MiReserva(int? idReserva)
         {
-            // Si no se proporciona un ID de reserva, redirige a la lista de reservas
+            // Verifica si el ID de la reserva es válido
             if (!idReserva.HasValue)
             {
-                return RedirectToAction(nameof(MisReservas));
+                return RedirectToAction(nameof(MisReservas)); // Redirige si no se encuentra el ID de la reserva
             }
 
-            // Llama al método del repositorio para obtener los detalles de la reserva
+            // Obtiene los detalles de la reserva a través del repositorio
             var reservaDetalles = await _reservaRepository.GetReservaByIdAsync(idReserva.Value);
 
             // Si no se encuentra la reserva, redirige a la lista de reservas
@@ -114,16 +113,16 @@ namespace Dviaje.Areas.Turista.Controllers
         [HttpDelete]
         public async Task<IActionResult> CancelarReserva(int reservaId)
         {
-            // Llama al método del repositorio para cancelar la reserva en la base de datos
+            // Llama al método del repositorio para cancelar la reserva
             var success = await _reservaRepository.CancelarReservaAsync(reservaId);
 
-            // Si la cancelación es exitosa, retorna un resultado Ok
+            // Si la cancelación es exitosa, retorna una respuesta Ok
             if (success)
             {
                 return Ok(new { success = true });
             }
 
-            return BadRequest(new { success = false }); // Si falla, retorna un resultado de error
+            return BadRequest(new { success = false }); // Si falla, retorna un error
         }
     }
 }

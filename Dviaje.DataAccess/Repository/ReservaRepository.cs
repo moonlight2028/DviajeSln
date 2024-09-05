@@ -14,15 +14,16 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
+        // Obtener todas las reservas para un usuario
         public async Task<List<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario)
         {
             var sql = @"
                 SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.Estado AS ReservaEstado,
                        p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion,
-                       u.IdUsuario AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS VerificadoAliado
+                       u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS VerificadoAliado
                 FROM Reservas r
                 INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN Usuarios u ON p.IdAliado = u.IdUsuario
+                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
                 WHERE r.IdUsuario = @IdUsuario";
 
             var resultado = await _db.QueryAsync<ReservaTarjetaV2VM>(sql, new { IdUsuario = idUsuario });
@@ -30,21 +31,23 @@ namespace Dviaje.DataAccess.Repository
             return resultado.ToList();
         }
 
+        // Obtener detalles de una reserva específica por ID
         public async Task<ReservaTarjetaV3VM> GetReservaByIdAsync(int idReserva)
         {
             var sql = @"
                 SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.Estado AS ReservaEstado,
                        p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Ubicacion,
-                       u.IdUsuario AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
+                       u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
                        (SELECT TOP 5 pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden) AS Imagen
                 FROM Reservas r
                 INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN Usuarios u ON p.IdAliado = u.IdUsuario
+                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
                 WHERE r.IdReserva = @IdReserva";
 
             return await _db.QueryFirstOrDefaultAsync<ReservaTarjetaV3VM>(sql, new { IdReserva = idReserva });
         }
 
+        // Registrar una nueva reserva
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             var sql = @"
@@ -53,11 +56,12 @@ namespace Dviaje.DataAccess.Repository
 
             var result = await _db.ExecuteAsync(sql, reservaCrearVM);
 
-            //  lógica para manejar los servicios adicionales (prueba)
+
 
             return result > 0;
         }
 
+        // Cancelar una reserva
         public async Task<bool> CancelarReservaAsync(int idReserva)
         {
             var sql = "UPDATE Reservas SET Estado = 'Cancelado' WHERE IdReserva = @IdReserva";
@@ -67,7 +71,7 @@ namespace Dviaje.DataAccess.Repository
 
         public Task<bool> SaveAsync()
         {
-            // No implementation needed for Dapper
+
             return Task.FromResult(true);
         }
     }
