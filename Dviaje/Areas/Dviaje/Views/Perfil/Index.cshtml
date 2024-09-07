@@ -1,1 +1,97 @@
 ﻿@model PerfilPublicoVM
+
+
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/perfil/perfil-publico.css">
+}
+
+
+<section class="banner b-sc-1">
+    <img src="https://images.unsplash.com/photo-1504221507732-5246c045949b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+         alt="Banner del usuairo" class="img-f">
+</section>
+
+<div class="perfil b-sc-1">
+    <section class="perfil-avatar">
+        <a href="" class="perfil-avatar-img b-s-93">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="Avatar del usuario" class="img-f">
+        </a>
+        <div class="avatar-text-contenedor">
+            <a href="" class="perfil-avatar-text">
+                <h3>Publicaciones</h3>
+                <span>500</span>
+            </a>
+            <a href="" class="perfil-avatar-text">
+                <h3>Reseñas</h3>
+                <span>400</span>
+            </a>
+            <div class="perfil-avatar-text">
+                <h3>Reservas</h3>
+                <span>100</span>
+            </div>
+        </div>
+    </section>
+    <section class="perfil-info">
+        <section>
+            <div class="perfil-info-text">
+                <h1>Nombre</h1>
+                <i class="fa-solid fa-suitcase-rolling"></i>
+            </div>
+            <div class="perfil-info-adicional">
+                <div class="info-adicional-nota">
+                    <span>4.5</span>
+                    <div>
+                        <div class="adicional-estrellas-contenedor">
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <div class="adicional-estrellas-full" style="width: 70%;">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <span>Razón social</span>
+                    </div>
+                </div>
+                <div class="info-adicional-ubicacion">
+                    <a href="">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Dirección</span>
+                    </a>
+                    <span data-aliado-estado="disponible" class="aliado-estado">Disponible</span>
+                </div>
+            </div>
+        </section>
+        <nav>
+            <ul class="perfil-nav">
+                <li>
+                    <div href="" class="activo">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Publicaciones</span>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        <span>Reseñas</span>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </section>
+</div>
+
+
+
