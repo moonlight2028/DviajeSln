@@ -267,7 +267,7 @@ svg {
     top: 0;
     left: 0;
     width: 100%;
-    color: var(--color-default);
+    color: var(--color-default-black);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px); /* Soporte para navegadores Webkit */
     z-index: 1000;

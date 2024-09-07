@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Moderador\Controllers\" />
+    <Folder Include="wwwroot\css\landing\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\js\landing\" />
   </ItemGroup>

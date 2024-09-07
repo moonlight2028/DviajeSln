@@ -1,0 +1,217 @@
+﻿main {
+    background-color: var(--color-gris-50);
+}
+
+
+/* Preguntas */
+.accordion-item {
+    border-bottom: 1px solid var(--color-gris-100);
+}
+
+.accordion-button[aria-expanded='true'] {
+    border-bottom: 1px solid var(--color-primario-500);
+}
+
+.accordion-button {
+    position: relative;
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 1em 0;
+    color: var(--color-gris-700);
+    font-size: 1.15rem;
+    font-weight: 400;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+    .accordion-button:hover,
+    .accordion-button:focus {
+        cursor: pointer;
+        color: var(--color-primario-500);
+    }
+
+        .accordion-button:hover::after,
+        .accordion-button:focus::after {
+            cursor: pointer;
+            color: var(--color-primario-500);
+            border: 1px solid var(--color-primario-500);
+        }
+
+.accordion-title {
+    padding: 1em 1.5em 1em 0;
+}
+
+.icon {
+    display: inline-block;
+    position: absolute;
+    top: 18px;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid;
+    border-radius: 22px;
+}
+
+    .icon::before {
+        display: block;
+        position: absolute;
+        content: '';
+        top: 9px;
+        left: 5px;
+        width: 10px;
+        height: 2px;
+        background: currentColor;
+    }
+
+    .icon::after {
+        display: block;
+        position: absolute;
+        content: '';
+        top: 5px;
+        left: 9px;
+        width: 2px;
+        height: 10px;
+        background: currentColor;
+    }
+
+.accordion-button[aria-expanded='true'] {
+    color: var(--color-primario-500);
+}
+
+    .accordion-button[aria-expanded='true'] .icon::after {
+        width: 0;
+    }
+
+    .accordion-button[aria-expanded='true'] + .accordion-content {
+        opacity: 1;
+        max-height: 9em;
+        transition: all 200ms linear;
+        will-change: opacity, max-height;
+    }
+
+.accordion-content {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 200ms linear, max-height 200ms linear;
+    will-change: opacity, max-height;
+}
+
+    .accordion-content p {
+        font-size: 1rem;
+        font-weight: 300;
+        margin: 2em 0;
+    }
+
+
+/* Formulario */
+.contenedor-pqrs {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100dvh;
+    max-width: 1536px;
+    padding-top: 80px;
+    margin: 0 auto;
+}
+
+.datos {
+    width: 100%;
+    max-width: 600px;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 25px;
+    margin: 0 auto;
+    background-color: var(--color-default);
+}
+
+.datos,
+.pqrs {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.pqrs-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.button-87-main {
+    width: 100%;
+}
+
+
+/* Filepond */
+.filepond--root {
+    font-family: inherit;
+    font-weight: 400;
+    margin-bottom: 0;
+    background-color: var(--color-gris-100);
+    border-radius: 5px;
+}
+
+.filepond--drop-label {
+    color: var(--color-gris-700);
+}
+
+.filepond--panel-root {
+    background-color: var(--color-gris-100);
+}
+
+.filepond--label-action {
+    color: var(--color-gris-700);
+    text-decoration: underline;
+}
+
+    .filepond--label-action:hover {
+        color: var(--color-primario-500);
+    }
+
+.filepond--credits {
+    display: none;
+}
+
+
+/* Imagen */
+.pqrs-imagen {
+    display: none;
+}
+
+
+@media (min-width: 640px) {
+    .datos {
+        padding: 40px;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    /* Formulario */
+    .datos {
+        margin-left: 0;
+        margin-right: auto;
+        z-index: 10;
+    }
+
+    /* Imagen */
+    .pqrs-imagen {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100dvh;
+        width: 70%;
+        padding: 30px;
+        padding-top: 90px;
+        display: block;
+    }
+
+        .pqrs-imagen .img-f {
+            border-radius: 25px;
+        }
+}
