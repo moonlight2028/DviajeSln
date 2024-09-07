@@ -427,6 +427,11 @@ svg {
         }
 
 
+footer {
+    background-color: black;
+}
+
+
 @media (min-width: 640px) {
     /* Barra de navegación principal */
     .nav-main-a {

@@ -10,6 +10,7 @@
     height: calc(100dvh - 70px);
     color: var(--color-gris-700);
     font-size:.8rem;
+    min-height: 100dvh;
 }
 
 @media (min-width: 768px) {
@@ -34,7 +35,8 @@
         height: 100%;
         position: relative;
         z-index: auto;
-        padding:20px;
+        padding: 20px;
+        padding-top: 80px;
     }
 
     .ingreso-img img{

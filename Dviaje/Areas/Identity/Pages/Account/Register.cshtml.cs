@@ -104,17 +104,13 @@ namespace Dviaje.Areas.Identity.Pages.Account
 
             // Lista de roles seleccionados.
             // Campo temporal no va en la versión final.
-            public List<string> RolesSeleccionados { get; set; }
+            public List<string> RolesSeleccionados { get; set; } = new List<string>();
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            // Obtencion de los roles.
-            Input = new()
-            {
-                ListaRoles = _roleManager.Roles.Select(r => r.Name)
-            };
+            await CargarRolesAsync();
 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -122,8 +118,6 @@ namespace Dviaje.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            var hola = Input.RolesSeleccionados;
-
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -139,7 +133,7 @@ namespace Dviaje.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (Input.RolesSeleccionados == null)
+                    if (Input.RolesSeleccionados == null && Input.RolesSeleccionados.Any())
                     {
                         // Asignando el rol default.
                         await _userManager.AddToRoleAsync(user, RolesUtility.RoleTurista);
@@ -178,13 +172,23 @@ namespace Dviaje.Areas.Identity.Pages.Account
                 }
             }
 
+            await CargarRolesAsync();
+
             // If we got this far, something failed, redisplay form
             return Page();
         }
 
+        // Carga de roles
+        public async Task CargarRolesAsync()
+        {
+            Input = new()
+            {
+                ListaRoles = await Task.FromResult(_roleManager.Roles.Select(r => r.Name))
+            };
+        }
 
 
-        //Cambiado por el modelo Usuario para la creacion del usuario 
+        // Cambiado por el modelo Usuario para la creacion del usuario 
         private Usuario CreateUser()
         {
             try
