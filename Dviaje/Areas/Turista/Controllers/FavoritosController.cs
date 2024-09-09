@@ -1,59 +1,103 @@
-﻿using Dviaje.Models.VM;
+﻿using Dviaje.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
     public class FavoritosController : Controller
     {
-        // Inyección en el controlador.
-        public FavoritosController()
+        private readonly IFavoritosRepository _favoritoRepository;
+
+        public FavoritosController(IFavoritosRepository favoritoRepository)
         {
+            _favoritoRepository = favoritoRepository;
         }
 
-        public IActionResult Index(int? pagina)
+        // GET: Muestra la lista de favoritos del usuario autenticado
+        public async Task<IActionResult> Index(int? pagina)
         {
-            // Validacion ruta de pagina
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtener el ID del usuario autenticado
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            // Obtener el id del usuario
+            // Obtiene los favoritos del usuario
+            var favoritos = await _favoritoRepository.GetFavoritosByUsuarioAsync(userId);
 
-            // Paginación.
-            int favoritosTotales = 10; // Consulta 
+            if (favoritos == null || !favoritos.Any())
+            {
+                return View("SinFavoritos");
+            }
+
+            // Implementación de paginación
+            var paginaActual = pagina ?? 1;
             int favoritosPorPagina = 10;
-            int paginasTotales = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(favoritosTotales) / Convert.ToDecimal(favoritosPorPagina)));
+            int totalFavoritos = favoritos.Count();
+            int paginasTotales = (int)Math.Ceiling((double)totalFavoritos / favoritosPorPagina);
 
-            // Validacion ruta de pagina
-            if (pagina > paginasTotales) pagina = 1;
+            var favoritosPaginados = favoritos
+                .Skip((paginaActual - 1) * favoritosPorPagina)
+                .Take(favoritosPorPagina)
+                .ToList();
 
-            // Consulta
-            List<PublicacionTarjetaV2VM>? listaFavoritos = null;
+            ViewBag.PaginaActual = paginaActual;
+            ViewBag.PaginasTotales = paginasTotales;
 
-            return View(listaFavoritos);
+            return View(favoritosPaginados);
         }
 
-        // Endpoints para JS
+        // POST: Agrega una publicación a favoritos
         [HttpPost]
         [ActionName("Favorito")]
-        public IActionResult CrearFavorito(int? idPublicacion)
+        public async Task<IActionResult> CrearFavorito(int? idPublicacion)
         {
-            /*
-             * Obtener el id del usuario
-             * Crear consulta para registrar el favorito
-             */
+            if (!idPublicacion.HasValue)
+            {
+                return BadRequest();
+            }
 
-            return Ok();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtener el ID del usuario autenticado
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var success = await _favoritoRepository.CrearFavoritoAsync(idPublicacion.Value, userId);
+
+            if (success)
+            {
+                return Ok(new { success = true });
+            }
+
+            return BadRequest(new { success = false });
         }
 
+        // DELETE: Elimina una publicación de los favoritos
         [HttpDelete]
         [ActionName("Favorito")]
-        public IActionResult EliminarFavorito(int? idPublicacion)
+        public async Task<IActionResult> EliminarFavorito(int? idPublicacion)
         {
-            /*
-             * Obtener el id del usuario
-             * Crear consulta para eliminar el favorito
-             */
-            return Ok();
-        }
+            if (!idPublicacion.HasValue)
+            {
+                return BadRequest();
+            }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtener el ID del usuario autenticado
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var success = await _favoritoRepository.EliminarFavoritoAsync(idPublicacion.Value, userId);
+
+            if (success)
+            {
+                return Ok(new { success = true });
+            }
+
+            return BadRequest(new { success = false });
+        }
     }
 }
