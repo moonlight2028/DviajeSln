@@ -7,6 +7,7 @@
         public string? AvatarAliado { get; set; }
         public string? NombreAliado { get; set; }
         public int TotalPublicacionesAliado { get; set; }
+        public bool Verificado { get; set; } = false;
         public decimal Precio { get; set; }
         public string? Titulo { get; set; }
         public string? Direccion { get; set; }

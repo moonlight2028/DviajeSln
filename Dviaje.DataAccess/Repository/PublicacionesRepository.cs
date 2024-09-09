@@ -37,6 +37,7 @@ namespace Dviaje.DataAccess.Repository
                     a.Avatar AS AvatarAliado,
                     a.UserName AS NombreAliado,
                     IFNULL(a.NumeroPublicaciones, 0) AS TotalPublicacionesAliado,
+                    IFNULL(a.Verificado, 0) AS Verificado,
                     p.Precio,
                     p.Titulo,
                     p.Direccion,

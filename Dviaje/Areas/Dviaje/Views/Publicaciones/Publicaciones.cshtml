@@ -1,8 +1,10 @@
 ﻿@model List<PublicacionTarjetaVM>
 
+
 @{
     ViewData["Title"] = "Publicaciones";
 }
+
 
 @section Styles {
     <!-- Swiper v11 -->
@@ -13,496 +15,157 @@
 }
 
 
-<div class="p-2">
-@*     <!-- Buscar formulario -->
-    <form action="" class="w-full my-10">
-        <!-- Barra de busqueda -->
-        <div class="flex flex-col gap-4 max-w-7xl p-2 rounded-3xl mx-auto overflow-hidden sm:p-4 lg:flex-row lg:p-2   b-s-11">
-
-            <div class="flex flex-col gap-4 sm:flex-row w-full">
-                <!-- Busqueda -->
-                <label for="UserEmail"
-                       class="relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 ml-4 focus-within:border-orange-500 w-[92%] sm:w-full">
-                    <input type="text" id="buscar" placeholder="Buscar"
-                           class="peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" />
-
-                    <span class="absolute start-0 top-2 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
-                        Buscar
-                    </span>
-                </label>
-
-                <!-- Fechas -->
-                <div class="flex gap-2">
-                    <label for="booking-busqueda-llegada"
-                           class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-                        <input type="date" id="booking-busqueda-llegada"
-                               class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
-                               placeholder="Username" />
-
-                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                            Llegada
-                        </span>
-                    </label>
-                    <label for="booking-busqueda-salida"
-                           class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-                        <input type="date" id="booking-busqueda-salida"
-                               class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
-                               placeholder="Username" />
-
-                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                            Salida
-                        </span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Botones -->
-            <div class="flex flex-col gap-2 sm:flex-row w-full">
-                <button class="group inline-block w-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
-                        href="#" id="booking-btn-filtrar">
-                    <span class="flex justify-center rounded-full bg-white py-2 text-base font-medium group-hover:bg-transparent text-orange-500 group-hover:text-white">
-                        Filtrar
-                    </span>
-                </button>
-
-                <button class="button-87-main text-base p-[9px] font-semibold w-full" type="submit">Buscar</button>
-            </div>
+<div class="main">
+    <!-- Sección búsqueda -->
+    <div class="nav-busqueda">
+        <!-- Ordenar -->
+        <div class="ordenar">
+            <span class="ordenar-titulo">Ordenar Por</span>
+            <div class="dropdown" id="ordenar-filtro"></div>
         </div>
-
-        <!-- Modal Filtros -->
-        <div class="fixed top-0 left-0 w-full h-svh z-[1000] backdrop-blur-sm bg-black bg-opacity-50 hidden"
-             id="booking-filtrar-modal">
-            <!-- Filtros -->
-            <section class="flex flex-col gap-1 p-2 w-full max-w-md rounded-xl border border-gray-300 b-s-11 mx-auto relative top-1/2 transform -translate-y-1/2 bg-white">
-                <!-- Fitro precio -->
-                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group"
-                         open>
-                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                        <span class="text-sm font-medium">Precio</span>
-
-                        <span class="transition group-open:-rotate-180 text-gray-300">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </summary>
-
-                    <div class="flex justify-between gap-4 p-4 border-t border-gray-200 bg-white">
-                        <label for="precioMinimo"
-                               class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-                            <input type="number" id="precioMinimo"
-                                   class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
-                                   placeholder="Precio mínimo $cop" />
-
-                            <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                                Precio mínimo $cop
-                            </span>
-                        </label>
-                        <label for="precioMaximo"
-                               class="relative block rounded-xl border border-gray-200 shadow-sm focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-                            <input type="number" id="precioMaximo"
-                                   class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
-                                   placeholder="Precio máximo $cop" />
-
-                            <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                                Precio máximo $cop
-                            </span>
-                        </label>
-                    </div>
-                </details>
-
-                <!-- Filtro puntiacion -->
-                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group"
-                         open>
-                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                        <span class="text-sm font-medium">Puntuación</span>
-
-                        <span class="transition group-open:-rotate-180 text-gray-300">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </summary>
-
-                    <div class="flex justify-center p-4 text-xl border-t border-gray-200 bg-white">
-                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-1"
-                               class="cursor-pointer hover:text-orange-500">
-                            <span>1</span>
-                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
-                        </label>
-                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-2"
-                               class="cursor-pointer pl-2 hover:text-orange-500">
-                            <span>2</span>
-                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
-                        </label>
-                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-3"
-                               class="cursor-pointer pl-2 hover:text-orange-500">
-                            <span>3</span>
-                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
-                        </label>
-                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-4"
-                               class="cursor-pointer pl-2 hover:text-orange-500">
-                            <span>4</span>
-                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
-                        </label>
-                        <label data-estrellas="puntuacion" for="booking-filtro-puntuacion-5"
-                               class="cursor-pointer pl-2 hover:text-orange-500">
-                            <span>5</span>
-                            <i class="fa-regular fa-star transition-all text-orange-500"></i>
-                        </label>
-
-                        <div class="hidden">
-                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-1"
-                                   value="1">
-                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-2"
-                                   value="2">
-                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-3"
-                                   value="3">
-                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-4"
-                                   value="4">
-                            <input type="radio" name="booking-filtro-puntuacion" id="booking-filtro-puntuacion-5"
-                                   value="5">
-                        </div>
-                    </div>
-                </details>
-
-                <!-- Fitro categorias -->
-                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
-                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                        <span class="text-sm font-medium">categorias</span>
-
-                        <span class="transition group-open:-rotate-180 text-gray-300">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </summary>
-
-                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                    </div>
-                </details>
-
-                <!-- Fitro Servicios de habitación -->
-                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
-                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                        <span class="text-sm font-medium">Servicios de habitación</span>
-
-                        <span class="transition group-open:-rotate-180 text-gray-300">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </summary>
-
-                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                    </div>
-
-                </details>
-
-                <!-- Fitro Servicios de establecimiento -->
-                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
-                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                        <span class="text-sm font-medium">Servicios de establecimiento</span>
-
-                        <span class="transition group-open:-rotate-180 text-gray-300">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </summary>
-
-                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                    </div>
-
-                </details>
-
-                <!-- Fitro Servicios de accesibilidad -->
-                <details class="overflow-hidden rounded-xl border border-gray-300 [&_summary::-webkit-details-marker]:hidden group">
-                    <summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-                        <span class="text-sm font-medium">Servicios de accesibilidad</span>
-
-                        <span class="transition group-open:-rotate-180 text-gray-300">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </summary>
-
-                    <div class="grid grid-cols-2 gap-4 p-4 border-t border-gray-200 bg-white">
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                        <label for="filtroCategoria"
-                               class="cursor-pointer text-gray-800 has-[:checked]:text-orange-500 w-full">
-                            <i class="fa-solid fa-guitar text-xl"></i>
-                            <span class="text-sm text-gray-600">Nombre categoria</span>
-                            <input type="checkbox" id="filtroCategoria" class="hidden">
-                        </label>
-                    </div>
-
-                </details>
-
-                <button class="group inline-block w-full mt-4 rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
-                        href="#">
-                    <span class="flex justify-center rounded-full bg-white py-2 text-base font-medium group-hover:bg-transparent text-orange-500 group-hover:text-white">
-                        Filtrar
-                    </span>
-                </button>
-            </section>
-            <!-- Fin Filtros -->
-        </div>
-    </form>
-    <!-- Fin Buscar formulario --> *@
-
+    </div>
 
 
     <!-- Publicaciones -->
-    <section class="flex flex-col items-center gap-2 max-w-screen-2xl mx-auto">
-        
-        @* 
-        <!-- Fitro ordenar publicaciones -->
-        <section class="relative ml-auto mb-5">
-            <button class="inline-flex items-center overflow-hidden rounded-md border bg-white group hover:border-orange-500"
-                    data-booking="btn-filtro" data-booking-filtro="precio">
-                <span data-booking="btn-span-select" class="border-e px-4 py-2 text-sm/none text-gray-600 hover:bg-gray-50 group-hover:text-black group-hover:border-e-orange-500">
-                </span>
-
-                <span class="h-full px-2 text-sm text-gray-600 group-hover:text-orange-500">
-                    <i class="fa-solid fa-chevron-down transition-all ease-in-out"></i>
-                </span>
-            </button>
-
-            <div class="absolute top-0 right-0 z-50 mt-8 rounded-xl border border-gray-100 bg-white shadow-lg overflow-hidden hidden"
-                 data-booking-filtro="precio-modal">
-                <div data-booking="btn-span-options" class="flex flex-col w-36 text-sm text-gray-600">
-                </div>
-            </div>
-        </section>
-        <!-- Fin Fitro ordenar publicaciones -->
-         *@
-
-
-        <!-- Tarjetas de publicaciones. -->
-        @if(Model != null && Model.Any()){
-            foreach(var publicacion in Model)
+    <section class="publicaciones">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var publicacion in Model)
             {
-                <article class="flex flex-col w-full rounded-3xl overflow-hidden md:flex-row md:h-[430px] md:items-center xl:h-[390px] max-w-screen-2xl b-s-95 tarjeta-publicación">
-                    <!-- Imágenes publicación -->
-                    <div class="swiper-carrusel relative w-full h-80 overflow-hidden md:h-full md:w-[30%]">
-                        <div class="swiper-wrapper">
-                            <!-- Slides -->
-                            @if(publicacion.Imagenes != null && publicacion.Imagenes.Any())
-                            {
-                                foreach(var imagen in publicacion.Imagenes){
-                                    <div class="swiper-slide">
-                                        <img src="@imagen.Ruta" alt="@imagen.Alt" class="img-f">
-                                    </div>    
-                                }
-                            }
-                        </div>
-
-                        <div class="swiper-carrusel-pagination absolute bottom-2 flex items-center justify-center rounded-xl w-fit px-3 text-sm text-white bg-black bg-opacity-70 z-10 left-1/2 transform -translate-x-1/2">
-                        </div>
-
-                        <div class="absolute top-0 flex justify-between w-full h-full text-white z-10 pointer-events-none">
-                            <div class="swiper-carrusel-prev flex items-center h-full text-2xl px-3 pointer-events-auto">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </div>
-                            <div class="swiper-carrusel-next flex items-center h-full text-2xl px-3 pointer-events-auto">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </div>
-                        </div>
-
-                        <button class="absolute top-0 right-0 mx-2 mt-1 text-3xl z-20 text-white md:right-auto">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <!-- FIn Imágenes publicación -->
-                    <!-- Información publicación -->
-                    <div class="p-3 md:w-[70%]">
-                        <!-- Usuario precio -->
-                        <section class="flex items-center justify-between">
-                            <a asp-area="Dviaje" asp-controller="Aliados" asp-action="Aliado" asp-route-id="@publicacion.AliadoId" class="flex items-center gap-2 group w-fit">
-                                <div class="w-12 h-12 rounded-full border-[2px] border-orange-500 overflow-hidden group-hover:border-cyan-500">
-                                    <img src="@publicacion.AvatarAliado"
-                                         alt="Avatar del aliado @publicacion.NombreAliado" class="img-f">
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-gray-800">@publicacion.NombreAliado</span>
-                                    <span class="text-xs text-gray-500 group-hover:text-black">@publicacion.TotalPublicacionesAliado.ToString("N0") Publicaciones</span>
-                                </div>
-                            </a>
-
-                            <div class="flex items-end">
-                                <span class="font-semibold text-2xl">@publicacion.Precio.ToString("C0", new System.Globalization.CultureInfo("es-CO"))</span>
-                                <span class="text-gray-500 text-sm">COP</span>
-                            </div>
-                        </section>
-
-                        <!-- Texto -->
-                        <section class="flex flex-col gap-2 mt-2">
-                            <h1 class="font-bold text-3xl">@publicacion.Titulo</h1>
-
-                            <div>
-                                <a href="" class="group">
-                                    <i class="fa-solid fa-location-dot text-orange-500 group-hover:text-orange-600"></i>
-                                    <span class="text-gray-500 group-hover:text-black">@publicacion.Direccion</span>
-                                </a>
-
-                                <!-- Calificación -->
-                                <section class="flex items-center justify-start gap-2">
-                                    <span class="font-semibold text-4xl">@publicacion.Puntuacion</span>
-
-                                    <a asp-area="Dviaje" asp-controller="Reseñas" asp-action="Reseñas" asp-route-idPublicacion="@publicacion.IdPublicacion" class="mt-1 group">
-                                        <div class="relative flex w-fit text-orange-500 group-hover:text-orange-600">
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <div style="width: @($"{(publicacion.Puntuacion / 5) * 100}%")"
-                                                 class="absolute top-0 left-0 w-full h-full flex overflow-hidden">
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-gray-500 group-hover:text-black">(@publicacion.NumeroResenas.ToString("N0") Reseñas)</span>
-                                    </a>
-                                </section>
-                            </div>
-
-                            <p class="text-lg text-pretty descripcion">@publicacion.Descripcion</p>
-
-                            <!-- Swiper categorias -->
-                            <div class="swiper-categorias">
-                                <div class="swiper-wrapper">
-                                    @if (publicacion.Categorias != null && publicacion.Categorias.Any())
+                <article class="publicacion b-s-95">
+                    <!-- Imagenes -->
+                    <div class="publicacion-imagen">
+                        <div class="swiper swiper-imagenes">
+                            <div class="swiper-wrapper">
+                                @if (publicacion.Imagenes != null)
+                                {
+                                    foreach (var imagen in publicacion.Imagenes)
                                     {
-                                        foreach(var categoria in publicacion.Categorias){
-                                            <a href="" class="swiper-slide relative w-fit px-3 text-md rounded-3xl cursor-pointer bg-orange-500 text-white hover:bg-orange-600 group">
-                                                <i class="@categoria.RutaIcono"></i>
-                                                <div class="absolute top-6 left-0 w-[200px] hidden text-sm text-start text-gray-700 pointer-events-none group-hover:block">
-                                                    @categoria.NombreCategoria
-                                                </div>
-                                            </a>
-                                        }
+                                        <div class="swiper-slide">
+                                            <img src="@imagen.Ruta" alt="@imagen.Alt" id="@($"img-publicacion-{imagen.IdPublicacion}")" class="img-f">
+                                        </div>
                                     }
+                                }
+                            </div>
+
+                            <div class="swiper-imagenes-pagination"></div>
+
+                            <div class="swiper-imagenes-botones">
+                                <div class="swiper-imagenes-prev">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </div>
+                                <div class="swiper-imagenes-next">
+                                    <i class="fa-solid fa-chevron-right"></i>
                                 </div>
                             </div>
-                            <!-- Fin Swiper categorias -->
-                        </section>
-
-                        <!-- Botones -->
-                        <div class="flex flex-col gap-1 mt-5 md:flex-row md:w-[500px]">
-                            <a asp-area="Turista" asp-controller="Reserva" asp-action="Reserva" asp-route-idPublicacion="@publicacion.IdPublicacion" class="w-full">
-                                <button class="button-64-segundo w-full">
-                                    <span class="text-xl font-semibold">Reservar</span>
-                                </button>
-                            </a>
-
-                            <a class="button-87-main text-xl font-semibold md:w-full" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion">Ver más</a>
                         </div>
                     </div>
-                    <!-- Fin Información publicación -->
+
+                    <!-- Datos -->
+                    <div class="publicacion-informacion">
+                        <div class="publicacion-informacion-header">
+                            <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-idUsuario="@publicacion.AliadoId" class="informacion-header-avatar">
+                                <div class="header-avatar">
+                                    <img src="@publicacion.AvatarAliado" alt="@($"Avatar del aliado {publicacion.NombreAliado}")" class="img-f">
+                                </div>
+                                <div>
+                                    <p>
+                                        @publicacion.NombreAliado
+                                        @if (publicacion.Verificado)
+                                        {
+                                            <span class="header-avatar-verificado">
+                                                <i class="fa-solid fa-suitcase-rolling"></i>
+                                            </span>
+                                        }
+                                    </p>
+                                    <div>
+                                        <span>@publicacion.TotalPublicacionesAliado.ToString("N")</span>
+                                        <span>Publicaciones</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="informacion-header-precio">
+                                <span>$</span>
+                                <span>@publicacion.Precio.ToString("N0")</span>
+                            </div>
+                        </div>
+                        <div class="publicacion-informacion-texto">
+                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion">
+                                <h1>@publicacion.Titulo</h1>
+                            </a>
+                            <div class="informacion-texto-puntuacion">
+                                <span>@publicacion.Puntuacion.ToString("0.0")</span>
+                                <a href="" class="texto-puntuacion-estrellas">
+                                    <div>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <div style="@($"width: {((publicacion.Puntuacion * 100) / 5).ToString()}%")">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span>@publicacion.NumeroResenas.ToString("N")</span>
+                                        <span>Reseñas</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <a href="" class="informacion-texto-ubicacion">
+                                <span><i class="fa-solid fa-location-dot"></i></span>
+                                <span>@publicacion.Direccion</span>
+                            </a>
+                            <p class="informacion-texto-descripcion">@publicacion.Descripcion</p>
+                        </div>
+                        <div class="publicacion-informacion-botones">
+                            <div class="publicacion-categorias">
+                                <div class="swiper-wrapper-categorias">
+                                    <div class="swiper-wrapper wrapper-categorias">
+                                        @if (publicacion.Categorias != null && publicacion.Categorias.Any())
+                                        {
+                                            foreach (var categoria in publicacion.Categorias)
+                                            {
+                                                <a href="" class="swiper-slide swiper-slide-categorias">
+                                                    <i class="@categoria.RutaIcono"></i>
+                                                    <span class="slide-categorias-nombre">@categoria.NombreCategoria</span>
+                                                </a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion" class="button-23">Reservar</a>
+                            <a asp-area="Turista" asp-controller="Reserva" asp-action="Reservar" asp-route-idPublicacion="@publicacion.IdPublicacion" class="button-87-main">Ver más</a>
+                        </div>
+                    </div>
                 </article>
             }
         }
-        <!-- Fin Tarjeta publicación -->
     </section>
-    <!-- Fin Publicaciones -->
-
-    <!-- Componente de paginación. -->
 
 
-@*     <div 
+    <!-- Paginación -->
+    <div class="paginacion">
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/publicaciones/publicaciones.js" type="module"></script>
+}
+
+
+
+
+@*     <div
         id="pagination-wrapper"
         data-paginacion-total="@(Model.Paginacion != null ? Model.Paginacion.PaginasTotales : 0)"
         data-paginacion-resultados-mostrados="@(Model.Paginacion != null ? Model.Paginacion.ResultadosMostrados : 0)"
         paginacion-resultados-totales="@(Model.Paginacion != null ? Model.Paginacion.ResultadosTotales : 0)">
     </div> *@
-
-
-
-</div>
-
-@section Scripts{
-    <script src="~/js/page/publicaciones.js" type="module"></script>
-}
