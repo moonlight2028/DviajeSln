@@ -1,32 +1,59 @@
-﻿using Dviaje.Models.VM;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
     public class PerfilController : Controller
     {
-        // Repositorios necesitados
+        private readonly IPerfilRepository _perfilRepository;
 
-
-        // Inyección de repositorios
-        public PerfilController()
+        public PerfilController(IPerfilRepository perfilRepository)
         {
-
+            _perfilRepository = perfilRepository;
         }
 
-        public IActionResult Index(string? idUsuario)
+        // Muestra el perfil público del usuario
+        public async Task<IActionResult> Index(string? idUsuario)
         {
-            // Validacion ruta de pagina
+            // Si no hay usuario autenticado, redirige al inicio
+            if (string.IsNullOrEmpty(idUsuario))
+            {
+                idUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
 
-            // Validar con Identity si el usuario tiene el rol turista, si no lo tiene redirigir a Landing
-            // Validar con Identity si el usuario tiene el rol aliado y si lo tiene asigna valor despues al modelo perfil y ejecutar consulta correspondiente
+            if (string.IsNullOrEmpty(idUsuario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            // Consulta perfil Aliado o Consulta perfil Turista
-            // Una consulta carga los datos del perfil del turista otra del aliado
-            PerfilPublicoVM? perfilPublico = null; // Consulta
+            // Obtener los roles del usuario
+            var esAliado = User.IsInRole("Aliado");
+            var esTurista = User.IsInRole("Turista");
 
-            return View(perfilPublico);
+            // Validar el rol y ejecutar la consulta correspondiente
+            PerfilPublicoVM perfilPublico = null;
+
+            if (esAliado)
+            {
+                // Consulta para obtener el perfil del aliado
+                perfilPublico = await _perfilRepository.GetPerfilAliadoAsync(idUsuario);
+            }
+            else if (esTurista)
+            {
+                // Consulta para obtener el perfil del turista
+                perfilPublico = await _perfilRepository.GetPerfilTuristaAsync(idUsuario);
+            }
+
+            // Si no se encuentra el perfil, redirige a la página de inicio
+            if (perfilPublico == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(perfilPublico); // Muestra la vista del perfil con los datos obtenidos
         }
     }
 }
