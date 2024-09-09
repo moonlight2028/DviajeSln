@@ -15,7 +15,7 @@ namespace Dviaje.Areas.Turista.Controllers
             _resenaRepository = resenaRepository;
         }
 
-
+        // Acción para mostrar las reseñas con más "Me Gusta"
         public async Task<IActionResult> TopResenas(int cantidad = 10)
         {
             var resenasTop = await _resenaRepository.ObtenerResenasTopAsync(cantidad);
@@ -28,8 +28,7 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(resenasTop);
         }
 
-
-        // GET: Muestra las reseñas disponibles para que el usuario pueda reseñar
+        // Muestra las reseñas disponibles para que el usuario pueda reseñar
         public async Task<IActionResult> Disponibles(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
@@ -49,7 +48,7 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(resenasDisponibles);
         }
 
-        // GET: Muestra las reseñas realizadas por el usuario
+        // Muestra las reseñas realizadas por el usuario
         public async Task<IActionResult> MisReseñas(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -69,7 +68,7 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(resenas);
         }
 
-        // GET: Crea una nueva reseña asociada a una reserva
+        // Crea una nueva reseña asociada a una reserva
         public IActionResult Crear(int? IdReserva)
         {
             if (!IdReserva.HasValue)
@@ -117,7 +116,7 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(resenaCrear);
         }
 
-        // POST: Incrementa el contador de "Me Gusta" en una reseña
+        // POST: Incrementa el contador de "Me Gusta" en una reseña (usando endpoint asíncrono)
         [HttpPost]
         [ActionName("MeGusta")]
         public async Task<IActionResult> CrearMeGusta(int? idResena)
@@ -134,16 +133,15 @@ namespace Dviaje.Areas.Turista.Controllers
             }
 
             var success = await _resenaRepository.AgregarMeGustaAsync(idResena.Value, userId);
-
             if (success)
             {
-                return Ok();
+                var meGustaCount = await _resenaRepository.ObtenerMeGustaCountAsync(idResena.Value);
+                return Ok(new { meGusta = meGustaCount });
             }
 
             return BadRequest();
         }
 
-        // DELETE: Elimina el "Me Gusta" en una reseña
         [HttpDelete]
         [ActionName("MeGusta")]
         public async Task<IActionResult> EliminarMeGusta(int? idResena)
@@ -160,13 +158,15 @@ namespace Dviaje.Areas.Turista.Controllers
             }
 
             var success = await _resenaRepository.EliminarMeGustaAsync(idResena.Value, userId);
-
             if (success)
             {
-                return Ok();
+                var meGustaCount = await _resenaRepository.ObtenerMeGustaCountAsync(idResena.Value);
+                return Ok(new { meGusta = meGustaCount });
             }
 
             return BadRequest();
         }
+
     }
 }
+
