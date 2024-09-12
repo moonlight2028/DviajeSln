@@ -359,7 +359,7 @@
 
 .paginacion-items-nav{
     font-size: 1rem;
-    border: none;
+    height: 30px;
 }
 
     .paginacion-items-nav:hover {

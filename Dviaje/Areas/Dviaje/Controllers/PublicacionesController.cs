@@ -35,15 +35,14 @@ namespace Dviaje.Areas.Dviaje.Controllers
             ordenar = ordenar == null ? "" : ordenar.Trim().ToLower();
 
             // Lista de publicaciones
-            //List<PublicacionTarjetaVM> listaPublicaciones = await _publicacionesRepository.ObtenerPublicacionesAsync((int)pagina, numeroPublicaciones, ordenar);
+            List<PublicacionTarjetaVM> listaPublicaciones = await _publicacionesRepository.ObtenerPublicacionesAsync((int)pagina, numeroPublicaciones, ordenar);
 
             // Paso de argumentos de paginación a la vista
-            ViewBag.PublicacionesTotales = publicacionesTotales;
-            ViewBag.PublicacionesPorVista = numeroPublicaciones;
-            ViewBag.PaginasTotales = paginasTotales;
+            ViewBag.PaginacionPaginas = paginasTotales;
+            ViewBag.PaginacionItems = numeroPublicaciones;
+            ViewBag.PaginacionResultados = publicacionesTotales;
 
-            //return View(listaPublicaciones);
-            return View();
+            return View(listaPublicaciones);
         }
 
         public async Task<IActionResult> Publicacion(int? id)
