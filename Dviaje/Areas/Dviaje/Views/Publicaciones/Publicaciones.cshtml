@@ -151,14 +151,36 @@
 
 
     <!-- Paginación -->
-    <div class="paginacion">
-    </div>
-</div>
+     <div class="paginacion" id="paginacion" data-paginacion-paginas="10" data-paginacion-items="5" data-paginacion-resultados="50"></div>
+ 
+
+
+
 
 
 @section Scripts {
     <script src="~/js/publicaciones/publicaciones.js" type="module"></script>
 }
+
+
+
+
+
+@*     <div class="paginacion" id="paginacion" data-paginacion-paginas="10" data-paginacion-items="5" data-paginacion-resultados="50">
+        <div>
+            <div class="paginacion-items">
+                <div class="paginacion-items-nav"><i class="fa-solid fa-chevron-left"></i></div>
+                <div class="paginacion-items-points">...</div>
+                <div class="paginacion-items-numbers">1</div>
+                <div class="paginacion-items-numbers">10</div>
+                <div class="paginacion-items-points">...</div>
+                <div class="paginacion-items-nav"><i class="fa-solid fa-chevron-right"></i></div>
+            </div>
+            <p>Mostrando resultados de 1 a 30 de 497</p>
+        </div>
+    </div> *@
+
+
 
 
 
@@ -169,3 +191,4 @@
         data-paginacion-resultados-mostrados="@(Model.Paginacion != null ? Model.Paginacion.ResultadosMostrados : 0)"
         paginacion-resultados-totales="@(Model.Paginacion != null ? Model.Paginacion.ResultadosTotales : 0)">
     </div> *@
+

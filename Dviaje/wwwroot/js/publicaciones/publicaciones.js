@@ -1,98 +1,60 @@
-/* swiper v11 */
-import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
-
-// Swiper Tarjetas
-let swiperCarrusel = new Swiper(".swiper-imagenes", {
-    lazy: true,
-    loop: true,
-    grabCursor: true,
-    pagination: {
-        el: ".swiper-imagenes-pagination",
-        type: "fraction",
-    },
-    navigation: {
-        nextEl: ".swiper-imagenes-next",
-        prevEl: ".swiper-imagenes-prev",
-    },
-});
-
-let swiperCategorias = new Swiper(".swiper-wrapper-categorias", {
-    lazy: true,
-    slidesPerView: 16,
-    spaceBetween: 5,
-    grabCursor: true,
-    freeMode: true,
-    loop: true,
-});
-// Fin Swiper Tarjetas
-
-
-
-//const btnOrdenar = document.getElementById("btn-ordenar");
-//const itemsOrdenar = document.getElementById("items-ordenar");
-
-
-
-// Elimina los acentos usando una expresi髇 regular
-const eliminarTilde = (str) => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-};
-
-const renderFiltroOrdenar = (filtro, items) => {
-    // Creaci髇 del template del filtro ordenar
-    let templateOrdenar = `
-    <button class="dropdown-toggle" id="btn-ordenar">${items[0]}</button>
-    <div class="dropdown-content b-s-95" id="items-ordenar">
-        ${items.map((valor, index) => {
-        if (index !== 0) {
-            return `<div data-ordenar="${eliminarTilde(valor).toLowerCase()}">${valor}</div>`
-        }
-    }).join('')}
-    </div>`.trim();
-
-    // Carga del template filtro ordenar
-    filtro.innerHTML = templateOrdenar;
-}
-
-
-/* Elementos */
-const main = document.querySelector('main');
-const filtroOrdenar = document.getElementById("ordenar-filtro");
+锘縤mport { publicacionesSwipers } from "./publicacionesSwipers.js"
+import { publicacionesOrdenar } from "./publicacionesOrdenar.js"
+import { paginacionNav } from "./paginacionNav.js"
 
 // URL
 let url = new URL(window.location.href);
 let parametros = new URLSearchParams(url.search);
 
-// Valores default del filtro ordenar
-const valoresOrdenar = ["Puntuaci髇", "Precio Mayor", "Precio Menor"];
+// Elementos
+// Filtro ordenar
+const main = document.querySelector('main');
+const filtroOrdenar = document.getElementById("ordenar-filtro");
+// Paginaci贸n
+const contenedorPaginacion = document.getElementById("paginacion");
+const numeroDePaginas = parseInt(contenedorPaginacion.getAttribute("data-paginacion-paginas"));
+const itemsPorPagina = parseInt(contenedorPaginacion.getAttribute("data-paginacion-items"));
+const resultadosTotales = parseInt(contenedorPaginacion.getAttribute("data-paginacion-resultados"));
+let paginaActual = 1;
 
-// Asignaci髇 a valores ordenar
+
+// Valores default del filtro ordenar
+let valoresOrdenar = ["Puntuaci贸n", "Precio Mayor", "Precio Menor"];
+
+// Asignaci贸n a valores ordenar
 if (parametros.has("ordenar")) {
-    switch (parametros.get("ordenar").trim().toLocaleUpperCase()) {
-        case "PRECIOMENOR":
-            valoresOrdenar = ["Precio Menor", "Precio Mayor", "Puntuaci髇"];
+    switch (parametros.get("ordenar").trim().toUpperCase()) {
+        case "PRECIO_MENOR":
+            valoresOrdenar = ["Precio Menor", "Precio Mayor", "Puntuaci贸n"];
             break;
-        case "PRECIOMAYOR":
-            valoresOrdenar = ["Precio Mayor", "Precio Menor", "Puntuaci髇"];
+        case "PRECIO_MAYOR":
+            valoresOrdenar = ["Precio Mayor", "Precio Menor", "Puntuaci贸n"];
             break;
     }
 }
 
-renderFiltroOrdenar(filtroOrdenar, valoresOrdenar);
+// Valores paginaci贸n
+if (parametros.has("pagina")) {
+    paginaActual = parseInt(parametros.get("pagina"));
+}
 
 
+// Render filtro ordenar
+publicacionesOrdenar(filtroOrdenar, valoresOrdenar);
+
+// Swiper tarjetas
+publicacionesSwipers();
+
+// Render paginaci贸n
+paginacionNav(paginaActual, numeroDePaginas, itemsPorPagina, resultadosTotales, contenedorPaginacion);
 
 
-
-
+// Evento click
 main.addEventListener('click', (event) => {
     const btnDropdownOrdenar = event.target.closest('.dropdown-toggle');
     const itemsDropdownOrdenar = event.target.closest('.dropdown-content');
 
-    //console.log(btnDropdownOrdenar)
-    //console.log(itemsDropdownOrdenar)
-
-
+    // Men煤 desplegable de filtro ordenar
     if (btnDropdownOrdenar) {
         const dropdown = btnDropdownOrdenar.nextElementSibling;
         dropdown.classList.toggle('show');
@@ -101,6 +63,31 @@ main.addEventListener('click', (event) => {
         allDropdowns.forEach(dropdown => {
             dropdown.classList.remove('show');
         });
+    }
+
+    // Redirige seg煤n el filtro de ordenar
+    if (itemsDropdownOrdenar) {
+        let valorItemClick = event.target.getAttribute('data-ordenar');
+        parametros.set("ordenar", valorItemClick);
+        url.search = parametros.toString();
+        window.location.href = url;
+    }
+
+    // Pagiancion
+    if (event.target.matches("div[data-pagina]")) {
+        const paginaNumero = parseInt(event.target.getAttribute('data-pagina'));
+        parametros.set("pagina", paginaNumero);
+        url.search = parametros.toString();
+        window.location.href = url;
+    }
+    if (event.target.closest("div[data-pagina-nav]")) {
+        let paginaNumero = paginaActual + 1;
+        if (event.target.closest("div[data-pagina-nav]").getAttribute("data-pagina-nav") === "anterior") {
+            paginaNumero = paginaActual - 1;
+        }
+        parametros.set("pagina", paginaNumero);
+        url.search = parametros.toString();
+        window.location.href = url;
     }
 });
 

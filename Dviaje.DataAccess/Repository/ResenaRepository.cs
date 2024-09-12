@@ -118,5 +118,20 @@ namespace Dviaje.DataAccess.Repository
 
             return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { Cantidad = cantidad })).ToList();
         }
+
+        public Task<List<ResenasTarjetaVM>> ObtenerMisResenasAsync(string idUsuario, int paginaActual)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ResenaDisponibleTarjetaVM>> ObtenerResenasDisponiblesAsync(string idUsuario, int paginaActual)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> ObtenerMeGustaCountAsync(int idResena)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

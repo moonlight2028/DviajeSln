@@ -49,14 +49,15 @@ namespace Dviaje.DataAccess.Repository
                 LEFT JOIN 
                     aspnetusers a ON p.IdAliado = a.Id
                 ORDER BY 
-                    CASE WHEN @orderBy IS NULL THEN p.Puntuacion END DESC, 
-                    CASE WHEN @orderBy IS NOT NULL THEN 
-                        CASE 
-                            WHEN @orderBy = 'Precio' THEN p.Precio
-                            WHEN @orderBy = 'Titulo' THEN p.Titulo
-                            ELSE p.Puntuacion
-                        END
-                    END DESC
+                    CASE 
+                        WHEN @orderBy IS NULL OR @orderBy NOT IN ('precio_mayor', 'precio_menor') THEN p.Puntuacion 
+                    END DESC,
+                    CASE 
+                        WHEN @orderBy = 'precio_mayor' THEN p.Precio 
+                    END DESC,
+                    CASE 
+                        WHEN @orderBy = 'precio_menor' THEN p.Precio 
+                    END ASC
                 LIMIT @pageSize OFFSET @offset;
             ";
 
