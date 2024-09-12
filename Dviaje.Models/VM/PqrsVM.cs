@@ -8,7 +8,6 @@
         public AtencionesViajerosTipoPqrs AtencionesViajerosTipoPqrs { get; set; }
         public AtencionesViajerosEstado AtencionesViajerosEstado { get; set; }
 
-
         // Campos de la tabla Mensajes
         public int IdMensaje { get; set; }
         public DateTime? FechaMensaje { get; set; }
@@ -17,7 +16,6 @@
         public string? Apellidos { get; set; }
         public string? Correo { get; set; }
         public string? Telefono { get; set; }
-
 
         // Campos de la tabla Adjuntos
         public List<AdjuntosVM>? Adjuntos { get; set; }
