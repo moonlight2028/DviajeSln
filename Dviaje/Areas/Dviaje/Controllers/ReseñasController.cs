@@ -1,4 +1,4 @@
-﻿using Dviaje.Models.VM;
+﻿using Dviaje.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
@@ -6,76 +6,88 @@ namespace Dviaje.Areas.Dviaje.Controllers
     [Area("Dviaje")]
     public class ReseñasController : Controller
     {
-        // Inyección en el controlador.
-        public ReseñasController()
+        private readonly IResenasRepository _resenaRepository;
+
+        // Inyección de dependencias
+        public ReseñasController(IResenasRepository resenaRepository)
         {
+            _resenaRepository = resenaRepository;
         }
 
-
-        public IActionResult Reseñas(int? idPublicacion)
+        // Muestra las reseñas públicas de una publicación específica
+        public async Task<IActionResult> Reseñas(int? idPublicacion)
         {
-            // Validacion ruta de pagina, si no pasa valiadciones retornar a Publicaciones
+            if (!idPublicacion.HasValue)
+            {
+                return RedirectToAction("Index", "Publicaciones");
+            }
 
-            // Consulta
-            ResenasPublicacionVM? resenas = null;
+            // Obtener reseñas para la publicación
+            var resenas = await _resenaRepository.ObtenerResenasPorPublicacionAsync(idPublicacion.Value, 1);
 
-            // Si resenas es null retornar a Publicaciones
+            if (resenas == null || !resenas.Any())
+            {
+                return View("SinResenas");
+            }
 
             return View(resenas);
         }
 
-
-        // Endpoints para JS
+        // Obtener lista de reseñas paginadas por publicación
         [HttpGet]
-        public IActionResult ListaReseñas(int? idPublicacion, int? pagina)
+        public async Task<IActionResult> ListaReseñas(int? idPublicacion, int? pagina = 1)
         {
-            // Validacion ruta
+            if (!idPublicacion.HasValue || pagina == null)
+            {
+                return BadRequest();
+            }
 
-            // Agregar logica de paginacion para las ResenasTarjetas con sus validaciones, en esta logica se necesita otra consulta
+            var resenas = await _resenaRepository.ObtenerResenasPorPublicacionAsync(idPublicacion.Value, pagina.Value);
 
-            /* Consulta
-             * La lista de ResenasTarjetaVM debe tener paginacion
-             * Ordenar las reseñas en la consulta de mejor calificacion a peor calificacion
-             */
-            List<ResenasTarjetaVM>? listaResenas = null; // Consulta
+            if (resenas == null || !resenas.Any())
+            {
+                return NoContent();
+            }
 
-            // Retornar JSON, si es null retornar NoContent
-
-            return Ok();
+            return Ok(resenas);
         }
 
+        // Obtener lista de reseñas paginadas por usuario
         [HttpGet]
-        public IActionResult ListaReseñas(string? idUsuario, int? pagina)
+        public async Task<IActionResult> ListaReseñas(string? idUsuario, int? pagina = 1)
         {
-            // Validacion ruta de idUsuario
+            if (string.IsNullOrEmpty(idUsuario) || pagina == null)
+            {
+                return BadRequest();
+            }
 
-            // Agregar logica de paginacion para las ResenasTarjetas con sus validaciones, en esta logica se necesita otra consulta
+            var resenas = await _resenaRepository.ObtenerMisResenasAsync(idUsuario, pagina.Value);
 
-            /* Consulta
-             * La lista de ResenasTarjetaVM debe tener paginacion
-             * Ordenar las reseñas en la consulta de mejor calificacion a peor calificacion
-             */
-            List<ResenasTarjetaVM>? listaResenas = null; // Consulta
+            if (resenas == null || !resenas.Any())
+            {
+                return NoContent();
+            }
 
-            // Retornar JSON, si es null retornar NoContent
-
-            return Ok();
+            return Ok(resenas);
         }
 
+        // Obtener las mejores 3 reseñas de una publicación
         [HttpGet]
-        public IActionResult TopReseñas(string? idPublicacion)
+        public async Task<IActionResult> TopReseñas(int? idPublicacion)
         {
-            // Validacion ruta de idPublicacion
+            if (!idPublicacion.HasValue)
+            {
+                return BadRequest();
+            }
 
-            /* Consulta
-             * Obtener top 3 reseñas con mejor calificacion
-             */
-            List<ResenasTarjetaVM>? listaResenas = null; // Consulta
+            var topResenas = await _resenaRepository.ObtenerTopResenasPorPublicacionAsync(idPublicacion.Value);
 
-            // Retornar JSON, si es null retornar NoContent
+            if (topResenas == null || !topResenas.Any())
+            {
+                return NoContent();
+            }
 
-            return Ok();
+            return Ok(topResenas);
         }
-
     }
 }

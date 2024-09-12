@@ -142,6 +142,7 @@ namespace Dviaje.Areas.Turista.Controllers
             return BadRequest();
         }
 
+
         [HttpDelete]
         [ActionName("MeGusta")]
         public async Task<IActionResult> EliminarMeGusta(int? idResena)
