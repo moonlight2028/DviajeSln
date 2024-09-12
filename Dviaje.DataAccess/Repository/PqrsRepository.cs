@@ -1,21 +1,68 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
+﻿using Dapper;
+using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
 using System.Data;
 
 namespace Dviaje.DataAccess.Repository
 {
     public class PqrsRepository : IPqrsRepository
     {
-        // Conexión de la base de datos
         private readonly IDbConnection _db;
 
-
-        // Constructor e inyección de la conexión a la base de datos
         public PqrsRepository(IDbConnection db)
         {
             _db = db;
         }
 
+        // Método para crear la PQRS
+        public async Task<bool> CrearPqrsAsync(PqrsVM pqrs)
+        {
+            using (var transaction = _db.BeginTransaction())
+            {
+                try
+                {
+                    // Insertar en la tabla de Mensajes
+                    var sqlMensaje = @"
+                        INSERT INTO Mensajes (FechaMensaje, Descripcion, Nombre, Apellidos, Correo, Telefono)
+                        VALUES (@FechaMensaje, @Descripcion, @Nombre, @Apellidos, @Correo, @Telefono);
+                        SELECT LAST_INSERT_ID();";  // Obtenemos el ID del mensaje insertado
 
+                    var idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensaje, new
+                    {
+                        FechaMensaje = pqrs.FechaMensaje ?? DateTime.Now,
+                        Descripcion = pqrs.Descripcion,
+                        Nombre = pqrs.Nombre,
+                        Apellidos = pqrs.Apellidos,
+                        Correo = pqrs.Correo,
+                        Telefono = pqrs.Telefono
+                    }, transaction);
 
+                    // Insertar en la tabla de Adjuntos si existen
+                    if (pqrs.Adjuntos != null && pqrs.Adjuntos.Any())
+                    {
+                        var sqlAdjuntos = @"
+                            INSERT INTO Adjuntos (RutaAdjunto, IdMensaje)
+                            VALUES (@RutaAdjunto, @IdMensaje)";
+
+                        foreach (var adjunto in pqrs.Adjuntos)
+                        {
+                            await _db.ExecuteAsync(sqlAdjuntos, new
+                            {
+                                RutaAdjunto = adjunto.RutaAdjunto,
+                                IdMensaje = idMensaje
+                            }, transaction);
+                        }
+                    }
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
     }
 }
