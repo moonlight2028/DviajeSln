@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Reporte de PQRS";
+}
+
+<h2>Reporte de PQRS</h2>
+<canvas id="pqrsChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("Pqrs", "Reportes", new { area = "Administrador" })',
+                method: 'GET',
+                success: function (data) {
+                    var labels = data.map(item => item.tipo);
+                    var values = data.map(item => item.cantidad);
+
+                    var ctx = document.getElementById('pqrsChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Cantidad de PQRS por Tipo',
+                                data: values,
+                                backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+                            }]
+                        },
+                        options: {
+                            responsive: true
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
