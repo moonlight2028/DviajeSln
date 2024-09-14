@@ -7,5 +7,6 @@
         public string? Descripcion { get; set; }
         public decimal Puntuacion { get; set; }
         public string? Imagen { get; set; }
+        public int NumeroResenas { get; set; }
     }
 }

@@ -9,5 +9,6 @@
         public decimal Puntuacion { get; set; }
         public int MeGusta { get; set; }
         public string? AvatarTurista { get; set; }
+        public string? NombreTurista { get; set; }
     }
 }
