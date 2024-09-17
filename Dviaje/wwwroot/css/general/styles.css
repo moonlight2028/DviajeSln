@@ -55,11 +55,11 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: var(--color-light-50);
 }
 
 main {
     min-height: 100dvh;
-    background-color: var(--color-light-50);
 }
 
 input,

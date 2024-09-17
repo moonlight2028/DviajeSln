@@ -18,10 +18,10 @@ export const publicacionesSwipers = () => {
 
     let swiperCategorias = new Swiper(".swiper-wrapper-categorias", {
         lazy: true,
-        slidesPerView: 16,
         spaceBetween: 5,
         grabCursor: true,
         freeMode: true,
         loop: true,
+        slidesPerView: 'auto',
     });
 }

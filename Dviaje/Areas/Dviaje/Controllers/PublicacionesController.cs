@@ -18,6 +18,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
+        [Route("Publicaciones")]
         public async Task<IActionResult> Publicaciones(int? pagina, string? ordenar)
         {
             // Validacion ruta de pagina

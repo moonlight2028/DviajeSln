@@ -10,8 +10,8 @@
 
     // Creación del template del filtro ordenar
     let templateOrdenar = `
-    <button class="dropdown-toggle" id="btn-ordenar">${items[0]}</button>
-    <div class="dropdown-content b-s-95" id="items-ordenar">
+    <button class="menu-desplegable-boton" id="btn-ordenar">${items[0]}</button>
+    <div class="menu-desplegable-contenido b-s-95" id="items-ordenar">
         ${items.map((valor, index) => {
         if (index !== 0) {
             return `<div data-ordenar="${dataOrdenar[index]}">${valor}</div>`

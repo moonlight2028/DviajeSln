@@ -1,6 +1,6 @@
 ﻿import { publicacionesSwipers } from "./publicacionesSwipers.js"
 import { publicacionesOrdenar } from "./publicacionesOrdenar.js"
-import { paginacionNav } from "./paginacionNav.js"
+import { paginacionNav } from "../general/paginacionNav.js"
 
 // URL
 let url = new URL(window.location.href);
@@ -8,7 +8,6 @@ let parametros = new URLSearchParams(url.search);
 
 // Elementos
 // Filtro ordenar
-const main = document.querySelector('main');
 const filtroOrdenar = document.getElementById("ordenar-filtro");
 // Paginación
 const contenedorPaginacion = document.getElementById("paginacion");
@@ -49,36 +48,27 @@ publicacionesSwipers();
 paginacionNav(paginaActual, numeroDePaginas, itemsPorPagina, resultadosTotales, contenedorPaginacion);
 
 
-// Evento click
-main.addEventListener('click', (event) => {
-    const btnDropdownOrdenar = event.target.closest('.dropdown-toggle');
-    const itemsDropdownOrdenar = event.target.closest('.dropdown-content');
+// Eventos
+// Redirige según el filtro de ordenar
+const itemsFiltroOrdenar = document.getElementById("items-ordenar");
+itemsFiltroOrdenar.addEventListener("click", (e) => {
+    e.stopPropagation();
 
-    // Menú desplegable de filtro ordenar
-    if (btnDropdownOrdenar) {
-        const dropdown = btnDropdownOrdenar.nextElementSibling;
-        dropdown.classList.toggle('show');
-    } else if (!itemsDropdownOrdenar && !event.target.closest('.dropdown')) {
-        const allDropdowns = document.querySelectorAll('.dropdown-content');
-        allDropdowns.forEach(dropdown => {
-            dropdown.classList.remove('show');
-        });
-    }
+    let valorItemClick = e.target.getAttribute('data-ordenar');
+    parametros.set("ordenar", valorItemClick);
+    url.search = parametros.toString();
+    window.location.href = url;
+})
 
-    // Redirige según el filtro de ordenar
-    if (itemsDropdownOrdenar) {
-        let valorItemClick = event.target.getAttribute('data-ordenar');
-        parametros.set("ordenar", valorItemClick);
-        url.search = parametros.toString();
-        window.location.href = url;
-    }
+// Pagiancion
+contenedorPaginacion.addEventListener("click", (event) => {
+    event.stopPropagation();
 
-    // Pagiancion
     if (event.target.matches("div[data-pagina]")) {
-        const paginaNumero = parseInt(event.target.getAttribute('data-pagina'));
-        parametros.set("pagina", paginaNumero);
-        url.search = parametros.toString();
-        window.location.href = url;
+            const paginaNumero = parseInt(event.target.getAttribute('data-pagina'));
+            parametros.set("pagina", paginaNumero);
+            url.search = parametros.toString();
+            window.location.href = url;
     }
     if (event.target.closest("div[data-pagina-nav]")) {
         let paginaNumero = paginaActual + 1;
@@ -89,5 +79,4 @@ main.addEventListener('click', (event) => {
         url.search = parametros.toString();
         window.location.href = url;
     }
-});
-
+})
