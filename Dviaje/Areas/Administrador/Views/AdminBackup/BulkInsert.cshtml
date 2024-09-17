@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Carga Masiva de Datos";
+}
+
+<h2>Carga Masiva de Datos en la Base de Datos</h2>
+
+<form asp-action="BulkInsert" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="dataFile">Seleccionar Archivo CSV</label>
+        <input type="file" name="dataFile" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Cargar Datos</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
