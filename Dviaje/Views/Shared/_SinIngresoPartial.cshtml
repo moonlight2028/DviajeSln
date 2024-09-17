@@ -6,11 +6,9 @@
 @if (!SignInManager.IsSignedIn(User))
 {
     <li>
-        <a class="nav-main-a" id="register" asp-area="Identity" asp-page="/Account/Login">
-            <button class="button-23">Ingresar</button>
-        </a>
+        <a class="button-23 botones-principal-identity" id="register" asp-area="Identity" asp-page="/Account/Login">Ingresar</a>
     </li>
     <li>
-        <a class="button-87-main nav-main-a" id="login" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
+        <a class="button-87-main botones-principal-identity" id="login" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
     </li>
 }

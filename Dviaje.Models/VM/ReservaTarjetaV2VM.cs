@@ -15,5 +15,6 @@
         public string? NombreAliado { get; set; }
         public string? AvatarAliado { get; set; }
         public bool VerificadoAliado { get; set; }
+        public int NumeroPublicacionesAliado { get; set; }
     }
 }

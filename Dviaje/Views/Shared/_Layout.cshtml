@@ -19,53 +19,49 @@
 <body>
     <header>
         <div class="contenedor-nav-main">
-        <nav class="nav-main">
-            <ul class="nav-main-ul">
-                <li>
-                    <a asp-area="Dviaje" asp-controller="Inicio" asp-action="Index">
-                        <!-- Optimizar imagen del logo -->
-                        <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
-                    </a>
-                </li>
-                <!-- Items de escritorio -->
-                <div class="nav-main-items">
-                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
-                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
-                    <li><a class="nav-main-a" href="">Item</a></li>
-                    <li><a class="nav-main-a" href="">Item</a></li>
-                </div>
-                <div class="nav-main-botones">
-                    <partial name="_SinIngresoPartial" />
-                    <partial name="_LoginPartial" />
-                    
-                    <!-- Items de mobile -->
-                    <div class="desplegable">
-                        <li class="nav-mobile-icono" data-desplegable="menu-mobile">
-                            <i class="fa-solid fa-bars"></i>
-                        </li>
-
-                        <ul class="desplegable-items" data-desplegable-items="menu-mobile">
-                            <li>
-                                <a class="h-p-500 desplegable-items-icons" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">
-                                    <i class="fa-solid fa-gear"></i>
-                                    Publicaciones
-                                </a>
-                            </li>
-                            <li>
-                                <a class="h-p-500 desplegable-items-icons" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">
-                                    <i class="fa-solid fa-gear"></i>
-                                    PQRS
-                                </a>
-                            </li>
-                            <div class="hr hr-butones-ingreso"></div>
-                            <div class="nav-mobile-ingreso">
-                                <partial name="_SinIngresoPartial" />
-                            </div>
-                        </ul>
+            <nav class="nav-main">
+                <ul class="nav-main-ul">
+                    <li>
+                        <a asp-area="Dviaje" asp-controller="Inicio" asp-action="Index">
+                            <!-- Optimizar imagen del logo -->
+                            <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
+                        </a>
+                    </li>
+                    <!-- Items de escritorio -->
+                    <div class="nav-main-items">
+                        <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
+                        <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
+                        <li><a class="nav-main-a" href="">Item</a></li>
+                        <li><a class="nav-main-a" href="">Item</a></li>
                     </div>
-                </div>
-            </ul>
-        </nav>
+                    <div class="nav-main-botones">
+                        <partial name="_SinIngresoPartial" />
+                        <partial name="_LoginPartial" />
+                    
+                        <!-- Items de mobile -->
+                        <div class="menu-desplegable menu-nav-mobile">
+                            <button class="menu-desplegable-boton menu-main-mobile">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                            <div class="menu-desplegable-contenido b-s-95">
+                                <div>
+                                    <li>
+                                        <a href="" class="">Publicaciones</a>
+                                    </li>
+                                </div>
+                                <div>
+                                    <li>
+                                        <a href="" class="">PQRS</a>
+                                    </li>
+                                </div>
+                                <div class="ingreso-parcial-botones">
+                                    <partial name="_SinIngresoPartial" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </nav>
         </div>
     </header>
 
@@ -81,7 +77,7 @@
 
     
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/general/layaut.js"></script>
+    <script src="~/js/general/layout.js"></script>
     
     @await RenderSectionAsync("Scripts", required: false)
 </body>
