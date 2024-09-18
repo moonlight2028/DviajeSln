@@ -31,6 +31,9 @@
     --color-light-50: #f8fafc;
     /* Zinc */
     --color-dark-400: #a1a1aa;
+    --color-dark-700: #3f3f46;
+    --color-dark-800: #27272a;
+    --color-dark-900: #18181b;
     --color-dark-950: #09090b;
     /* Grises */
     --color-gris-50: #f9fafb;
@@ -327,8 +330,6 @@ svg {
     left: 0;
     width: 100%;
     color: var(--color-default-black);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
     z-index: 1000;
 }
 

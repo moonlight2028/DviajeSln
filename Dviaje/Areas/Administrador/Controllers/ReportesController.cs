@@ -1,11 +1,9 @@
-﻿using Dviaje.Utility;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Administrador.Controllers
 {
     [Area("Administrador")]
-    [Authorize(Roles = RolesUtility.RoleAdministrador)]
+    //[Authorize(Roles = RolesUtility.RoleAdministrador)]
     public class ReportesController : Controller
     {
         public IActionResult Publicaciones()
