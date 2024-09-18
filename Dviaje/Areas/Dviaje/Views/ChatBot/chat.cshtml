@@ -1,0 +1,150 @@
+﻿@{
+    ViewData["Title"] = "ChatBot - Explora y Resuelve tus Dudas";
+}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>Explorador Virtual</h2>
+        <p>Estoy aquí para ayudarte a planear tu próxima aventura. Pregúntame lo que quieras sobre la plataforma y tus reservas.</p>
+    </div>
+
+    <div class="chat-content">
+        <div id="messages" class="chat-box">
+            <!-- Aquí aparecerán los mensajes -->
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="pregunta" placeholder="Escribe tu pregunta aquí..." />
+            <button id="enviar">Enviar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-image: url('https://example.com/mountain_background.jpg'); /* cambira por una imagen que sea agradable a la vista */
+        background-size: cover;
+        background-position: center;
+    }
+
+    .chat-container {
+        max-width: 500px;
+        margin: 50px auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .chat-header {
+        padding-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+    }
+
+        .chat-header h2 {
+            color: #2e8b57; /*  verde */
+            margin-bottom: 10px;
+        }
+
+        .chat-header p {
+            color: #6c757d;
+        }
+
+    .chat-content {
+        margin-top: 20px;
+    }
+
+    .chat-box {
+        background-color: #f0f8ff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        height: 300px;
+        padding: 10px;
+        overflow-y: scroll;
+        box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .chat-box div {
+            margin-bottom: 10px;
+        }
+
+        .chat-box .user {
+            text-align: left;
+            color: #007bff;
+        }
+
+        .chat-box .bot {
+            text-align: right;
+            color: #28a745;
+        }
+
+    .chat-input {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .chat-input input {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #2e8b57;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-input button {
+            width: 18%;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .chat-input button:hover {
+                background-color: #3cb371;
+            }
+</style>
+
+<!-- Script para el funcionamiento del chat -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Enviar mensaje al hacer clic en el botón
+        $("#enviar").click(function () {
+            enviarMensaje();
+        });
+
+        // Enviar mensaje al presionar Enter
+        $("#pregunta").keypress(function (e) {
+            if (e.which === 13) { // Tecla Enter
+                enviarMensaje();
+            }
+        });
+
+        function enviarMensaje() {
+            var pregunta = $("#pregunta").val();
+            if (pregunta !== "") {
+                $("#messages").append("<div class='user'><strong>Tú:</strong> " + pregunta + "</div>");
+
+                // Enviar la pregunta al chatbot
+                $.ajax({
+                    url: '/Chat/ChatBot/ObtenerRespuesta',
+                    type: 'POST',
+                    data: { pregunta: pregunta },
+                    success: function (response) {
+                        $("#messages").append("<div class='bot'><strong>Explorador:</strong> " + response.respuesta + "</div>");
+                        $("#pregunta").val(""); // Limpiar el campo de entrada
+                        $("#messages").scrollTop($("#messages")[0].scrollHeight); // Mantener el scroll en la parte inferior
+                    }
+                });
+            }
+        }
+    });
+</script>
