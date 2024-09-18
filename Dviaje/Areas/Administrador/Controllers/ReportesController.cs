@@ -30,33 +30,40 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpGet]
         public async Task<IActionResult> Reservas()
         {
-            var reservasData = await _reservaRepository.GetAll()
-                .GroupBy(r => r.FechaReserva.Date)
+            // Espera la lista de reservas antes de aplicar LINQ
+            var reservasList = await _reservaRepository.GetAll(); // Asegúrate de que GetAll() devuelva una lista de ReservaTarjetaV2VM
+
+            // Luego puedes aplicar LINQ sobre la lista
+            var reservasData = reservasList
+                .GroupBy(r => r.FechaInicial.Value.Date)  // Agrupar por la fecha inicial de la reserva
                 .Select(grp => new
                 {
                     Fecha = grp.Key,
                     Cantidad = grp.Count()
                 })
-                .ToListAsync();
+                .ToList();
 
             return Json(reservasData);
         }
+
 
         // Reporte de Publicaciones por Cantidad
         [HttpGet]
         public async Task<IActionResult> PublicacionesReporte()
         {
-            var publicacionesData = await _publicacionRepository.GetAll()
+            var publicacionesList = await _publicacionRepository.GetAll();
+            var publicacionesData = publicacionesList
                 .GroupBy(p => p.Categoria)
                 .Select(grp => new
                 {
                     Categoria = grp.Key,
                     Cantidad = grp.Count()
                 })
-                .ToListAsync();
+                .ToList();
 
             return Json(publicacionesData);
         }
+
 
         // Reporte de PQRS por Tipo
         [HttpGet]
