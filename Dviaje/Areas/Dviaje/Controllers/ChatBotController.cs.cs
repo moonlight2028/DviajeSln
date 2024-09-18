@@ -9,7 +9,7 @@ namespace Dviaje.Areas.Chat.Controllers
         // Acción para mostrar la interfaz del chatbot
         public IActionResult Chat()
         {
-            return View(); // Renderiza la vista Chat.cshtml
+            return View(); // vista Chat.cshtml
         }
 
         // Acción para recibir la pregunta y devolver la respuesta
