@@ -21,7 +21,7 @@ namespace Dviaje.Areas.Administrador.Controllers
                 var startInfo = new ProcessStartInfo
                 {
                     FileName = "mysqldump",
-                    Arguments = $"--user=root --password=tu_password --host=localhost nombre_base_datos --result-file={backupFileName}",
+                    Arguments = $"--user=root --password= --host=localhost dviaje --result-file={backupFileName}",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
