@@ -3,9 +3,11 @@
     public class PublicacionVM
     {
         public int IdPublicacion { get; set; }
+        public string? Titulo { get; set; }
         public decimal Puntuacion { get; set; }
         public int NumeroResenas { get; set; }
         public string? Descripcion { get; set; }
+        public string? Ubicacion { get; set; }
         public string? IdAliado { get; set; }
         public string? AvatarAliado { get; set; }
         public string? NombreAliado { get; set; }

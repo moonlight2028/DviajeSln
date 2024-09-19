@@ -15,7 +15,8 @@ namespace Dviaje.Areas.Dviaje.Controllers
             _perfilRepository = perfilRepository;
         }
 
-        // Muestra el perfil público del usuario
+
+        [Route("Perfil")]
         public async Task<IActionResult> Index(string? idUsuario)
         {
             // Si no hay usuario autenticado, redirige al inicio

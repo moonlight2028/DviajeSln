@@ -49,6 +49,7 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Muestra las reseñas realizadas por el usuario
+        // Corregir debe retornar una lista del modelo ResenaTarjetaV2VM
         public async Task<IActionResult> MisReseñas(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

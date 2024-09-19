@@ -8,9 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <Compile Remove="wwwroot\css\landing\**" />
+    <Compile Remove="wwwroot\js\landing\**" />
     <Content Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <Content Remove="wwwroot\css\landing\**" />
+    <Content Remove="wwwroot\js\landing\**" />
     <EmbeddedResource Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <EmbeddedResource Remove="wwwroot\css\landing\**" />
+    <EmbeddedResource Remove="wwwroot\js\landing\**" />
     <None Remove="Areas\Turista\Views\Atencion Viajero\**" />
+    <None Remove="wwwroot\css\landing\**" />
+    <None Remove="wwwroot\js\landing\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,9 +45,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Moderador\Controllers\" />
-    <Folder Include="wwwroot\css\landing\" />
     <Folder Include="wwwroot\img\" />
-    <Folder Include="wwwroot\js\landing\" />
   </ItemGroup>
 
 </Project>

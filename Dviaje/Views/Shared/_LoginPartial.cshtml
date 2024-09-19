@@ -5,26 +5,30 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    // Menu desplegable avatar
-    <div class="desplegable">
-        <div class="avatar" data-desplegable="avatar">
-            <img src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww" alt="Alternate Text" class="img-f" />
+    <div class="menu-desplegable">
+        <button class="menu-desplegable-boton nav-principal-avatar">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww" alt="Alternate Text" class="img-f" />
+        </button>
+        <div class="menu-desplegable-contenido b-s-95">
+            <div>
+                <li>
+                    <a class="nav-avatar-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                        <i class="fa-solid fa-user-gear"></i>
+                        Administra Cuenta
+                    </a>
+                </li>
+            </div>
+            <span class="nav-avatar-separador"></span>
+            <div>
+                <li>
+                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index","Inicio",new { area = "" })" class="nav-cerrar-sesion">
+                        <button id="logout" type="submit" class="nav-avatar-item">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Crear Sesión
+                        </button>
+                    </form>
+                </li>
+            </div>
         </div>
-
-        <ul class="desplegable-items" data-desplegable-items="avatar">
-            <li>
-                <a class="h-p-500 desplegable-items-icons" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                    <i class="fa-solid fa-user-gear"></i>
-                    Administrar Cuenta
-                </a>
-            </li>
-            <div class="hr"></div>
-            <form class="cerrar-sesion h-p-500" id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Inicio", new { area = "" })">
-                <button id="logout" type="submit">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    Cerrar sesión
-                </button>
-            </form>
-        </ul>
     </div>
 }

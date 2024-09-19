@@ -142,7 +142,7 @@ namespace Dviaje.DataAccess.Repository
 
             return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { Cantidad = cantidad })).ToList();
         }
-
+        
         // Obtiene reseñas públicas de una publicación
         public async Task<List<ResenasTarjetaVM>> ObtenerResenasPublicasAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10)
         {
@@ -175,15 +175,6 @@ namespace Dviaje.DataAccess.Repository
 
             return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { IdPublicacion = idPublicacion })).ToList();
         }
-
-        public Task<List<ResenasTarjetaVM>> ObtenerResenasPorPublicacionAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ResenasTarjetaVM>> ObtenerTopResenasPorPublicacionAsync(int idPublicacion, int cantidad = 3)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -8,6 +8,8 @@
         public decimal Puntuacion { get; set; }
         public int NumeroResenas { get; set; }
         public string? Ubicacion { get; set; }
+        public string? Descripcion { get; set; }
+        public List<Servicio>? Servicios { get; set; }
         // Imagenes con el orden, 5 Imagenes
         public List<PublicacionImagenVM>? Imagen { get; set; }
 
@@ -16,6 +18,7 @@
         public string? AvatarAliado { get; set; }
         public string? NombreAliado { get; set; }
         public bool Verificado { get; set; } = false;
+        public int NumeroPublicaciones { get; set; }
 
         // Datos de la reserva
         public int IdReserva { get; set; }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Dviaje.Areas.Administrador.Controllers
 {
     [Area("Administrador")]
-    [Authorize(Roles = "Administrador")] // Solo accesible para administradores
+    //[Authorize(Roles = RolesUtility.RoleAdministrador)]
     public class ReportesController : Controller
     {
         private readonly IReservaRepository _reservaRepository;

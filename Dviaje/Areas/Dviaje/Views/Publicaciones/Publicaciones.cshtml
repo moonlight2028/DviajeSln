@@ -18,10 +18,9 @@
 <div class="main">
     <!-- Sección búsqueda -->
     <div class="nav-busqueda">
-        <!-- Ordenar -->
         <div class="ordenar">
             <span class="ordenar-titulo">Ordenar Por</span>
-            <div class="dropdown" id="ordenar-filtro"></div>
+            <div class="menu-desplegable" id="ordenar-filtro"></div>
         </div>
     </div>
 
@@ -79,7 +78,7 @@
                                         }
                                     </p>
                                     <div>
-                                        <span>@publicacion.TotalPublicacionesAliado.ToString("N")</span>
+                                        <span>@publicacion.TotalPublicacionesAliado.ToString("N0")</span>
                                         <span>Publicaciones</span>
                                     </div>
                                 </div>
@@ -111,28 +110,27 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span>@publicacion.NumeroResenas.ToString("N")</span>
+                                        <span>@publicacion.NumeroResenas.ToString("N0")</span>
                                         <span>Reseñas</span>
                                     </div>
                                 </a>
                             </div>
                             <a href="" class="informacion-texto-ubicacion">
                                 <span><i class="fa-solid fa-location-dot"></i></span>
-                                <span>@publicacion.Direccion</span>
+                                <span class="informacion-direccion">@publicacion.Direccion</span>
                             </a>
                             <p class="informacion-texto-descripcion">@publicacion.Descripcion</p>
                         </div>
                         <div class="publicacion-informacion-botones">
                             <div class="publicacion-categorias">
                                 <div class="swiper-wrapper-categorias">
-                                    <div class="swiper-wrapper wrapper-categorias">
+                                    <div class="swiper-wrapper">
                                         @if (publicacion.Categorias != null && publicacion.Categorias.Any())
                                         {
                                             foreach (var categoria in publicacion.Categorias)
                                             {
                                                 <a href="" class="swiper-slide swiper-slide-categorias">
                                                     <i class="@categoria.RutaIcono"></i>
-                                                    <span class="slide-categorias-nombre">@categoria.NombreCategoria</span>
                                                 </a>
                                             }
                                         }
@@ -151,21 +149,10 @@
 
 
     <!-- Paginación -->
-    <div class="paginacion">
-    </div>
+     <div class="paginacion" id="paginacion" data-paginacion-paginas="@ViewBag.PaginacionPaginas" data-paginacion-items="@ViewBag.PaginacionItems" data-paginacion-resultados="@ViewBag.PaginacionResultados"></div>
 </div>
-
+ 
 
 @section Scripts {
     <script src="~/js/publicaciones/publicaciones.js" type="module"></script>
 }
-
-
-
-
-@*     <div
-        id="pagination-wrapper"
-        data-paginacion-total="@(Model.Paginacion != null ? Model.Paginacion.PaginasTotales : 0)"
-        data-paginacion-resultados-mostrados="@(Model.Paginacion != null ? Model.Paginacion.ResultadosMostrados : 0)"
-        paginacion-resultados-totales="@(Model.Paginacion != null ? Model.Paginacion.ResultadosTotales : 0)">
-    </div> *@

@@ -1,7 +1,114 @@
 ﻿@{
-    ViewData["Title"] = "Publicaciones";
+    ViewData["Title"] = "Reportes de Publicaciones";
 }
 
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/reportes/reportes.css">
+}
+
+
+<div class="menu-lateral">
+    <ul class="sidebar-menu">
+        <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-link sidebar-item-activo">
+                <i class="fa-solid fa-book-open"></i>
+                <span class="sidebar-menu-text">Publicaciones</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-link">
+                <i class="fa-solid fa-handshake-angle"></i>
+                <span class="sidebar-menu-text">PQRS</span>
+            </a>
+        </li>
+        <div class="sidebar-break"></div>
+        <li class="sidebar-menu-item">
+            <button class="sidebar-menu-link" id="descargar-pdf">
+                <i class="fa-solid fa-download"></i>
+                <span class="sidebar-menu-text">Descargar</span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<div class="reportes">
+    <h1>Reportes Publicaciones</h1>
+
+    <section class="contenedor-reportes">
+        <div class="graficos-seccion-uno">
+            <article class="contenedor-uno" id="grafica-por-mes">
+                <canvas id="publicacionesPorMes"></canvas>
+            </article>
+            <article class="contenedor-dos" id="grafica-categorias">
+                <canvas id="publicacionesCategorias"></canvas>
+            </article>
+            <article class="contenedor-tres" id="grafica-precios">
+                <canvas id="publicacionesPrecios"></canvas>
+            </article>
+        </div>
+        <div class="graficos-seccion-dos">
+            <article class="contenedor-cuatro"></article>
+        </div>
+        <div class="graficos-seccion-tres">
+            <article class="contenedor-cinco" id="grafica-top">
+                <canvas id="publicacionesTop"></canvas>
+            </article>
+            <article class="contenedor-seis" id="grafica-activo">
+                <canvas id="publicacionesActivas"></canvas>
+            </article>
+        </div>
+        
+    </section>
+</div>
+
+
+@section Scripts {
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JSPDF v2.5.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- HTHML2 Canvas v1.4.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script src="~/js/reportes/reportesPublicaciones.js" type="module"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
 @section Styles {
     <!-- Utilidades -->
     <link rel="stylesheet" href="~/css/page/utilidades.css">
@@ -127,3 +234,4 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="~/js/page/publicacionesReportes.js" type="module"></script>
 }
+ *@
