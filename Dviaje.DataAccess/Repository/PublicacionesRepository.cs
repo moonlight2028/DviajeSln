@@ -229,6 +229,9 @@ namespace Dviaje.DataAccess.Repository
             return publicacion;
         }
 
-
+        Task<PublicacionTarjetaV2VM> IPublicacionesRepository.GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

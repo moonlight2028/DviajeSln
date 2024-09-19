@@ -1,7 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dviaje.Areas.Administrador.Controllers
 {
@@ -51,17 +49,18 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpGet]
         public async Task<IActionResult> PublicacionesReporte()
         {
-            var publicacionesList = await _publicacionRepository.GetAll();
-            var publicacionesData = publicacionesList
-                .GroupBy(p => p.Categoria)
-                .Select(grp => new
-                {
-                    Categoria = grp.Key,
-                    Cantidad = grp.Count()
-                })
-                .ToList();
+            //var publicacionesList = await _publicacionRepository.GetAll();
+            //var publicacionesData = publicacionesList
+            //    .GroupBy(p => p.Categoria)
+            //    .Select(grp => new
+            //    {
+            //        Categoria = grp.Key,
+            //        Cantidad = grp.Count()
+            //    })
+            //    .ToList();
 
-            return Json(publicacionesData);
+            //return Json(publicacionesData);
+            return Ok();
         }
 
 
@@ -69,32 +68,36 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpGet]
         public async Task<IActionResult> Pqrs()
         {
-            var pqrsData = await _pqrsRepository.GetAll()
-                .GroupBy(p => p.TipoPqrs)
-                .Select(grp => new
-                {
-                    Tipo = grp.Key,
-                    Cantidad = grp.Count()
-                })
-                .ToListAsync();
+            //var pqrsData = await _pqrsRepository.GetAll()
+            //    .GroupBy(p => p.TipoPqrs)
+            //    .Select(grp => new
+            //    {
+            //        Tipo = grp.Key,
+            //        Cantidad = grp.Count()
+            //    })
+            //    .ToListAsync();
 
-            return Json(pqrsData);
+            //return Json(pqrsData);
+
+            return Ok();
         }
 
         // Reporte de Reseñas por Publicación
         [HttpGet]
         public async Task<IActionResult> Resenas()
         {
-            var resenasData = await _resenaRepository.GetAll()
-                .GroupBy(r => r.PublicacionId)
-                .Select(grp => new
-                {
-                    PublicacionId = grp.Key,
-                    Cantidad = grp.Count()
-                })
-                .ToListAsync();
+            //var resenasData = await _resenaRepository.GetAll()
+            //    .GroupBy(r => r.PublicacionId)
+            //    .Select(grp => new
+            //    {
+            //        PublicacionId = grp.Key,
+            //        Cantidad = grp.Count()
+            //    })
+            //    .ToListAsync();
 
-            return Json(resenasData);
+            //return Json(resenasData);
+
+            return Ok();
         }
 
         public IActionResult Index()

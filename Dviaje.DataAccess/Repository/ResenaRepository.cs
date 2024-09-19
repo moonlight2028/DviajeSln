@@ -142,9 +142,9 @@ namespace Dviaje.DataAccess.Repository
 
             return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { Cantidad = cantidad })).ToList();
         }
-        
+
         // Obtiene reseñas públicas de una publicación
-        public async Task<List<ResenasTarjetaVM>> ObtenerResenasPublicasAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10)
+        public async Task<List<ResenasTarjetaVM>> ObtenerResenasPorPublicacionAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10)
         {
             var sql = @"
                 SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
@@ -164,7 +164,7 @@ namespace Dviaje.DataAccess.Repository
         }
 
         // Obtiene las mejores 3 reseñas públicas de una publicación
-        public async Task<List<ResenasTarjetaVM>> ObtenerTopResenasPublicasAsync(int idPublicacion)
+        public async Task<List<ResenasTarjetaVM>> ObtenerTopResenasPorPublicacionAsync(int idPublicacion)
         {
             var sql = @"
                 SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
@@ -175,6 +175,6 @@ namespace Dviaje.DataAccess.Repository
 
             return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { IdPublicacion = idPublicacion })).ToList();
         }
-        
+
     }
 }

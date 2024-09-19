@@ -29,7 +29,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<List<ResenasTarjetaVM>> ObtenerResenasPorPublicacionAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10);
 
         // Obtener las mejores 3 reseñas de una publicación
-        Task<List<ResenasTarjetaVM>> ObtenerTopResenasPorPublicacionAsync(int idPublicacion, int cantidad = 3);
+        Task<List<ResenasTarjetaVM>> ObtenerTopResenasPorPublicacionAsync(int idPublicacion);
 
         Task<int> ObtenerMeGustaCountAsync(int idResena);
     }
