@@ -149,11 +149,12 @@ namespace Dviaje.DataAccess.Repository
                     p.NumeroResenas,
                     p.Descripcion,
                     p.Precio,
-                    p.Direccion,
+                    p.Direccion AS Ubicacion,
                     a.Id AS IdAliado,
                     a.Avatar AS AvatarAliado,
                     a.UserName AS NombreAliado,
-                    a.NumeroPublicaciones AS PublicacionesAliado
+                    a.NumeroPublicaciones AS PublicacionesAliado,
+                    IFNULL(a.Verificado, 0) AS VerificadoAliado
                 FROM Publicaciones p
                 LEFT JOIN aspnetusers a ON p.IdAliado = a.Id
                 WHERE p.IdPublicacion = @IdPublicacion;";
@@ -166,6 +167,22 @@ namespace Dviaje.DataAccess.Repository
             if (publicacion != null)
             {
                 // Consultas para obtener las listas relacionadas
+                string consultaPuntuaciones = @"
+                    SELECT 
+                        r.Calificacion AS puntuacion,
+                        COUNT(r.Calificacion) AS cantidad
+                    FROM 
+                        resenas r
+                    JOIN 
+                        reservas res ON r.IdReserva = res.IdReserva
+                    WHERE 
+                        res.IdPublicacion = @IdPublicacion
+                    GROUP BY 
+                        r.Calificacion
+                    ORDER BY 
+                        r.Calificacion DESC;
+                ";
+
                 string consultaImagenes = @"
                     SELECT 
                         pi.Ruta,
@@ -183,7 +200,8 @@ namespace Dviaje.DataAccess.Repository
                     WHERE pc.IdPublicacion = @IdPublicacion;";
 
                 string consultaServicios = @"
-                    SELECT 
+                    SELECT
+                        s.IdServicio,
                         s.NombreServicio,
                         s.ServicioTipo,
                         s.RutaIcono 
@@ -211,6 +229,7 @@ namespace Dviaje.DataAccess.Repository
 
 
                 // Ejecuta y obtiene los datos de las consultas
+                var puntuaciones = await _db.QueryAsync<PuntuacionVM>(consultaPuntuaciones, new { IdPublicacion = idPublicacion });
                 var imagenes = await _db.QueryAsync<PublicacionImagenVM>(consultaImagenes, new { IdPublicacion = idPublicacion });
                 var categorias = await _db.QueryAsync<CategoriaVM>(consultaCategorias, new { IdPublicacion = idPublicacion });
                 var servicios = await _db.QueryAsync<ServicioVM>(consultaServicios, new { IdPublicacion = idPublicacion });
@@ -219,6 +238,7 @@ namespace Dviaje.DataAccess.Repository
 
 
                 // Carga los datos de las sub consultas en el modelo de publicación
+                publicacion.PuntuacionPorEstrellas = puntuaciones.ToList();
                 publicacion.Imagenes = imagenes.ToList();
                 publicacion.Categorias = categorias.ToList();
                 publicacion.Servicios = servicios.ToList();

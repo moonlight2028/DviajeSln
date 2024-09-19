@@ -17,15 +17,15 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
 
         [Route("Perfil")]
-        public async Task<IActionResult> Index(string? idUsuario)
+        public async Task<IActionResult> Index(string? id)
         {
             // Si no hay usuario autenticado, redirige al inicio
-            if (string.IsNullOrEmpty(idUsuario))
+            if (string.IsNullOrEmpty(id))
             {
-                idUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             }
 
-            if (string.IsNullOrEmpty(idUsuario))
+            if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -40,12 +40,12 @@ namespace Dviaje.Areas.Dviaje.Controllers
             if (esAliado)
             {
                 // Consulta para obtener el perfil del aliado
-                perfilPublico = await _perfilRepository.GetPerfilAliadoAsync(idUsuario);
+                perfilPublico = await _perfilRepository.GetPerfilAliadoAsync(id);
             }
             else if (esTurista)
             {
                 // Consulta para obtener el perfil del turista
-                perfilPublico = await _perfilRepository.GetPerfilTuristaAsync(idUsuario);
+                perfilPublico = await _perfilRepository.GetPerfilTuristaAsync(id);
             }
 
             // Si no se encuentra el perfil, redirige a la página de inicio

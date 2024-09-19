@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
-    public class ReseñasController : Controller
+    public class ResenasController : Controller
     {
         private readonly IResenasRepository _resenaRepository;
 
         // Inyección de dependencias
-        public ReseñasController(IResenasRepository resenaRepository)
+        public ResenasController(IResenasRepository resenaRepository)
         {
             _resenaRepository = resenaRepository;
         }
 
         // Muestra las reseñas públicas de una publicación específica
-        public async Task<IActionResult> Reseñas(int? idPublicacion)
+        public async Task<IActionResult> Resenas(int? idPublicacion)
         {
             if (!idPublicacion.HasValue)
             {

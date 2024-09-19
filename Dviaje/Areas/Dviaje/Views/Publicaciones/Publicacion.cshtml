@@ -1,4 +1,445 @@
-﻿@* @model PublicacionVM
+﻿@model PublicacionVM
+
+
+@{
+    ViewData["Title"] = "Publicación";
+}
+
+
+@section Styles {
+    <!-- Swiper v11 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Fancybox ui v5.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@@5.0/dist/fancybox/fancybox.css" />
+
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/publicaciones/publicacion.css">
+}
+
+
+<div class="seccion-inicio">
+    <section class="inicio">
+        <div class="inicio-imagenes">
+            <div class="swiper carrusel-main">
+                <div class="swiper-wrapper">
+                    @if(Model.Imagenes != null && Model.Imagenes.Any())
+                    {
+                        foreach(var imagen in Model.Imagenes)
+                        {
+                            <!-- Imagen full resolución -->
+                            <a href="@imagen.Ruta" class="swiper-slide" data-fancybox="gallery">
+                                <!-- Imagen carrusel -->
+                                <img src="@imagen.Ruta" alt="@imagen.Alt" class="img-f">
+                            </a>
+                        }
+                    }
+                </div>
+
+                <div class="swiper-pagination"></div>
+
+                <div class="carrusel-main-paginacion">
+                    <div class="swiper-prev">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="swiper-next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper swiper-thumbs">
+                <div class="swiper-wrapper">
+                    @if (Model.Imagenes != null && Model.Imagenes.Any())
+                    {
+                        foreach (var imagen in Model.Imagenes)
+                        {
+                            <!-- Imagen de los thumbs -->
+                            <div class="swiper-slide">
+                                <img src="@imagen.Ruta" alt="@imagen.Alt" class="img-f">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="inicio-informacion">
+            <div>
+                <h1 class="informacion-titulo">@Model.Titulo</h1>
+                <a href="" class="informacion-ubicacion">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>@Model.Ubicacion</span>
+                </a>
+                <p class="informacion-descripcion">@Model.Descripcion</p>
+            </div>
+            <div class="informacion-lista-categorias">
+                @if (Model.Categorias != null && Model.Categorias.Any())
+                {
+                    foreach(var categoria in Model.Categorias)
+                    {
+                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@categoria.IdCategoria" class="informacion-categoria">
+                            <i class="@categoria.RutaIcono"></i>
+                            <span>@categoria.NombreCategoria</span>
+                        </a>
+                    }
+                }
+            </div>
+            <div class="contenedor-precio">
+                <span class="informacion-precio">@($"$ {Model.Precio.ToString("N0")}")</span>
+                <a asp-area="Turista" asp-controller="Reserva" asp-action="Reservar" asp-route-id="@Model.IdPublicacion" class="button-87-main">Reservar</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section class="puntuacion">
+    <div class="puntuacion-principal">
+        <section class="puntuacion-seccion">
+            <div class="contenedor-usuario">
+                <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.IdAliado" class="puntuacion-avatar">
+                    <img src="@Model.AvatarAliado" alt="@($"Avatar del Aliado {Model.NombreAliado}")" class="img-f">
+                </a>
+                <div class="puntuacion-usuario">
+                    <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.IdAliado">
+                        @Model.NombreAliado
+                        @if (Model.VerificadoAliado)
+                        {
+                            <i class="fa-solid fa-suitcase-rolling"></i>
+                        }
+                    </a>
+                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@Model.IdAliado" class="puntuacion-usuario-publicaciones">@($"{Model.PublicacionesAliado.ToString("N0")} Publicaciones")</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="contenedor-resenas">
+                    <span>@Model.Puntuacion</span>
+                    <a asp-area="Dviaje" asp-controller="Resena" asp-action="Resenas" asp-route-id="@Model.IdPublicacion" class="puntuacion-resenas">
+                        <div class="puntuacion-estrellas">
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <div class="puntuacion-estrellas-nota" style="@($"width: {(Model.Puntuacion / 5) * 100}%");">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <span>@($"{Model.NumeroResenas} Reseñas")</span>
+                    </a>
+                </div>
+
+                @if (Model.PuntuacionPorEstrellas != null && Model.PuntuacionPorEstrellas.Any())
+                {
+                    int sumaTotal = Model.PuntuacionPorEstrellas.Sum(p => p.Cantidad);
+
+                    foreach(var puntuacion in Model.PuntuacionPorEstrellas)
+                    {
+                        <div class="puntuacion-detalle">
+                            <div class="puntuacion-detalle-numero">
+                                <span>@puntuacion.Puntuacion</span>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="puntuacion-barra">
+                                <div class="puntuacion-barra-nota" style="@($"width: {(puntuacion.Cantidad / sumaTotal) * 100}%");" ></div>
+                            </div>
+                            <span class="puntuacion-detalle-resenas">@puntuacion.Cantidad</span>
+                        </div>
+                    }
+                }
+            </div>
+        </section>
+
+        <section class="contenedor-servicio">
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-button" id="accordion-button-1" aria-expanded="true">
+                        <span class="accordion-title">Servicios</span>
+                        <span class="icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="accordion-content">
+                        @if (Model.Servicios != null && Model.Servicios.Any())
+                        {
+                            foreach(var servicio in Model.Servicios)
+                            {
+                                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="servicio-item">
+                                    <i class="@servicio.RutaIcono"></i>
+                                    <span>@servicio.NombreServicio</span>
+                                </a>
+                            }    
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Restricciones != null && Model.Restricciones.Any())
+            {
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-2" aria-expanded="false">
+                            <span class="accordion-title">Restricciones</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+                            @foreach (var restriccion in Model.Restricciones)
+                            {
+                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-restriccion="@restriccion.IdRestriccion" class="servicio-item">
+                                <i class="@restriccion.RutaIcono"></i>
+                                <span>@restriccion.NombreRestriccion</span>
+                            </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+
+    @if(Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
+    {
+        <form class="formualrio">
+            <div class="form-servicios b-s-93">
+                <h2>Servicios Adicionales</h2>
+                <div class="form-items">
+                    @foreach(var servicio in Model.ServiciosAdicionales)
+                    {
+                        <label for="@servicio.IdServicioAdicional">
+                            <i class="@servicio.RutaIcono"></i>
+                            <span>@servicio.NombreServicio</span>
+                            <span class="form-items-check"><i class="fa-regular fa-circle-check"></i></span>
+                        </label>
+                        <input type="checkbox" id="@servicio.IdServicioAdicional">
+                    }
+                </div>
+            </div>
+            <div class="form-boton b-s-95">
+                <span>@($"$ {Model.Precio.ToString("N0")}")</span>
+                <a href="" class="button-87-main">Reservar</a>
+            </div>
+        </form>
+    }
+</section>
+
+<section class="top-imagenes">
+    <div class="imagenes-wrap-sticky">
+        <div class="top-imagenes-wrap">
+            <h2 class="top-imagenes-titulo">Descubre lo Mejor en Imágenes</h2>
+            @if  (Model.Imagenes != null && Model.Imagenes.Any())
+            {
+                foreach (var imagen in Model.Imagenes.Take(4))
+                {
+                    <div class="top-imagenes-imagen">
+                        <img src="@imagen.Ruta" alt="@imagen.Alt" class="img-f">
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<div class="resena-contenedor">
+    <h2>Reseñas Reales, Experiencias Únicas</h2>
+    <section class="resenas">
+        <article class="resena-tarjeta b-s-95">
+            <a href="" class="resena-avatar b-s-93">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                     alt="" class="img-f">
+            </a>
+            <p>
+                La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse
+                a
+                estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar
+                constantemente es esencial en un mundo donde la innovación es la norma diaria.
+            </p>
+            <div class="hr"></div>
+
+            <div class="resena-footer">
+                <div class="resena-usuario">
+                    <a href="">Usuario</a>
+                    <span>11 de Diciembre 2024</span>
+                </div>
+                <div class="resena-estrellas">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <div class="resena-puntuacion" style="width: 60%;">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="resena-like">
+                <i class="fa-regular fa-thumbs-up"></i>
+                <span>1.500</span>
+            </div>
+        </article>
+        <article class="resena-tarjeta b-s-95">
+            <a href="" class="resena-avatar b-s-93">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                     alt="" class="img-f">
+            </a>
+            <p>
+                La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse
+                a
+                estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar
+            </p>
+            <div class="hr"></div>
+
+            <div class="resena-footer">
+                <div class="resena-usuario">
+                    <a href="">Usuario</a>
+                    <span>11 de Diciembre 2024</span>
+                </div>
+                <div class="resena-estrellas">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <div class="resena-puntuacion" style="width: 60%;">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="resena-like">
+                <i class="fa-regular fa-thumbs-up"></i>
+                <span>1.500</span>
+            </div>
+        </article>
+        <article class="resena-tarjeta b-s-95">
+            <a href="" class="resena-avatar b-s-93">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                     alt="" class="img-f">
+            </a>
+            <p>
+                La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse
+                a
+                estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar
+                constantemente es esencial en un mundo donde la innovación es la norma diaria.
+            </p>
+            <div class="hr"></div>
+
+            <div class="resena-footer">
+                <div class="resena-usuario">
+                    <a href="">Usuario</a>
+                    <span>11 de Diciembre 2024</span>
+                </div>
+                <div class="resena-estrellas">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <div class="resena-puntuacion" style="width: 60%;">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="resena-like">
+                <i class="fa-regular fa-thumbs-up"></i>
+                <span>1.500</span>
+            </div>
+        </article>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/publicaciones/publicacion.js" type="module"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model PublicacionVM
 
 @{
     ViewData["Title"] = "Publicación";

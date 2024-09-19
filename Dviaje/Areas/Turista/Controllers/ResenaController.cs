@@ -6,11 +6,11 @@ using System.Security.Claims;
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
-    public class ReseñaController : Controller
+    public class ResenaController : Controller
     {
         private readonly IResenasRepository _resenaRepository;
 
-        public ReseñaController(IResenasRepository resenaRepository)
+        public ResenaController(IResenasRepository resenaRepository)
         {
             _resenaRepository = resenaRepository;
         }

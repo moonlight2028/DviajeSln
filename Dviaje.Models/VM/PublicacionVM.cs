@@ -12,6 +12,9 @@
         public string? AvatarAliado { get; set; }
         public string? NombreAliado { get; set; }
         public int PublicacionesAliado { get; set; }
+        public decimal Precio { get; set; }
+        public bool VerificadoAliado { get; set; } = false;
+        public List<PuntuacionVM>? PuntuacionPorEstrellas { get; set; }
         public List<PublicacionImagenVM>? Imagenes { get; set; }
         public List<CategoriaVM>? Categorias { get; set; }
         public List<ServicioVM>? Servicios { get; set; }
