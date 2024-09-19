@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Reporte de Reservas";
+}
+
+<h2>Reporte de Reservas</h2>
+<canvas id="reservasChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                url: '@Url.Action("Reservas", "Reportes", new { area = "Administrador" })',
+                method: 'GET',
+                success: function(data) {
+                    var labels = data.map(item => item.fecha);
+                    var values = data.map(item => item.cantidad);
+
+                    var ctx = document.getElementById('reservasChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Reservas por Fecha',
+                                data: values,
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Copia de Seguridad";
+}
+
+<h2>Copia de Seguridad de la Base de Datos</h2>
+
+<form asp-action="Backup" method="post">
+    <button type="submit" class="btn btn-primary">Realizar copia de seguridad</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}

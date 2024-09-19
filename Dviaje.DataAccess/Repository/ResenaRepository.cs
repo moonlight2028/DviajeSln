@@ -14,7 +14,7 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-        // Obtiene las reseñas disponibles para reseñar
+        // Obtiene las reseñas disponibles para que el usuario pueda reseñar
         public async Task<List<ResenaDisponibleTarjetaVM>> ObtenerResenasDisponiblesAsync(string idUsuario, int paginaActual, int elementosPorPagina = 10)
         {
             var sql = @"
@@ -88,13 +88,37 @@ namespace Dviaje.DataAccess.Repository
         // Añadir "Me Gusta" a una reseña
         public async Task<bool> AgregarMeGustaAsync(int idResena, string idUsuario)
         {
-            var sql = @"
-                INSERT INTO ResenasMeGusta (IdResena, IdUsuario)
-                VALUES (@IdResena, @IdUsuario)";
+            // Verificar si el usuario ya ha dado "Me Gusta"
+            var sqlCheck = @"
+        SELECT COUNT(*)
+        FROM ResenasMeGusta
+        WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
 
-            var result = await _db.ExecuteAsync(sql, new { IdResena = idResena, IdUsuario = idUsuario });
+            var yaDioMeGusta = await _db.ExecuteScalarAsync<int>(sqlCheck, new { IdResena = idResena, IdUsuario = idUsuario });
+
+            if (yaDioMeGusta > 0)
+            {
+                // El usuario ya dio "Me Gusta" previamente, no hacer nada
+                return false;
+            }
+
+            // Insertar un nuevo "Me Gusta"
+            var sqlInsert = @"
+        INSERT INTO ResenasMeGusta (IdResena, IdUsuario)
+        VALUES (@IdResena, @IdUsuario)";
+
+            var result = await _db.ExecuteAsync(sqlInsert, new { IdResena = idResena, IdUsuario = idUsuario });
             return result > 0;
         }
+
+        public async Task<int> ObtenerMeGustaCountAsync(int idResena)
+        {
+            var sql = "SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = @IdResena";
+
+            var count = await _db.ExecuteScalarAsync<int>(sql, new { IdResena = idResena });
+            return count;
+        }
+
 
         // Elimina "Me Gusta" de una reseña
         public async Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario)
@@ -107,7 +131,7 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-        // Método para obtener las reseñas con más "Me Gusta"
+        // Método para obtener las reseñas con más "Me Gusta" (Top reseñas)
         public async Task<List<ResenasTarjetaVM>> ObtenerResenasTopAsync(int cantidad)
         {
             var sql = @"
@@ -118,20 +142,39 @@ namespace Dviaje.DataAccess.Repository
 
             return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { Cantidad = cantidad })).ToList();
         }
-
-        public Task<List<ResenasTarjetaVM>> ObtenerMisResenasAsync(string idUsuario, int paginaActual)
+        
+        // Obtiene reseñas públicas de una publicación
+        public async Task<List<ResenasTarjetaVM>> ObtenerResenasPublicasAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
+                FROM Resenas rs
+                WHERE rs.IdPublicacion = @IdPublicacion
+                ORDER BY rs.Calificacion DESC
+                LIMIT @ElementosPorPagina OFFSET @Offset";
+
+            var offset = (paginaActual - 1) * elementosPorPagina;
+
+            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new
+            {
+                IdPublicacion = idPublicacion,
+                ElementosPorPagina = elementosPorPagina,
+                Offset = offset
+            })).ToList();
         }
 
-        public Task<List<ResenaDisponibleTarjetaVM>> ObtenerResenasDisponiblesAsync(string idUsuario, int paginaActual)
+        // Obtiene las mejores 3 reseñas públicas de una publicación
+        public async Task<List<ResenasTarjetaVM>> ObtenerTopResenasPublicasAsync(int idPublicacion)
         {
-            throw new NotImplementedException();
-        }
+            var sql = @"
+                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
+                FROM Resenas rs
+                WHERE rs.IdPublicacion = @IdPublicacion
+                ORDER BY rs.Calificacion DESC
+                LIMIT 3";
 
-        public Task<int> ObtenerMeGustaCountAsync(int idResena)
-        {
-            throw new NotImplementedException();
+            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { IdPublicacion = idPublicacion })).ToList();
         }
+        
     }
 }

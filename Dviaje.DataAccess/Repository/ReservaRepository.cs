@@ -14,6 +14,21 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
+        //  método GetAll para reportes 
+        public async Task<List<ReservaTarjetaV2VM>> GetAll()
+        {
+            var sql = @"
+                SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.Estado AS ReservaEstado,
+                       p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion,
+                       u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS VerificadoAliado
+                FROM Reservas r
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN aspnetusers u ON p.IdAliado = u.Id";
+
+            var resultado = await _db.QueryAsync<ReservaTarjetaV2VM>(sql);
+            return resultado.ToList();
+        }
+
         // Obtener todas las reservas para un usuario
         public async Task<List<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario)
         {
@@ -74,5 +89,7 @@ namespace Dviaje.DataAccess.Repository
 
             return Task.FromResult(true);
         }
+
+
     }
 }

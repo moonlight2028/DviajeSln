@@ -17,7 +17,6 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-
         // Retorna todas las publicaciones registradas
         public async Task<int> PublicacionesTotales()
         {
@@ -26,6 +25,33 @@ namespace Dviaje.DataAccess.Repository
 
             return totalPublicaciones;
         }
+
+
+        //metodo get all para reportes 
+
+        public async Task<List<PublicacionTarjetaV2VM>> GetAll()
+        {
+            string consulta = @"
+        SELECT 
+            p.IdPublicacion,
+            p.Titulo,
+            p.Puntuacion,
+            p.Descripcion,
+            c.NombreCategoria AS Categoria
+        FROM 
+            publicaciones p
+        JOIN 
+            publicacionescategorias pc ON p.IdPublicacion = pc.IdPublicacion
+        JOIN 
+            categorias c ON pc.IdCategoria = c.IdCategoria;
+    ";
+
+            // Ejecuta la consulta y mapea los resultados a PublicacionTarjetaV2VM
+            var publicaciones = await _db.QueryAsync<PublicacionTarjetaV2VM>(consulta);
+
+            return publicaciones.ToList();
+        }
+
 
         public async Task<List<PublicacionTarjetaVM>> ObtenerPublicacionesAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null)
         {
