@@ -433,6 +433,10 @@ svg {
     width:100%;
 }
 
+.nav-pagina-activa {
+    color: var(--color-primario-500);
+}
+
 /* Menu mobile */
 .menu-main-mobile {
     font-size: 1.7rem;

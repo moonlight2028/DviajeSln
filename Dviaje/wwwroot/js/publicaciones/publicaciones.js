@@ -1,5 +1,6 @@
-﻿import { publicacionesSwipers } from "./publicacionesSwipers.js"
+﻿import { validacionInputFechas } from "../general/inputsFechas.js"
 import { publicacionesOrdenar } from "./publicacionesOrdenar.js"
+import { publicacionesSwipers } from "./publicacionesSwipers.js"
 import { paginacionNav } from "../general/paginacionNav.js"
 
 // URL
@@ -37,6 +38,9 @@ if (parametros.has("pagina")) {
     paginaActual = parseInt(parametros.get("pagina"));
 }
 
+
+// Validación de fechas en la nav de búsqueda
+validacionInputFechas();
 
 // Render filtro ordenar
 publicacionesOrdenar(filtroOrdenar, valoresOrdenar);

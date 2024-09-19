@@ -18,134 +18,164 @@
 <div class="main">
     <!-- Sección búsqueda -->
     <div class="nav-busqueda">
-        <div class="ordenar">
-            <span class="ordenar-titulo">Ordenar Por</span>
-            <div class="menu-desplegable" id="ordenar-filtro"></div>
-        </div>
+        <form class="buscar b-s-95" action="">
+            <div class="buscar-datos">
+                <label class="input-label buscar-datos-input">
+                    <input type="text" autocomplete="on" aria-required="true" class="input-field"
+                           placeholder="Cundinamarca" />
+                    <span class="input-placeholder">Buscar</span>
+                </label>
+
+                <div class="buscar-fechas">
+                    <label class="input-label input-fecha">
+                        <input type="date" autocomplete="on" aria-required="true" class="input-field"
+                               placeholder="Fecha Inicial" id="booking-busqueda-llegada" />
+                        <span class="input-placeholder">Fecha Inicial</span>
+                    </label>
+
+                    <label class="input-label input-fecha">
+                        <input type="date" autocomplete="on" aria-required="true" class="input-field"
+                               placeholder="Fecha Final" id="booking-busqueda-salida" />
+                        <span class="input-placeholder">Fecha Final</span>
+                    </label>
+                </div>
+            </div>
+            <div class="buscar-botones">
+                <button class="button-23">Filtros</button>
+                <button class="button-87-main">Buscar</button>
+            </div>
+        </form>
     </div>
 
 
     <!-- Publicaciones -->
-    <section class="publicaciones">
-        @if (Model != null && Model.Any())
-        {
-            foreach (var publicacion in Model)
+    <div class="resultados">
+        <div class="ordenar">
+            <span class="ordenar-titulo">Ordenar Por</span>
+            <div class="menu-desplegable" id="ordenar-filtro"></div>
+        </div>
+        <section class="publicaciones">
+            @if (Model != null && Model.Any())
             {
-                <article class="publicacion b-s-95">
-                    <!-- Imagenes -->
-                    <div class="publicacion-imagen">
-                        <div class="swiper swiper-imagenes">
-                            <div class="swiper-wrapper">
-                                @if (publicacion.Imagenes != null)
-                                {
-                                    foreach (var imagen in publicacion.Imagenes)
+                foreach (var publicacion in Model)
+                {
+                    <article class="publicacion b-s-95">
+                        <!-- Imagenes -->
+                        <div class="publicacion-imagen">
+                            <div class="swiper swiper-imagenes">
+                                <div class="swiper-wrapper">
+                                    @if (publicacion.Imagenes != null)
                                     {
-                                        <div class="swiper-slide">
-                                            <img src="@imagen.Ruta" alt="@imagen.Alt" id="@($"img-publicacion-{imagen.IdPublicacion}")" class="img-f">
-                                        </div>
+                                        foreach (var imagen in publicacion.Imagenes)
+                                        {
+                                            <div class="swiper-slide">
+                                                <img src="@imagen.Ruta" alt="@imagen.Alt" id="@($"img-publicacion-{imagen.IdPublicacion}")" class="img-f">
+                                            </div>
+                                        }
                                     }
-                                }
-                            </div>
-
-                            <div class="swiper-imagenes-pagination"></div>
-
-                            <div class="swiper-imagenes-botones">
-                                <div class="swiper-imagenes-prev">
-                                    <i class="fa-solid fa-chevron-left"></i>
                                 </div>
-                                <div class="swiper-imagenes-next">
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Datos -->
-                    <div class="publicacion-informacion">
-                        <div class="publicacion-informacion-header">
-                            <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-idUsuario="@publicacion.AliadoId" class="informacion-header-avatar">
-                                <div class="header-avatar">
-                                    <img src="@publicacion.AvatarAliado" alt="@($"Avatar del aliado {publicacion.NombreAliado}")" class="img-f">
-                                </div>
-                                <div>
-                                    <p>
-                                        @publicacion.NombreAliado
-                                        @if (publicacion.Verificado)
-                                        {
-                                            <span class="header-avatar-verificado">
-                                                <i class="fa-solid fa-suitcase-rolling"></i>
-                                            </span>
-                                        }
-                                    </p>
-                                    <div>
-                                        <span>@publicacion.TotalPublicacionesAliado.ToString("N0")</span>
-                                        <span>Publicaciones</span>
+                                <div class="swiper-imagenes-pagination"></div>
+
+                                <div class="swiper-imagenes-botones">
+                                    <div class="swiper-imagenes-prev">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </div>
+                                    <div class="swiper-imagenes-next">
+                                        <i class="fa-solid fa-chevron-right"></i>
                                     </div>
                                 </div>
-                            </a>
-                            <div class="informacion-header-precio">
-                                <span>$</span>
-                                <span>@publicacion.Precio.ToString("N0")</span>
                             </div>
                         </div>
-                        <div class="publicacion-informacion-texto">
-                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion">
-                                <h1>@publicacion.Titulo</h1>
-                            </a>
-                            <div class="informacion-texto-puntuacion">
-                                <span>@publicacion.Puntuacion.ToString("0.0")</span>
-                                <a href="" class="texto-puntuacion-estrellas">
+
+                        <!-- Datos -->
+                        <div class="publicacion-informacion">
+                            <div class="publicacion-informacion-header">
+                                <div class="informacion-header-avatar">
+                                    <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@publicacion.AliadoId" class="header-avatar">
+                                        <img src="@publicacion.AvatarAliado" alt="@($"Avatar del aliado {publicacion.NombreAliado}")" class="img-f">
+                                    </a>
                                     <div>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <div style="@($"width: {((publicacion.Puntuacion * 100) / 5).ToString()}%")">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
+                                        <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@publicacion.AliadoId" class="header-avatar-nombre">
+                                            @publicacion.NombreAliado
+                                            @if (publicacion.Verificado)
+                                            {
+                                                <span class="header-avatar-verificado">
+                                                    <i class="fa-solid fa-suitcase-rolling"></i>
+                                                </span>
+                                            }
+                                        </a>
+                                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@publicacion.AliadoId" class="header-avatar-publicaciones">
+                                            <span>@publicacion.TotalPublicacionesAliado.ToString("N0")</span>
+                                            <span>Publicaciones</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="informacion-header-precio">
+                                    <span>$</span>
+                                    <span>@publicacion.Precio.ToString("N0")</span>
+                                </div>
+                            </div>
+                            <div class="publicacion-informacion-texto">
+                                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion">
+                                    <h1>@publicacion.Titulo</h1>
+                                </a>
+                                <div class="informacion-texto-puntuacion">
+                                    <span>@publicacion.Puntuacion.ToString("0.0")</span>
+                                    <a asp-area="Dviaje" asp-controller="Resenas" asp-action="Resenas" asp-route-id="@publicacion.IdPublicacion" class="texto-puntuacion-estrellas">
+                                        <div>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <div style="@($"width: {((publicacion.Puntuacion * 100) / 5).ToString()}%")">
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span>@publicacion.NumeroResenas.ToString("N0")</span>
+                                            <span>Reseñas</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <a href="" class="informacion-texto-ubicacion">
+                                    <span><i class="fa-solid fa-location-dot"></i></span>
+                                    <span class="informacion-direccion">@publicacion.Direccion</span>
+                                </a>
+                                <p class="informacion-texto-descripcion">@publicacion.Descripcion</p>
+                            </div>
+                            <div class="publicacion-informacion-botones">
+                                <div class="publicacion-categorias">
+                                    <div class="swiper-wrapper-categorias">
+                                        <div class="swiper-wrapper">
+                                            @if (publicacion.Categorias != null && publicacion.Categorias.Any())
+                                            {
+                                                foreach (var categoria in publicacion.Categorias)
+                                                {
+                                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@categoria.IdCategoria" class="swiper-slide swiper-slide-categorias">
+                                                        <i class="@categoria.RutaIcono"></i>
+                                                        <span class="tooltip-categoria">@categoria.NombreCategoria</span>
+                                                    </a>
+                                                }
+                                            }
                                         </div>
                                     </div>
-                                    <div>
-                                        <span>@publicacion.NumeroResenas.ToString("N0")</span>
-                                        <span>Reseñas</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <a href="" class="informacion-texto-ubicacion">
-                                <span><i class="fa-solid fa-location-dot"></i></span>
-                                <span class="informacion-direccion">@publicacion.Direccion</span>
-                            </a>
-                            <p class="informacion-texto-descripcion">@publicacion.Descripcion</p>
-                        </div>
-                        <div class="publicacion-informacion-botones">
-                            <div class="publicacion-categorias">
-                                <div class="swiper-wrapper-categorias">
-                                    <div class="swiper-wrapper">
-                                        @if (publicacion.Categorias != null && publicacion.Categorias.Any())
-                                        {
-                                            foreach (var categoria in publicacion.Categorias)
-                                            {
-                                                <a href="" class="swiper-slide swiper-slide-categorias">
-                                                    <i class="@categoria.RutaIcono"></i>
-                                                </a>
-                                            }
-                                        }
-                                    </div>
                                 </div>
-                            </div>
 
-                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion" class="button-23">Reservar</a>
-                            <a asp-area="Turista" asp-controller="Reserva" asp-action="Reservar" asp-route-idPublicacion="@publicacion.IdPublicacion" class="button-87-main">Ver más</a>
+                                <a asp-area="Turista" asp-controller="Reserva" asp-action="Reservar" asp-route-id="@publicacion.IdPublicacion" class="button-23">Reservar</a>
+                                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion" class="button-87-main">Ver más</a>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                }
             }
-        }
-    </section>
+        </section>
+    </div>
 
 
     <!-- Paginación -->
