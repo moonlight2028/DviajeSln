@@ -1,10 +1,14 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
+using Dviaje.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
+    [Authorize(Roles = RolesUtility.RoleTurista)]
     public class FavoritosController : Controller
     {
         private readonly IFavoritosRepository _favoritoRepository;
@@ -15,37 +19,46 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // GET: Muestra la lista de favoritos del usuario autenticado
+        [Route("Favoritos/{pagina?}")]
         public async Task<IActionResult> Index(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtener el ID del usuario autenticado
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             // Obtiene los favoritos del usuario
-            var favoritos = await _favoritoRepository.GetFavoritosByUsuarioAsync(userId);
+            // Corregir, paginar directamente en la consulta SQL, ya que esta trayendo todos los datos para paginar después en el controlador.
+            // No es bueno traer todos los datos de la DB.
+            // Error: MySqlException: Table 'dviaje.publicacionimagenes' doesn't exist
+            //var favoritos = await _favoritoRepository.GetFavoritosByUsuarioAsync(userId);
 
-            if (favoritos == null || !favoritos.Any())
-            {
-                return View("SinFavoritos");
-            }
+            //if (favoritos == null || !favoritos.Any())
+            //{
+            //    ViewBag.Favoritos = false;
+
+            //    return View();
+            //}
 
             // Implementación de paginación
-            var paginaActual = pagina ?? 1;
-            int favoritosPorPagina = 10;
-            int totalFavoritos = favoritos.Count();
-            int paginasTotales = (int)Math.Ceiling((double)totalFavoritos / favoritosPorPagina);
+            // Corregir, implementar lógica de paginación en la consulta SQL.
+            //var paginaActual = pagina ?? 1;
+            //int favoritosPorPagina = 10;
+            //int totalFavoritos = favoritos.Count();
+            //int paginasTotales = (int)Math.Ceiling((double)totalFavoritos / favoritosPorPagina);
 
-            var favoritosPaginados = favoritos
-                .Skip((paginaActual - 1) * favoritosPorPagina)
-                .Take(favoritosPorPagina)
-                .ToList();
+            //var favoritosPaginados = favoritos
+            //    .Skip((paginaActual - 1) * favoritosPorPagina)
+            //    .Take(favoritosPorPagina)
+            //    .ToList();
 
-            ViewBag.PaginaActual = paginaActual;
-            ViewBag.PaginasTotales = paginasTotales;
 
-            return View(favoritosPaginados);
+            // Datos requeridos para la paginacion
+            //ViewBag.PaginacionPaginas = paginasTotales;
+            //ViewBag.PaginacionItems = favoritosPorPagina;
+            //ViewBag.PaginacionResultados = totalFavoritos;
+
+
+            List<PublicacionTarjetaV2VM>? favoritos = null;
+
+            return View(favoritos);
         }
 
         // POST: Agrega una publicación a favoritos
