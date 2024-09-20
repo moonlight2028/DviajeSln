@@ -22,11 +22,10 @@
 
         // Datos de la reserva
         public int IdReserva { get; set; }
-        public DateTime FechaInicial { get; set; }
-        public DateTime FechaFinal { get; set; }
+        public DateTime? FechaInicial { get; set; }
+        public DateTime? FechaFinal { get; set; }
         public int NumeroPersonas { get; set; }
         public ReservaEstado ReservaEstado { get; set; }
-
-        List<ServicioAdicionalVM>? ServiciosAdicionales { get; set; }
+        public List<ServicioAdicionalVM>? ServiciosAdicionales { get; set; }
     }
 }

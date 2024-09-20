@@ -1,12 +1,16 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
+using Dviaje.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
+    [Authorize(Roles = RolesUtility.RoleTurista)]
     public class ReservasController : Controller
     {
         private readonly IReservaRepository _reservaRepository;
@@ -89,24 +93,129 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // GET: Muestra los detalles de una reserva específica
-        public async Task<IActionResult> MiReserva(int? idReserva)
+        [Route("reserva/mi-reserva/{id?}")]
+        public async Task<IActionResult> MiReserva(int? id)
         {
             // Verifica si el ID de la reserva es válido
-            if (!idReserva.HasValue)
+            if (!id.HasValue)
             {
                 return RedirectToAction(nameof(MisReservas)); // Redirige si no se encuentra el ID de la reserva
             }
 
             // Obtiene los detalles de la reserva a través del repositorio
-            var reservaDetalles = await _reservaRepository.GetReservaByIdAsync(idReserva.Value);
+            // Corregir. Error: MySqlException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '5 pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacio...' at line 5
+            // var reservaDetalles = await _reservaRepository.GetReservaByIdAsync(id.Value);
 
             // Si no se encuentra la reserva, redirige a la lista de reservas
-            if (reservaDetalles == null)
-            {
-                return RedirectToAction(nameof(MisReservas));
-            }
+            //if (reservaDetalles == null)
+            //{
+            //    return RedirectToAction(nameof(MisReservas));
+            //}
 
-            return View(reservaDetalles); // Muestra los detalles de la reserva
+
+
+
+
+            // Datos de test borrar cuando esté la consulta
+            ReservaTarjetaV3VM datosTest = new ReservaTarjetaV3VM
+            {
+                IdPublicacion = 1,
+                TituloPublicacion = "Titulo publicación ajdsklfjkaldsf adsfjakldsjfl aldkfjlkadsjfl adslkfjkladsjf aadkfjlkadj aldskfjkalds adsfjlkjdkls",
+                Puntuacion = 4.3m,
+                NumeroResenas = 1156,
+                Ubicacion = "Calle 186 #48 - 45",
+                Descripcion = "La comunicación efectiva es fundamental en todos los aspectos de la vida. Permite expresar ideas, compartir conocimientos y construir relaciones sólidas. En el ámbito profesional, la comunicación clara y precisa es clave para alcanzar objetivos, resolver conflictos y fomentar la colaboración. Además, una buena comunicación ayuda a motivar a los equipos, a mejorar la productividad y a garantizar el éxito en proyectos. Dominar esta habilidad es esencial para el desarrollo personal y profesional en un entorno cada vez más interconectado.",
+                IdAliado = "DFSS",
+                AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                NombreAliado = "Barca",
+                Verificado = true,
+                NumeroPublicaciones = 4562,
+                IdReserva = 2,
+                FechaInicial = new DateTime(2023, 11, 18),
+                FechaFinal = new DateTime(2023, 11, 20),
+                NumeroPersonas = 10,
+                ReservaEstado = ReservaEstado.Aprobado,
+                ServiciosAdicionales = new List<ServicioAdicionalVM> {
+                    new ServicioAdicionalVM {
+                        NombreServicio = "Tour Guiado por la Ciudad",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        NombreServicio = "Aventura en Montaña",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        NombreServicio = "Spa y Relajación",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        NombreServicio = "Alquiler de Bicicletas",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        NombreServicio = "Clases de Surf",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    }
+                },
+                Servicios = new List<Servicio> {
+                    new Servicio {
+                        IdServicio = 1,
+                        NombreServicio = "Tour Guiado por la Ciudad",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new Servicio {
+                        IdServicio = 2,
+                        NombreServicio = "Aventura en Montaña",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new Servicio {
+                        IdServicio = 3,
+                        NombreServicio = "Spa y Relajación",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new Servicio {
+                        IdServicio = 4,
+                        NombreServicio = "Alquiler de Bicicletas",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new Servicio {
+                        IdServicio = 5,
+                        NombreServicio = "Clases de Surf",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new Servicio {
+                        IdServicio = 6,
+                        NombreServicio = "Visita a Viñedos",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new Servicio {
+                        IdServicio = 7,
+                        NombreServicio = "Cena Romántica",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    }
+                },
+                Imagen = new List<PublicacionImagenVM> {
+                    new PublicacionImagenVM{
+                        Ruta = "https://images.unsplash.com/photo-1726461974101-d98a3c616dcc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        Alt = "Vista panorámica del paisaje al atardecer"
+                    },
+                    new PublicacionImagenVM{
+                        Ruta = "https://images.unsplash.com/photo-1726533870778-8be51bf99bb1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        Alt = "Interior de una cabaña de lujo en la montaña"
+                    },
+                    new PublicacionImagenVM{
+                        Ruta = "https://images.unsplash.com/photo-1726715245558-69afa5ded798?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        Alt = "Turistas disfrutando de una caminata por el bosque"
+                    },
+                    new PublicacionImagenVM{
+                        Ruta = "https://plus.unsplash.com/premium_photo-1699566447802-0551b84a186d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        Alt = "Piscina al aire libre con vistas a las montañas"
+                    }
+                }
+            };
+
+
+            return View(datosTest);
         }
 
         // DELETE: Cancela una reserva específica

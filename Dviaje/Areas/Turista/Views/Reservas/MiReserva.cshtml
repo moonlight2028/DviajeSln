@@ -1,0 +1,133 @@
+﻿@model ReservaTarjetaV3VM
+
+
+@{
+    ViewData["Title"] = "Mi Reserva";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/reservas/reserva-mi-reserva.css">
+}
+
+
+<div class="reserva-publicacion">
+    <section class="reserva">
+        <div>
+            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@Model.IdPublicacion">
+                <h1>@Model.TituloPublicacion</h1>
+            </a>
+            <a href="" class="ubicacion">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>@Model.Ubicacion</span>
+            </a>
+        </div>
+
+        <div class="reerva-informacion-contenedor">
+            <div>
+                <div class="reserva-informacion">
+                    <span>Fecha Inicial:</span>
+                    <span>@Model.FechaInicial?.ToString("MM-dd-yyyy")</span>
+                </div>
+                <div class="reserva-informacion">
+                    <span>Fecha Final:</span>
+                    <span>@Model.FechaFinal?.ToString("MM-dd-yyyy")</span>
+                </div>
+                <div class="reserva-informacion">
+                    <span>Personas:</span>
+                    <span>@Model.NumeroPersonas</span>
+                </div>
+            </div>
+            
+            @switch (Model.ReservaEstado)
+            {
+                case ReservaEstado.Activo:
+                    <span class="reserva-estado-activa">Activa</span>
+                    break;
+                case ReservaEstado.Aprobado:
+                    <span class="reserva-estado-finalizada">Finalizada</span>
+                    break;
+                default:
+                    <span class="reserva-estado-cancelada">Cancelada</span>
+                    break;
+            }
+
+            @if(Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
+            {
+                <div>
+                    <h2>Servicios Adicionales</h2>
+                    <div class="servicios-adicionales">
+                        @foreach (var servicio in Model.ServiciosAdicionales)
+                        {
+                            <div class="servicio-adicional">
+                                <i class="@servicio.RutaIcono"></i>
+                                <span>@servicio.NombreServicio</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div>
+            <p class="publicacion-descripcion">@Model.Descripcion</p>
+
+            @if (Model.Servicios != null && Model.Servicios.Any())
+            {
+                <div class="servicios-publicacion">
+                    @foreach (var servicio in Model.Servicios)
+                    {
+                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="servicio-publicacion">
+                            <i class="@servicio.RutaIcono"></i>
+                            <span>@servicio.NombreServicio</span>
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="calificacion">
+            <i class="fa-solid fa-star"></i>
+            <span>@Model.Puntuacion</span>
+            <i class="fa-solid fa-circle punto"></i>
+            <a href="">@Model.NumeroResenas.ToString("N0") Reseñas</a>
+        </div>
+
+        <div class="aliado-informacion">
+            <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.IdAliado" class="reserva-avatar">
+                <img src="@Model.AvatarAliado" alt="Avatar del aliado @Model.NombreAliado" class="img-f">
+            </a>
+            <div class="reserva-aliado">
+                <span class="reserva-aliado-nombre">
+                    @if (Model.Verificado)
+                    {
+                        <i class="fa-solid fa-suitcase-rolling verificado"></i>
+                    }
+                    <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.IdAliado">@Model.NombreAliado</a>
+                </span>
+                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@Model.IdAliado">@Model.NumeroPublicaciones.ToString("N0") Publicaciones</a>
+            </div>
+        </div>
+    </section>
+
+    @if (Model.Imagen != null && Model.Imagen.Any())
+    {
+        <section class="publcacion">
+            <div class="publicacion-imagen">
+                <img src="@Model.Imagen[0].Ruta" alt="@Model.Imagen[0].Alt" class="img-f">
+            </div>
+            <div class="publicacion-imagen-dos">
+                <div class="publicacion-imagen">
+                    <img src="@Model.Imagen[1].Ruta" alt="@Model.Imagen[1].Alt" class="img-f">
+                </div>
+                <div class="publicacion-imagen">
+                    <img src="@Model.Imagen[2].Ruta" alt="@Model.Imagen[2].Alt" class="img-f">
+                </div>
+            </div>
+            <div class="publicacion-imagen">
+                <img src="@Model.Imagen[3].Ruta" alt="@Model.Imagen[3].Alt" class="img-f">
+            </div>
+        </section>
+    }
+</div>
