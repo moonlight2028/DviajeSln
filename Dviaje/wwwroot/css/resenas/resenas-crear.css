@@ -1,0 +1,294 @@
+﻿.resena-contenedor {
+    display: flex;
+    flex-direction: column;
+}
+
+.opinion-reserva {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100dvh;
+    padding: 10px;
+    padding-top: 70px;
+}
+
+.resena-opinion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+    .resena-opinion h1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+
+.resena-slogan {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .resena-slogan p {
+        min-width: fit-content;
+        font-weight: 600;
+    }
+
+.formulario-resena {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputs-puntuacion {
+    display: none;
+}
+
+.label-puntuacion {
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+    .label-puntuacion i {
+        color: var(--color-primario-500);
+    }
+
+
+/* Sección reservas */
+.resena-reserva {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: 50%;
+    padding-bottom: 20px;
+}
+
+.numeros-contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.reserva-numeros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .reserva-numeros span {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    .reserva-numeros p {
+        font-size: .8rem;
+    }
+
+.hr-v {
+    width: 1px;
+    background-color: var(--color-gris-200);
+}
+
+.reserva-informacion {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.informacion-texto {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.texto-etiquetas {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.texto-fecha {
+    background-color: var(--color-default);
+    font-size: .7rem;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 30px;
+    line-height: 1;
+}
+
+    .texto-fecha span {
+        font-weight: 600;
+    }
+
+.btn-reserva {
+    width: fit-content;
+    color: var(--color-default);
+    border: 1px solid var(--color-default);
+    margin-left: auto;
+    backdrop-filter: blur(5px);
+}
+
+
+/* Sección publicación */
+.resena-publicacion {
+    width: 100%;
+    height: 100dvh;
+    padding: 0 10px 40px 10px;
+}
+
+.publicacion-contenedor {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.publicacion-informacion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.ubicacion-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.publicacion-avatar {
+    display: block;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 100%;
+    border: 2px solid var(--color-primario-500);
+    overflow: hidden;
+}
+
+    .publicacion-avatar:hover {
+        border: 2px solid var(--color-terciario-500);
+    }
+
+.publicacion-ubicacion {
+    background-color: var(--color-default);
+    width: fit-content;
+    padding: 0 10px;
+    border-radius: 30px;
+}
+
+    .publicacion-ubicacion:hover i {
+        color: var(--color-primario-500);
+    }
+
+    .publicacion-ubicacion:hover span {
+        color: var(--color-default-black);
+        text-decoration: underline;
+    }
+
+.Publicacion-puntuacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-default);
+    border-radius: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.publicacion-botones {
+    display: flex;
+    align-items: center;
+}
+
+.publicacion-usuario {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 24px;
+    background-color: var(--color-default);
+    padding: 10px 0;
+    border-radius: 30px;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+
+.input-placeholder {
+    background-color: var(--color-light-50);
+}
+
+.input-field:focus + .input-placeholder {
+    background-color: var(--color-light-50);
+}
+
+
+@media (min-width: 640px) {
+    .opinion-reserva {
+        padding: 70px 20px 10px 20px;
+    }
+
+    .resena-opinion {
+        height: 50%;
+    }
+
+    .resena-reserva {
+        height: 50%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .resena-contenedor {
+        flex-direction: row;
+        max-width:1280px;
+        margin: 0 auto;
+    }
+
+    .resena-publicacion {
+        width: 50%;
+        padding: 70px 20px 30px 0;
+    }
+
+    .opinion-reserva {
+        width:50%;
+    }
+}
+
+@media (min-width: 1280px) {
+    .resena-publicacion {
+        padding: 70px 0 30px 0;
+    }
+
+    .opinion-reserva {
+        padding: 70px 20px 10px 0;
+    }
+}

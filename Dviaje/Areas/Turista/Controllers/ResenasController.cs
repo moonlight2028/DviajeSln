@@ -1,16 +1,19 @@
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models.VM;
+using Dviaje.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
-    public class ResenaController : Controller
+    [Authorize(Roles = RolesUtility.RoleTurista)]
+    public class ResenasController : Controller
     {
         private readonly IResenasRepository _resenaRepository;
 
-        public ResenaController(IResenasRepository resenaRepository)
+        public ResenasController(IResenasRepository resenaRepository)
         {
             _resenaRepository = resenaRepository;
         }
@@ -70,17 +73,19 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Crea una nueva reseña asociada a una reserva
-        public IActionResult Crear(int? IdReserva)
+        [Route("Reseña/Crear/{id?}")]
+        public IActionResult Crear(int? id)
         {
-            if (!IdReserva.HasValue)
+            if (!id.HasValue)
             {
                 return RedirectToAction(nameof(Disponibles));
             }
 
+            // Agregar validaciones de lógica de negocio
+
             var resenaFormulario = new ResenaCrearVM
             {
-                IdReserva = IdReserva.Value,
-                Fecha = DateTime.Now // Fecha actual para la reseña
+                IdReserva = id.Value
             };
 
             return View(resenaFormulario);

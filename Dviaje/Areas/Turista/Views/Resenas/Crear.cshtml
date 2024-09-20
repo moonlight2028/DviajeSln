@@ -1,0 +1,129 @@
+﻿@model ResenaCrearVM
+
+
+@{
+    ViewData["Title"] = "Crear Reseña";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/resenas/resenas-crear.css">
+}
+
+
+<div class="resena-contenedor">
+    <div class="opinion-reserva">
+        <section class="resena-opinion">
+            <a href="">
+                <h1>Titulo Publicacion adfkjalkd adklfjlakds adslkfjaldks</h1>
+            </a>
+            <div class="resena-slogan">
+                <p>Tu opinión cuenta</p>
+                <div class="hr"></div>
+            </div>
+            <form action="" class="formulario-resena">
+                <div class="inputs-puntuacion">
+                    <input type="radio" name="puntuacion" value="1" id="puntuacion-1">
+                    <input type="radio" name="puntuacion" value="2" id="puntuacion-2">
+                    <input type="radio" name="puntuacion" value="3" id="puntuacion-3">
+                    <input type="radio" name="puntuacion" value="4" id="puntuacion-4">
+                    <input type="radio" name="puntuacion" value="5" id="puntuacion-5">
+                </div>
+
+                <div>
+                    <label for="puntuacion-1" class="label-puntuacion">
+                        1 <i class="fa-regular fa-star"></i>
+                    </label>
+                    <label for="puntuacion-2" class="label-puntuacion">
+                        2 <i class="fa-regular fa-star"></i>
+                    </label>
+                    <label for="puntuacion-2" class="label-puntuacion">
+                        3 <i class="fa-regular fa-star"></i>
+                    </label>
+                    <label for="puntuacion-4" class="label-puntuacion">
+                        4 <i class="fa-regular fa-star"></i>
+                    </label>
+                    <label for="puntuacion-5" class="label-puntuacion">
+                        5 <i class="fa-regular fa-star"></i>
+                    </label>
+                </div>
+
+                <div>
+                    <label asp-for="@Model.Opinion" class="input-label">
+                        <textarea asp-for="@Model.Opinion" aria-required="true"
+                                  class="input-field input-field-textarea" placeholder="Opinión"
+                                  maxlength="250"></textarea>
+                        <span class="input-placeholder">Opinión</span>
+                    </label>
+                    <span asp-validation-for="@Model.Opinion" class="validation-message"></span>
+                </div>
+
+                <button class="button-87-main">Publicar</button>
+            </form>
+        </section>
+
+        <section class="resena-reserva">
+            <div class="numeros-contenedor">
+                <a href="" class="reserva-numeros">
+                    <span>1.502</span>
+                    <p>Reseñas</p>
+                </a>
+                <div class="hr-v"></div>
+                <a href="" class="reserva-numeros">
+                    <span>1.502</span>
+                    <p>Reservas</p>
+                </a>
+            </div>
+
+            <article class="reserva-informacion">
+                <img src="https://images.unsplash.com/photo-1726090401458-7abb00f7450c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D"
+                     alt="" class="img-f">
+
+                <div class="informacion-texto">
+                    <div class="texto-etiquetas">
+                        <div class="texto-fecha">
+                            <span>Fecha Inicial:</span>
+                            <p>13 de septiembre de 2024</p>
+                        </div>
+                        <div class="texto-fecha">
+                            <span>Fecha Final:</span>
+                            <p>13 de septiembre de 2024</p>
+                        </div>
+                        <div class="texto-fecha">
+                            <span>Personas</span>
+                            <p>10</p>
+                        </div>
+                    </div>
+                    <a href="" class="button-23 btn-reserva">Reserva</a>
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <section class="resena-publicacion">
+        <div class="publicacion-contenedor">
+            <img src="https://images.unsplash.com/photo-1726182886720-9bcfa08da27a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+            <div class="publicacion-informacion">
+                <div class="ubicacion-avatar">
+                    <a href="" class="publicacion-ubicacion">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>audfljadlk adsjflkad badjflk</span>
+                    </a>
+                    <a href="" class="publicacion-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </a>
+                </div>
+
+                <div class="publicacion-botones">
+                    <span class="Publicacion-puntuacion">4.5</span>
+                    <a href="" class="button-23 btn-reserva">Ver Más</a>
+                </div>
+            </div>
+
+            <p class="publicacion-usuario">Nombre Usuario</p>
+        </div>
+    </section>
+</div>
