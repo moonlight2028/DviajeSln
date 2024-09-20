@@ -3,11 +3,16 @@
     public class PerfilPublicoVM
     {
         // Datos Turista
+        public string? IdUsuario { get; set; }
         public string? Nombre { get; set; }
         public string? Avatar { get; set; }
         public int NumeroReservas { get; set; }
+        public int NumeroResenas { get; set; }
+        public string? Banner { get; set; }
+
 
         // Datos Aliado
+        public bool EsAliado { get; set; } = false;
         public int NumeroPulicaciones { get; set; }
         public bool Verificado { get; set; } = false;
         public string? RazonSocial { get; set; }

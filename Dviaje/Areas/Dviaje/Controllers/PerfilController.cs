@@ -1,7 +1,7 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
@@ -16,45 +16,44 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        [Route("Perfil")]
-        public async Task<IActionResult> Index(string? id)
+        [Route("Perfil/{id?}")]
+        public IActionResult Index(string? id)
         {
-            // Si no hay usuario autenticado, redirige al inicio
             if (string.IsNullOrEmpty(id))
             {
-                id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return RedirectToAction("Index", "Inicio");
             }
 
-            if (string.IsNullOrEmpty(id))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            // Obtener los roles del usuario
-            var esAliado = User.IsInRole("Aliado");
-            var esTurista = User.IsInRole("Turista");
-
-            // Validar el rol y ejecutar la consulta correspondiente
-            PerfilPublicoVM perfilPublico = null;
-
-            if (esAliado)
-            {
-                // Consulta para obtener el perfil del aliado
-                perfilPublico = await _perfilRepository.GetPerfilAliadoAsync(id);
-            }
-            else if (esTurista)
-            {
-                // Consulta para obtener el perfil del turista
-                perfilPublico = await _perfilRepository.GetPerfilTuristaAsync(id);
-            }
+            // Corregir consulta
+            //PerfilPublicoVM? perfilPublico = await _perfilRepository.ObtenerPerfilPublicoAsync(id);
 
             // Si no se encuentra el perfil, redirige a la página de inicio
-            if (perfilPublico == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //if (perfilPublico == null)
+            //{
+            //    return RedirectToAction("Index", "Inicio");
+            //}
 
-            return View(perfilPublico); // Muestra la vista del perfil con los datos obtenidos
+
+
+
+            // Datos de test borrar cuando esté la consulta
+            PerfilPublicoVM datosTest = new PerfilPublicoVM
+            {
+                Nombre = "Juan Pérez",
+                Avatar = "https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww",
+                NumeroReservas = 115,
+                NumeroResenas = 468,
+                Banner = "https://images.unsplash.com/photo-1504221507732-5246c045949b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                EsAliado = true,
+                NumeroPulicaciones = 1515,
+                Verificado = true,
+                RazonSocial = "Juan Pérez S.A.S.",
+                SitioWeb = "https://www.youtube.com/",
+                Direccion = "Calle Falsa 123, Ciudad, País",
+                AliadoEstado = AliadoEstado.Disponible,
+                Puntuacion = 4.3m
+            };
+            return View(datosTest);
         }
     }
 }

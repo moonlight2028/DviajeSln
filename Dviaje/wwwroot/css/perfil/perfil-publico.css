@@ -62,6 +62,10 @@
     width: 100%;
 }
 
+.avatar-text-contenedor button{
+    cursor:pointer;
+}
+
 .perfil-avatar-text {
     display: flex;
     flex-direction: column;
