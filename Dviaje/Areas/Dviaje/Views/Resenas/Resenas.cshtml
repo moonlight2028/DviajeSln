@@ -1,0 +1,106 @@
+﻿@model ResenasPublicacionVM
+
+
+@{
+    ViewData["Title"] = "Reseñas";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/resenas/resenas.css">
+}
+
+
+<div class="contenedor-resenas">
+    <section class="publicacion">
+        <a href="" class="publicacion-ubicacion">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>@Model.DireccionPublicacion</span>
+        </a>
+        <h1 class="publicacion-titulo">@Model.TituloPublicacion</h1>
+
+        <div>
+            <div class="publicacion-puntuacion">
+                <span class="publicacion-puntuacion-nota">@Model.PuntuacionPunblicacion</span>
+                <div class="estrellas">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <div class="estrellas-puntuacion" style="@($"width: {(Model.PuntuacionPunblicacion / 5) * 100}%");">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <p class="publicacion-descripcion">@Model.DescripcionPublicacion</p>
+        </div>
+        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@Model.IdPublicacion" class="button-87-main">Ver más</a>
+    </section>
+
+    <section class="resenas">
+        <div class="resenas-contenedor">
+            <h2>Reseñas</h2>
+            <div class="resena-tarjeta-contenedor">
+                <article class="resena-tarjeta b-s-93">
+                    <div class="resena-tarjeta-header">
+                        <a href="" class="resena-tarjeta-avatar">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                 alt="" class="img-f">
+                        </a>
+                        <div class="tarjeta-header-texto">
+                            <a href="">Usuario</a>
+                            <span>Escribio la reseña (jul de 2024)</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="resena-puntuacion">
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <div class="resena-puntuacion-nota" style="width: 60%;">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+
+                        <p class="resena-tarjeta-opinion">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit.
+                            Vel
+                            illum vero facere itaque deserunt dolor tempore repudiandae modi, rerum debitis quos
+                            perspiciatis fugit minima error, animi ipsa. Minima, error deleniti.
+                        </p>
+                        <button class="btn-leermas">
+                            Leer más
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <div class="resena-tarjeta-like">
+                        <button>
+                            <i class="fa-regular fa-thumbs-up"></i>
+                        </button>
+                        <span>15</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <div class="img-publicacion">
+        <img src="https://images.unsplash.com/photo-1724093121148-ec407f45e44c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+             alt="" class="img-f">
+    </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
@@ -15,22 +16,35 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
         // Muestra las reseñas públicas de una publicación específica
-        public async Task<IActionResult> Resenas(int? idPublicacion)
+        [Route("Reseñas/{id?}")]
+        public async Task<IActionResult> Resenas(int? id)
         {
-            if (!idPublicacion.HasValue)
+            if (!id.HasValue)
             {
-                return RedirectToAction("Index", "Publicaciones");
+                return RedirectToAction("Publicaciones", "Publicaciones");
             }
 
-            // Obtener reseñas para la publicación
-            var resenas = await _resenaRepository.ObtenerResenasPorPublicacionAsync(idPublicacion.Value, 1);
+            // Corregir consulta retornar solo la informacion del modelo ResenasPublicacionVM
+            // var resenas = await _resenaRepository.ObtenerResenasPorPublicacionAsync(id.Value, 1);
 
-            if (resenas == null || !resenas.Any())
+            //if (resenas == null || !resenas.Any())
+            //{
+            //    return View("SinResenas");
+            //}
+
+
+            // Datos de test borrar cuando esté lista la consulta
+            ResenasPublicacionVM informacionResenaPublicacion = new ResenasPublicacionVM
             {
-                return View("SinResenas");
-            }
+                IdPublicacion = 1,
+                TituloPublicacion = "Aventura en la Montaña",
+                PuntuacionPunblicacion = 4.2m,
+                DescripcionPublicacion = "La comunicación efectiva es fundamental en todos los aspectos de la vida. Permite expresar ideas, compartir conocimientos y construir relaciones sólidas. En el ámbito profesional, la comunicación clara y precisa es clave para alcanzar objetivos, resolver conflictos y fomentar la colaboración. Además, una buena comunicación ayuda a motivar a los equipos, a mejorar la productividad y a garantizar el éxito en proyectos. Dominar esta habilidad es esencial para el desarrollo personal y profesional en un entorno cada vez más interconectado.",
+                DireccionPublicacion = "Calle Falsa 123, Ciudad, País",
+                ImagenPublicacion = "https://images.unsplash.com/photo-1724093121148-ec407f45e44c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            };
 
-            return View(resenas);
+            return View(informacionResenaPublicacion);
         }
 
         // Obtener lista de reseñas paginadas por publicación

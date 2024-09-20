@@ -240,7 +240,7 @@ svg {
     top: 0;
     transform: translateY(-50%);
     font-size: 0.75rem;
-    background-color: var(--color-light-50);
+    background-color: var(--color-default);
     color: var(--color-default-black);
     transition: all 0.2s;
     pointer-events: none;
@@ -262,7 +262,7 @@ svg {
     font-size: .8rem;
     transform: translateY(-50%);
     padding: 0 5px;
-    background-color: var(--color-light-50);
+    background-color: var(--color-default);
     color: var(--color-primario-500);
 }
 

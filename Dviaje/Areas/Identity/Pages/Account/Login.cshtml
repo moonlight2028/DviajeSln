@@ -5,9 +5,11 @@
     ViewData["Title"] = "Ingresar";
 }
 
+
 @section Styles {
     <link rel="stylesheet" href="~/css/autenticacion/login.css" />
 }
+
 
 <section class="ingreso">
     @* Banner *@
@@ -36,11 +38,10 @@
                 </label>
                 <span asp-validation-for="Input.Password" class="validation-message"></span>
             </div>
-        </div>
-        
-        <div class="recuerdame">
-            <input asp-for="Input.RememberMe" type="checkbox" class="custom-checkbox" />
-            <label asp-for="Input.RememberMe">¿Recuérdame?</label>
+            <div class="recuerdame">
+                <input asp-for="Input.RememberMe" type="checkbox" class="custom-checkbox" />
+                <label asp-for="Input.RememberMe">¿Recuérdame?</label>
+            </div>
         </div>
         
         <button id="login-submit" type="submit" class="button-87-main">Iniciar sesión</button>

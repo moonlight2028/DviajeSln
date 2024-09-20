@@ -1,0 +1,256 @@
+﻿.contenedor-nav-main {
+    color: var(--color-default);
+}
+
+
+.contenedor-resenas {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    color: var(--color-gris-50);
+    padding-top: 70px;
+}
+
+.img-publicacion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.publicacion, .resenas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Publicación */
+.publicacion {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.publicacion-titulo {
+    font-size: 2rem;
+    color: var(--color-default);
+}
+
+.publicacion-puntuacion {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.publicacion-puntuacion-nota {
+    font-size: 1.5rem;
+    margin-top: 2px;
+}
+
+.publicacion-descripcion {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.publicacion-ubicacion {
+    font-size: .8rem;
+    color: var(--color-gris-200);
+}
+
+    .publicacion-ubicacion:hover {
+        color: var(--color-default);
+    }
+
+.estrellas {
+    position: relative;
+    display: flex;
+    color: var(--color-primario-500);
+    width: fit-content;
+}
+
+.estrellas-puntuacion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.button-87-main {
+    width: fit-content;
+}
+
+/* Reseñas */
+.resenas {
+    padding: 20px;
+    padding-top: 0;
+}
+
+.resenas-contenedor {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    background-color: #00000020;
+}
+
+/* Reseñas tarjetas */
+.resena-tarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    border-radius: 30px;
+    padding: 20px;
+    color: var(--color-gris-700);
+    background-color: var(--color-gris-50);
+}
+
+.resena-tarjeta-avatar {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 2px solid var(--color-primario-500);
+    overflow: hidden;
+}
+
+    .resena-tarjeta-avatar:hover {
+        border: 2px solid var(--color-terciario-500);
+    }
+
+.resena-tarjeta-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.tarjeta-header-texto {
+    display: flex;
+    flex-direction: column;
+    font-size: .8rem;
+    font-weight: 300;
+}
+
+    .tarjeta-header-texto a {
+        font-weight: 600;
+    }
+
+        .tarjeta-header-texto a:hover {
+            color: var(--color-default-black);
+        }
+
+.resena-puntuacion {
+    position: relative;
+    display: flex;
+    color: var(--color-primario-500);
+    width: fit-content;
+}
+
+.resena-puntuacion-nota {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.resena-tarjeta-opinion {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .9rem;
+}
+
+.btn-leermas {
+    font-size: .7rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    .btn-leermas:hover {
+        color: var(--color-default-black);
+        font-weight: 500;
+    }
+
+.resena-tarjeta-like, .resena-tarjeta-like button {
+    font-size: .8rem;
+}
+
+    .resena-tarjeta-like button {
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+        .resena-tarjeta-like button:hover {
+            color: var(--color-primario-500);
+        }
+
+
+@media (min-width: 768px) {
+    /* Publicación */
+    .publicacion {
+        padding: 20px 50px;
+    }
+
+    .publicacion-titulo {
+        font-size: 3rem;
+    }
+
+    /* Reseñas */
+    .resenas {
+        padding: 50px;
+        padding-top: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contenedor-resenas {
+        padding-top: 0;
+    }
+
+
+    /* Publicación */
+    .publicacion-titulo {
+        font-size: 2.5rem;
+    }
+
+    .contenedor-resenas {
+        flex-direction: row;
+    }
+
+    .publicacion-descripcion {
+        -webkit-line-clamp: 3;
+    }
+
+    /* Reseñas */
+    .resenas {
+        padding: 70px 0 20px 0;
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 1280px) {
+    /* Publicación */
+    .publicacion {
+        padding: 20px 100px;
+    }
+
+    .publicacion-titulo {
+        font-size: 4rem;
+    }
+}

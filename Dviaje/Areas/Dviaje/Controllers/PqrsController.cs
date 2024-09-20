@@ -13,6 +13,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
         private readonly IEnvioEmail _email;
         private readonly IPqrsRepository _pqrsRepository;
 
+
         // Inyección de dependencias
         public PqrsController(IEnvioEmail email, IPqrsRepository pqrsRepository)
         {
@@ -20,7 +21,9 @@ namespace Dviaje.Areas.Dviaje.Controllers
             _pqrsRepository = pqrsRepository;
         }
 
+
         // GET: Muestra el formulario PQRS
+        [Route("Pqrs")]
         public IActionResult Pqrs()
         {
             // Verificar si el usuario está autenticado
@@ -40,6 +43,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
         // POST: Procesa el envío de PQRS
         [HttpPost]
+        [Route("Pqrs")]
         public async Task<IActionResult> Pqrs(PqrsVM pqrs, List<IFormFile> adjuntos)
         {
             if (!ModelState.IsValid)
@@ -91,12 +95,6 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
             // Redirigir a una página de confirmación o mostrar un mensaje de éxito
             return RedirectToAction("Confirmacion");
-        }
-
-        // Página de confirmación de envío de PQRS
-        public IActionResult Confirmacion()
-        {
-            return View();
         }
     }
 }

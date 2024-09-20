@@ -5,20 +5,12 @@
     flex-direction:column;
     justify-content:end;
     width: 100%;
-    max-width: 1536px;
+    max-width: 1280px;
     margin: 0 auto;
     height: calc(100dvh - 70px);
     color: var(--color-gris-700);
     font-size:.8rem;
     min-height: 100dvh;
-}
-
-@media (min-width: 768px) {
-    .ingreso {
-        flex-direction: row-reverse;
-        justify-content:center;
-        align-items:center;
-    }
 }
 
 .ingreso-img {
@@ -30,20 +22,6 @@
     z-index: -10;
 }
 
-@media (min-width: 768px) {
-    .ingreso-img {
-        height: 100%;
-        position: relative;
-        z-index: auto;
-        padding: 20px;
-        padding-top: 80px;
-    }
-
-    .ingreso-img img{
-        border-radius: 30px;
-    }
-}
-
 .ingreso-form {
     display: flex;
     flex-direction: column;
@@ -52,14 +30,7 @@
     padding: 20px;
     height: 70%;
     border-radius: 50px 0 0;
-}
-
-@media (min-width: 768px) {
-    .ingreso-form {
-        height: 100%;
-        width: 100%;
-        border-radius: 0;
-    }
+    background-color: var(--color-light-50);
 }
 
     .ingreso-form h1{
@@ -73,73 +44,6 @@
         flex-direction:column;
         gap:10px;
     }
-
-
-.input-label {
-    position: relative;
-    display: block;
-    border-radius: 1rem;
-    border: 1px solid var(--color-gris-200);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-    .input-label:focus-within {
-        border-color: var(--color-primario-500);
-        box-shadow: 0 0 0 1px var(--color-primario-500);
-    }
-
-.input-field {
-    width: 100%;
-    border: none;
-    border-radius: 1rem;
-    background: transparent;
-    padding: 0.5rem 1rem;
-    outline: none;
-    box-shadow: none;
-    font-size: 1rem;
-    color: var(--color-default-black);
-}
-
-.input-placeholder {
-    position: absolute;
-    left: 1rem;
-    top: 0;
-    transform: translateY(-50%);
-    font-size: 0.75rem;
-    background-color: var(--color-default);
-    color: var(--color-default-black);
-    transition: all 0.2s;
-    pointer-events: none;
-}
-
-.input-field::placeholder {
-    color: transparent;
-
-}
-
-.input-field:placeholder-shown + .input-placeholder {
-    top: 50%;
-    font-size: 1rem;
-    transform: translateY(-50%);
-    color: var(--color-gris-700);
-}
-
-.input-field:focus + .input-placeholder {
-    top: 0;
-    font-size: .8rem;
-    transform: translateY(-50%);
-    padding: 0 5px;
-    background-color: var(--color-default);
-    color: var(--color-primario-500);
-}
-
-.validation-message {
-    color: var(--color-terciario-500);
-    padding-left: 1rem;
-    display: block;
-    font-size: 0.875rem;
-}
 
 .recuerdame {
     display:flex;
@@ -198,11 +102,6 @@
         color: var(--color-primario-500);
     }
 
-h1, .ingreso-form-inputs, .recuerdame, .button-87-main, .opciones, .ingreso-form-condiciones {
-    max-width: 500px;
-    margin: 0 auto;
-    width: 100%;
-}
 
 /* Formulario de registro */
 .ingreso-form-condiciones{
@@ -216,3 +115,58 @@ h1, .ingreso-form-inputs, .recuerdame, .button-87-main, .opciones, .ingreso-form
     .ingreso-form-condiciones a:hover {
         color: var(--color-primario-500);
     }
+
+.input-placeholder {
+    background-color: var(--color-light-50);
+}
+
+.input-field:focus + .input-placeholder {
+    background-color: var(--color-light-50);
+}
+
+
+@media (min-width: 640px) {
+    .ingreso-form {
+        padding: 0 100px;
+    }
+}
+
+@media (min-width: 768px) {
+    .ingreso {
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ingreso-img {
+        height: 100%;
+        position: relative;
+        z-index: auto;
+        padding: 80px 20px 20px 0;
+    }
+
+        .ingreso-img img {
+            border-radius: 30px;
+        }
+
+    .ingreso-form {
+        height: 100%;
+        width: 100%;
+        max-width:500px;
+        border-radius: 0;
+        padding: 0 20px;
+    }
+}
+
+@media (min-width: 1536px) {
+    .ingreso-form {
+        padding:0 20px 0 0;
+    }
+
+    .ingreso-img {
+        height: 100%;
+        position: relative;
+        z-index: auto;
+        padding: 80px 0 20px 0;
+    }
+}
