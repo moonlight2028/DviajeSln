@@ -16,7 +16,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        [Route("Perfil/{id?}")]
+        [Route("perfil/{id?}")]
         public IActionResult Index(string? id)
         {
             if (string.IsNullOrEmpty(id))

@@ -19,7 +19,7 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // GET: Muestra la lista de favoritos del usuario autenticado
-        [Route("Favoritos/{pagina?}")]
+        [Route("favoritos/{pagina?}")]
         public async Task<IActionResult> Index(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtener el ID del usuario autenticado

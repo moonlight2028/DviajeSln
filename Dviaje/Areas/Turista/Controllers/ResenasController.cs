@@ -32,7 +32,7 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Muestra las reseñas disponibles para que el usuario pueda reseñar
-        [Route("Reseñas/Disponibles/{pagina?}")]
+        [Route("reseñas/disponibles/{pagina?}")]
         public async Task<IActionResult> Disponibles(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
@@ -102,28 +102,99 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Muestra las reseñas realizadas por el usuario
-        // Corregir debe retornar una lista del modelo ResenaTarjetaV2VM
+        [Route("reseñas/mis-reseñas/{pagina?}")]
         public async Task<IActionResult> MisReseñas(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             var paginaActual = pagina ?? 1;
-            var resenas = await _resenaRepository.ObtenerMisResenasAsync(userId, paginaActual);
 
-            if (resenas == null || !resenas.Any())
+            // Corregir debe retornar una lista del modelo ResenaTarjetaV2VM
+            // var resenas = await _resenaRepository.ObtenerMisResenasAsync(userId, paginaActual);
+
+
+
+
+            // Datos de test borrar cuando esté la consulta
+            List<ResenasTarjetaV2VM>? datosTest = new List<ResenasTarjetaV2VM>
             {
-                return View("SinResenas");
-            }
+                new ResenasTarjetaV2VM
+                {
+                    IdPublicacion = 1,
+                    TituloPublcacion = "Aventura en la Montaña",
+                    Opinion = "Una experiencia increíble, todo estuvo perfecto.",
+                    Fecha = new DateTime(2024, 1, 15),
+                    Puntuacion = 4.8m,
+                    MeGusta = 120,
+                    IdAliado = "A123",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Juan Pérez",
+                    NumeroPublicacionesAliado = 15,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenasTarjetaV2VM
+                {
+                    IdPublicacion = 2,
+                    TituloPublcacion = "Relajación en la Playa",
+                    Opinion = "El lugar es hermoso, pero el servicio podría mejorar.",
+                    Fecha = new DateTime(2023, 8, 23),
+                    Puntuacion = 3.7m,
+                    MeGusta = 85,
+                    IdAliado = "B456",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "María Gómez",
+                    NumeroPublicacionesAliado = 10,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenasTarjetaV2VM
+                {
+                    IdPublicacion = 3,
+                    TituloPublcacion = "Escapada Rural",
+                    Opinion = "La cabaña era acogedora y perfecta para desconectar.",
+                    Fecha = new DateTime(2024, 2, 10),
+                    Puntuacion = 4.5m,
+                    MeGusta = 95,
+                    IdAliado = "C789",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Pedro Sánchez",
+                    NumeroPublicacionesAliado = 8,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenasTarjetaV2VM
+                {
+                    IdPublicacion = 4,
+                    TituloPublcacion = "Tour por la Ciudad klajdslkfjalk adslkfjalksd aldkjflkads alsdkjflk adkjflkadsjf adkfjlkadsjfl asdfjkladsjf adfjlkadsjflk",
+                    Opinion = "La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la norma diaria.",
+                    Fecha = new DateTime(2023, 11, 18),
+                    Puntuacion = 4.9m,
+                    MeGusta = 135,
+                    IdAliado = "D321",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Ana López",
+                    NumeroPublicacionesAliado = 20,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenasTarjetaV2VM
+                {
+                    IdPublicacion = 5,
+                    TituloPublcacion = "Viaje en Familia",
+                    Opinion = "Todo estuvo bien, aunque la comida no fue tan buena.",
+                    Fecha = new DateTime(2023, 5, 5),
+                    Puntuacion = 3.9m,
+                    MeGusta = 65,
+                    IdAliado = "E654",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Carlos Ruiz",
+                    NumeroPublicacionesAliado = 12,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                }
+            };
 
-            return View(resenas);
+            return View(datosTest);
         }
 
         // Crea una nueva reseña asociada a una reserva
-        [Route("Reseña/Escribir/{id?}")]
+        [Route("reseña/escribir/{id?}")]
         public IActionResult Crear(int? id)
         {
             if (!id.HasValue)

@@ -18,7 +18,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        [Route("Publicaciones")]
+        [Route("publicaciones")]
         public async Task<IActionResult> Publicaciones(int? pagina, string? ordenar)
         {
             // Validacion ruta de pagina
@@ -46,7 +46,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
             return View(listaPublicaciones);
         }
 
-        [Route("Publicacion/{id?}")]
+        [Route("publicacion/{id?}")]
         public async Task<IActionResult> Publicacion(int? id)
         {
             // Validacion ruta de pagina

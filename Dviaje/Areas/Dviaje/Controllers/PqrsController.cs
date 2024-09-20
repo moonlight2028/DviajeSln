@@ -23,7 +23,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
 
         // GET: Muestra el formulario PQRS
-        [Route("Pqrs")]
+        [Route("pqrs")]
         public IActionResult Pqrs()
         {
             // Verificar si el usuario está autenticado
@@ -43,7 +43,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
         // POST: Procesa el envío de PQRS
         [HttpPost]
-        [Route("Pqrs")]
+        [Route("pqrs")]
         public async Task<IActionResult> Pqrs(PqrsVM pqrs, List<IFormFile> adjuntos)
         {
             if (!ModelState.IsValid)

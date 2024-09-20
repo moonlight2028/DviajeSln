@@ -16,7 +16,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
         // Muestra las reseñas públicas de una publicación específica
-        [Route("Reseñas/{id?}")]
+        [Route("reseñas/{id?}")]
         public async Task<IActionResult> Resenas(int? id)
         {
             if (!id.HasValue)

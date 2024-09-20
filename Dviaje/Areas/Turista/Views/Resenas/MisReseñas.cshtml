@@ -1,1 +1,77 @@
-﻿@model List<ResenasTarjetaVM>
+﻿@model List<ResenasTarjetaV2VM>?
+
+
+@{
+    ViewData["Title"] = "Mis Reseñas";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/resenas/resenas-mis-resenas.css">
+}
+
+
+@if (Model != null && Model.Any())
+{
+    <section class="favoritos">
+        @foreach(var resena in Model)
+        {
+            <article class="favorito-tarjeta b-s-93">
+                <div class="favorito-img">
+                    <img src="@resena.ImagenPublicacion" alt="Imagen de la publicación @resena.TituloPublcacion" class="img-f">
+                </div>
+
+                <div class="favorito-contenido">
+                    <div class="favorito-informacion">
+                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@resena.IdPublicacion">
+                            <h2>@resena.TituloPublcacion</h2>
+                        </a>
+                        <p class="favorito-descripcion">@resena.Opinion</p>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="favorito-footer">
+                        <div class="favorito-puntuacion">
+                            <span>@resena.Puntuacion</span>
+                            <div class="favorito-puntuacion-detalles">
+                                <div class="favorito-estrellas">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div class="favorito-estrellas-nota" style="@($"width: {(resena.Puntuacion / 5) * 100}%");">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <span>@resena.Fecha?.ToString("MM-dd-yyyy")</span>
+                            </div>
+                        </div>
+                        <div class="favorito-botones">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            <span>@resena.MeGusta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aliado-informacion">
+                    <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@resena.IdAliado" class="aliado-avatar">
+                        <img src="@resena.AvatarAliado" alt="Avatar del aliado @resena.NombreAliado" class="img-f">
+                    </a>
+                    <div class="aliado-informacion-links">
+                        <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@resena.IdAliado">@resena.NombreAliado</a>
+                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@resena.IdAliado">@resena.NumeroPublicacionesAliado.ToString("N0") Publicaciones</a>
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+}
+else
+{
+    <h1>No tienes Reseñas</h1>    
+}

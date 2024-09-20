@@ -12,5 +12,6 @@
         public string? AvatarAliado { get; set; }
         public string? NombreAliado { get; set; }
         public int NumeroPublicacionesAliado { get; set; }
+        public string? ImagenPublicacion { get; set; }
     }
 }
