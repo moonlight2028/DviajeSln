@@ -32,23 +32,73 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Muestra las reseñas disponibles para que el usuario pueda reseñar
+        [Route("Reseñas/Disponibles/{pagina?}")]
         public async Task<IActionResult> Disponibles(int? pagina)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtiene el ID del usuario autenticado
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             var paginaActual = pagina ?? 1;
-            var resenasDisponibles = await _resenaRepository.ObtenerResenasDisponiblesAsync(userId, paginaActual);
+            // Corregir. Error: MySqlException: Unknown column 'p.ImagenUrl' in 'field list'
+            //var resenasDisponibles = await _resenaRepository.ObtenerResenasDisponiblesAsync(userId, paginaActual);
 
-            if (resenasDisponibles == null || !resenasDisponibles.Any())
-            {
-                return View("SinResenas");
-            }
 
-            return View(resenasDisponibles);
+
+
+            // Datos de test borrar cuando esté la consulta
+            List<ResenaDisponibleTarjetaVM>? datosTest = new List<ResenaDisponibleTarjetaVM> {
+                new ResenaDisponibleTarjetaVM {
+                    TituloPublicacion = "Aventura en la Montaña",
+                    DescripcionPublicacion = "Una experiencia inolvidable rodeado de naturaleza, perfecta para quienes buscan desconectarse y disfrutar del aire libre.",
+                    IdPublicacion = 2,
+                    PuntuacionPublicacion = 4.8m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 3,
+                    FechaInicial = new DateTime(2024, 01, 15),
+                    FechaFinal = new DateTime(2024, 01, 18)
+                },
+                new ResenaDisponibleTarjetaVM {
+                    TituloPublicacion = "Relax en la Playa",
+                    DescripcionPublicacion = "El lugar perfecto para relajarse con vistas al mar, disfrutar de la tranquilidad y desconectar del mundo.",
+                    IdPublicacion = 3,
+                    PuntuacionPublicacion = 4.5m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 4,
+                    FechaInicial = new DateTime(2024, 02, 05),
+                    FechaFinal = new DateTime(2024, 02, 10)
+                },
+                new ResenaDisponibleTarjetaVM {
+                    TituloPublicacion = "Escapada Rural",
+                    DescripcionPublicacion = "Una hermosa casa de campo con vistas espectaculares, ideal para una escapada romántica o con amigos.",
+                    IdPublicacion = 4,
+                    PuntuacionPublicacion = 4.9m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 5,
+                    FechaInicial = new DateTime(2024, 03, 12),
+                    FechaFinal = new DateTime(2024, 03, 15)
+                },
+                new ResenaDisponibleTarjetaVM {
+                    TituloPublicacion = "Tour en la Ciudad",
+                    DescripcionPublicacion = "Descubre los secretos y maravillas de la ciudad con este tour guiado por los principales puntos de interés.",
+                    IdPublicacion = 5,
+                    PuntuacionPublicacion = 4.3m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 6,
+                    FechaInicial = new DateTime(2024, 04, 02),
+                    FechaFinal = new DateTime(2024, 04, 05)
+                },
+                new ResenaDisponibleTarjetaVM {
+                    TituloPublicacion = "Aventura en la Selva",
+                    DescripcionPublicacion = "Una experiencia emocionante para quienes buscan adentrarse en la selva y vivir la naturaleza de cerca.",
+                    IdPublicacion = 6,
+                    PuntuacionPublicacion = 4.7m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 7,
+                    FechaInicial = new DateTime(2024, 05, 10),
+                    FechaFinal = new DateTime(2024, 05, 15)
+                }
+            };
+
+            return View(datosTest);
         }
 
         // Muestra las reseñas realizadas por el usuario
@@ -73,7 +123,7 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // Crea una nueva reseña asociada a una reserva
-        [Route("Reseña/Crear/{id?}")]
+        [Route("Reseña/Escribir/{id?}")]
         public IActionResult Crear(int? id)
         {
             if (!id.HasValue)

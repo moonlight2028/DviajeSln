@@ -7,13 +7,13 @@ using System.Security.Claims;
 namespace Dviaje.Areas.Turista.Controllers
 {
     [Area("Turista")]
-    public class ReservaController : Controller
+    public class ReservasController : Controller
     {
         private readonly IReservaRepository _reservaRepository;
         private readonly IEnvioEmail _envioEmail;
 
         // Constructor con inyección de dependencias para el repositorio de reservas y el servicio de envío de correos
-        public ReservaController(IReservaRepository reservaRepository, IEnvioEmail envioEmail)
+        public ReservasController(IReservaRepository reservaRepository, IEnvioEmail envioEmail)
         {
             _reservaRepository = reservaRepository;
             _envioEmail = envioEmail;

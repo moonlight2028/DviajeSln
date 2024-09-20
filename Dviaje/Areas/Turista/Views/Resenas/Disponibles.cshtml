@@ -1,2 +1,71 @@
-@model List<ResenaDisponibleTarjetaVM>?
+@model List<ResenaDisponibleTarjetaVM>
 
+
+@{
+    ViewData["Title"] = "Reseñas Disponibles";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/resenas/resenas-disponibles.css">
+}
+
+
+@if (Model != null && Model.Any())
+{
+    <section class="resenas-disponibles-contenedor">
+        <h1>Reseñas Disponibles Ahora</h1>
+
+        <div class="lista-resenas">
+            @foreach (var resena in Model)
+            {
+                <article class="resena-disponible b-s-95">
+                    <div class="resena-disponible-imagen">
+                        <img src="@resena.ImagenPublicacion" alt="@($"Imagen de la publicación {@resena.TituloPublicacion}")" class="img-f">
+                    </div>
+                    <div class="resena-disponible-informacion">
+                        <div>
+                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@resena.IdPublicacion">
+                                <h2>@resena.TituloPublicacion</h2>
+                            </a>
+                            <a asp-area="Dviaje" asp-controller="Resenas" asp-action="Resenas" asp-route-id="@resena.IdPublicacion" class="resena-puntuacion">
+                                <span>@resena.PuntuacionPublicacion</span>
+                                <div class="estrellas">
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <div class="estrellas-puntuacion" style="@($"width: {(@resena.PuntuacionPublicacion / 5) * 100}%")" >
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <p class="resena-disponible-descripcion">@resena.DescripcionPublicacion</p>
+                        </div>
+                        
+                        <div class="hr"></div>
+                        
+                        <div>
+                            <a asp-area="Turista" asp-controller="Reservas" asp-action="MiReserva" asp-route-id="@resena.IdReserva" class="reserva-fecha">
+                                @resena.FechaInicial?.ToString("MM-dd-yyyy") - @resena.FechaFinal?.ToString("MM-dd-yyyy")
+                            </a>
+                            <div class="resena-disponible-botones">
+                                <a asp-area="Turista" asp-controller="Reservas" asp-action="MiReserva" asp-route-id="@resena.IdReserva" class="button-23">Reserva</a>
+                                <a asp-area="Turista" asp-controller="Resenas" asp-action="Crear" asp-route-id="@resena.IdReserva" class="button-87-main">Escribir Reseña</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </section>
+}else
+{
+    <h1>No hay Reseñas Disponibles</h1>    
+}

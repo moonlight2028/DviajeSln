@@ -1,0 +1,157 @@
+﻿.resenas-disponibles-contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 100px 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.lista-resenas {
+    display: grid;
+    gap: 10px;
+    max-width: 1536px;
+    margin: 0 auto;
+}
+
+.resena-disponible {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+    .resena-disponible:hover {
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    }
+
+.resena-disponible-imagen {
+    border-radius: 20px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.resena-disponible-informacion {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+}
+
+    .resena-disponible-informacion h2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+.resena-disponible-descripcion {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .9rem;
+}
+
+.resena-puntuacion {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    width:fit-content;
+}
+
+    .resena-puntuacion:hover .estrellas i{
+        color: var(--color-terciario-500);
+    }
+
+    .resena-puntuacion span {
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+.estrellas,
+.estrellas-puntuacion {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    color: var(--color-primario-500);
+    font-size: .8rem;
+}
+
+.estrellas-puntuacion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.reserva-fecha {
+    display: block;
+    width: fit-content;
+    padding: 0 10px;
+    border-radius: 30px;
+    border: 1px solid var(--color-gris-500);
+    font-size: .7rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+    .reserva-fecha:hover {
+        border: 1px solid var(--color-primario-500);
+        color: var(--color-primario-500);
+    }
+
+.resena-disponible-botones {
+    display: flex;
+    gap: 5px;
+    font-size: .9rem;
+}
+
+
+@media (min-width: 640px) {
+
+    .lista-resenas {
+        padding: 0 20px;
+    }
+
+    .resena-disponible {
+        flex-direction: row;
+        height: 300px;
+    }
+
+    .resena-disponible-imagen {
+        border-radius: 20px;
+        height: 100%;
+        width: 40%;
+        overflow: hidden;
+        order: 1;
+    }
+
+    .resena-disponible-informacion {
+        width: 60%;
+        height: 100%;
+        padding-right: 10px;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .lista-resenas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1536px) {
+
+    .lista-resenas {
+        padding: 0;
+    }
+}
