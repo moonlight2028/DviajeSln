@@ -9,9 +9,11 @@
 
         public int IdPublicacion { get; set; }
         public string? TituloPublicacion { get; set; }
-        public decimal Puntuacion { get; set; }
+        public decimal PuntuacionPublicacion { get; set; }
+        public int NumeroResenasPublicacion { get; set; }
+        public string? imagenPublicacion { get; set; }
 
-        public int IdAliado { get; set; }
+        public string? IdAliado { get; set; }
         public string? NombreAliado { get; set; }
         public string? AvatarAliado { get; set; }
         public bool VerificadoAliado { get; set; }

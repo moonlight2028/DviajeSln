@@ -73,23 +73,79 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // GET: Muestra la lista de reservas del usuario autenticado
+        [Route("reservas/mis-reservas")]
         public async Task<IActionResult> MisReservas(int? pagina, string? estado)
         {
             // Obtiene el ID del usuario autenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Obtiene todas las reservas del usuario a través del repositorio
-            var reservas = await _reservaRepository.GetAllReservasAsync(userId);
+            // implementar paginación,  en la consulta
+            // Corregir. Error: MySqlException: Unknown column 'r.Estado' in 'field list'
+            //var reservas = await _reservaRepository.GetAllReservasAsync(userId);
 
-            // Si no hay reservas, muestra la vista "SinReservas"
-            if (reservas == null || !reservas.Any())
-            {
-                return View("SinReservas");
-            }
 
-            //  implementar paginación,  hacerlo aquí
+            // Paso de argumentos de paginación a la vista
+            //ViewBag.PaginacionPaginas = paginasTotales;
+            //ViewBag.PaginacionItems = numeroPublicaciones;
+            //ViewBag.PaginacionResultados = publicacionesTotales;
 
-            return View(reservas); // Muestra la lista de reservas del usuario
+
+
+
+            // Datos de test borrar cuando esté la consulta
+            List<ReservaTarjetaV2VM>? datosTest = new List<ReservaTarjetaV2VM> {
+                new ReservaTarjetaV2VM{
+                    IdReserva = 2,
+                    FechaInicial = new DateTime(2023, 11, 18),
+                    FechaFinal = new DateTime(2023, 11, 20),
+                    ReservaEstado = ReservaEstado.Aprobado,
+                    IdPublicacion = 1,
+                    TituloPublicacion = "Titulo publicación ajdsklfjkaldsf adsfjakldsjfl aldkfjlkadsjfl adslkfjkladsjf aadkfjlkadj aldskfjkalds adsfjlkjdkls",
+                    PuntuacionPublicacion = 4.3m,
+                    NumeroResenasPublicacion = 4561,
+                    imagenPublicacion = "https://images.unsplash.com/photo-1726266852911-ee5f5b49ea0d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdAliado = "DASF",
+                    NombreAliado = "Barca",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    VerificadoAliado = true,
+                    NumeroPublicacionesAliado  = 1542
+                },
+                    new ReservaTarjetaV2VM{
+                    IdReserva = 3,
+                    FechaInicial = new DateTime(2024, 02, 15),
+                    FechaFinal = new DateTime(2024, 02, 17),
+                    ReservaEstado = ReservaEstado.Activo,
+                    IdPublicacion = 2,
+                    TituloPublicacion = "Escapada de fin de semana a las montañas",
+                    PuntuacionPublicacion = 4.7m,
+                    NumeroResenasPublicacion = 59,
+                    imagenPublicacion = "https://images.unsplash.com/photo-1726500087639-0a68be284497?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdAliado = "XYZ123",
+                    NombreAliado = "Mountain Escape",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    VerificadoAliado = true,
+                    NumeroPublicacionesAliado = 234
+                },
+                new ReservaTarjetaV2VM{
+                    IdReserva = 4,
+                    FechaInicial = new DateTime(2024, 03, 10),
+                    FechaFinal = new DateTime(2024, 03, 12),
+                    ReservaEstado = ReservaEstado.Cancelado,
+                    IdPublicacion = 3,
+                    TituloPublicacion = "Aventura tropical en la playa",
+                    PuntuacionPublicacion = 3.8m,
+                    NumeroResenasPublicacion = 481,
+                    imagenPublicacion = "https://images.unsplash.com/photo-1726677644019-c010b789cf12?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdAliado = "BEACH789",
+                    NombreAliado = "Tropical Vibes",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    VerificadoAliado = false,
+                    NumeroPublicacionesAliado = 674
+                }
+            };
+
+            return View(datosTest);
         }
 
         // GET: Muestra los detalles de una reserva específica

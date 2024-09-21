@@ -1,0 +1,288 @@
+﻿.contenedor-mis-reservas {
+    display:flex;
+    flex-direction:column;
+    gap:50px;
+    padding: 100px 10px;
+    max-width: 1536px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.reservas {
+    display: grid;
+    gap: 10px;
+}
+
+
+/* Reserva tarjeta */
+.reserva-tarjeta {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: var(--color-default);
+    color: var(--color-gris-700);
+}
+
+    .reserva-tarjeta:hover {
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    }
+
+.reserva-tarjeta-imagen,
+.reserva-tarjeta-informacion {
+    width: 100%;
+    height: 50%;
+}
+
+.reserva-tarjeta-imagen {
+    padding: 20px 20px 0 20px;
+}
+
+.tarjeta-imagen-contenedor {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+}
+
+.imagen-informacion-aliado {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 2px;
+    padding: 5px 10px 0 0;
+    border-radius: 0 30px 0 0;
+    width: fit-content;
+    background-color: var(--color-default);
+}
+
+.informacion-aliado-avatar {
+    display: block;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 100%;
+    border: 2px solid var(--color-primario-500);
+    overflow: hidden;
+}
+
+    .informacion-aliado-avatar:hover {
+        border: 2px solid var(--color-terciario-500);
+    }
+
+.informacion-aliado-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: .7rem;
+    line-height: 1;
+}
+
+.nombre-aliado {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.nombre-aliado {
+    font-weight: 500;
+    color: var(--color-default-black);
+}
+
+    .nombre-aliado:hover {
+        font-weight: 600;
+        color: var(--color-default-black);
+    }
+
+    .nombre-aliado i {
+        font-size: .9rem;
+        color: var(--color-primario-500);
+    }
+
+    .nombre-aliado:hover i {
+        color: var(--color-terciario-500);
+    }
+
+.cantidad-publiaciones:hover {
+    color: var(--color-default-black);
+    text-decoration: underline;
+}
+
+.reserva-tarjeta-informacion {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+    .reserva-tarjeta-informacion h2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--color-default-black);
+    }
+
+.reserva-tarjeta-puntuacion {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+    .reserva-tarjeta-puntuacion span:first-child {
+        font-weight: 600;
+        font-size: 1.8rem;
+        color: var(--color-default-black);
+    }
+
+.reserva-tarjeta-estrellas {
+    display: flex;
+    flex-direction: column;
+}
+
+    .reserva-tarjeta-estrellas a:hover {
+        color: var(--color-default-black);
+        text-decoration: underline;
+    }
+
+.estrellas,
+.estrellas-puntuacion {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    color: var(--color-primario-500);
+    font-size: .8rem;
+}
+
+.estrellas-puntuacion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.resenas-numero {
+    font-size: .7rem;
+}
+
+.tarjeta-informacion-adicional {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reserva-tarjeta-fecha {
+    display: flex;
+    flex-direction: column;
+    font-size: .8rem;
+    line-height: 1.2;
+}
+
+    .reserva-tarjeta-fecha span:first-child {
+        font-size: .9rem;
+        font-weight: 500;
+    }
+
+.reserva-estado-activa,
+.reserva-estado-finalizada,
+.reserva-estado-cancelada {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    padding: 0 10px;
+    border-radius: 30px;
+    font-size: .8rem;
+}
+
+.reserva-estado-activa {
+    background-color: var(--color-secundario-50);
+    border: 2px solid var(--color-secundario-400);
+    color: var(--color-secundario-400);
+}
+
+.reserva-estado-finalizada {
+    background-color: var(--color-primario-50);
+    border: 2px solid var(--color-primario-500);
+    color: var(--color-primario-500);
+}
+
+.reserva-estado-cancelada {
+    background-color: var(--color-terciario-200);
+    border: 2px solid var(--color-terciario-500);
+    color: var(--color-terciario-500);
+}
+
+.hr-y {
+    height: 20px;
+    width: 1px;
+    background-color: var(--color-gris-200);
+}
+
+.reserva-tarjeta-informacion .button-87-main {
+    width: fit-content;
+    margin-top: 10px;
+}
+
+
+@media (min-width: 640px) {
+    /* Reserva tarjeta */
+    .reserva-tarjeta {
+        height: 250px;
+        flex-direction: row;
+    }
+
+    .reserva-tarjeta-imagen,
+    .reserva-tarjeta-informacion {
+        width: 50%;
+        height: 100%;
+    }
+
+    .reserva-tarjeta-imagen {
+        padding: 20px 0 20px 20px;
+    }
+
+    .tarjeta-imagen-contenedor {
+        border-radius: 20px 0 0 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .contenedor-mis-reservas {
+        padding: 100px 20px;
+    }
+
+    .reserva-tarjeta-imagen {
+        width: 40%;
+    }
+
+    .reserva-tarjeta-informacion {
+        width: 60%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .reservas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1536px) {
+    .contenedor-mis-reservas {
+        padding: 100px 0;
+    }
+}

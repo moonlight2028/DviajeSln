@@ -1,1 +1,113 @@
 ﻿@model List<ReservaTarjetaV2VM>?
+
+
+@{
+    ViewData["Title"] = "Mis Reservas";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/reservas/reservas-mis-reservas.css">
+}
+
+
+@if (Model != null && Model.Any())
+{
+    <div class="contenedor-mis-reservas">
+        <h1>Mis Reservas</h1>
+        <section class="reservas">
+            @foreach (var reserva in Model)
+            {
+                <article class="reserva-tarjeta b-s-95">
+                    <div class="reserva-tarjeta-imagen">
+                        <div class="tarjeta-imagen-contenedor">
+                            <img src="@reserva.imagenPublicacion" alt="Imagen de la publicación @reserva.TituloPublicacion" class="img-f">
+                            <div class="imagen-informacion-aliado">
+                                <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@reserva.IdAliado" class="informacion-aliado-avatar">
+                                    <img src="@reserva.AvatarAliado" alt="Avatar del aliado @reserva.NombreAliado" class="img-f">
+                                </a>
+                                <div class="informacion-aliado-links">
+                                    <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@reserva.IdAliado" class="nombre-aliado">
+                                        @if (reserva.VerificadoAliado)
+                                        {
+                                            <i class="fa-solid fa-suitcase-rolling"></i>
+                                        }
+                                        <span>@reserva.NombreAliado</span>
+                                    </a>
+                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@reserva.IdAliado" class="cantidad-publiaciones">
+                                        @reserva.NumeroPublicacionesAliado.ToString("N0").Replace(',','.') Publicaciones
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reserva-tarjeta-informacion">
+                        <div>
+                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@reserva.IdPublicacion">
+                                <h2>@reserva.TituloPublicacion</h2>
+                            </a>
+                            <div class="reserva-tarjeta-puntuacion">
+                                <span>@reserva.PuntuacionPublicacion</span>
+                                <div class="reserva-tarjeta-estrellas">
+                                    <div class="estrellas">
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <div class="estrellas-puntuacion" style="@($"width: {(@reserva.PuntuacionPublicacion / 5) * 100}%");">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <a asp-area="Dviaje" asp-controller="Resenas" asp-action="Resenas" asp-route-id="@reserva.IdPublicacion" class="resenas-numero">
+                                        @reserva.NumeroResenasPublicacion.ToString("N0").Replace(',','.') Reseñas
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr"></div>
+                        <div>
+                            <div class="tarjeta-informacion-adicional">
+                                <div class="reserva-tarjeta-fecha">
+                                    <span>Fecha Inicial</span>
+                                    <span>@reserva.FechaInicial?.ToString("MM-dd-yyyy")</span>
+                                </div>
+                                <div class="hr-y"></div>
+                                <div class="reserva-tarjeta-fecha">
+                                    <span>Fecha Final</span>
+                                    <span>@reserva.FechaFinal?.ToString("MM-dd-yyyy")</span>
+                                </div>
+
+                                <div class="hr-y"></div>
+                                
+                                @switch (reserva.ReservaEstado)
+                                {
+                                    case ReservaEstado.Activo:
+                                        <span class="reserva-estado-activa">Activa</span>
+                                        break;
+                                    case ReservaEstado.Aprobado:
+                                        <span class="reserva-estado-finalizada">Finalizada</span>
+                                        break;
+                                    default:
+                                        <span class="reserva-estado-cancelada">Cancelada</span>
+                                        break;
+                                }
+                            </div>
+                            <a asp-area="Turista" asp-controller="Reservas" asp-action="MiReserva" asp-route-id="@reserva.IdReserva" class="button-87-main">Ver Más</a>
+                        </div>
+                    </div>
+                </article>
+            }
+        </section>
+    </div>
+}
+else
+{
+    <h1>Aún no as realizado reservas</h1>
+}
