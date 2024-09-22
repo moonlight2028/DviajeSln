@@ -40,7 +40,7 @@ if (parametros.has("pagina")) {
 
 
 // Validación de fechas en la nav de búsqueda
-validacionInputFechas();
+validacionInputFechas("booking-busqueda-llegada", "booking-busqueda-salida");
 
 // Render filtro ordenar
 publicacionesOrdenar(filtroOrdenar, valoresOrdenar);

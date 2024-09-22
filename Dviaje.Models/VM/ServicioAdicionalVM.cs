@@ -7,6 +7,7 @@
         public string? NombreServicio { get; set; }
         public ServicioTipo ServicioTipo { get; set; }
         public string? RutaIcono { get; set; }
+        public bool Seleccionado { get; set; }
     }
 }
 

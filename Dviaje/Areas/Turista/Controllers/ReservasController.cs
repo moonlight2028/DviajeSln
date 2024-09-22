@@ -24,24 +24,66 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         // GET: Muestra el formulario para reservar una publicación específica
-        public async Task<IActionResult> Reservar(int? idPublicacion)
+        [Route("reservar/{id?}")]
+        public async Task<IActionResult> Reservar(int? id)
         {
             // Verifica si el ID de publicación es válido
-            if (!idPublicacion.HasValue)
+            if (!id.HasValue)
             {
-                return RedirectToAction("Index", "Publicaciones"); // Redirige si no hay una publicación seleccionada
+                return RedirectToAction("Publicaciones", "Publicaciones", new { area = "Dviaje" });                // Redirige si no hay una publicación seleccionada
             }
 
             // Inicializa un ViewModel de ReservaCrearVM para la vista
             var reservaFormulario = new ReservaCrearVM
             {
-                IdPublicacion = idPublicacion.Value,
+                IdPublicacion = id.Value,
+                // Falta la consulta
                 ServiciosAdicionales = new List<ServicioAdicionalVM>() // Cargar servicios adicionales 
             };
 
 
 
-            return View(reservaFormulario);
+
+            // Datos de test borrar cuando esté la consulta
+            ReservaCrearVM datosTest = new ReservaCrearVM
+            {
+                IdPublicacion = id.Value,
+                PrecioTotal = 1561524m,
+                ServiciosAdicionales = new List<ServicioAdicionalVM> {
+                    new ServicioAdicionalVM {
+                        IdServicioAdicional = 1,
+                        Precio = 45615m,
+                        NombreServicio = "Tour Guiado por la Ciudad",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        IdServicioAdicional = 2,
+                        Precio = 4185615m,
+                        NombreServicio = "Aventura en Montaña",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        IdServicioAdicional = 3,
+                        Precio = 4895123m,
+                        NombreServicio = "Spa y Relajación",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        IdServicioAdicional = 4,
+                        Precio = 4123m,
+                        NombreServicio = "Alquiler de Bicicletas",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    },
+                    new ServicioAdicionalVM {
+                        IdServicioAdicional = 5,
+                        Precio = 21345m,
+                        NombreServicio = "Clases de Surf",
+                        RutaIcono = "fa-solid fa-fire-burner"
+                    }
+                }
+            };
+
+            return View(datosTest);
         }
 
         // POST: Crea y guarda una nueva reserva en la base de datos
@@ -167,7 +209,6 @@ namespace Dviaje.Areas.Turista.Controllers
             //{
             //    return RedirectToAction(nameof(MisReservas));
             //}
-
 
 
 

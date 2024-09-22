@@ -1,1 +1,102 @@
 ﻿@model ReservaCrearVM
+
+
+@{
+    ViewData["Title"] = "Reservar";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/reservas/reservar.css">
+}
+
+
+<div class="reserva-publicacion">
+    <form class="reserva">
+        <input type="hidden" asp-for="@Model.IdPublicacion" />
+        <h1>Reserva ahora, vive la experiencia</h1>
+
+        <div class="reserva-inputs">
+            <div>
+                <label asp-for="FechaInicial" class="input-label">
+                    <input asp-for="FechaInicial" type="date" autocomplete="on" aria-required="true"
+                           class="input-field" placeholder="Fecha Inicial"/>
+                    <span class="input-placeholder">Fecha Inicial</span>
+                </label>
+                <span asp-validation-for="FechaInicial" class="validation-message"></span>
+            </div>
+            <div>
+                <label asp-for="FechaFinal" class="input-label">
+                    <input asp-for="FechaFinal" type="date" autocomplete="on" aria-required="true"
+                           class="input-field" placeholder="Fecha Final" />
+                    <span class="input-placeholder">Fecha Final</span>
+                </label>
+                <span asp-validation-for="FechaFinal" class="validation-message"></span>
+            </div>
+            <div>
+                <label asp-for="NumeroPersonas" class="input-label input-label-personas">
+                    <input asp-for="NumeroPersonas" type="number" autocomplete="on" aria-required="true"
+                           class="input-field" placeholder="Fecha Inicial" min="1" value="1" />
+                    <span class="input-placeholder">Numero de Personas</span>
+                </label>
+                <span asp-validation-for="NumeroPersonas" class="validation-message"></span>
+            </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div>
+            <h2>Servicios Adicionales</h2>
+            <div class="reserva-lista-servicios">
+                @if(Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
+                {
+                    foreach(var servicio in Model.ServiciosAdicionales)
+                    {
+                        <div class="reserva-servicio reserva-servicio-activo">
+                            <input type="checkbox" asp-for="@servicio.Seleccionado" data-servicio-precio="@servicio.Precio">
+                            <label asp-for="@servicio.IdServicioAdicional">
+                                <i class="@servicio.RutaIcono"></i>
+                                <span>@servicio.NombreServicio</span>
+                            </label>
+                        </div>
+                    }    
+                }
+            </div>
+        </div>
+
+        <div class="reserva-precio">
+            <span>$ @Model.PrecioTotal.ToString("N0")</span>
+            <button class="button-87-main">Reservar</button>
+        </div>
+    </form>
+
+    <section class="publicacion">
+        <div class="publicacion-informacion">
+            <img src="https://images.unsplash.com/photo-1646836366532-a282ebbd4703?q=80&w=1949&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="" class="img-f">
+            <div class="publicacion-informacion-texto">
+                <div class="ubicacion-avatar">
+                    <div class="publicacion-ubicacion">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>aksdfjkla adfjkla adfjkl adfkjl</span>
+                    </div>
+                    <a href="" class="publicacion-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="" class="img-f">
+                    </a>
+                </div>
+                <p class="publicacion-aliado">Nombre Aliado</p>
+                <div class="publicacion-nota">
+                    <span>4.5</span>
+                    <a href="" class="button-23 button-23-mas">Ver Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/reservas/reservar.js" type="module"></script>
+}

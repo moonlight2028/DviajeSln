@@ -1,7 +1,10 @@
-﻿export const validacionInputFechas = () => {
+﻿export const validacionInputFechas = (fechaInicial, fechaFinal) => {
     // Fechas del booking
-    const bookingLlegada = document.getElementById("booking-busqueda-llegada");
-    const bookingSalida = document.getElementById("booking-busqueda-salida");
+    //const bookingLlegada = document.getElementById("booking-busqueda-llegada");
+    //const bookingSalida = document.getElementById("booking-busqueda-salida");
+
+    const bookingLlegada = document.getElementById(fechaInicial);
+    const bookingSalida = document.getElementById(fechaFinal);
 
     // Establece la fecha actual y el valor minimo en la fecha actual
     let fechaActual = new Date().toISOString().split("T")[0];
