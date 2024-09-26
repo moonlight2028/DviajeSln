@@ -8,12 +8,16 @@ namespace Dviaje.Areas.Dviaje.Controllers
     public class ResenasController : Controller
     {
         private readonly IResenasRepository _resenaRepository;
+        private readonly IPublicacionesRepository _publicacionesRepository;
+
 
         // Inyección de dependencias
-        public ResenasController(IResenasRepository resenaRepository)
+        public ResenasController(IResenasRepository resenaRepository, IPublicacionesRepository publicacionesRepository)
         {
             _resenaRepository = resenaRepository;
+            _publicacionesRepository = publicacionesRepository;
         }
+
 
         // Muestra las reseñas públicas de una publicación específica
         [Route("reseñas/{id?}")]
@@ -25,38 +29,22 @@ namespace Dviaje.Areas.Dviaje.Controllers
             }
 
             // Corregir consulta retornar solo la informacion del modelo ResenasPublicacionVM
-            // var resenas = await _resenaRepository.ObtenerResenasPorPublicacionAsync(id.Value, 1);
+            var publicacion = await _publicacionesRepository.ObtenerPublicacionResenasVMAsyn((int)id);
 
-            //if (resenas == null || !resenas.Any())
-            //{
-            //    return View("SinResenas");
-            //}
-
-
-            // Datos de test borrar cuando esté lista la consulta
-            ResenasPublicacionVM informacionResenaPublicacion = new ResenasPublicacionVM
+            if (publicacion == null)
             {
-                IdPublicacion = 1,
-                TituloPublicacion = "Aventura en la Montaña",
-                PuntuacionPunblicacion = 4.2m,
-                DescripcionPublicacion = "La comunicación efectiva es fundamental en todos los aspectos de la vida. Permite expresar ideas, compartir conocimientos y construir relaciones sólidas. En el ámbito profesional, la comunicación clara y precisa es clave para alcanzar objetivos, resolver conflictos y fomentar la colaboración. Además, una buena comunicación ayuda a motivar a los equipos, a mejorar la productividad y a garantizar el éxito en proyectos. Dominar esta habilidad es esencial para el desarrollo personal y profesional en un entorno cada vez más interconectado.",
-                DireccionPublicacion = "Calle Falsa 123, Ciudad, País",
-                ImagenPublicacion = "https://images.unsplash.com/photo-1724093121148-ec407f45e44c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            };
-
-            return View(informacionResenaPublicacion);
-        }
-
-        // Obtener lista de reseñas paginadas por publicación
-        [HttpGet]
-        public async Task<IActionResult> ListaReseñas(int? idPublicacion, int? pagina = 1)
-        {
-            if (!idPublicacion.HasValue || pagina == null)
-            {
-                return BadRequest();
+                return RedirectToAction("Publicaciones", "Publicaciones");
             }
 
-            var resenas = await _resenaRepository.ObtenerResenasPorPublicacionAsync(idPublicacion.Value, pagina.Value);
+            return View(publicacion);
+        }
+
+
+        [HttpGet]
+        [Route("reseñas/lista")]
+        public async Task<IActionResult> ResenasPorPublicacion(int? id, int? pagina, [FromQuery(Name = "resultados-mostrados")] int? resultadosMostrados)
+        {
+            List<ResenaTarjetaBasicaVM>? resenas = await _resenaRepository.ObtenerListaResenaTarjetaBasicaVMAsync((int)id, (int)pagina, (int)resultadosMostrados);
 
             if (resenas == null || !resenas.Any())
             {
@@ -67,41 +55,28 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
         // Obtener lista de reseñas paginadas por usuario
-        [HttpGet]
-        public async Task<IActionResult> ListaReseñas(string? idUsuario, int? pagina = 1)
-        {
-            if (string.IsNullOrEmpty(idUsuario) || pagina == null)
-            {
-                return BadRequest();
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> ListaReseñas(string? idUsuario, int? pagina = 1)
+        //{
+        //    if (string.IsNullOrEmpty(idUsuario) || pagina == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var resenas = await _resenaRepository.ObtenerMisResenasAsync(idUsuario, pagina.Value);
+        //    var resenas = await _resenaRepository.ObtenerMisResenasAsync(idUsuario, pagina.Value);
 
-            if (resenas == null || !resenas.Any())
-            {
-                return NoContent();
-            }
+        //    if (resenas == null || !resenas.Any())
+        //    {
+        //        return NoContent();
+        //    }
 
-            return Ok(resenas);
-        }
+        //    return Ok(resenas);
+        //}
 
-        // Obtener las mejores 3 reseñas de una publicación
-        [HttpGet]
-        public async Task<IActionResult> TopReseñas(int? idPublicacion)
-        {
-            if (!idPublicacion.HasValue)
-            {
-                return BadRequest();
-            }
 
-            var topResenas = await _resenaRepository.ObtenerTopResenasPorPublicacionAsync(idPublicacion.Value);
 
-            if (topResenas == null || !topResenas.Any())
-            {
-                return NoContent();
-            }
 
-            return Ok(topResenas);
-        }
+
+
     }
 }

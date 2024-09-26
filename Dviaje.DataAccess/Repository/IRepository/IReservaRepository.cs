@@ -4,15 +4,14 @@ namespace Dviaje.DataAccess.Repository.IRepository
 {
     public interface IReservaRepository
     {
-        Task<List<ReservaTarjetaV2VM>> GetAllReservasAsync(string idUsuario);
-        Task<ReservaTarjetaV3VM> GetReservaByIdAsync(int idReserva);
+        Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario);
+        Task<ReservaMiReservaVM?> ObtenerReservaMiReservaPorAliadoAsync(int idReserva, string idAliado);
+        Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(int pagina = 1, int resultadosMostrados = 10, string? estado = null);
+        Task<int> ObtenerTotalReservas(string idUsuario, string? estado);
+        Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion);
         Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM);
         Task<bool> CancelarReservaAsync(int idReserva);
-        Task<bool> SaveAsync();
-        Task<List<ReservaTarjetaV2VM>> GetAll();
-
-
-
-
+        Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario);
+        Task<List<ReservaTablaItemVM>?> ObtenerListaReservaTablaItemVMAsync(string idAliado);
     }
 }

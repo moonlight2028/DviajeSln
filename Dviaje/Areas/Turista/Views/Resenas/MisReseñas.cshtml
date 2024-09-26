@@ -1,4 +1,4 @@
-﻿@model List<ResenasTarjetaV2VM>?
+﻿@model List<ResenaTarjetaDetalleVM>?
 
 
 @{
@@ -19,13 +19,13 @@
         {
             <article class="favorito-tarjeta b-s-93">
                 <div class="favorito-img">
-                    <img src="@resena.ImagenPublicacion" alt="Imagen de la publicación @resena.TituloPublcacion" class="img-f">
+                    <img src="@resena.ImagenPublicacion" alt="Imagen de la publicación @resena.TituloPublicacion" class="img-f">
                 </div>
 
                 <div class="favorito-contenido">
                     <div class="favorito-informacion">
                         <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@resena.IdPublicacion">
-                            <h2>@resena.TituloPublcacion</h2>
+                            <h2>@resena.TituloPublicacion</h2>
                         </a>
                         <p class="favorito-descripcion">@resena.Opinion</p>
                     </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="favorito-botones">
                             <i class="fa-regular fa-thumbs-up"></i>
-                            <span>@resena.MeGusta</span>
+                            <span>@resena.NumerosLikes</span>
                         </div>
                     </div>
                 </div>

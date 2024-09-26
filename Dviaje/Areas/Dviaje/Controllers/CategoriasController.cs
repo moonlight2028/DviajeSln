@@ -1,16 +1,28 @@
-﻿using Dviaje.Models;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     public class CategoriasController : Controller
     {
-        public IActionResult Categorias()
+        private readonly ICategoriasRepository _categoriasRepository;
+
+
+        public CategoriasController(ICategoriasRepository categoriasRepository)
+        {
+            _categoriasRepository = categoriasRepository;
+        }
+
+
+        [HttpGet]
+        [Route("categorias")]
+        public async Task<IActionResult> Categorias()
         {
             // Consulta
-            List<Categoria>? categoriasLista = null;
+            List<Categoria>? categorias = await _categoriasRepository.ObtenerCategoriasAsync();
 
-            return Ok();
+            return Ok(categorias);
         }
     }
 }

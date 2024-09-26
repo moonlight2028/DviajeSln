@@ -1,4 +1,4 @@
-﻿@model ResenasPublicacionVM
+﻿@model PublicacionResenasVM
 
 
 @{
@@ -22,14 +22,14 @@
 
         <div>
             <div class="publicacion-puntuacion">
-                <span class="publicacion-puntuacion-nota">@Model.PuntuacionPunblicacion</span>
+                <span class="publicacion-puntuacion-nota">@Model.PuntuacionPublicacion</span>
                 <div class="estrellas">
                     <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
-                    <div class="estrellas-puntuacion" style="@($"width: {(Model.PuntuacionPunblicacion / 5) * 100}%");">
+                    <div class="estrellas-puntuacion" style="@($"width: {(Model.PuntuacionPublicacion / 5) * 100}%");">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>

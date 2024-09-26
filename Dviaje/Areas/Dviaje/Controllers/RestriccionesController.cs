@@ -1,4 +1,5 @@
-﻿using Dviaje.Models;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
@@ -6,12 +7,21 @@ namespace Dviaje.Areas.Dviaje.Controllers
     [Area("Dviaje")]
     public class RestriccionesController : Controller
     {
-        // Endpoints para JS
+        private readonly IRestriccionesRepository _restriccionesRepository;
+
+
+        public RestriccionesController(IRestriccionesRepository restriccionesRepository)
+        {
+            _restriccionesRepository = restriccionesRepository;
+        }
+
+
         [HttpGet]
-        public IActionResult Restricciones()
+        [Route("Restricciones")]
+        public async Task<IActionResult> Restricciones()
         {
             // Consulta
-            List<Restriccion>? restriccionesLista = null;
+            List<Restriccion>? restriccionesLista = await _restriccionesRepository.ObtenerRestriccionesAsync();
 
             return Ok();
         }

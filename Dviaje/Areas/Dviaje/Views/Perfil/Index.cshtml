@@ -13,13 +13,13 @@
 
 
 <section class="banner b-sc-1">
-    <img src="@Model.Banner" alt="@($"Banner del usuairo {Model.Nombre}")" class="img-f">
+    <img src="@Model.Banner" alt="@($"Banner del usuairo {Model.UserName}")" class="img-f">
 </section>
 
 <div class="perfil b-sc-1">
     <section class="perfil-avatar">
         <div class="perfil-avatar-img b-s-93">
-            <img src="@Model.Avatar" alt="@($"Avatar del usuario {Model.Nombre}")" class="img-f">
+            <img src="@Model.Avatar" alt="@($"Avatar del usuario {Model.UserName}")" class="img-f">
         </div>
         <div class="avatar-text-contenedor">
             @if (Model.EsAliado)
@@ -42,7 +42,7 @@
     <section class="perfil-info">
         <section>
             <div class="perfil-info-text">
-                <h1>@Model.Nombre</h1>
+                <h1>@Model.UserName</h1>
                 @if (Model.Verificado)
                 {
                     <i class="fa-solid fa-suitcase-rolling"></i>

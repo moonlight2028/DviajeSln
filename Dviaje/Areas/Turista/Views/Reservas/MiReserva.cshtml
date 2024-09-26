@@ -1,4 +1,4 @@
-﻿@model ReservaTarjetaV3VM
+﻿@model ReservaMiReservaVM
 
 
 @{
@@ -20,7 +20,7 @@
             </a>
             <a href="" class="ubicacion">
                 <i class="fa-solid fa-location-dot"></i>
-                <span>@Model.Ubicacion</span>
+                <span>@Model.Direccion</span>
             </a>
         </div>
 
@@ -36,7 +36,7 @@
                 </div>
                 <div class="reserva-informacion">
                     <span>Personas:</span>
-                    <span>@Model.NumeroPersonas</span>
+                    <span>@Model.Personas</span>
                 </div>
             </div>
             
@@ -53,12 +53,12 @@
                     break;
             }
 
-            @if(Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
+            @if (Model.ServiciosAdicionalesPublicacion != null && Model.ServiciosAdicionalesPublicacion.Any())
             {
                 <div>
                     <h2>Servicios Adicionales</h2>
                     <div class="servicios-adicionales">
-                        @foreach (var servicio in Model.ServiciosAdicionales)
+                        @foreach (var servicio in Model.ServiciosAdicionalesPublicacion)
                         {
                             <div class="servicio-adicional">
                                 <i class="@servicio.RutaIcono"></i>
@@ -71,12 +71,12 @@
         </div>
 
         <div>
-            <p class="publicacion-descripcion">@Model.Descripcion</p>
+            <p class="publicacion-descripcion">@Model.DescripcionPublicacion</p>
 
-            @if (Model.Servicios != null && Model.Servicios.Any())
+            @if (Model.ServiciosPublicacion != null && Model.ServiciosPublicacion.Any())
             {
                 <div class="servicios-publicacion">
-                    @foreach (var servicio in Model.Servicios)
+                    @foreach (var servicio in Model.ServiciosPublicacion)
                     {
                         <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="servicio-publicacion">
                             <i class="@servicio.RutaIcono"></i>
@@ -89,9 +89,9 @@
 
         <div class="calificacion">
             <i class="fa-solid fa-star"></i>
-            <span>@Model.Puntuacion</span>
+            <span>@Model.PuntuacionPublicacion</span>
             <i class="fa-solid fa-circle punto"></i>
-            <a href="">@Model.NumeroResenas.ToString("N0") Reseñas</a>
+            <a href="">@Model.NumeroReseñasPublicacion.ToString("N0") Reseñas</a>
         </div>
 
         <div class="aliado-informacion">
@@ -100,33 +100,33 @@
             </a>
             <div class="reserva-aliado">
                 <span class="reserva-aliado-nombre">
-                    @if (Model.Verificado)
+                    @if (Model.VerificadoAliado)
                     {
                         <i class="fa-solid fa-suitcase-rolling verificado"></i>
                     }
                     <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.IdAliado">@Model.NombreAliado</a>
                 </span>
-                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@Model.IdAliado">@Model.NumeroPublicaciones.ToString("N0") Publicaciones</a>
+                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@Model.IdAliado">@Model.NumeroPublicacionesAliado.ToString("N0") Publicaciones</a>
             </div>
         </div>
     </section>
 
-    @if (Model.Imagen != null && Model.Imagen.Any())
+    @if (Model.ImagenesPublicacion != null && Model.ImagenesPublicacion.Any())
     {
         <section class="publcacion">
             <div class="publicacion-imagen">
-                <img src="@Model.Imagen[0].Ruta" alt="@Model.Imagen[0].Alt" class="img-f">
+                <img src="@Model.ImagenesPublicacion[0].Ruta" alt="@Model.ImagenesPublicacion[0].Alt" class="img-f">
             </div>
             <div class="publicacion-imagen-dos">
                 <div class="publicacion-imagen">
-                    <img src="@Model.Imagen[1].Ruta" alt="@Model.Imagen[1].Alt" class="img-f">
+                    <img src="@Model.ImagenesPublicacion[1].Ruta" alt="@Model.ImagenesPublicacion[1].Alt" class="img-f">
                 </div>
                 <div class="publicacion-imagen">
-                    <img src="@Model.Imagen[2].Ruta" alt="@Model.Imagen[2].Alt" class="img-f">
+                    <img src="@Model.ImagenesPublicacion[2].Ruta" alt="@Model.ImagenesPublicacion[2].Alt" class="img-f">
                 </div>
             </div>
             <div class="publicacion-imagen">
-                <img src="@Model.Imagen[3].Ruta" alt="@Model.Imagen[3].Alt" class="img-f">
+                <img src="@Model.ImagenesPublicacion[3].Ruta" alt="@Model.ImagenesPublicacion[3].Alt" class="img-f">
             </div>
         </section>
     }

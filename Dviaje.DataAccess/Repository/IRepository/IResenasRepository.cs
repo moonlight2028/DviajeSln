@@ -4,33 +4,14 @@ namespace Dviaje.DataAccess.Repository.IRepository
 {
     public interface IResenasRepository
     {
-        // Obtener las reseñas disponibles para que el usuario las pueda reseñar
-        Task<List<ResenaDisponibleTarjetaVM>> ObtenerResenasDisponiblesAsync(string idUsuario, int paginaActual, int elementosPorPagina = 10);
-
-        // Obtener las reseñas ya realizadas por el usuario
-        Task<List<ResenasTarjetaVM>> ObtenerMisResenasAsync(string idUsuario, int paginaActual, int elementosPorPagina = 10);
-
-        // Validar si una reserva puede ser reseñada
-        Task<bool> ValidarReservaParaResenaAsync(int idReserva, string idUsuario);
-
-        // Crear una nueva reseña
         Task<bool> CrearResenaAsync(ResenaCrearVM resenaCrear);
-
-        // Añadir "Me Gusta" a una reseña
+        Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10);
+        Task<List<ResenaTarjetaDisponibleVM>?> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10);
+        Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10);
+        Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null);
         Task<bool> AgregarMeGustaAsync(int idResena, string idUsuario);
-
-        // Eliminar "Me Gusta" de una reseña
         Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario);
-
-        // Obtener las reseñas con más "Me Gusta"
-        Task<List<ResenasTarjetaVM>> ObtenerResenasTopAsync(int cantidad);
-
-        // Obtener las reseñas públicas de una publicación
-        Task<List<ResenasTarjetaVM>> ObtenerResenasPorPublicacionAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10);
-
-        // Obtener las mejores 3 reseñas de una publicación
-        Task<List<ResenasTarjetaVM>> ObtenerTopResenasPorPublicacionAsync(int idPublicacion);
-
         Task<int> ObtenerMeGustaCountAsync(int idResena);
+        Task<bool> ValidarReservaParaResenaAsync(int idReserva, string idUsuario);
     }
 }

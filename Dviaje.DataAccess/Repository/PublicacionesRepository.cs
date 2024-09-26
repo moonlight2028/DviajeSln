@@ -7,15 +7,14 @@ namespace Dviaje.DataAccess.Repository
 {
     public class PublicacionesRepository : IPublicacionesRepository
     {
-        // Conexión de la base de datos
         private readonly IDbConnection _db;
 
 
-        // Constructor e inyección de la conexión a la base de datos
         public PublicacionesRepository(IDbConnection db)
         {
             _db = db;
         }
+
 
         // Retorna todas las publicaciones registradas
         public async Task<int> PublicacionesTotales()
@@ -26,34 +25,7 @@ namespace Dviaje.DataAccess.Repository
             return totalPublicaciones;
         }
 
-
-        //metodo get all para reportes 
-
-        public async Task<List<PublicacionTarjetaV2VM>> GetAll()
-        {
-            string consulta = @"
-        SELECT 
-            p.IdPublicacion,
-            p.Titulo,
-            p.Puntuacion,
-            p.Descripcion,
-            c.NombreCategoria AS Categoria
-        FROM 
-            publicaciones p
-        JOIN 
-            publicacionescategorias pc ON p.IdPublicacion = pc.IdPublicacion
-        JOIN 
-            categorias c ON pc.IdCategoria = c.IdCategoria;
-    ";
-
-            // Ejecuta la consulta y mapea los resultados a PublicacionTarjetaV2VM
-            var publicaciones = await _db.QueryAsync<PublicacionTarjetaV2VM>(consulta);
-
-            return publicaciones.ToList();
-        }
-
-
-        public async Task<List<PublicacionTarjetaVM>> ObtenerPublicacionesAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null)
+        public async Task<List<PublicacionTarjetaBusquedaVM>> ObtenerListaPublicacionTarjetaBusquedaVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null)
         {
             // Consulta para obtener las publicaciones
             string consultaPublicaciones = @"
@@ -116,7 +88,7 @@ namespace Dviaje.DataAccess.Repository
 
 
             // Ejecuta y obtiene la consulta de las publicaciones
-            var publicaciones = await _db.QueryAsync<PublicacionTarjetaVM>(consultaPublicaciones, new { orderBy = ordenarPor, pageSize = numeroPublicaciones, offset = (pagina - 1) * numeroPublicaciones });
+            var publicaciones = await _db.QueryAsync<PublicacionTarjetaBusquedaVM>(consultaPublicaciones, new { orderBy = ordenarPor, pageSize = numeroPublicaciones, offset = (pagina - 1) * numeroPublicaciones });
 
             // Obtiene los Id de las publicaciones para usarlos en las siguientes consultas
             var idsPublicaciones = publicaciones.Select(p => p.IdPublicacion).ToList();
@@ -138,7 +110,7 @@ namespace Dviaje.DataAccess.Repository
             return publicaciones.ToList();
         }
 
-        public async Task<PublicacionVM?> ObtenerPublicacionPorIdAsync(int idPublicacion)
+        public async Task<PublicacionDetalleVM?> ObtenerPublicacionDetalleVMAsync(int idPublicacion)
         {
             // // Consulta para obtener la publicación
             string consultaPublicacion = @"
@@ -161,7 +133,7 @@ namespace Dviaje.DataAccess.Repository
 
 
             // Ejecutar las consultas
-            var publicacion = await _db.QueryFirstOrDefaultAsync<PublicacionVM>(consultaPublicacion, new { IdPublicacion = idPublicacion });
+            var publicacion = await _db.QueryFirstOrDefaultAsync<PublicacionDetalleVM>(consultaPublicacion, new { IdPublicacion = idPublicacion });
 
 
             if (publicacion != null)
@@ -244,12 +216,108 @@ namespace Dviaje.DataAccess.Repository
                 publicacion.Servicios = servicios.ToList();
                 publicacion.ServiciosAdicionales = serviciosAdicionales.ToList();
                 publicacion.Restricciones = restricciones.ToList();
+                // ToDo: Agregar consulta
+                publicacion.TopResenas = null;
             }
 
             return publicacion;
         }
 
-        Task<PublicacionTarjetaV2VM> IPublicacionesRepository.GetAll()
+        public async Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsyn(int idPublicacion)
+        {
+            // Corregir consulta retornar solo la informacion del modelo PublicacionResenasVM
+            //var sql = @"
+            //    SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
+            //    FROM Resenas rs
+            //    WHERE rs.IdPublicacion = @IdPublicacion
+            //    ORDER BY rs.Calificacion DESC
+            //    LIMIT @ElementosPorPagina OFFSET @Offset";
+
+            //var offset = (paginaActual - 1) * elementosPorPagina;
+
+            //return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new
+            //{
+            //    IdPublicacion = idPublicacion,
+            //    ElementosPorPagina = elementosPorPagina,
+            //    Offset = offset
+            //})).ToList();
+
+
+            // Datos de test borrar cuando esté lista la consulta
+            PublicacionResenasVM informacionResenaPublicacion = new PublicacionResenasVM
+            {
+                IdPublicacion = 1,
+                TituloPublicacion = "Aventura en la Montaña",
+                PuntuacionPublicacion = 4.2m,
+                DescripcionPublicacion = "La comunicación efectiva es fundamental en todos los aspectos de la vida. Permite expresar ideas, compartir conocimientos y construir relaciones sólidas. En el ámbito profesional, la comunicación clara y precisa es clave para alcanzar objetivos, resolver conflictos y fomentar la colaboración. Además, una buena comunicación ayuda a motivar a los equipos, a mejorar la productividad y a garantizar el éxito en proyectos. Dominar esta habilidad es esencial para el desarrollo personal y profesional en un entorno cada vez más interconectado.",
+                DireccionPublicacion = "Calle Falsa 123, Ciudad, País",
+                ImagenPublicacion = "https://images.unsplash.com/photo-1724093121148-ec407f45e44c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            };
+
+            return (informacionResenaPublicacion);
+        }
+
+        public Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion)
+        {
+            return Task.FromResult<PublicacionTarjetaImagenVM?>(null);
+        }
+
+        public Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> EditarPublicacionAsync(PublicacionCrearVM publicacion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync(int idPublicacion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> EstadoEliminarPublicacionAsync(int idPublicacion, int idAliado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> EstadoCambiarPublicacionAsync(int idPublicacion, int idAliado, string estado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<PublicacionTablaItemVM>?> ObtenerListaPublicacionTablaItemVMAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ReportesPublicacionesPorMesVM>?> ReportePublicacionesPorMesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ReportesPublicacionesTopCategoriaVM>?> ReporteTopCategoriasAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ReportesPublicacionesActivasVM>?> ReportePublicacionesActivasAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ReportesPublicacionesPreciosVM>?> ReportePreciosPromediosAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual)
         {
             throw new NotImplementedException();
         }

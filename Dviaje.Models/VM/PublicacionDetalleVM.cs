@@ -1,6 +1,6 @@
 ﻿namespace Dviaje.Models.VM
 {
-    public class PublicacionVM
+    public class PublicacionDetalleVM
     {
         public int IdPublicacion { get; set; }
         public string? Titulo { get; set; }
@@ -20,5 +20,6 @@
         public List<ServicioVM>? Servicios { get; set; }
         public List<ServicioAdicionalVM>? ServiciosAdicionales { get; set; }
         public List<RestriccionVM>? Restricciones { get; set; }
+        public List<ResenaTarjetaBasicaVM>? TopResenas { get; set; }
     }
 }

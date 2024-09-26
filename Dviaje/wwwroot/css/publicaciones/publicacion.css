@@ -499,6 +499,8 @@
     position: absolute;
     top: 1px;
     right: 4px;
+    /* Corregir */
+    display: none;
 }
 
 .form-servicios input {

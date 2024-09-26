@@ -1,6 +1,6 @@
 ﻿namespace Dviaje.Models.VM
 {
-    public class PqrsVM
+    public class PqrsCrearVM
     {
         // Campos de la tabla AtencionViajeros
         public int IdAtencionViajero { get; set; }

@@ -9,13 +9,14 @@ namespace Dviaje.DataAccess.Repository
     {
         private readonly IDbConnection _db;
 
+
         public PqrsRepository(IDbConnection db)
         {
             _db = db;
         }
 
-        // Método para crear la PQRS
-        public async Task<bool> CrearPqrsAsync(PqrsVM pqrs)
+
+        public async Task<bool> CrearPqrsAsync(PqrsCrearVM pqrs)
         {
             using (var transaction = _db.BeginTransaction())
             {
@@ -63,6 +64,21 @@ namespace Dviaje.DataAccess.Repository
                     return false;
                 }
             }
+        }
+
+        public Task<List<AtencionViajerosPqrsVM>?> ObtenerListaAtencionViajerosPqrsVM(string idUsuario)
+        {
+            return Task.FromResult<List<AtencionViajerosPqrsVM>?>(null);
+        }
+
+        public Task<List<MensajesPqrsVM>?> ObtenerMensajesPqrsVmAsync(int idAtencionViajero)
+        {
+            return Task.FromResult<List<MensajesPqrsVM>?>(null);
+        }
+
+        public Task<bool> RegistrarMensajeAsync(MensajesPqrsPostVM mensaje)
+        {
+            return Task.FromResult(false);
         }
     }
 }

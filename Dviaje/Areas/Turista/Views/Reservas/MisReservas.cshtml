@@ -1,4 +1,4 @@
-﻿@model List<ReservaTarjetaV2VM>?
+﻿@model List<ReservaTarjetaBasicaVM>?
 
 
 @{
@@ -22,7 +22,7 @@
                 <article class="reserva-tarjeta b-s-95">
                     <div class="reserva-tarjeta-imagen">
                         <div class="tarjeta-imagen-contenedor">
-                            <img src="@reserva.imagenPublicacion" alt="Imagen de la publicación @reserva.TituloPublicacion" class="img-f">
+                            <img src="@reserva.ImagenPublicacion" alt="Imagen de la publicación @reserva.TituloPublicacion" class="img-f">
                             <div class="imagen-informacion-aliado">
                                 <a asp-area="Dviaje" asp-controller="Perfil" asp-action="Index" asp-route-id="@reserva.IdAliado" class="informacion-aliado-avatar">
                                     <img src="@reserva.AvatarAliado" alt="Avatar del aliado @reserva.NombreAliado" class="img-f">
@@ -36,7 +36,7 @@
                                         <span>@reserva.NombreAliado</span>
                                     </a>
                                     <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-id-aliado="@reserva.IdAliado" class="cantidad-publiaciones">
-                                        @reserva.NumeroPublicacionesAliado.ToString("N0").Replace(',','.') Publicaciones
+                                        @reserva.NumeroPublicacionesPublicacion.ToString("N0").Replace(',','.') Publicaciones
                                     </a>
                                 </div>
                             </div>

@@ -3,7 +3,6 @@ using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
@@ -22,21 +21,11 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        // GET: Muestra el formulario PQRS
         [Route("pqrs")]
         public IActionResult Pqrs()
         {
             // Verificar si el usuario está autenticado
             ViewBag.SesionIniciada = User.Identity.IsAuthenticated;
-
-            // Si el usuario ha iniciado sesión, pasar datos adicionales al ViewModel
-            if (ViewBag.SesionIniciada)
-            {
-                var userName = User.FindFirstValue(ClaimTypes.Name);
-                var userEmail = User.FindFirstValue(ClaimTypes.Email);
-                ViewBag.UserName = userName;
-                ViewBag.UserEmail = userEmail;
-            }
 
             return View();
         }
@@ -44,12 +33,11 @@ namespace Dviaje.Areas.Dviaje.Controllers
         // POST: Procesa el envío de PQRS
         [HttpPost]
         [Route("pqrs")]
-        public async Task<IActionResult> Pqrs(PqrsVM pqrs, List<IFormFile> adjuntos)
+        public async Task<IActionResult> Pqrs(PqrsCrearVM pqrs, List<IFormFile> adjuntos)
         {
             if (!ModelState.IsValid)
             {
-                // Si el modelo no es válido, regresar a la vista con los errores
-                return View(pqrs);
+                return View(nameof(Pqrs));
             }
 
             // Completar datos faltantes desde el controlador

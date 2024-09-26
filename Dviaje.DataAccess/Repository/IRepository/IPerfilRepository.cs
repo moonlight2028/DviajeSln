@@ -4,6 +4,6 @@ namespace Dviaje.DataAccess.Repository.IRepository
 {
     public interface IPerfilRepository
     {
-        Task<PerfilPublicoVM?> ObtenerPerfilPublicoAsync(string idUsuario);
+        Task<PerfilPublicoVM?> ObtenerPerfilPublicoVMAsync(string idUsuario);
     }
 }

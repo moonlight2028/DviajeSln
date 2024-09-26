@@ -36,7 +36,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
             ordenar = ordenar == null ? "" : ordenar.Trim().ToLower();
 
             // Lista de publicaciones
-            List<PublicacionTarjetaVM> listaPublicaciones = await _publicacionesRepository.ObtenerPublicacionesAsync((int)pagina, numeroPublicaciones, ordenar);
+            List<PublicacionTarjetaBusquedaVM> listaPublicaciones = await _publicacionesRepository.ObtenerListaPublicacionTarjetaBusquedaVMAsync((int)pagina, numeroPublicaciones, ordenar);
 
             // Paso de argumentos de paginación a la vista
             ViewBag.PaginacionPaginas = paginasTotales;
@@ -53,7 +53,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
             if (id is null) return RedirectToAction(nameof(Publicaciones));
 
             // Publicación
-            PublicacionVM? publicacionBuscada = await _publicacionesRepository.ObtenerPublicacionPorIdAsync((int)id);
+            PublicacionDetalleVM? publicacionBuscada = await _publicacionesRepository.ObtenerPublicacionDetalleVMAsync((int)id);
 
             // Validación
             if (publicacionBuscada is null) return RedirectToAction(nameof(Publicaciones));
@@ -62,23 +62,22 @@ namespace Dviaje.Areas.Dviaje.Controllers
         }
 
 
-        // Endpoints para JS
         [HttpGet]
-        public IActionResult ListaPublicaciones(string? idUsuario, int? pagina)
+        [Route("publicacion/tarjeta-imagen")]
+        public async Task<IActionResult> PublicacionTarjetaImagen(int? id)
         {
-            // Validacion ruta de idUsuario
+            PublicacionTarjetaImagenVM? publicacion = await _publicacionesRepository.ObtenerPublicacionTarjetaImagenVMAsync((int)id);
 
-            // Agregar logica de paginacion para las PublicacionesTarjetas con sus validaciones, en esta logica se necesita otra consulta
-
-            /* Consulta
-             * La lista de PublicacionTarjetaV2VM debe tener paginacion
-            */
-            List<PublicacionTarjetaV2VM> listaPublicaciones = null; // Consulta
-
-            // Retornar JSON, si es null retornar NoContent
-
-            return Ok();
+            return Ok(publicacion);
         }
+
+
+
+
+
+
+
+
 
     }
 }

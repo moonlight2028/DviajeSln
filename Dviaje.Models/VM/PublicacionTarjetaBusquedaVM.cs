@@ -1,6 +1,6 @@
 ﻿namespace Dviaje.Models.VM
 {
-    public class PublicacionTarjetaVM
+    public class PublicacionTarjetaBusquedaVM
     {
         public int IdPublicacion { get; set; }
         public string? AliadoId { get; set; }

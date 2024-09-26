@@ -1,4 +1,5 @@
-﻿using Dviaje.Models;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
@@ -6,14 +7,23 @@ namespace Dviaje.Areas.Dviaje.Controllers
     [Area("Dviaje")]
     public class ServiciosController : Controller
     {
-        // Endpoints para JS
+        private readonly IServiciosRepository _serviciosRepository;
+
+
+        public ServiciosController(IServiciosRepository serviciosRepository)
+        {
+            _serviciosRepository = serviciosRepository;
+        }
+
+
         [HttpGet]
-        public IActionResult Servicios()
+        [Route("servicios")]
+        public async Task<IActionResult> Servicios()
         {
             // Consulta
-            List<Servicio>? listaServicios = null;
+            List<Servicio>? servicios = await _serviciosRepository.ObtenerServiciosAsync();
 
-            return Ok();
+            return Ok(servicios);
         }
     }
 }

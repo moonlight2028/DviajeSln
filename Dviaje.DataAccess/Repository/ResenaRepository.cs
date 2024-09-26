@@ -9,72 +9,13 @@ namespace Dviaje.DataAccess.Repository
     {
         private readonly IDbConnection _db;
 
+
         public ResenaRepository(IDbConnection db)
         {
             _db = db;
         }
 
-        // Obtiene las reseñas disponibles para que el usuario pueda reseñar
-        public async Task<List<ResenaDisponibleTarjetaVM>> ObtenerResenasDisponiblesAsync(string idUsuario, int paginaActual, int elementosPorPagina = 10)
-        {
-            var sql = @"
-                SELECT r.IdReserva, p.Titulo AS TituloPublicacion, p.Descripcion AS DescripcionPublicacion, p.Puntuacion AS PuntuacionPublicacion, p.ImagenUrl AS ImagenPublicacion, r.FechaInicial, r.FechaFinal
-                FROM Reservas r
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                WHERE r.IdUsuario = @IdUsuario
-                AND r.Estado = 'Aprobado'
-                AND r.FechaFinal <= CURRENT_DATE
-                AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)
-                ORDER BY r.FechaFinal DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
 
-            var offset = (paginaActual - 1) * elementosPorPagina;
-
-            return (await _db.QueryAsync<ResenaDisponibleTarjetaVM>(sql, new
-            {
-                IdUsuario = idUsuario,
-                ElementosPorPagina = elementosPorPagina,
-                Offset = offset
-            })).ToList();
-        }
-
-        // Obtiene las reseñas que ya realizó el usuario
-        public async Task<List<ResenasTarjetaVM>> ObtenerMisResenasAsync(string idUsuario, int paginaActual, int elementosPorPagina = 10)
-        {
-            var sql = @"
-                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
-                FROM Resenas rs
-                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                WHERE r.IdUsuario = @IdUsuario
-                ORDER BY rs.Fecha DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
-
-            var offset = (paginaActual - 1) * elementosPorPagina;
-
-            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new
-            {
-                IdUsuario = idUsuario,
-                ElementosPorPagina = elementosPorPagina,
-                Offset = offset
-            })).ToList();
-        }
-
-        // Valida si la reserva puede ser reseñada
-        public async Task<bool> ValidarReservaParaResenaAsync(int idReserva, string idUsuario)
-        {
-            var sql = @"
-                SELECT COUNT(*)
-                FROM Reservas r
-                WHERE r.IdReserva = @IdReserva
-                AND r.IdUsuario = @IdUsuario
-                AND r.Estado = 'Aprobado'
-                AND r.FechaFinal <= CURRENT_DATE
-                AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)";
-
-            return await _db.ExecuteScalarAsync<bool>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
-        }
-
-        // Crea una nueva reseña
         public async Task<bool> CrearResenaAsync(ResenaCrearVM resenaCrear)
         {
             var sql = @"
@@ -85,7 +26,197 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-        // Añadir "Me Gusta" a una reseña
+
+        public Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<ResenaTarjetaDisponibleVM>> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
+        {
+            // Corregir. Error: MySqlException: Unknown column 'p.ImagenUrl' in 'field list'
+            //var sql = @"
+            //    SELECT r.IdReserva, p.Titulo AS TituloPublicacion, p.Descripcion AS DescripcionPublicacion, p.Puntuacion AS PuntuacionPublicacion, p.ImagenUrl AS ImagenPublicacion, r.FechaInicial, r.FechaFinal
+            //    FROM Reservas r
+            //    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+            //    WHERE r.IdUsuario = @IdUsuario
+            //    AND r.Estado = 'Aprobado'
+            //    AND r.FechaFinal <= CURRENT_DATE
+            //    AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)
+            //    ORDER BY r.FechaFinal DESC
+            //    LIMIT @ElementosPorPagina OFFSET @Offset";
+
+            //var offset = (pagina - 1) * resultadosMostrados;
+
+            //return (await _db.QueryAsync<ResenaTarjetaDisponibleVM>(sql, new
+            //{
+            //    IdUsuario = idUsuario,
+            //    ElementosPorPagina = resultadosMostrados,
+            //    Offset = offset
+            //})).ToList();
+
+
+            // Datos de test borrar cuando esté la consulta
+            List<ResenaTarjetaDisponibleVM>? datosTest = new List<ResenaTarjetaDisponibleVM> {
+                new ResenaTarjetaDisponibleVM {
+                    TituloPublicacion = "Aventura en la Montaña",
+                    DescripcionPublicacion = "Una experiencia inolvidable rodeado de naturaleza, perfecta para quienes buscan desconectarse y disfrutar del aire libre.",
+                    IdPublicacion = 2,
+                    PuntuacionPublicacion = 4.8m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 3,
+                    FechaInicial = new DateTime(2024, 01, 15),
+                    FechaFinal = new DateTime(2024, 01, 18)
+                },
+                new ResenaTarjetaDisponibleVM {
+                    TituloPublicacion = "Relax en la Playa",
+                    DescripcionPublicacion = "El lugar perfecto para relajarse con vistas al mar, disfrutar de la tranquilidad y desconectar del mundo.",
+                    IdPublicacion = 3,
+                    PuntuacionPublicacion = 4.5m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 4,
+                    FechaInicial = new DateTime(2024, 02, 05),
+                    FechaFinal = new DateTime(2024, 02, 10)
+                },
+                new ResenaTarjetaDisponibleVM {
+                    TituloPublicacion = "Escapada Rural",
+                    DescripcionPublicacion = "Una hermosa casa de campo con vistas espectaculares, ideal para una escapada romántica o con amigos.",
+                    IdPublicacion = 4,
+                    PuntuacionPublicacion = 4.9m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 5,
+                    FechaInicial = new DateTime(2024, 03, 12),
+                    FechaFinal = new DateTime(2024, 03, 15)
+                },
+                new ResenaTarjetaDisponibleVM {
+                    TituloPublicacion = "Tour en la Ciudad",
+                    DescripcionPublicacion = "Descubre los secretos y maravillas de la ciudad con este tour guiado por los principales puntos de interés.",
+                    IdPublicacion = 5,
+                    PuntuacionPublicacion = 4.3m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 6,
+                    FechaInicial = new DateTime(2024, 04, 02),
+                    FechaFinal = new DateTime(2024, 04, 05)
+                },
+                new ResenaTarjetaDisponibleVM {
+                    TituloPublicacion = "Aventura en la Selva",
+                    DescripcionPublicacion = "Una experiencia emocionante para quienes buscan adentrarse en la selva y vivir la naturaleza de cerca.",
+                    IdPublicacion = 6,
+                    PuntuacionPublicacion = 4.7m,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    IdReserva = 7,
+                    FechaInicial = new DateTime(2024, 05, 10),
+                    FechaFinal = new DateTime(2024, 05, 15)
+                }
+            };
+
+            return datosTest;
+        }
+
+        public async Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
+        {
+            // Corregir debe retornar una lista del modelo ResenaTarjetaDetalle
+            //var sql = @"
+            //    SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
+            //    FROM Resenas rs
+            //    INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
+            //    WHERE r.IdUsuario = @IdUsuario
+            //    ORDER BY rs.Fecha DESC
+            //    LIMIT @ElementosPorPagina OFFSET @Offset";
+
+            //var offset = (pagina - 1) * resultadosMostrados;
+
+            //return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new
+            //{
+            //    IdUsuario = idUsuario,
+            //    ElementosPorPagina = resultadosMostrados,
+            //    Offset = offset
+            //})).ToList();
+
+
+            // Datos de test borrar cuando esté la consulta
+            List<ResenaTarjetaDetalleVM>? datosTest = new List<ResenaTarjetaDetalleVM>
+            {
+                new ResenaTarjetaDetalleVM
+                {
+                    IdPublicacion = 1,
+                    TituloPublicacion = "Aventura en la Montaña",
+                    Opinion = "Una experiencia increíble, todo estuvo perfecto.",
+                    Fecha = new DateTime(2024, 1, 15),
+                    Puntuacion = 4.8m,
+                    NumerosLikes = 120,
+                    IdAliado = "A123",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Juan Pérez",
+                    NumeroPublicacionesAliado = 15,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenaTarjetaDetalleVM
+                {
+                    IdPublicacion = 2,
+                    TituloPublicacion = "Relajación en la Playa",
+                    Opinion = "El lugar es hermoso, pero el servicio podría mejorar.",
+                    Fecha = new DateTime(2023, 8, 23),
+                    Puntuacion = 3.7m,
+                    NumerosLikes = 85,
+                    IdAliado = "B456",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "María Gómez",
+                    NumeroPublicacionesAliado = 10,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenaTarjetaDetalleVM
+                {
+                    IdPublicacion = 3,
+                    TituloPublicacion = "Escapada Rural",
+                    Opinion = "La cabaña era acogedora y perfecta para desconectar.",
+                    Fecha = new DateTime(2024, 2, 10),
+                    Puntuacion = 4.5m,
+                    NumerosLikes = 95,
+                    IdAliado = "C789",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Pedro Sánchez",
+                    NumeroPublicacionesAliado = 8,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenaTarjetaDetalleVM
+                {
+                    IdPublicacion = 4,
+                    TituloPublicacion = "Tour por la Ciudad klajdslkfjalk adslkfjalksd aldkjflkads alsdkjflk adkjflkadsjf adkfjlkadsjfl asdfjkladsjf adfjlkadsjflk",
+                    Opinion = "La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la norma diaria.",
+                    Fecha = new DateTime(2023, 11, 18),
+                    Puntuacion = 4.9m,
+                    NumerosLikes = 135,
+                    IdAliado = "D321",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Ana López",
+                    NumeroPublicacionesAliado = 20,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                },
+                new ResenaTarjetaDetalleVM
+                {
+                    IdPublicacion = 5,
+                    TituloPublicacion = "Viaje en Familia",
+                    Opinion = "Todo estuvo bien, aunque la comida no fue tan buena.",
+                    Fecha = new DateTime(2023, 5, 5),
+                    Puntuacion = 3.9m,
+                    NumerosLikes = 65,
+                    IdAliado = "E654",
+                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+                    NombreAliado = "Carlos Ruiz",
+                    NumeroPublicacionesAliado = 12,
+                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                }
+            };
+
+            return datosTest;
+        }
+
+        public Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null)
+        {
+            return Task.FromResult<List<ResenaTarjetaRecibidaVM>?>(null);
+        }
+
         public async Task<bool> AgregarMeGustaAsync(int idResena, string idUsuario)
         {
             // Verificar si el usuario ya ha dado "Me Gusta"
@@ -111,16 +242,6 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-        public async Task<int> ObtenerMeGustaCountAsync(int idResena)
-        {
-            var sql = "SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = @IdResena";
-
-            var count = await _db.ExecuteScalarAsync<int>(sql, new { IdResena = idResena });
-            return count;
-        }
-
-
-        // Elimina "Me Gusta" de una reseña
         public async Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario)
         {
             var sql = @"
@@ -131,50 +252,26 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-        // Método para obtener las reseñas con más "Me Gusta" (Top reseñas)
-        public async Task<List<ResenasTarjetaVM>> ObtenerResenasTopAsync(int cantidad)
+        public async Task<int> ObtenerMeGustaCountAsync(int idResena)
         {
-            var sql = @"
-                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
-                FROM Resenas rs
-                ORDER BY rs.MeGusta DESC
-                LIMIT @Cantidad";
+            var sql = "SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = @IdResena";
 
-            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { Cantidad = cantidad })).ToList();
+            var count = await _db.ExecuteScalarAsync<int>(sql, new { IdResena = idResena });
+            return count;
         }
 
-        // Obtiene reseñas públicas de una publicación
-        public async Task<List<ResenasTarjetaVM>> ObtenerResenasPorPublicacionAsync(int idPublicacion, int paginaActual, int elementosPorPagina = 10)
+        public async Task<bool> ValidarReservaParaResenaAsync(int idReserva, string idUsuario)
         {
             var sql = @"
-                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
-                FROM Resenas rs
-                WHERE rs.IdPublicacion = @IdPublicacion
-                ORDER BY rs.Calificacion DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
+                SELECT COUNT(*)
+                FROM Reservas r
+                WHERE r.IdReserva = @IdReserva
+                AND r.IdUsuario = @IdUsuario
+                AND r.Estado = 'Aprobado'
+                AND r.FechaFinal <= CURRENT_DATE
+                AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)";
 
-            var offset = (paginaActual - 1) * elementosPorPagina;
-
-            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new
-            {
-                IdPublicacion = idPublicacion,
-                ElementosPorPagina = elementosPorPagina,
-                Offset = offset
-            })).ToList();
+            return await _db.ExecuteScalarAsync<bool>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
         }
-
-        // Obtiene las mejores 3 reseñas públicas de una publicación
-        public async Task<List<ResenasTarjetaVM>> ObtenerTopResenasPorPublicacionAsync(int idPublicacion)
-        {
-            var sql = @"
-                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
-                FROM Resenas rs
-                WHERE rs.IdPublicacion = @IdPublicacion
-                ORDER BY rs.Calificacion DESC
-                LIMIT 3";
-
-            return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new { IdPublicacion = idPublicacion })).ToList();
-        }
-
     }
 }

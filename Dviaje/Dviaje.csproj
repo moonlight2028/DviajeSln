@@ -44,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Moderador\Controllers\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

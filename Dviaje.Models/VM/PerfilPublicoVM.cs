@@ -3,8 +3,8 @@
     public class PerfilPublicoVM
     {
         // Datos Turista
-        public string? IdUsuario { get; set; }
-        public string? Nombre { get; set; }
+        public string? Id { get; set; }
+        public string? UserName { get; set; }
         public string? Avatar { get; set; }
         public int NumeroReservas { get; set; }
         public int NumeroResenas { get; set; }
