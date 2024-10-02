@@ -1,0 +1,234 @@
+﻿.contenedor-principal {
+    width: 100%;
+    max-width: 1536px;
+    height: 100dvh;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 80px 20px 0 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.contenedor-pqrs-mensajes {
+    position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+.pqrs,
+.mensajes {
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-default);
+    border-radius: 10px;
+}
+
+.pqrs {
+    overflow: auto;
+}
+
+
+/* Inicio pqrs atención a los viajeros */
+.atencion-viajero {
+    padding: 20px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-gris-200);
+}
+
+    .atencion-viajero:hover {
+        background-color: var(--color-default);
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    }
+
+.atencion-viajero-activo {
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.pqrs-mensaje-fecha {
+    display: flex;
+    flex-direction: column;
+}
+
+.pqrs-mensaje {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .9rem;
+}
+
+.pqrs-fecha {
+    font-size: .7rem;
+    min-width: 100px;
+}
+
+.pqrs-tipo-pregunta,
+.pqrs-tipo-queja,
+.pqrs-tipo-reclamo,
+.pqrs-tipo-sugerencia {
+    width: fit-content;
+    padding: 0 10px;
+    font-size: .7rem;
+    border-radius: 20px;
+}
+
+.pqrs-tipo-pregunta {
+    background-color: var(--color-secundario-50);
+    color: var(--color-secundario-400);
+    border: 2px solid var(--color-secundario-400);
+}
+
+.pqrs-tipo-queja {
+    background-color: var(--color-cuarto-50);
+    color: var(--color-cuarto-400);
+    border: 2px solid var(--color-cuarto-400);
+}
+
+.pqrs-tipo-reclamo {
+    background-color: var(--color-terciario-50);
+    color: var(--color-terciario-400);
+    border: 2px solid var(--color-terciario-400);
+}
+
+.pqrs-tipo-sugerencia {
+    background-color: var(--color-quinto-50);
+    color: var(--color-quinto-400);
+    border: 2px solid var(--color-quinto-400);
+}
+
+/* Fin pqrs atención a los viajeros */
+
+
+/* Inicio mensajes */
+.mensajes {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.mensajes-lista {
+    overflow: auto;
+    border-radius: 10px;
+}
+
+.mensajes-envio {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+    .mensajes-envio .input-label {
+        width: 85%;
+    }
+
+        .mensajes-envio .input-label textarea {
+            resize: none;
+        }
+
+    .mensajes-envio button {
+        margin-bottom: 4px;
+    }
+
+.mensajes-envio-adjuntar {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-gris-700);
+}
+
+.mensaje,
+.mensaje-moderador {
+    display: flex;
+    align-items: end;
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.mensaje-moderador {
+    flex-direction: row-reverse;
+    margin-left: auto;
+}
+
+.mensaje-avatar {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.mensaje-descripcion,
+.mensaje-respuesta {
+    font-size: .8rem;
+    padding: 25px;
+    border-radius: 25px 25px 25px 0;
+    background-color: var(--color-secundario-50);
+}
+
+.mensaje-respuesta {
+    border-radius: 25px 25px 0 25px;
+    background-color: var(--color-primario-50);
+}
+
+.mensaje-fecha {
+    display: block;
+    min-width: 100px;
+    color: var(--color-gris-700);
+    font-size: .7rem;
+    text-align: end;
+}
+
+
+/* Fin mensajes */
+
+
+@media (min-width: 768px) {
+    .contenedor-pqrs-mensajes {
+        display: flex;
+        gap: 20PX;
+    }
+
+    /* Inicio pqrs atención a los viajeros */
+    .pqrs {
+        width: 40%;
+    }
+
+    /* Fin pqrs atención a los viajeros */
+
+    /* Inicio mensajes */
+    .mensajes {
+        position: relative;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        width: 60%;
+    }
+
+    /* Fin mensajes */
+}
+
+@media (min-width: 1024px) {
+
+    /* Inicio mensajes */
+    .mensaje,
+    .mensaje-moderador {
+        width: 80%;
+    }
+
+    /* Fin mensajes */
+}
+
+@media (min-width: 1536px) {
+    .contenedor-principal {
+        padding: 80px 0 0 0;
+    }
+}

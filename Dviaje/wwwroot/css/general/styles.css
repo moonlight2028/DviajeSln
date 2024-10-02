@@ -21,8 +21,16 @@
     --color-secundario-900: #164e63;
     --color-secundario-950: #083344;
     /* Rojo */
+    --color-terciario-50: #fef2f2;
     --color-terciario-200: #fecaca;
+    --color-terciario-400: #f87171;
     --color-terciario-500: #ef4444;
+    /* Amarillo */
+    --color-cuarto-50: #fefce8;
+    --color-cuarto-400: #facc15;
+    /* Verde */
+    --color-quinto-50: #f0fdf4;
+    --color-quinto-400: #4ade80;
     /* Blanco */
     --color-default: #fff;
     /* Negro */
@@ -95,7 +103,7 @@ button {
     background-color: transparent;
 }
 
-ul {
+ul, ol {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -420,18 +428,18 @@ svg {
 }
 
 .nav-cerrar-sesion {
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.nav-cerrar-sesion:hover {
-    color: var(--color-default);
-}
+    .nav-cerrar-sesion:hover {
+        color: var(--color-default);
+    }
 
-.nav-cerrar-sesion button{
-    color:inherit;
-    cursor:inherit;
-    width:100%;
-}
+    .nav-cerrar-sesion button {
+        color: inherit;
+        cursor: inherit;
+        width: 100%;
+    }
 
 .nav-pagina-activa {
     color: var(--color-primario-500);
@@ -497,7 +505,7 @@ footer {
     }
 
     .menu-nav-mobile {
-        display:none;
+        display: none;
     }
 }
 

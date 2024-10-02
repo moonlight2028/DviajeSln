@@ -1,3 +1,200 @@
 ﻿@model List<AtencionViajerosPqrsVM>?
 
-<h1>Mis pqrs</h1>
+
+@{
+    ViewData["Title"] = "Mis PQRS";
+}
+
+
+@section Styles {
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/pqrs/pqrs-mis-pqrs.css">
+}
+
+
+<div class="contenedor-principal">
+    <h1>Mis PQRS</h1>
+    <div class="contenedor-pqrs-mensajes">
+        <ol class="pqrs B-S-95">
+            <li class="atencion-viajero atencion-viajero-activo">
+                <div class="pqrs-mensaje-fecha">
+                    <h2 class="pqrs-mensaje">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis sequi aliquid et,
+                        incidunt exercitationem placeat omnis ea unde obcaecati atque repellat nostrum, esse
+                        molestiae excepturi in quo fugiat aspernatur adipisci?
+                    </h2>
+
+                    <span class="pqrs-fecha">2024-02-21 12:00</span>
+                </div>
+                <span class="pqrs-tipo-sugerencia">Pregunta</span>
+                <span class="pqrs-tipo-pregunta">Estado</span>
+            </li>
+
+            <li class="atencion-viajero">
+                <div class="pqrs-mensaje-fecha">
+                    <h2 class="pqrs-mensaje">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis sequi aliquid et,
+                        incidunt exercitationem placeat omnis ea unde obcaecati atque repellat nostrum, esse
+                        molestiae excepturi in quo fugiat aspernatur adipisci?
+                    </h2>
+
+                    <span class="pqrs-fecha">2024-02-21 12:00</span>
+                </div>
+                <span class="pqrs-tipo-sugerencia">Pregunta</span>
+                <span class="pqrs-tipo-pregunta">Estado</span>
+            </li>
+            <li class="atencion-viajero">
+                <div class="pqrs-mensaje-fecha">
+                    <h2 class="pqrs-mensaje">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis sequi aliquid et,
+                        incidunt exercitationem placeat omnis ea unde obcaecati atque repellat nostrum, esse
+                        molestiae excepturi in quo fugiat aspernatur adipisci?
+                    </h2>
+
+                    <span class="pqrs-fecha">2024-02-21 12:00</span>
+                </div>
+                <span class="pqrs-tipo-sugerencia">Pregunta</span>
+                <span class="pqrs-tipo-pregunta">Estado</span>
+            </li>
+            <li class="atencion-viajero">
+                <div class="pqrs-mensaje-fecha">
+                    <h2 class="pqrs-mensaje">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis sequi aliquid et,
+                        incidunt exercitationem placeat omnis ea unde obcaecati atque repellat nostrum, esse
+                        molestiae excepturi in quo fugiat aspernatur adipisci?
+                    </h2>
+
+                    <span class="pqrs-fecha">2024-02-21 12:00</span>
+                </div>
+                <span class="pqrs-tipo-sugerencia">Pregunta</span>
+                <span class="pqrs-tipo-pregunta">Estado</span>
+            </li>
+            <li class="atencion-viajero">
+                <div class="pqrs-mensaje-fecha">
+                    <h2 class="pqrs-mensaje">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis sequi aliquid et,
+                        incidunt exercitationem placeat omnis ea unde obcaecati atque repellat nostrum, esse
+                        molestiae excepturi in quo fugiat aspernatur adipisci?
+                    </h2>
+
+                    <span class="pqrs-fecha">2024-02-21 12:00</span>
+                </div>
+                <span class="pqrs-tipo-sugerencia">Pregunta</span>
+                <span class="pqrs-tipo-pregunta">Estado</span>
+            </li>
+        </ol>
+
+        <section class="mensajes">
+            <div class="mensajes-lista">
+                <article class="mensaje">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-descripcion">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+
+                <article class="mensaje-moderador">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-respuesta">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+                <article class="mensaje">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-descripcion">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+                <article class="mensaje">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-descripcion">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+                <article class="mensaje-moderador">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-respuesta">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+                <article class="mensaje">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-descripcion">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+                <article class="mensaje-moderador">
+                    <div class="mensaje-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
+                             alt="" class="img-f">
+                    </div>
+                    <p class="mensaje-respuesta">
+                        La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos.
+                        Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas
+                        habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la
+                        norma diaria.
+                    </p>
+                    <span class="mensaje-fecha">2024-02-21 12:00</span>
+                </article>
+            </div>
+
+            <div class="mensajes-envio">
+                <label class="input-label">
+                    <textarea aria-required="true"
+                              class="input-field input-field-textarea" placeholder="Mensaje"
+                              maxlength="250"></textarea>
+                    <span class="input-placeholder">Mensaje</span>
+                </label>
+                <button class="mensajes-envio-adjuntar">
+                    <i class="fa-solid fa-paperclip"></i>
+                </button>
+                <button class="button-87-main">Enviar</button>
+            </div>
+
+
+        </section>
+
+    </div>
+</div>
