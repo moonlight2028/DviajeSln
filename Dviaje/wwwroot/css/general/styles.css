@@ -278,11 +278,40 @@ svg {
     width: 100%;
 }
 
+.contenedor-select {
+    position: relative;
+}
+
+    .contenedor-select:focus-within .select-icono i {
+        transform: rotate(180deg);
+        transition: color 0.3s, transform 0.3s;
+        color: var(--color-primario-500);
+    }
+
+.input-select {
+    appearance: none;
+    width: 100%;
+    padding: 8px 16px;
+    color: var(--color-gris-700);
+}
+
+    .input-select:focus {
+        outline-color:var(--color-primario-500);
+    }
+
+.select-icono {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+    color: var(--color-gris-500);
+}
+
 .validation-message {
-    color: var(--color-terciario-500);
-    padding-left: 1rem;
     display: block;
+    padding-left: 1rem;
     font-size: 0.875rem;
+    color: var(--color-terciario-500);
 }
 
 /* Menú desplegable*/

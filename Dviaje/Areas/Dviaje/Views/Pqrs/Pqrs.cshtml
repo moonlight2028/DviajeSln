@@ -105,6 +105,17 @@
                     <span asp-validation-for="Telefono" class="validation-message"></span>
                 </div>
                 <div>
+                    <div class="contenedor-select">
+                        <select class="input-label input-select">
+                            <option value="0" selected>Pregunta</option>
+                            <option value="1">Queja</option>
+                            <option value="2">Reclamo</option>
+                            <option value="3">Sugerencia</option>
+                        </select>
+                        <div class="select-icono"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                </div>
+                <div>
                     <label asp-for="Descripcion" class="input-label">
                         <textarea asp-for="Descripcion" aria-required="true"
                                   class="input-field input-field-textarea" placeholder="Descripción"
