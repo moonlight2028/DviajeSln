@@ -6,9 +6,6 @@
 
 
 @section Styles {
-    <!-- Filepond v4 -->
-    <link href="~/lib/filepond/filepond.css" rel="stylesheet" />
-
     <!-- Estilos custom -->
     <link rel="stylesheet" href="~/css/pqrs/pqrs.css">
 }
@@ -70,49 +67,58 @@
             </div>
         </section>
 
-        <form action="" class="pqrs">
+        <form asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs" method="post" enctype="multipart/form-data" id="form-pqrs" class="pqrs">
             <div class="pqrs-inputs">
-                <div>
-                    <label asp-for="Correo" class="input-label">
-                        <input asp-for="Correo" type="email" autocomplete="on" aria-required="true"
-                               class="input-field" placeholder="Correo" />
-                        <span class="input-placeholder">Correo</span>
-                    </label>
-                    <span asp-validation-for="Correo" class="validation-message"></span>
-                </div>
-                <div>
-                    <label asp-for="Nombre" class="input-label">
-                        <input asp-for="Nombre" type="text" autocomplete="on" aria-required="true"
-                               class="input-field" placeholder="Nombres" />
-                        <span class="input-placeholder">Nombres</span>
-                    </label>
-                    <span asp-validation-for="Nombre" class="validation-message"></span>
-                </div>
-                <div>
-                    <label asp-for="Apellidos" class="input-label">
-                        <input asp-for="Apellidos" type="text" autocomplete="on" aria-required="true"
-                               class="input-field" placeholder="Apellidos" />
-                        <span class="input-placeholder">Apellidos</span>
-                    </label>
-                    <span asp-validation-for="Apellidos" class="validation-message"></span>
-                </div>
-                <div>
-                    <label asp-for="Telefono" class="input-label">
-                        <input asp-for="Telefono" type="tel" autocomplete="on" aria-required="true"
-                               class="input-field" placeholder="Correo" />
-                        <span class="input-placeholder">Telefono</span>
-                    </label>
-                    <span asp-validation-for="Telefono" class="validation-message"></span>
-                </div>
+                @if (!ViewBag.SesionIniciada)
+                {
+                    <div>
+                        <label asp-for="Correo" class="input-label">
+                            <input asp-for="Correo" type="email" autocomplete="on" aria-required="true"
+                                   class="input-field" placeholder="Correo" />
+                            <span class="input-placeholder">Correo</span>
+                        </label>
+                        <span asp-validation-for="Correo" class="validation-message"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Nombre" class="input-label">
+                            <input asp-for="Nombre" type="text" autocomplete="on" aria-required="true"
+                                   class="input-field" placeholder="Nombres" />
+                            <span class="input-placeholder">Nombres</span>
+                        </label>
+                        <span asp-validation-for="Nombre" class="validation-message"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Apellidos" class="input-label">
+                            <input asp-for="Apellidos" type="text" autocomplete="on" aria-required="true"
+                                   class="input-field" placeholder="Apellidos" />
+                            <span class="input-placeholder">Apellidos</span>
+                        </label>
+                        <span asp-validation-for="Apellidos" class="validation-message"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Telefono" class="input-label">
+                            <input asp-for="Telefono" type="tel" autocomplete="on" aria-required="true"
+                                   class="input-field" placeholder="Correo" />
+                            <span class="input-placeholder">Telefono</span>
+                        </label>
+                        <span asp-validation-for="Telefono" class="validation-message"></span>
+                    </div>
+                }
                 <div>
                     <div class="contenedor-select">
-                        <select class="input-label input-select">
-                            <option value="0" selected>Pregunta</option>
-                            <option value="1">Queja</option>
-                            <option value="2">Reclamo</option>
-                            <option value="3">Sugerencia</option>
-                        </select>
-                        <div class="select-icono"><i class="fa-solid fa-chevron-down"></i></div>
+                        @Html.DropDownListFor(model => model.AtencionesViajerosTipoPqrs,
+                                 Enum.GetValues(typeof(AtencionesViajerosTipoPqrs))
+                                 .Cast<AtencionesViajerosTipoPqrs>()
+                                 .Select(e => new SelectListItem
+                        {
+                            Text = e.ToString(),
+                            Value = ((int)e).ToString()
+                        }),
+                                 new { @class = "input-label input-select" }
+                                 )
+                        <div class="select-icono">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -126,9 +132,15 @@
                 </div>
             </div>
 
-            <input type="file" id="pqrs-carga-datos" multiple />
+            <div class="upload-container">
+                <input type="file" id="fileInput" name="archivos" multiple accept=".jpg, .jpeg, .png, .webp, .pdf" />
+                <div class="file-drop-zone">
+                    Arrastra y suelta archivos aquí o haz clic para seleccionar
+                </div>
+                <ul id="fileList"></ul>
+            </div>
 
-            <button class="button-87-main">Enviar PQRS</button>
+            <button class="button-87-main" type="submit">Enviar PQRS</button>
         </form>
     </section>
     <div class="pqrs-imagen">
@@ -138,15 +150,7 @@
 
 
 @section Scripts {
-    <!-- Script de FilePond y plugins -->
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 
     <script src="~/js/pqrs/pqrs.js" type="module"></script>
 }
-
-
-
-

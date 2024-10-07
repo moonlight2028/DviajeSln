@@ -147,37 +147,6 @@
 }
 
 
-/* Filepond */
-.filepond--root {
-    font-family: inherit;
-    font-weight: 400;
-    margin-bottom: 0;
-    background-color: var(--color-gris-100);
-    border-radius: 5px;
-}
-
-.filepond--drop-label {
-    color: var(--color-gris-700);
-}
-
-.filepond--panel-root {
-    background-color: var(--color-gris-100);
-}
-
-.filepond--label-action {
-    color: var(--color-gris-700);
-    text-decoration: underline;
-}
-
-    .filepond--label-action:hover {
-        color: var(--color-primario-500);
-    }
-
-.filepond--credits {
-    display: none;
-}
-
-
 /* Imagen */
 .pqrs-imagen {
     display: none;

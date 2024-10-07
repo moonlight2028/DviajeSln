@@ -1,8 +1,13 @@
 using Dviaje.DataAccess.Data;
 using Dviaje.DataAccess.Repository;
 using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
 using Dviaje.Services;
 using Dviaje.Services.IServices;
+using Dviaje.Utility;
+using Dviaje.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +32,9 @@ builder.Services.AddScoped<IDbConnection>(cr =>
 
 // Identity personalizado
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddErrorDescriber<ErrorDescriberIdentity>();
 
 // Corrección de rutas de Identity
 builder.Services.ConfigureApplicationCookie(options =>
@@ -39,6 +46,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // Soporte para páginas razor
 builder.Services.AddRazorPages();
+
+// Soporte para las validaciones de FluentValidation del lado del cliente
+builder.Services.AddFluentValidationClientsideAdapters();
 
 // Servicios EmailSender temporal Para Identity en los registros
 builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -56,6 +66,10 @@ builder.Services.AddScoped<IResenasRepository, ResenaRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 builder.Services.AddScoped<IRestriccionesRepository, RestriccionesRepository>();
 builder.Services.AddScoped<IServiciosRepository, ServiciosRepository>();
+
+// Inyección de Validadores
+builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearVMValidator>();
+
 
 var app = builder.Build();
 
