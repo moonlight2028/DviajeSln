@@ -2,6 +2,6 @@
 {
     public interface IEnvioEmail
     {
-        Task EnviarEmail(string asunto, string correoUser, string usuario, string cuerpoCorreo, string html);
+        Task EnviarEmailAsync(string asunto, string correoUser, string usuario, string cuerpoCorreo, string html);
     }
 }

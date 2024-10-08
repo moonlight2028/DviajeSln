@@ -31,7 +31,11 @@ builder.Services.AddScoped<IDbConnection>(cr =>
 );
 
 // Identity personalizado
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedAccount = true;
+})
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
     .AddErrorDescriber<ErrorDescriberIdentity>();
@@ -50,10 +54,8 @@ builder.Services.AddRazorPages();
 // Soporte para las validaciones de FluentValidation del lado del cliente
 builder.Services.AddFluentValidationClientsideAdapters();
 
-// Servicios EmailSender temporal Para Identity en los registros
-builder.Services.AddScoped<IEmailSender, EmailSender>();
-
-//EmailServicio
+// Servicios de Envíos de Correos
+builder.Services.AddScoped<IEmailSender, EnvioEmail>();
 builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
 
 // Inyección de Repositorios
