@@ -6,7 +6,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
     {
         Task<bool> CrearResenaAsync(ResenaCrearVM resenaCrear);
         Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10);
-        Task<List<ResenaTarjetaDisponibleVM>?> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10);
+        Task<List<ResenaTarjetaDisponibleVM>?> ObtenerListaResenaTarjetaDisponibleVMAsync(int idPubiccion, string idUsuario, int pagina = 1, int resultadosMostrados = 10);
         Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10);
         Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null);
         Task<bool> AgregarMeGustaAsync(int idResena, string idUsuario);

@@ -390,7 +390,7 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<List<ReservaTablaItemVM>?> ObtenerListaReservaTablaItemVMAsync(string idAliado)
         {
-            // Consulta SQL para obtener los detalles de las reservas y las publicaciones asociadas al aliado
+            // obtener los detalles de las reservas y las publicaciones asociadas al aliado
             var sql = @"
         SELECT 
             r.IdReserva,
