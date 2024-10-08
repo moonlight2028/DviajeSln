@@ -19,18 +19,18 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario)
         {
-            // Corregir. Error: MySqlException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '5 pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacio...' at line 5
-            //var sql = @"
-            //    SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.Estado AS ReservaEstado,
-            //           p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Ubicacion,
-            //           u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
-            //           (SELECT TOP 5 pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden) AS Imagen
-            //    FROM Reservas r
-            //    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-            //    INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-            //    WHERE r.IdReserva = @IdReserva";
-
-            //return await _db.QueryFirstOrDefaultAsync<ReservaMiReserva>(sql, new { IdReserva = idReserva });
+            var sql = @"
+                SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.Estado AS ReservaEstado,
+                p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Ubicacion,
+                u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
+                pi.Ruta AS Imagen
+                FROM Reservas r
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
+                LEFT JOIN PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                WHERE r.IdReserva = @IdReserva AND r.IdUsuario = @IdUsuario
+                ORDER BY pi.Orden 
+                LIMIT 5";
 
 
             // Datos de test borrar cuando esté la consulta
@@ -140,6 +140,56 @@ namespace Dviaje.DataAccess.Repository
         }
         public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(int pagina = 1, int resultadosMostrados = 10, string? estado = null)
         {
+            var sql = @"
+        SELECT 
+            r.IdReserva, 
+            r.FechaInicial, 
+            r.FechaFinal, 
+            r.Estado AS ReservaEstado,
+            p.IdPublicacion, 
+            p.Titulo AS TituloPublicacion, 
+            p.Puntuacion AS PuntuacionPublicacion, 
+            p.NumeroResenas AS NumeroResenasPublicacion,
+            (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
+            pi.Ruta AS ImagenPublicacion,
+            u.Id AS IdAliado, 
+            u.UserName AS NombreAliado, 
+            u.Avatar AS AvatarAliado, 
+            u.Verificado AS VerificadoAliado
+        FROM 
+            Reservas r
+        INNER JOIN 
+            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        INNER JOIN 
+            aspnetusers u ON p.IdAliado = u.Id
+        LEFT JOIN 
+            PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+        WHERE 
+            (@Estado IS NULL OR r.Estado = @Estado)
+        ORDER BY 
+            r.FechaInicial DESC
+        LIMIT 
+            @ResultadosMostrados OFFSET @Offset;
+    ";
+
+            // Cálculo del offset para paginación
+            var offset = (pagina - 1) * resultadosMostrados;
+
+            // Parámetros de consulta para Dapper
+            var parameters = new
+            {
+                Estado = estado,
+                ResultadosMostrados = resultadosMostrados,
+                Offset = offset
+            };
+
+            // Ejecuta la consulta y retorna la lista de reservas
+            var reservas = await _db.QueryAsync<ReservaTarjetaBasicaVM>(sql, parameters);
+
+            return reservas.ToList();
+
+
+
             // Datos de test borrar cuando esté la consulta
             List<ReservaTarjetaBasicaVM>? datosTest = new List<ReservaTarjetaBasicaVM> {
                 new ReservaTarjetaBasicaVM {
@@ -202,9 +252,53 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion)
         {
-            // Cargar en la consulta solo los datos de IdPublicacion , PrecioTotal, ServiciosAdicionales
+            // obtener los datos de la publicación
+            var sqlPublicacion = @"
+        SELECT 
+            p.IdPublicacion,
+            p.Precio AS PrecioTotal,
+            p.FechaInicial,
+            p.FechaFinal,
+            p.NumeroPersonas
+        FROM 
+            Publicaciones p
+        WHERE 
+            p.IdPublicacion = @IdPublicacion;
+    ";
 
-            // Datos de test borrar cuando esté la consulta
+            // obtener los servicios adicionales asociados a la publicación
+            var sqlServiciosAdicionales = @"
+        SELECT 
+            sa.IdServicioAdicional, 
+            sa.Precio, 
+            s.NombreServicio, 
+            s.ServicioTipo,
+            s.RutaIcono
+        FROM 
+            ServiciosAdicionales sa
+        INNER JOIN 
+            Servicios s ON sa.IdServicio = s.IdServicio
+        WHERE 
+            sa.IdPublicacion = @IdPublicacion;
+    ";
+
+            // Ejecutar la consulta para obtener los datos de la publicación
+            var publicacion = await _db.QueryFirstOrDefaultAsync<ReservaCrearVM>(sqlPublicacion, new { IdPublicacion = idPublicacion });
+
+            if (publicacion == null)
+            {
+                return null; // Si no se encuentra la publicación, retorna null
+            }
+
+            // Ejecutar la consulta para obtener los servicios adicionales
+            var serviciosAdicionales = await _db.QueryAsync<ServicioAdicionalVM>(sqlServiciosAdicionales, new { IdPublicacion = idPublicacion });
+
+            // Asignar los servicios adicionales a la publicación
+            publicacion.ServiciosAdicionales = serviciosAdicionales.ToList();
+
+            return publicacion;
+
+
             ReservaCrearVM datosTest = new ReservaCrearVM
             {
                 IdPublicacion = idPublicacion,
@@ -264,14 +358,68 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-        public Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
+        public async Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
         {
-            throw new NotImplementedException();
+            // obtener los datos de la reserva y la publicación
+            var sql = @"
+        SELECT 
+            r.IdReserva,
+            r.FechaInicial,
+            r.FechaFinal,
+            r.NumeroPersonas AS Personas,
+            p.IdPublicacion,
+            p.NumeroResenas AS NumeroResenasPublicacion,
+            (SELECT COUNT(*) FROM Reservas WHERE IdPublicacion = p.IdPublicacion) AS NumeroReservasPublicacion,
+            (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
+        FROM 
+            Reservas r
+        INNER JOIN 
+            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        WHERE 
+            r.IdReserva = @IdReserva
+        AND 
+            r.IdUsuario = @IdUsuario;
+    ";
+
+            // Ejecutar la consulta utilizando Dapper
+            var reservaResumen = await _db.QueryFirstOrDefaultAsync<ReservaTarjetaResumenVM>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
+
+            return reservaResumen;
         }
 
-        public Task<List<ReservaTablaItemVM>?> ObtenerListaReservaTablaItemVMAsync(string idAliado)
+
+        public async Task<List<ReservaTablaItemVM>?> ObtenerListaReservaTablaItemVMAsync(string idAliado)
         {
-            throw new NotImplementedException();
+            // obtener los detalles de las reservas y las publicaciones asociadas al aliado
+            var sql = @"
+        SELECT 
+            r.IdReserva,
+            r.Estado AS ReservaEstado,
+            r.PrecioTotal AS PrecioReserva,
+            r.FechaInicial,
+            r.FechaFinal,
+            u.Id AS IdUsuario,
+            u.UserName AS NombreUsuario,
+            u.Avatar AS AvatarUsuario,
+            p.IdPublicacion,
+            p.Titulo AS TituloPublicacion,
+            (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
+        FROM 
+            Reservas r
+        INNER JOIN 
+            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        INNER JOIN 
+            aspnetusers u ON r.IdUsuario = u.Id
+        WHERE 
+            p.IdAliado = @IdAliado
+        ORDER BY 
+            r.FechaInicial DESC;
+    ";
+
+            // Ejecutar la consulta utilizando Dapper
+            var reservas = await _db.QueryAsync<ReservaTablaItemVM>(sql, new { IdAliado = idAliado });
+
+            return reservas.ToList();
         }
     }
 }
