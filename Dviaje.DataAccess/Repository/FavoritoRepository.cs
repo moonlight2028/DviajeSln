@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models.VM;
 using System.Data;
 
 namespace Dviaje.DataAccess.Repository
@@ -15,29 +14,32 @@ namespace Dviaje.DataAccess.Repository
         }
 
         // Obtiene los favoritos del usuario
-        public async Task<List<FavoritoTarjetaVM>?> ObtenerListaFavoritoTarjetaVMAsync(string idUsuario)
-        {
-            // Obtiene los favoritos del usuario
-            // Corregir, paginar directamente en la consulta SQL, ya que esta trayendo todos los datos para paginar después en el controlador.
-            // No es bueno traer todos los datos de la DB.
-            // Implementación de paginación
-            // Corregir, implementar lógica de paginación en la consulta SQL.
-            // Error: MySqlException: Table 'dviaje.publicacionimagenes' doesn't exist
+        //public async Task<List<FavoritoTarjetaVM>?> ObtenerListaFavoritoTarjetaVMAsync(string idUsuario, int pagina = 1, int resultadosPorPagina = 10)
+        // {
+        //     // Consulta con paginación
+        //     var sql = @"
+        //             SELECT p.IdPublicacion, p.Titulo, p.Descripcion, p.Puntuacion, p.NumeroResenas, 
+        //             (SELECT pi.Ruta FROM publicacionimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen
+        //             FROM Favoritos f
+        //             INNER JOIN Publicaciones p ON f.IdPublicacion = p.IdPublicacion
+        //             WHERE f.IdUsuario = @IdUsuario
+        //             ORDER BY f.FechaAgregado DESC
+        //             LIMIT @ResultadosPorPagina OFFSET @Offset";
 
-            //var sql = @"
-            //    SELECT p.IdPublicacion, p.Titulo, p.Descripcion, p.Puntuacion, pi.Ruta AS Imagen
-            //    FROM Favoritos f
-            //    INNER JOIN Publicaciones p ON f.IdPublicacion = p.IdPublicacion
-            //    LEFT JOIN PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-            //    WHERE f.IdUsuario = @IdUsuario
-            //    ORDER BY f.FechaAgregado DESC"; // Ordena los favoritos por fecha
+        //     var offset = (pagina - 1) * resultadosPorPagina;
 
-            //var resultado = await _db.QueryAsync<FavoritoTarjetaVM>(sql, new { IdUsuario = idUsuario });
-            //return resultado.ToList();
+        //     var favoritos = await _db.QueryAsync<FavoritoTarjetaVM>(sql, new
+        //     {
+        //         IdUsuario = idUsuario,
+        //         ResultadosPorPagina = resultadosPorPagina,
+        //         Offset = offset
+        //     });
 
+        //     return favoritos.ToList();
 
-            return null;
-        }
+        // en cuestion para aplcar al Irepository: , int pagina = 1, int resultadosPorPagina = 10
+        // }
+
 
         // Agrega un favorito para el usuario
         public async Task<bool> CrearFavoritoAsync(int idPublicacion, string idUsuario)

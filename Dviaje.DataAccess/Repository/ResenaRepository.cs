@@ -30,18 +30,18 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                       SELECT r.IdReserva, u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
+                SELECT r.IdReserva, u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista, 
+                       rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
                        (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumeroLikes
-                        FROM Resenas rs
-                        INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                        INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                        INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
-                        WHERE p.IdPublicacion = @IdPublicacion
-                        ORDER BY rs.Fecha DESC
-                        LIMIT @ElementosPorPagina OFFSET @Offset";
+                FROM Resenas rs
+                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
+                WHERE p.IdPublicacion = @IdPublicacion
+                ORDER BY rs.Fecha DESC
+                LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
-
             var result = await _db.QueryAsync<ResenaTarjetaBasicaVM>(sql, new
             {
                 IdPublicacion = idPublicacion,
@@ -53,36 +53,32 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+
         public async Task<List<ResenaTarjetaDisponibleVM>> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
-            // Corregir
-            //var sql = @"
-            //        SELECT r.IdReserva, 
-            //               p.Titulo AS TituloPublicacion, 
-            //               p.Descripcion AS DescripcionPublicacion, 
-            //               p.Puntuacion AS PuntuacionPublicacion, 
-            //               pi.Ruta AS ImagenPublicacion, 
-            //               r.FechaInicial, 
-            //               r.FechaFinal
-            //               FROM Reservas r
-            //               INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-            //               LEFT JOIN PublicacionImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
-            //               WHERE r.IdUsuario = @IdUsuario
-            //               AND p.IdPublicacion = @IdPublicacion
-            //               ORDER BY r.FechaFinal DESC
-            //               LIMIT @ElementosPorPagina OFFSET @Offset";
+            var sql = @"
+                SELECT r.IdReserva, p.Titulo AS TituloPublicacion, p.Descripcion AS DescripcionPublicacion, 
+                       p.Puntuacion AS PuntuacionPublicacion, pi.Ruta AS ImagenPublicacion, 
+                       r.FechaInicial, r.FechaFinal
+                FROM Reservas r
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                LEFT JOIN PublicacionImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
+                WHERE r.IdUsuario = @IdUsuario
+                AND r.FechaFinal <= CURRENT_DATE
+                AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)
+                ORDER BY r.FechaFinal DESC
+                LIMIT @ElementosPorPagina OFFSET @Offset";
 
-            //var offset = (pagina - 1) * resultadosMostrados;
+            var offset = (pagina - 1) * resultadosMostrados;
+            var result = await _db.QueryAsync<ResenaTarjetaDisponibleVM>(sql, new
+            {
+                IdUsuario = idUsuario,
+                ElementosPorPagina = resultadosMostrados,
+                Offset = offset
+            });
 
-            //var result = await _db.QueryAsync<ResenaTarjetaDisponibleVM>(sql, new
-            //{
-            //    IdPublicacion = idPublicacion,
-            //    IdUsuario = idUsuario,
-            //    ElementosPorPagina = resultadosMostrados,
-            //    Offset = offset
-            //});
+            return result.ToList();
 
-            //return result.ToList();
 
             // Datos de test borrar cuando esté la consulta
             List<ResenaTarjetaDisponibleVM>? datosTest = new List<ResenaTarjetaDisponibleVM> {
@@ -144,20 +140,21 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                    SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
-                    (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                    p.Titulo AS TituloPublicacion, p.Imagen AS ImagenPublicacion,
-                    u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.NumeroPublicaciones AS NumeroPublicacionesAliado
-                    FROM Resenas rs
-                    INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                    INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-                    WHERE r.IdUsuario = @IdUsuario
-                    ORDER BY rs.Fecha DESC
-                    LIMIT @ElementosPorPagina OFFSET @Offset";
+                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
+                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                       p.Titulo AS TituloPublicacion, pi.Ruta AS ImagenPublicacion, 
+                       u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, 
+                       u.NumeroPublicaciones AS NumeroPublicacionesAliado
+                FROM Resenas rs
+                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
+                LEFT JOIN PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                WHERE r.IdUsuario = @IdUsuario
+                ORDER BY rs.Fecha DESC
+                LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
-
             var result = await _db.QueryAsync<ResenaTarjetaDetalleVM>(sql, new
             {
                 IdUsuario = idUsuario,
@@ -250,34 +247,28 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null)
         {
             var sql = @"
-                    SELECT rs.Opinion, 
-                           rs.Calificacion AS Puntuacion, 
-                           rs.Fecha, 
-                           (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                           p.IdPublicacion, 
-                           p.Titulo AS TituloPublicacion, 
-                           (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
-                           u.Id AS IdTurista, 
-                           u.UserName AS NombreTurista, 
-                           u.Avatar AS AvatarTurista,
-                           (SELECT COUNT(*) FROM Resenas r WHERE r.IdUsuario = u.Id) AS NumeroResenasTurista
-                            FROM Resenas rs
-                            INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                            INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                            INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
-                            WHERE p.IdAliado = @IdAliado
-                            ORDER BY CASE WHEN @Ordenar IS NOT NULL THEN 
-                         CASE @Ordenar 
-                             WHEN 'Fecha' THEN rs.Fecha
-                             WHEN 'Puntuacion' THEN rs.Calificacion
-                             WHEN 'Likes' THEN NumerosLikes
-                             END
-                             ELSE rs.Fecha
-                             END DESC
+                SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
+                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                       p.IdPublicacion, p.Titulo AS TituloPublicacion, 
+                       (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
+                       u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista,
+                       (SELECT COUNT(*) FROM Resenas r WHERE r.IdUsuario = u.Id) AS NumeroResenasTurista
+                FROM Resenas rs
+                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
+                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
+                WHERE p.IdAliado = @IdAliado
+                ORDER BY CASE WHEN @Ordenar IS NOT NULL THEN
+                        CASE @Ordenar
+                            WHEN 'Fecha' THEN rs.Fecha
+                            WHEN 'Puntuacion' THEN rs.Calificacion
+                            WHEN 'Likes' THEN NumerosLikes
+                        END
+                        ELSE rs.Fecha
+                    END DESC
                 LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
-
             var result = await _db.QueryAsync<ResenaTarjetaRecibidaVM>(sql, new
             {
                 IdAliado = idAliado,

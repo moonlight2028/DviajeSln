@@ -6,6 +6,6 @@
         public string? Descripcion { get; set; }
         public string? IdUsuario { get; set; }
         public string? IdAtencionViajero { get; set; }
-        List<Adjuntos>? Adjuntos { get; set; }
+        public List<Adjuntos>? Adjuntos { get; set; }
     }
 }
