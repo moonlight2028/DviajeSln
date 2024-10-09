@@ -53,35 +53,36 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-        public async Task<List<ResenaTarjetaDisponibleVM>> ObtenerListaResenaTarjetaDisponibleVMAsync(int idPublicacion, string idUsuario, int pagina = 1, int resultadosMostrados = 10)
+        public async Task<List<ResenaTarjetaDisponibleVM>> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
-            var sql = @"
-                    SELECT r.IdReserva, 
-                           p.Titulo AS TituloPublicacion, 
-                           p.Descripcion AS DescripcionPublicacion, 
-                           p.Puntuacion AS PuntuacionPublicacion, 
-                           pi.Ruta AS ImagenPublicacion, 
-                           r.FechaInicial, 
-                           r.FechaFinal
-                           FROM Reservas r
-                           INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                           LEFT JOIN PublicacionImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
-                           WHERE r.IdUsuario = @IdUsuario
-                           AND p.IdPublicacion = @IdPublicacion
-                           ORDER BY r.FechaFinal DESC
-                           LIMIT @ElementosPorPagina OFFSET @Offset";
+            // Corregir
+            //var sql = @"
+            //        SELECT r.IdReserva, 
+            //               p.Titulo AS TituloPublicacion, 
+            //               p.Descripcion AS DescripcionPublicacion, 
+            //               p.Puntuacion AS PuntuacionPublicacion, 
+            //               pi.Ruta AS ImagenPublicacion, 
+            //               r.FechaInicial, 
+            //               r.FechaFinal
+            //               FROM Reservas r
+            //               INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+            //               LEFT JOIN PublicacionImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
+            //               WHERE r.IdUsuario = @IdUsuario
+            //               AND p.IdPublicacion = @IdPublicacion
+            //               ORDER BY r.FechaFinal DESC
+            //               LIMIT @ElementosPorPagina OFFSET @Offset";
 
-            var offset = (pagina - 1) * resultadosMostrados;
+            //var offset = (pagina - 1) * resultadosMostrados;
 
-            var result = await _db.QueryAsync<ResenaTarjetaDisponibleVM>(sql, new
-            {
-                IdPublicacion = idPublicacion,
-                IdUsuario = idUsuario,
-                ElementosPorPagina = resultadosMostrados,
-                Offset = offset
-            });
+            //var result = await _db.QueryAsync<ResenaTarjetaDisponibleVM>(sql, new
+            //{
+            //    IdPublicacion = idPublicacion,
+            //    IdUsuario = idUsuario,
+            //    ElementosPorPagina = resultadosMostrados,
+            //    Offset = offset
+            //});
 
-            return result.ToList();
+            //return result.ToList();
 
             // Datos de test borrar cuando esté la consulta
             List<ResenaTarjetaDisponibleVM>? datosTest = new List<ResenaTarjetaDisponibleVM> {

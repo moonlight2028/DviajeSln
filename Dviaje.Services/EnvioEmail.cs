@@ -14,14 +14,15 @@ namespace Dviaje.Services
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var apiKey = Key;
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress(Email, UserDViaje);
-            var asunto = subject;
-            var to = new EmailAddress(email);
-            var htmlContent = htmlMessage;
-            var msg = MailHelper.CreateSingleEmail(from, to, asunto, "", htmlContent);
-            var response = await client.SendEmailAsync(msg);
+            //var apiKey = Key;
+            //var client = new SendGridClient(apiKey);
+            //var from = new EmailAddress(Email, UserDViaje);
+            //var asunto = subject;
+            //var to = new EmailAddress(email);
+            //var htmlContent = htmlMessage;
+            //var msg = MailHelper.CreateSingleEmail(from, to, asunto, "", htmlContent);
+            //var response = await client.SendEmailAsync(msg);
+            await Task.CompletedTask;
         }
 
         public async Task EnviarEmailAsync(string asunto, string correoUsuario, string usuario, string cuerpoCorreo, string html)
