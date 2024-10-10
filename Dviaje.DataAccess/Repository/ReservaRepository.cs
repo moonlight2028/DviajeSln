@@ -27,7 +27,7 @@ namespace Dviaje.DataAccess.Repository
                 FROM Reservas r
                 INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
                 INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-                LEFT JOIN PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
                 WHERE r.IdReserva = @IdReserva AND r.IdUsuario = @IdUsuario
                 ORDER BY pi.Orden 
                 LIMIT 5";
@@ -145,7 +145,7 @@ namespace Dviaje.DataAccess.Repository
             r.IdReserva, 
             r.FechaInicial, 
             r.FechaFinal, 
-            r.Estado AS ReservaEstado,
+            r.ReservaEstado AS Estado,
             p.IdPublicacion, 
             p.Titulo AS TituloPublicacion, 
             p.Puntuacion AS PuntuacionPublicacion, 
@@ -163,9 +163,9 @@ namespace Dviaje.DataAccess.Repository
         INNER JOIN 
             aspnetusers u ON p.IdAliado = u.Id
         LEFT JOIN 
-            PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+            PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
         WHERE 
-            (@Estado IS NULL OR r.Estado = @Estado)
+            (@Estado IS NULL OR r.ReservaEstado = @Estado)
         ORDER BY 
             r.FechaInicial DESC
         LIMIT 
