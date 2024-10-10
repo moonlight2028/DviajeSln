@@ -138,56 +138,56 @@ namespace Dviaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
-        public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(int pagina = 1, int resultadosMostrados = 10, string? estado = null)
+        public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10, string? estado = null)
         {
             var sql = @"
-        SELECT 
-            r.IdReserva, 
-            r.FechaInicial, 
-            r.FechaFinal, 
-            r.ReservaEstado AS Estado,
-            p.IdPublicacion, 
-            p.Titulo AS TituloPublicacion, 
-            p.Puntuacion AS PuntuacionPublicacion, 
-            p.NumeroResenas AS NumeroResenasPublicacion,
-            (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
-            pi.Ruta AS ImagenPublicacion,
-            u.Id AS IdAliado, 
-            u.UserName AS NombreAliado, 
-            u.Avatar AS AvatarAliado, 
-            u.Verificado AS VerificadoAliado
-        FROM 
-            Reservas r
-        INNER JOIN 
-            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-        INNER JOIN 
-            aspnetusers u ON p.IdAliado = u.Id
-        LEFT JOIN 
-            PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-        WHERE 
-            (@Estado IS NULL OR r.ReservaEstado = @Estado)
-        ORDER BY 
-            r.FechaInicial DESC
-        LIMIT 
-            @ResultadosMostrados OFFSET @Offset;
-    ";
+                    SELECT 
+                        r.IdReserva, 
+                        r.FechaInicial, 
+                        r.FechaFinal, 
+                        r.ReservaEstado AS Estado,
+                        p.IdPublicacion, 
+                        p.Titulo AS TituloPublicacion, 
+                        p.Puntuacion AS PuntuacionPublicacion, 
+                        p.NumeroResenas AS NumeroResenasPublicacion,
+                        (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
+                        pi.Ruta AS ImagenPublicacion,
+                        u.Id AS IdAliado, 
+                        u.UserName AS NombreAliado, 
+                        u.Avatar AS AvatarAliado, 
+                        u.Verificado AS VerificadoAliado
+                    FROM 
+                        Reservas r
+                    INNER JOIN 
+                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN 
+                        aspnetusers u ON p.IdAliado = u.Id
+                    LEFT JOIN 
+                        PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                    WHERE 
+                        r.IdUsuario = @IdUsuario AND (@Estado IS NULL OR r.ReservaEstado = @Estado)
+                    ORDER BY 
+                        r.FechaInicial DESC
+                    LIMIT 
+                        @ResultadosMostrados OFFSET @Offset;
+                    ";
 
-            // Cálculo del offset para paginación
-            var offset = (pagina - 1) * resultadosMostrados;
+                            // Cálculo del offset para paginación
+                            var offset = (pagina - 1) * resultadosMostrados;
 
-            // Parámetros de consulta para Dapper
-            var parameters = new
-            {
-                Estado = estado,
-                ResultadosMostrados = resultadosMostrados,
-                Offset = offset
-            };
+                            // Parámetros de consulta para Dapper
+                            var parameters = new
+                            {
+                                IdUsuario = idUsuario, // Filtro por el usuario
+                                Estado = estado,
+                                ResultadosMostrados = resultadosMostrados,
+                                Offset = offset
+                            };
 
-            // Ejecuta la consulta y retorna la lista de reservas
-            var reservas = await _db.QueryAsync<ReservaTarjetaBasicaVM>(sql, parameters);
+                            // Ejecuta la consulta y retorna la lista de reservas
+                            var reservas = await _db.QueryAsync<ReservaTarjetaBasicaVM>(sql, parameters);
 
-            return reservas.ToList();
-
+                            return reservas.ToList();
 
 
             // Datos de test borrar cuando esté la consulta
@@ -250,36 +250,36 @@ namespace Dviaje.DataAccess.Repository
             return 10;
         }
 
+
+        // id del aliado (se guarda en idUsuario, se encuentra en la tabla publicaciones), servicios adicionales que tenga la publicacion
+        // 
         public async Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion)
         {
-            // obtener los datos de la publicación
+            // Consulta para obtener los datos de la publicación, incluyendo el IdAliado como IdUsuario
             var sqlPublicacion = @"
-        SELECT 
-            p.IdPublicacion,
-            p.Precio AS PrecioTotal,
-            p.FechaInicial,
-            p.FechaFinal,
-            p.NumeroPersonas
-        FROM 
-            Publicaciones p
-        WHERE 
-            p.IdPublicacion = @IdPublicacion;
+    SELECT 
+        p.IdAliado AS IdUsuario,
+        p.IdPublicacion,
+        p.Precio AS PrecioTotal
+    FROM 
+        Publicaciones p
+    WHERE 
+        p.IdPublicacion = @IdPublicacion;
     ";
 
-            // obtener los servicios adicionales asociados a la publicación
+            // Consulta para obtener los servicios adicionales asociados a la publicación
             var sqlServiciosAdicionales = @"
-        SELECT 
-            sa.IdServicioAdicional, 
-            sa.Precio, 
-            s.NombreServicio, 
-            s.ServicioTipo,
-            s.RutaIcono
-        FROM 
-            ServiciosAdicionales sa
-        INNER JOIN 
-            Servicios s ON sa.IdServicio = s.IdServicio
-        WHERE 
-            sa.IdPublicacion = @IdPublicacion;
+    SELECT 
+        sa.IdServicioAdicional, 
+        sa.Precio, 
+        s.NombreServicio, 
+        s.RutaIcono
+    FROM 
+        ServiciosAdicionales sa
+    INNER JOIN 
+        Servicios s ON sa.IdServicio = s.IdServicio
+    WHERE 
+        sa.IdPublicacion = @IdPublicacion;
     ";
 
             // Ejecutar la consulta para obtener los datos de la publicación
@@ -299,45 +299,9 @@ namespace Dviaje.DataAccess.Repository
             return publicacion;
 
 
-            ReservaCrearVM datosTest = new ReservaCrearVM
-            {
-                IdPublicacion = idPublicacion,
-                PrecioTotal = 1561524m,
-                ServiciosAdicionales = new List<ServicioAdicionalVM> {
-                    new ServicioAdicionalVM {
-                        IdServicioAdicional = 1,
-                        Precio = 45615m,
-                        NombreServicio = "Tour Guiado por la Ciudad",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioAdicionalVM {
-                        IdServicioAdicional = 2,
-                        Precio = 4185615m,
-                        NombreServicio = "Aventura en Montaña",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioAdicionalVM {
-                        IdServicioAdicional = 3,
-                        Precio = 4895123m,
-                        NombreServicio = "Spa y Relajación",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioAdicionalVM {
-                        IdServicioAdicional = 4,
-                        Precio = 4123m,
-                        NombreServicio = "Alquiler de Bicicletas",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioAdicionalVM {
-                        IdServicioAdicional = 5,
-                        Precio = 21345m,
-                        NombreServicio = "Clases de Surf",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    }
-                }
-            };
+           
 
-            return datosTest;
+       
         }
 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
@@ -370,7 +334,7 @@ namespace Dviaje.DataAccess.Repository
             p.IdPublicacion,
             p.NumeroResenas AS NumeroResenasPublicacion,
             (SELECT COUNT(*) FROM Reservas WHERE IdPublicacion = p.IdPublicacion) AS NumeroReservasPublicacion,
-            (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
+            (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
         FROM 
             Reservas r
         INNER JOIN 

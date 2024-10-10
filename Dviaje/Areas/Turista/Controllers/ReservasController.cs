@@ -47,9 +47,10 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> MisReservas(int? pagina, string? estado)
         {
             // Obtiene el ID del usuario autenticado
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+           // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = "26cfe5c9-00f8-411e-b589-df3405a8b798";
 
-            var reservas = await _reservaRepository.ObtenerListaReservaTarjetaBasicaVMAsync();
+            var reservas = await _reservaRepository.ObtenerListaReservaTarjetaBasicaVMAsync(userId);
 
             // Paso de argumentos de paginación a la vista
             //ViewBag.PaginacionPaginas = paginasTotales;
@@ -127,7 +128,8 @@ namespace Dviaje.Areas.Turista.Controllers
         [Route("reserva/resumen/{id?}")]
         public async Task<IActionResult> ReservaTarjetaResumen(int? id)
         {
-            var reservaTarjeta = await _reservaRepository.ObtenerReservaTarjetaResumenVMAsync((int)id, "ASDF");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reservaTarjeta = await _reservaRepository.ObtenerReservaTarjetaResumenVMAsync((int)id, "26cfe5c9-00f8-411e-b589-df3405a8b798");
 
             return Ok();
         }
