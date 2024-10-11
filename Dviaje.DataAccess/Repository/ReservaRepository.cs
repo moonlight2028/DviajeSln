@@ -172,22 +172,22 @@ namespace Dviaje.DataAccess.Repository
                         @ResultadosMostrados OFFSET @Offset;
                     ";
 
-                            // Cálculo del offset para paginación
-                            var offset = (pagina - 1) * resultadosMostrados;
+            // Cálculo del offset para paginación
+            var offset = (pagina - 1) * resultadosMostrados;
 
-                            // Parámetros de consulta para Dapper
-                            var parameters = new
-                            {
-                                IdUsuario = idUsuario, // Filtro por el usuario
-                                Estado = estado,
-                                ResultadosMostrados = resultadosMostrados,
-                                Offset = offset
-                            };
+            // Parámetros de consulta para Dapper
+            var parameters = new
+            {
+                IdUsuario = idUsuario, // Filtro por el usuario
+                Estado = estado,
+                ResultadosMostrados = resultadosMostrados,
+                Offset = offset
+            };
 
-                            // Ejecuta la consulta y retorna la lista de reservas
-                            var reservas = await _db.QueryAsync<ReservaTarjetaBasicaVM>(sql, parameters);
+            // Ejecuta la consulta y retorna la lista de reservas
+            var reservas = await _db.QueryAsync<ReservaTarjetaBasicaVM>(sql, parameters);
 
-                            return reservas.ToList();
+            return reservas.ToList();
 
 
             // Datos de test borrar cuando esté la consulta
@@ -257,30 +257,30 @@ namespace Dviaje.DataAccess.Repository
         {
             // Consulta para obtener los datos de la publicación, incluyendo el IdAliado como IdUsuario
             var sqlPublicacion = @"
-    SELECT 
-        p.IdAliado AS IdUsuario,
-        p.IdPublicacion,
-        p.Precio AS PrecioTotal
-    FROM 
-        Publicaciones p
-    WHERE 
-        p.IdPublicacion = @IdPublicacion;
-    ";
+                                SELECT 
+                                    p.IdAliado AS IdUsuario,
+                                    p.IdPublicacion,
+                                    p.Precio AS PrecioTotal
+                                FROM 
+                                    Publicaciones p
+                                WHERE 
+                                    p.IdPublicacion = @IdPublicacion;
+                                ";
 
             // Consulta para obtener los servicios adicionales asociados a la publicación
             var sqlServiciosAdicionales = @"
-    SELECT 
-        sa.IdServicioAdicional, 
-        sa.Precio, 
-        s.NombreServicio, 
-        s.RutaIcono
-    FROM 
-        ServiciosAdicionales sa
-    INNER JOIN 
-        Servicios s ON sa.IdServicio = s.IdServicio
-    WHERE 
-        sa.IdPublicacion = @IdPublicacion;
-    ";
+                                SELECT 
+                                    sa.IdServicioAdicional, 
+                                    sa.Precio, 
+                                    s.NombreServicio, 
+                                    s.RutaIcono
+                                FROM 
+                                    ServiciosAdicionales sa
+                                INNER JOIN 
+                                    Servicios s ON sa.IdServicio = s.IdServicio
+                                WHERE 
+                                    sa.IdPublicacion = @IdPublicacion;
+                                ";
 
             // Ejecutar la consulta para obtener los datos de la publicación
             var publicacion = await _db.QueryFirstOrDefaultAsync<ReservaCrearVM>(sqlPublicacion, new { IdPublicacion = idPublicacion });
@@ -299,9 +299,9 @@ namespace Dviaje.DataAccess.Repository
             return publicacion;
 
 
-           
 
-       
+
+
         }
 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
@@ -358,7 +358,7 @@ namespace Dviaje.DataAccess.Repository
             var sql = @"
         SELECT 
             r.IdReserva,
-            r.Estado AS ReservaEstado,
+            r.ReservaEstado AS Estado ,
             r.PrecioTotal AS PrecioReserva,
             r.FechaInicial,
             r.FechaFinal,
@@ -367,7 +367,7 @@ namespace Dviaje.DataAccess.Repository
             u.Avatar AS AvatarUsuario,
             p.IdPublicacion,
             p.Titulo AS TituloPublicacion,
-            (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
+            (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
         FROM 
             Reservas r
         INNER JOIN 
