@@ -7,6 +7,7 @@
         public DateTime? FechaAtencion { get; set; }
         public AtencionesViajerosTipoPqrs AtencionesViajerosTipoPqrs { get; set; }
         public AtencionesViajerosEstado AtencionesViajerosEstado { get; set; }
+        public string? IdTurista { get; set; }
 
         // Campos de la tabla Mensajes
         public int IdMensaje { get; set; }

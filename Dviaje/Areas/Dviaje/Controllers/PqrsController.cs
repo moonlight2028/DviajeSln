@@ -1,26 +1,31 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
+using Dviaje.Utility;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Dviaje.Controllers
 {
     [Area("Dviaje")]
     public class PqrsController : Controller
     {
-        private readonly IEnvioEmail _email;
+        private readonly IEnvioEmailService _email;
         private readonly IPqrsRepository _pqrsRepository;
         private IValidator<PqrsCrearVM> _pqrsCrearVMValidator;
+        private readonly ISubirArchivosService _subirArchivos;
 
 
         // Inyección de dependencias
-        public PqrsController(IEnvioEmail email, IPqrsRepository pqrsRepository, IValidator<PqrsCrearVM> pqrsCrearVMValidator)
+        public PqrsController(IEnvioEmailService email, IPqrsRepository pqrsRepository, IValidator<PqrsCrearVM> pqrsCrearVMValidator, ISubirArchivosService subirArchivos)
         {
             _email = email;
             _pqrsRepository = pqrsRepository;
             _pqrsCrearVMValidator = pqrsCrearVMValidator;
+            _subirArchivos = subirArchivos;
         }
 
 
@@ -33,75 +38,76 @@ namespace Dviaje.Areas.Dviaje.Controllers
             return View();
         }
 
-        // POST: Procesa el envío de PQRS
         [HttpPost]
         [Route("pqrs")]
         public async Task<IActionResult> Pqrs(PqrsCrearVM pqrs, List<IFormFile> archivos)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Validaciones
             var validacion = await _pqrsCrearVMValidator.ValidateAsync(pqrs);
             if (!validacion.IsValid)
             {
                 validacion.AddToModelState(this.ModelState);
 
-                ViewBag.SesionIniciada = User.Identity.IsAuthenticated;
+                ViewBag.SesionIniciada = userId == null ? false : true;
 
                 return View(pqrs);
             }
 
+            if (archivos != null && archivos.Any())
+            {
+                foreach (var archivo in archivos)
+                {
+                    if (!ArchivosUtility.ArchivosValidos.Contains(archivo.ContentType))
+                    {
+                        ViewBag.SesionIniciada = userId == null ? false : true;
+
+                        return View(pqrs);
+                    }
+                }
+            }
+
+
+            // Registrar en la tabla AtencionViajeros y retornar el Id
+            pqrs.FechaAtencion = DateTime.UtcNow;
+            pqrs.AtencionesViajerosEstado = AtencionesViajerosEstado.EsperaRespuestaUsuario;
+            pqrs.IdTurista = userId;
+
+
+            // Registrar en la tabla Mensaje y retornar el Id
+            pqrs.IdAtencionViajero = 1;
+
+
+            // Registrar en la tabla Adjuntos
+            if (archivos != null && archivos.Any())
+            {
+                foreach (var archivo in archivos)
+                {
+                    if (archivo.ContentType == "application/pdf")
+                    {
+                        var url = await _subirArchivos.SubirArchivoAsync(archivo, ArchivosUtility.CarpetaPQRS(1));
+                        pqrs.Adjuntos.Add(new AdjuntosVM
+                        {
+                            IdMensaje = 1,
+                            RutaAdjunto = url,
+                            IdPublico = ""
+                        });
+                    }
+                    else
+                    {
+                        var url = await _subirArchivos.SubirArchivoAsync(archivo, ArchivosUtility.CarpetaPQRS(1));
+                        pqrs.Adjuntos.Add(new AdjuntosVM
+                        {
+                            IdMensaje = 1,
+                            RutaAdjunto = url,
+                            IdPublico = ""
+                        });
+                    }
+                }
+            }
 
             return RedirectToAction(nameof(Pqrs));
-
-
-
-
-
-
-
-
-
-            // Completar datos faltantes desde el controlador
-            //pqrs.FechaAtencion = pqrs.FechaAtencion ?? DateTime.Now; // Asignar fecha actual si no está definida
-            //pqrs.AtencionesViajerosEstado = AtencionesViajerosEstado.EsperaRespuestaUsuario; // Estado inicial
-            //pqrs.AtencionesViajerosTipoPqrs = pqrs.AtencionesViajerosTipoPqrs; // Tipo de PQRS seleccionado por el usuario
-
-            //// Procesar los archivos adjuntos si los hay
-            //if (adjuntos != null && adjuntos.Any())
-            //{
-            //    pqrs.Adjuntos = new List<AdjuntosVM>();
-            //    foreach (var file in adjuntos)
-            //    {
-            //        // Guardar el archivo en el servidor y generar la ruta
-            //        var rutaAdjunto = Path.Combine("ruta/al/directorio", file.FileName);
-
-            //        // Simulamos la escritura del archivo al sistema de archivos
-            //        using (var stream = new FileStream(rutaAdjunto, FileMode.Create))
-            //        {
-            //            await file.CopyToAsync(stream);
-            //        }
-
-            //        // Añadimos el adjunto al ViewModel
-            //        pqrs.Adjuntos.Add(new AdjuntosVM
-            //        {
-            //            RutaAdjunto = rutaAdjunto,
-            //            IdMensaje = 0 // Este ID se asignará en el repositorio
-            //        });
-            //    }
-            //}
-
-            //// Enviar la PQRS al repositorio para registrarla en la base de datos
-            //var resultado = await _pqrsRepository.CrearPqrsAsync(pqrs);
-            //if (!resultado)
-            //{
-            //    // Si hubo un error al guardar la PQRS, agregar un mensaje de error
-            //    ModelState.AddModelError("", "Error al enviar la PQRS.");
-            //    return View(pqrs);
-            //}
-
-            //// Enviar correo de confirmación al usuario
-            //// await _email.EnviarEmailAsync(pqrs.Correo, "Confirmación de PQRS", "Tu PQRS ha sido recibida exitosamente.");
-
-            //// Redirigir a una página de confirmación o mostrar un mensaje de éxito
-            //return RedirectToAction("Confirmacion");
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Dviaje.Utility
 {
-    public class ErrorDescriberIdentity : IdentityErrorDescriber
+    public class ErrorDescriberIdentityUtility : IdentityErrorDescriber
     {
         public override IdentityError DefaultError()
         {

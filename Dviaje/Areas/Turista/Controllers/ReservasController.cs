@@ -13,10 +13,10 @@ namespace Dviaje.Areas.Turista.Controllers
     public class ReservasController : Controller
     {
         private readonly IReservaRepository _reservaRepository;
-        private readonly IEnvioEmail _envioEmail;
+        private readonly IEnvioEmailService _envioEmail;
 
 
-        public ReservasController(IReservaRepository reservaRepository, IEnvioEmail envioEmail)
+        public ReservasController(IReservaRepository reservaRepository, IEnvioEmailService envioEmail)
         {
             _reservaRepository = reservaRepository;
             _envioEmail = envioEmail;

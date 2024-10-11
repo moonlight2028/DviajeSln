@@ -5,7 +5,7 @@ using SendGrid.Helpers.Mail;
 
 namespace Dviaje.Services
 {
-    public class EnvioEmail : IEmailSender, IEnvioEmail
+    public class SendGridService : IEmailSender, IEnvioEmailService
     {
         private string Email { get; } = "dviajeusers@gmail.com";
         private string UserDViaje { get; } = "Dviaje";

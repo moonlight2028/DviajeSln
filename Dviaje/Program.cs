@@ -38,7 +38,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
-    .AddErrorDescriber<ErrorDescriberIdentity>();
+    .AddErrorDescriber<ErrorDescriberIdentityUtility>();
 
 // Corrección de rutas de Identity
 builder.Services.ConfigureApplicationCookie(options =>
@@ -54,9 +54,10 @@ builder.Services.AddRazorPages();
 // Soporte para las validaciones de FluentValidation del lado del cliente
 builder.Services.AddFluentValidationClientsideAdapters();
 
-// Servicios de Envíos de Correos
-builder.Services.AddScoped<IEmailSender, EnvioEmail>();
-builder.Services.AddScoped<IEnvioEmail, EnvioEmail>();
+// Inyección de Servicios
+builder.Services.AddScoped<IEmailSender, SendGridService>();
+builder.Services.AddScoped<IEnvioEmailService, SendGridService>();
+builder.Services.AddScoped<ISubirArchivosService, CloudinaryService>();
 
 // Inyección de Repositorios
 builder.Services.AddScoped<ICategoriasRepository, CategoriasRepository>();
