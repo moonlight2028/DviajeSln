@@ -68,44 +68,55 @@ namespace Dviaje.Areas.Dviaje.Controllers
                 }
             }
 
-
-            // Registrar en la tabla AtencionViajeros y retornar el Id
+            // Registros
             pqrs.FechaAtencion = DateTime.UtcNow;
-            pqrs.AtencionesViajerosEstado = AtencionesViajerosEstado.EsperaRespuestaUsuario;
+            pqrs.AtencionesViajerosEstado = AtencionesViajerosEstado.Proceso;
             pqrs.IdTurista = userId;
 
 
-            // Registrar en la tabla Mensaje y retornar el Id
-            pqrs.IdAtencionViajero = 1;
 
 
-            // Registrar en la tabla Adjuntos
-            if (archivos != null && archivos.Any())
-            {
-                foreach (var archivo in archivos)
-                {
-                    if (archivo.ContentType == "application/pdf")
-                    {
-                        var url = await _subirArchivos.SubirArchivoAsync(archivo, ArchivosUtility.CarpetaPQRS(1));
-                        pqrs.Adjuntos.Add(new AdjuntosVM
-                        {
-                            IdMensaje = 1,
-                            RutaAdjunto = url,
-                            IdPublico = ""
-                        });
-                    }
-                    else
-                    {
-                        var url = await _subirArchivos.SubirArchivoAsync(archivo, ArchivosUtility.CarpetaPQRS(1));
-                        pqrs.Adjuntos.Add(new AdjuntosVM
-                        {
-                            IdMensaje = 1,
-                            RutaAdjunto = url,
-                            IdPublico = ""
-                        });
-                    }
-                }
-            }
+
+
+
+
+            //// Registrar en la tabla AtencionViajeros y retornar el Id
+            //pqrs.FechaAtencion = DateTime.UtcNow;
+            //pqrs.AtencionesViajerosEstado = AtencionesViajerosEstado.EsperaRespuestaUsuario;
+            //pqrs.IdTurista = userId;
+
+
+            //// Registrar en la tabla Mensaje y retornar el Id
+            //pqrs.IdAtencionViajero = 1;
+
+
+            //// Registrar en la tabla Adjuntos
+            //if (archivos != null && archivos.Any())
+            //{
+            //    foreach (var archivo in archivos)
+            //    {
+            //        if (archivo.ContentType == "application/pdf")
+            //        {
+            //            var url = await _subirArchivos.SubirArchivoAsync(archivo, ArchivosUtility.CarpetaPQRS(1));
+            //            pqrs.Adjuntos.Add(new AdjuntosVM
+            //            {
+            //                IdMensaje = 1,
+            //                RutaAdjunto = url,
+            //                IdPublico = ""
+            //            });
+            //        }
+            //        else
+            //        {
+            //            var url = await _subirArchivos.SubirArchivoAsync(archivo, ArchivosUtility.CarpetaPQRS(1));
+            //            pqrs.Adjuntos.Add(new AdjuntosVM
+            //            {
+            //                IdMensaje = 1,
+            //                RutaAdjunto = url,
+            //                IdPublico = ""
+            //            });
+            //        }
+            //    }
+            //}
 
             return RedirectToAction(nameof(Pqrs));
         }
