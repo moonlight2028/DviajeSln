@@ -2,6 +2,7 @@
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models.VM;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Dviaje.DataAccess.Repository
 {
@@ -14,78 +15,75 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-        // Crear PQRS y sus adjuntos
-        public async Task<bool> CrearPqrsAsync(PqrsCrearVM pqrs)
+        // Crear PQRS
+        public async Task<int[]?> CrearPqrsAsync(PqrsCrearVM pqrs)
         {
-            using (var transaction = _db.BeginTransaction())
+            try
             {
-                try
+                // Asegurarse de que la conexión esté abierta antes de comenzar la transacción
+                if (_db.State != ConnectionState.Open)
                 {
-                    int idMensaje;
+                    _db.Open();  // Usar Open() sincrónico en lugar de OpenAsync()
+                }
 
-                    if (!string.IsNullOrEmpty(pqrs.IdTurista))
+                using (var transaction = _db.BeginTransaction())
+                {
+                    try
                     {
-                        // Si el usuario está registrado, solo la descripción, tipo de PQRS, y la relación con el IdUsuario
-                        var sqlMensajeRegistrado = @"
-                            INSERT INTO Mensajes (Fecha, Descripcion, IdUsuario, IdAtencionViajero)
-                            VALUES (@Fecha, @Descripcion, @IdUsuario, @IdAtencionViajero);
-                            SELECT LAST_INSERT_ID();";  // ID del mensaje insertado
+                        int idAtencionViajeros;
+                        int idMensaje;
 
-                        idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensajeRegistrado, new
+                        var sqlAtencionesViajeros = @"
+                            INSERT INTO atencionesviajeros (FechaAtencion, TipoPqrs, Estado, IdTurista)
+                            VALUES (@FechaAtencion, @TipoPqrs, @Estado, @IdTurista);
+                            SELECT LAST_INSERT_ID();";
+
+                        idAtencionViajeros = await _db.ExecuteScalarAsync<int>(sqlAtencionesViajeros, new
                         {
-                            Fecha = pqrs.FechaMensaje ?? DateTime.Now,
-                            Descripcion = pqrs.Descripcion,
-                            IdUsuario = pqrs.IdTurista,
-                            IdAtencionViajero = pqrs.IdAtencionViajero
+                            FechaAtencion = pqrs.FechaAtencion,
+                            TipoPqrs = pqrs.AtencionesViajerosTipoPqrs,
+                            Estado = pqrs.AtencionesViajerosEstado,
+                            IdTurista = pqrs.IdTurista
                         }, transaction);
-                    }
-                    else
-                    {
-                        // Si el usuario no está registrado, incluye los datos de contacto
-                        var sqlMensajeNoRegistrado = @"
-                            INSERT INTO Mensajes (Fecha, Descripcion, Nombre, Apellidos, Correo, Telefono, IdAtencionViajero)
-                            VALUES (@Fecha, @Descripcion, @Nombre, @Apellidos, @Correo, @Telefono, @IdAtencionViajero);
-                            SELECT LAST_INSERT_ID();";  // ID del mensaje insertado
 
-                        idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensajeNoRegistrado, new
+                        var sqlMensaje = @"
+                            INSERT INTO Mensajes (Fecha, Descripcion, Nombre, Apellidos, Correo, Telefono, IdUsuario, IdAtencionViajero)
+                            VALUES (@Fecha, @Descripcion, @Nombre, @Apellidos, @Correo, @Telefono, @IdUsuario, @IdAtencionViajero);
+                            SELECT LAST_INSERT_ID();";
+
+                        idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensaje, new
                         {
-                            Fecha = pqrs.FechaMensaje ?? DateTime.Now,
+                            Fecha = pqrs.FechaAtencion,
                             Descripcion = pqrs.Descripcion,
                             Nombre = pqrs.Nombre,
                             Apellidos = pqrs.Apellidos,
                             Correo = pqrs.Correo,
                             Telefono = pqrs.Telefono,
-                            IdAtencionViajero = pqrs.IdAtencionViajero
+                            IdUsuario = "01bfd429-16ea-44b3-902c-794e2c78dfa7",
+                            IdAtencionViajero = idAtencionViajeros  // Usar el ID generado en la primera inserción
                         }, transaction);
-                    }
 
-                    // Insertar en la tabla de Adjuntos (prueba)
-                    if (pqrs.Adjuntos != null && pqrs.Adjuntos.Any())
+                        transaction.Commit();
+
+                        return new[] { idAtencionViajeros, idMensaje };
+                    }
+                    catch
                     {
-                        var sqlAdjuntos = @"
-                            INSERT INTO Adjuntos (RutaAdjunto, IdMensaje)
-                            VALUES (@RutaAdjunto, @IdMensaje)";
-
-                        foreach (var adjunto in pqrs.Adjuntos)
-                        {
-                            await _db.ExecuteAsync(sqlAdjuntos, new
-                            {
-                                RutaAdjunto = adjunto.RutaAdjunto,
-                                IdMensaje = idMensaje
-                            }, transaction);
-                        }
+                        transaction.Rollback();
+                        return null;
                     }
-
-                    transaction.Commit();
-                    return true;
                 }
-                catch
+            }
+            finally
+            {
+                // Cerrar la conexión si está abierta
+                if (_db.State == ConnectionState.Open)
                 {
-                    transaction.Rollback();
-                    return false;
+                    _db.Close();
                 }
             }
         }
+
 
         // lista de atenciones al viajero (PQRS) por usuario
         public async Task<List<AtencionViajerosPqrsVM>?> ObtenerListaAtencionViajerosPqrsVM(string idUsuario)

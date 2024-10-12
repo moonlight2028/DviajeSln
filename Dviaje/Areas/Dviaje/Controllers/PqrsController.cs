@@ -72,8 +72,9 @@ namespace Dviaje.Areas.Dviaje.Controllers
             pqrs.FechaAtencion = DateTime.UtcNow;
             pqrs.AtencionesViajerosEstado = AtencionesViajerosEstado.Proceso;
             pqrs.IdTurista = userId;
+            var result = await _pqrsRepository.CrearPqrsAsync(pqrs);
 
-
+            var s = "dasfasd";
 
 
 
