@@ -306,56 +306,76 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
-            using (var transaction = _db.BeginTransaction())
+
+            try
             {
-                try
+                // Asegurarse de que la conexión esté abierta antes de comenzar la transacción
+                if (_db.State != ConnectionState.Open)
                 {
-                    // Inserción de la reserva en la tabla Reservas
-                    var sqlReserva = @"
+                    _db.Open();  // Usar Open() sincrónico en lugar de OpenAsync()
+                }
+
+
+                using (var transaction = _db.BeginTransaction())
+                {
+                    try
+                    {
+                        // Inserción de la reserva en la tabla Reservas
+                        var sqlReserva = @"
                 INSERT INTO Reservas (FechaReserva, ReservaEstado,  FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
                 VALUES (@FechaReserva, @Estado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
                 SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
-                    var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
-                    {
-                        FechaReserva = DateTime.UtcNow,
-                        Estado = ReservaEstado.Activo,
-                        FechaInicial = reservaCrearVM.FechaInicial,
-                        FechaFinal = reservaCrearVM.FechaFinal,
-                        NumeroPersonas = reservaCrearVM.NumeroPersonas,
-                        PrecioTotal = reservaCrearVM.PrecioTotal,
-                        IdUsuario = reservaCrearVM.IdUsuario,
-                        IdPublicacion = reservaCrearVM.IdPublicacion
-                    }, transaction);
+                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
+                        {
+                            FechaReserva = DateTime.UtcNow,
+                            Estado = ReservaEstado.Activo,
+                            FechaInicial = reservaCrearVM.FechaInicial,
+                            FechaFinal = reservaCrearVM.FechaFinal,
+                            NumeroPersonas = reservaCrearVM.NumeroPersonas,
+                            PrecioTotal = reservaCrearVM.PrecioTotal,
+                            IdUsuario = reservaCrearVM.IdUsuario,
+                            IdPublicacion = reservaCrearVM.IdPublicacion
+                        }, transaction);
 
-                    // Verificación de servicios adicionales seleccionados y su inserción en la tabla intermedia
-                    if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
-                    {
-                        var sqlServiciosAdicionales = @"
+                        // Verificación de servicios adicionales seleccionados y su inserción en la tabla intermedia
+                        if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
+                        {
+                            var sqlServiciosAdicionales = @"
                     INSERT INTO ReservaServicioAdicional (IdReserva, IdServicioAdicional)
                     VALUES (@IdReserva, @IdServicioAdicional);";
 
-                        foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
-                        {
-                            await _db.ExecuteAsync(sqlServiciosAdicionales, new
+                            foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
                             {
-                                IdReserva = idReserva,
-                                IdServicioAdicional = servicio.IdServicioAdicional
-                            }, transaction);
+                                await _db.ExecuteAsync(sqlServiciosAdicionales, new
+                                {
+                                    IdReserva = idReserva,
+                                    IdServicioAdicional = servicio.IdServicioAdicional
+                                }, transaction);
+                            }
                         }
-                    }
 
-                    // Confirmar la transacción
-                    transaction.Commit();
-                    return true;
-                }
-                catch
-                {
-                    // Si algo falla, revertir la transacción
-                    transaction.Rollback();
-                    return false;
+                        // Confirmar la transacción
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        // Si algo falla, revertir la transacción
+                        transaction.Rollback();
+                        return false;
+                    }
                 }
             }
+            finally
+            {
+                // Cerrar la conexión si está abierta
+                if (_db.State == ConnectionState.Open)
+                {
+                    _db.Close();
+                }
+            }
+
         }
 
 
@@ -366,6 +386,9 @@ namespace Dviaje.DataAccess.Repository
             var result = await _db.ExecuteAsync(sql, new { IdReserva = idReserva });
             return result > 0;
         }
+
+
+
 
         public async Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
         {
