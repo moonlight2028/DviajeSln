@@ -312,18 +312,20 @@ namespace Dviaje.DataAccess.Repository
                 {
                     // Inserción de la reserva en la tabla Reservas
                     var sqlReserva = @"
-                INSERT INTO Reservas (FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                VALUES (@FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                INSERT INTO Reservas (FechaReserva, ReservaEstado,  FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
+                VALUES (@FechaReserva, @Estado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
                 SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
                     var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                     {
-                        reservaCrearVM.FechaInicial,
-                        reservaCrearVM.FechaFinal,
-                        reservaCrearVM.NumeroPersonas,
-                        reservaCrearVM.PrecioTotal,
-                        reservaCrearVM.IdUsuario,
-                        reservaCrearVM.IdPublicacion
+                        FechaReserva = DateTime.UtcNow,
+                        Estado = ReservaEstado.Activo,
+                        FechaInicial = reservaCrearVM.FechaInicial,
+                        FechaFinal = reservaCrearVM.FechaFinal,
+                        NumeroPersonas = reservaCrearVM.NumeroPersonas,
+                        PrecioTotal = reservaCrearVM.PrecioTotal,
+                        IdUsuario = reservaCrearVM.IdUsuario,
+                        IdPublicacion = reservaCrearVM.IdPublicacion
                     }, transaction);
 
                     // Verificación de servicios adicionales seleccionados y su inserción en la tabla intermedia
