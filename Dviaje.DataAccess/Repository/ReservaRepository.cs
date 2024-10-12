@@ -306,14 +306,57 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
-            var sql = @"
+            using (var transaction = _db.BeginTransaction())
+            {
+                try
+                {
+                    // Inserción de la reserva en la tabla Reservas
+                    var sqlReserva = @"
                 INSERT INTO Reservas (FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                VALUES (@FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion)";
+                VALUES (@FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
-            var result = await _db.ExecuteAsync(sql, reservaCrearVM);
+                    var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
+                    {
+                        reservaCrearVM.FechaInicial,
+                        reservaCrearVM.FechaFinal,
+                        reservaCrearVM.NumeroPersonas,
+                        reservaCrearVM.PrecioTotal,
+                        reservaCrearVM.IdUsuario,
+                        reservaCrearVM.IdPublicacion
+                    }, transaction);
 
-            return result > 0;
+                    // Verificación de servicios adicionales seleccionados y su inserción en la tabla intermedia
+                    if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
+                    {
+                        var sqlServiciosAdicionales = @"
+                    INSERT INTO ReservaServicioAdicional (IdReserva, IdServicioAdicional)
+                    VALUES (@IdReserva, @IdServicioAdicional);";
+
+                        foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
+                        {
+                            await _db.ExecuteAsync(sqlServiciosAdicionales, new
+                            {
+                                IdReserva = idReserva,
+                                IdServicioAdicional = servicio.IdServicioAdicional
+                            }, transaction);
+                        }
+                    }
+
+                    // Confirmar la transacción
+                    transaction.Commit();
+                    return true;
+                }
+                catch
+                {
+                    // Si algo falla, revertir la transacción
+                    transaction.Rollback();
+                    return false;
+                }
+            }
         }
+
+
 
         public async Task<bool> CancelarReservaAsync(int idReserva)
         {
