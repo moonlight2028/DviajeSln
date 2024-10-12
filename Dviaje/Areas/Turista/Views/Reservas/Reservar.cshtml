@@ -10,7 +10,7 @@
 }
 
 <div class="reserva-publicacion">
-    <form class="reserva" method="post" enctype="multipart/form-data" asp-action="Reservar">
+    <form class="reserva" method="post" asp-area="Turista" asp-controller="Reservas" asp-action="ReservaCrear">
         <input type="hidden" asp-for="IdPublicacion" />
         <h1>Reserva ahora, vive la experiencia</h1>
 

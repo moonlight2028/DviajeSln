@@ -81,17 +81,16 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Reservar(ReservaCrearVM reservaFormCrear)
+        public async Task<IActionResult> ReservaCrear(ReservaCrearVM reservaFormCrear)
         {
             // Verifica si el modelo es válido
-            if (!ModelState.IsValid)
-            {
-                return View(reservaFormCrear); // Devuelve el formulario con errores
-            }
+
 
             // Obtiene el ID del usuario autenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             reservaFormCrear.IdUsuario = userId; // Asigna el ID del usuario (string) al ViewModel
+            // ToDo: Calcular precio
+            reservaFormCrear.PrecioTotal = 156156;
 
             // Llama al método del repositorio para registrar la reserva
             var success = await _reservaRepository.RegistrarReservaAsync(reservaFormCrear);
