@@ -23,7 +23,7 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> MisPqrs()
         {
             // Datos esperados de la DB
-            List<AtencionViajerosPqrsVM>? pqrs = await _pqrsRepository.ObtenerListaAtencionViajerosPqrsVM("ASDF");
+            List<AtencionViajerosPqrsVM>? pqrs = await _pqrsRepository.ObtenerListaAtencionViajerosPqrsVMAsync("ASDF");
 
             return View(pqrs);
         }

@@ -58,6 +58,7 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddScoped<IEmailSender, SendGridService>();
 builder.Services.AddScoped<IEnvioEmailService, SendGridService>();
 builder.Services.AddScoped<ISubirArchivosService, CloudinaryService>();
+builder.Services.AddScoped<IOptimizacionImagenesService, ImageSharpService>();
 
 // Inyección de Repositorios
 builder.Services.AddScoped<ICategoriasRepository, CategoriasRepository>();
@@ -71,6 +72,7 @@ builder.Services.AddScoped<IRestriccionesRepository, RestriccionesRepository>();
 builder.Services.AddScoped<IServiciosRepository, ServiciosRepository>();
 
 // Inyección de Validadores
+builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearAutenticadoVMValidator>();
 builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearVMValidator>();
 
 

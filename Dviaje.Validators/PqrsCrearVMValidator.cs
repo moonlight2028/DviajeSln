@@ -22,7 +22,7 @@ namespace Dviaje.Validators
                 .Matches(@"^[a-zA-Z\s]+$").WithMessage("Los apellidos solo pueden contener letras.");
 
             RuleFor(x => x.Correo)
-                .NotEmpty().WithMessage("El Correo es obligatorioOOOOOO.")
+                .NotEmpty().WithMessage("El Correo es obligatorio.")
                 .EmailAddress().WithMessage("El correo no es válido.")
                 .Length(5, 100).WithMessage("El correo debe tener entre 5 y 100 caracteres.");
 

@@ -17,8 +17,5 @@
         public string? Apellidos { get; set; }
         public string? Correo { get; set; }
         public string? Telefono { get; set; }
-
-        // Campos de la tabla Adjuntos
-        public List<AdjuntosVM>? Adjuntos { get; set; }
     }
 }

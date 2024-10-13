@@ -20,7 +20,7 @@ namespace Dviaje.Services
         }
 
 
-        public async Task<string?> SubirArchivoAsync(IFormFile archivo, string folder)
+        public async Task<string?> SubirArchivoPrivadoAsync(IFormFile archivo, string carpeta)
         {
             if (archivo == null || archivo.Length == 0)
             {
@@ -33,14 +33,40 @@ namespace Dviaje.Services
                 var uploadParams = new RawUploadParams
                 {
                     File = new FileDescription(archivo.FileName, stream),
-                    Folder = folder,
+                    Folder = carpeta,
+                    Type = "private"
                 };
 
                 var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-                // Retorna la URL pública del archivo
-                return uploadResult.SecureUrl.ToString();
+                return uploadResult.PublicId;
             }
         }
+
+        public async Task<string?> SubirImagenPrivadaAsync(byte[] imagen, string nombre, string carpeta)
+        {
+            if (imagen == null || imagen.Length == 0)
+            {
+                return null;
+            }
+
+            using (var stream = new MemoryStream(imagen))
+            {
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(nombre, stream),
+                    Folder = carpeta,
+                    Type = "private" // Tipo de acceso privado
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                return uploadResult.PublicId;
+            }
+        }
+
+
+
+
     }
 }

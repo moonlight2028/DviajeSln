@@ -4,6 +4,7 @@ namespace Dviaje.Services.IServices
 {
     public interface ISubirArchivosService
     {
-        Task<string?> SubirArchivoAsync(IFormFile archivo, string folder);
+        Task<string?> SubirArchivoPrivadoAsync(IFormFile archivo, string carpeta);
+        Task<string?> SubirImagenPrivadaAsync(byte[] imagen, string nombre, string carpeta);
     }
 }
