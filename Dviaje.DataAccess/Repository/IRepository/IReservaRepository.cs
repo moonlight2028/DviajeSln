@@ -10,7 +10,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<int> ObtenerTotalReservas(string idUsuario, string? estado);
         Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion);
         Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM);
-        Task<bool> CancelarReservaAsync(int idReserva);
+        Task<bool> CancelarReservaAsync(int idReserva, string idUsuario);
         Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario);
         Task<List<ReservaTablaItemVM>?> ObtenerListaReservaTablaItemVMAsync(string idAliado);
     }

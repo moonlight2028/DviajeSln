@@ -380,12 +380,30 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        public async Task<bool> CancelarReservaAsync(int idReserva)
+        public async Task<bool> CancelarReservaAsync(int idReserva, string idUsuario)
         {
-            var sql = "UPDATE Reservas SET Estado = 'Cancelado' WHERE IdReserva = @IdReserva";
+            // verifica si esta activa y si pertenece como tal al usuario 
+            var verificarReservaSql = @"
+                                    SELECT COUNT(*) 
+                                    FROM Reservas 
+                                    WHERE IdReserva = @IdReserva 
+                                    AND IdUsuario = @IdUsuario 
+                                    AND ReservaEstado = 'Activo'";
+
+            var existeReserva = await _db.ExecuteScalarAsync<int>(verificarReservaSql, new { IdReserva = idReserva, IdUsuario = idUsuario });
+
+            if (existeReserva == 0)
+            {
+                return false; // si no pertenece o esta cancelada 
+            }
+
+            // ya validada cancelar reserva xd 
+            var sql = "UPDATE Reservas SET ReservaEstado = 'Cancelado' WHERE IdReserva = @IdReserva";
             var result = await _db.ExecuteAsync(sql, new { IdReserva = idReserva });
+
             return result > 0;
         }
+
 
 
 

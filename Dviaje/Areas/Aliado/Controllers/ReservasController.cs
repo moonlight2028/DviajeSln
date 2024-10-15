@@ -51,11 +51,30 @@ namespace Dviaje.Areas.Aliado.Controllers
 
         [HttpPut]
         [Route("reserva/alido/cancelar/{id?}")]
-        public async Task<IActionResult> CancelarReserva(int? id)
+        public async Task<IActionResult> CancelarReserva(int idReserva)
         {
-            bool resultado = await _reservaRepository.CancelarReservaAsync((int)id);
+            // Obtener ID del usuario 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Ok();
+            // usuario esté autenticado
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            //cancelar la reserva
+            var success = await _reservaRepository.CancelarReservaAsync(idReserva, userId);
+
+            if (success)
+            {
+                // respuesta si la cancelación se cumplio 
+                return RedirectToAction(nameof(Reservas));
+            }
+
+            //mensaje de error
+            ModelState.AddModelError("", "No se pudo cancelar la reserva.");
+            return RedirectToAction(nameof(Reservas));
         }
+
     }
 }
