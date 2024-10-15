@@ -3,6 +3,7 @@ using Dviaje.Models.VM;
 using Dviaje.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dviaje.Areas.Aliado.Controllers
 {
@@ -32,10 +33,21 @@ namespace Dviaje.Areas.Aliado.Controllers
         [Route("reservas")]
         public async Task<IActionResult> Reservas()
         {
-            List<ReservaTablaItemVM>? reservas = await _reservaRepository.ObtenerListaReservaTablaItemVMAsync("IDALIADO");
+            // Id del usuario auntenticado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Verificar si el ID de usuario está disponible (en caso de que no esté autenticado)
+            if (userId == null)
+            {
+                return Unauthorized(); // errorr si el usuario no está autenticado
+            }
+
+            // Llamada al metodo
+            List<ReservaTablaItemVM>? reservas = await _reservaRepository.ObtenerListaReservaTablaItemVMAsync(userId);
 
             return Ok(reservas);
         }
+
 
         [HttpPut]
         [Route("reserva/alido/cancelar/{id?}")]
