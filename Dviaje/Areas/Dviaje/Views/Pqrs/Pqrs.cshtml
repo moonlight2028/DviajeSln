@@ -6,6 +6,9 @@
 
 
 @section Styles {
+    <!-- Toast v1.4 -->
+    <link href="~/lib/iziToast/iziToast.min.css" rel="stylesheet" />
+
     <!-- Estilos custom -->
     <link rel="stylesheet" href="~/css/pqrs/pqrs.css">
 }
@@ -151,6 +154,11 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    @if (TempData["Notificacion"] != null && TempData["NotificacionTitulo"] != null && TempData["NotificacionMensaje"] != null)
+    {
+        <partial name="_IziToastPartial" />
+    }
 
     <script src="~/js/pqrs/pqrs.js" type="module"></script>
 }

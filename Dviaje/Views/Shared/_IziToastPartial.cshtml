@@ -1,0 +1,8 @@
+﻿<script src="~/lib/iziToast/iziToast.min.js"></script>
+<script>
+    iziToast['@TempData["Notificacion"]']({
+        title: '@TempData["NotificacionTitulo"]',
+        message: '@TempData["NotificacionMensaje"]',
+        position: 'bottomRight',
+    });
+</script>

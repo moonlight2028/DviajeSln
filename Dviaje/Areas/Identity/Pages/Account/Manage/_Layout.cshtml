@@ -9,16 +9,19 @@
     }
 }
 
-<h1>Manage your account</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/identity/layout.css">
+}
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
+@* <h1>Manage your account</h1> *@
+
             <partial name="_ManageNav" />
+<div>
+    @* <h2>Change your account settings</h2> *@
+    <div>
+        <div>
         </div>
-        <div class="col-md-9">
+        <div>
             @RenderBody()
         </div>
     </div>
@@ -26,4 +29,6 @@
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
+
+    <script src="~/js/identity/layout.js"></script>
 }

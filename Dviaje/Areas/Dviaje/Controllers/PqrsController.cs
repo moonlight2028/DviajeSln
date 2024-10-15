@@ -74,6 +74,10 @@ namespace Dviaje.Areas.Dviaje.Controllers
                     {
                         ViewBag.SesionIniciada = userId == null ? false : true;
 
+                        TempData["Notificacion"] = "error";
+                        TempData["NotificacionTitulo"] = "PQRS";
+                        TempData["NotificacionMensaje"] = "Archivos no Soportados.";
+
                         return View(pqrs);
                     }
                 }
@@ -120,6 +124,10 @@ namespace Dviaje.Areas.Dviaje.Controllers
                 // Guardado de adjuntos en la DB
                 var resultadoRegistroAdjuntos = await _pqrsRepository.RegistrarAdjuntosAsync(adjuntos);
             }
+
+            TempData["Notificacion"] = "success";
+            TempData["NotificacionTitulo"] = "PQRS";
+            TempData["NotificacionMensaje"] = "Enviado Correctamente.";
 
             return RedirectToAction(nameof(Pqrs));
         }
