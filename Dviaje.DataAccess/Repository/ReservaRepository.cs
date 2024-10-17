@@ -407,7 +407,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-
+        // Paginar
         public async Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
         {
             // obtener los datos de la reserva y la publicación
@@ -468,6 +468,8 @@ namespace Dviaje.DataAccess.Repository
 
             // Ejecutar la consulta utilizando Dapper
             var reservas = await _db.QueryAsync<ReservaTablaItemVM>(sql, new { IdAliado = idAliado });
+
+            var df = "sdfsd";
 
             return reservas.ToList();
         }

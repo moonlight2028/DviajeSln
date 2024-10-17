@@ -112,7 +112,7 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> CancelarReserva(int? id)
         {
             // Llama al método del repositorio para cancelar la reserva
-            var success = await _reservaRepository.CancelarReservaAsync((int)id);
+            var success = await _reservaRepository.CancelarReservaAsync((int)id,"sdfsadf");
 
             // Si la cancelación es exitosa, retorna una respuesta Ok
             if (success)

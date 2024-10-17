@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace Dviaje.Areas.Aliado.Controllers
 {
     [Area("Aliado")]
-    [Authorize(Roles = RolesUtility.RoleAliado)]
+    //[Authorize(Roles = RolesUtility.RoleAliado)]
     public class ReservasController : Controller
     {
         private readonly IReservaRepository _reservaRepository;
@@ -36,14 +36,12 @@ namespace Dviaje.Areas.Aliado.Controllers
             // Id del usuario auntenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Verificar si el ID de usuario está disponible (en caso de que no esté autenticado)
-            if (userId == null)
-            {
-                return Unauthorized(); // errorr si el usuario no está autenticado
-            }
-
             // Llamada al metodo
-            List<ReservaTablaItemVM>? reservas = await _reservaRepository.ObtenerListaReservaTablaItemVMAsync(userId);
+            List<ReservaTablaItemVM>? reservas = await _reservaRepository.ObtenerListaReservaTablaItemVMAsync("01bfd429-16ea-44b3-902c-794e2c78dfa7");
+
+            if (reservas == null || !reservas.Any()) { 
+                return NotFound();
+            }
 
             return Ok(reservas);
         }
@@ -51,29 +49,21 @@ namespace Dviaje.Areas.Aliado.Controllers
 
         [HttpPut]
         [Route("reserva/alido/cancelar/{id?}")]
-        public async Task<IActionResult> CancelarReserva(int idReserva)
+        public async Task<IActionResult> CancelarReserva(int id)
         {
             // Obtener ID del usuario 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // usuario esté autenticado
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
             //cancelar la reserva
-            var success = await _reservaRepository.CancelarReservaAsync(idReserva, userId);
+            var success = await _reservaRepository.CancelarReservaAsync(id, userId);
 
             if (success)
             {
                 // respuesta si la cancelación se cumplio 
-                return RedirectToAction(nameof(Reservas));
+                return Ok();
             }
 
-            //mensaje de error
-            ModelState.AddModelError("", "No se pudo cancelar la reserva.");
-            return RedirectToAction(nameof(Reservas));
+            return BadRequest("No se pudo cancelar la reserva.");
         }
 
     }
