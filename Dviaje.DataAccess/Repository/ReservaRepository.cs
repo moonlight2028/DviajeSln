@@ -256,15 +256,41 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
-
             try
             {
-                // Asegurarse de que la conexión esté abierta antes de comenzar la transacción
+                //Conexion 
                 if (_db.State != ConnectionState.Open)
                 {
-                    _db.Open();  // Usar Open() sincrónico en lugar de OpenAsync()
+                    _db.Open();
                 }
 
+                // Validación 1: No permitir fechas exgeradas 
+                if (reservaCrearVM.FechaFinal > DateTime.UtcNow.AddYears(1))
+                {
+                    return false; // La fecha es demasiado posterior
+                }
+
+                // Validación 2: No permitir si ya existe una reserva con las mismmas fechas
+                var sqlVerificarReserva = @"
+                                        SELECT COUNT(*)
+                                        FROM Reservas
+                                        WHERE IdUsuario = @IdUsuario
+                                        AND IdPublicacion = @IdPublicacion
+                                        AND ReservaEstado = 'Activo'
+                                        AND ((FechaInicial <= @FechaFinal AND FechaFinal >= @FechaInicial))";
+
+                var reservasConflicto = await _db.ExecuteScalarAsync<int>(sqlVerificarReserva, new
+                {
+                    IdUsuario = reservaCrearVM.IdUsuario,
+                    IdPublicacion = reservaCrearVM.IdPublicacion,
+                    FechaInicial = reservaCrearVM.FechaInicial,
+                    FechaFinal = reservaCrearVM.FechaFinal
+                });
+
+                if (reservasConflicto > 0)
+                {
+                    return false; // Ya existe una reserva en ese periodo 
+                }
 
                 using (var transaction = _db.BeginTransaction())
                 {
@@ -272,9 +298,9 @@ namespace Dviaje.DataAccess.Repository
                     {
                         // Inserción de la reserva en la tabla Reservas
                         var sqlReserva = @"
-                INSERT INTO Reservas (FechaReserva, ReservaEstado,  FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                VALUES (@FechaReserva, @Estado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
-                SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
+                                        INSERT INTO Reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
+                                        VALUES (@FechaReserva, @Estado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                                        SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
                         var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
@@ -292,8 +318,8 @@ namespace Dviaje.DataAccess.Repository
                         if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
                         {
                             var sqlServiciosAdicionales = @"
-                    INSERT INTO ReservaServicioAdicional (IdReserva, IdServicioAdicional)
-                    VALUES (@IdReserva, @IdServicioAdicional);";
+                        INSERT INTO ReservaServicioAdicional (IdReserva, IdServicioAdicional)
+                        VALUES (@IdReserva, @IdServicioAdicional);";
 
                             foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
                             {
@@ -325,8 +351,8 @@ namespace Dviaje.DataAccess.Repository
                     _db.Close();
                 }
             }
-
         }
+
 
 
 
