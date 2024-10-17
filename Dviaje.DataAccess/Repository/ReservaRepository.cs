@@ -141,36 +141,40 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10, string? estado = null)
         {
             var sql = @"
-                    SELECT 
-                        r.IdReserva, 
-                        r.FechaInicial, 
-                        r.FechaFinal, 
-                        r.ReservaEstado AS Estado,
-                        p.IdPublicacion, 
-                        p.Titulo AS TituloPublicacion, 
-                        p.Puntuacion AS PuntuacionPublicacion, 
-                        p.NumeroResenas AS NumeroResenasPublicacion,
-                        (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
-                        pi.Ruta AS ImagenPublicacion,
-                        u.Id AS IdAliado, 
-                        u.UserName AS NombreAliado, 
-                        u.Avatar AS AvatarAliado, 
-                        u.Verificado AS VerificadoAliado
-                    FROM 
-                        Reservas r
-                    INNER JOIN 
-                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                    INNER JOIN 
-                        aspnetusers u ON p.IdAliado = u.Id
-                    LEFT JOIN 
-                        PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-                    WHERE 
-                        r.IdUsuario = @IdUsuario AND (@Estado IS NULL OR r.ReservaEstado = @Estado)
-                    ORDER BY 
-                        r.FechaInicial DESC
-                    LIMIT 
-                        @ResultadosMostrados OFFSET @Offset;
-                    ";
+        SELECT 
+            r.IdReserva, 
+            r.FechaInicial, 
+            r.FechaFinal, 
+            r.ReservaEstado AS Estado,
+            p.IdPublicacion, 
+            p.Titulo AS TituloPublicacion, 
+            p.Puntuacion AS PuntuacionPublicacion, 
+            p.NumeroResenas AS NumeroResenasPublicacion,
+            (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
+            -- Aquí seleccionamos una sola imagen por publicación
+            (SELECT pi.Ruta 
+             FROM PublicacionesImagenes pi 
+             WHERE pi.IdPublicacion = p.IdPublicacion 
+             ORDER BY pi.Orden 
+             LIMIT 1) AS ImagenPublicacion,
+            u.Id AS IdAliado, 
+            u.UserName AS NombreAliado, 
+            u.Avatar AS AvatarAliado, 
+            u.Verificado AS VerificadoAliado
+        FROM 
+            Reservas r
+        INNER JOIN 
+            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        INNER JOIN 
+            aspnetusers u ON p.IdAliado = u.Id
+        WHERE 
+            r.IdUsuario = @IdUsuario 
+            AND (@Estado IS NULL OR r.ReservaEstado = @Estado)
+        ORDER BY 
+            r.FechaInicial DESC
+        LIMIT 
+            @ResultadosMostrados OFFSET @Offset;
+    ";
 
             // Cálculo del offset para paginación
             var offset = (pagina - 1) * resultadosMostrados;
@@ -178,7 +182,7 @@ namespace Dviaje.DataAccess.Repository
             // Parámetros de consulta para Dapper
             var parameters = new
             {
-                IdUsuario = idUsuario, // Filtro por el usuario
+                IdUsuario = idUsuario,
                 Estado = estado,
                 ResultadosMostrados = resultadosMostrados,
                 Offset = offset
@@ -188,62 +192,8 @@ namespace Dviaje.DataAccess.Repository
             var reservas = await _db.QueryAsync<ReservaTarjetaBasicaVM>(sql, parameters);
 
             return reservas.ToList();
-
-
-            // Datos de test borrar cuando esté la consulta
-            List<ReservaTarjetaBasicaVM>? datosTest = new List<ReservaTarjetaBasicaVM> {
-                new ReservaTarjetaBasicaVM {
-                    IdReserva = 2,
-                    FechaInicial = new DateTime(2023, 11, 18),
-                    FechaFinal = new DateTime(2023, 11, 20),
-                    ReservaEstado = ReservaEstado.Aprobado,
-                    IdPublicacion = 1,
-                    TituloPublicacion = "Titulo publicación ajdsklfjkaldsf adsfjakldsjfl aldkfjlkadsjfl adslkfjkladsjf aadkfjlkadj aldskfjkalds adsfjlkjdkls",
-                    PuntuacionPublicacion = 4.3m,
-                    NumeroResenasPublicacion = 4561,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852911-ee5f5b49ea0d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdAliado = "DASF",
-                    NombreAliado = "Barca",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    VerificadoAliado = true,
-                    NumeroPublicacionesPublicacion  = 1542
-                },
-                new ReservaTarjetaBasicaVM {
-                    IdReserva = 3,
-                    FechaInicial = new DateTime(2024, 02, 15),
-                    FechaFinal = new DateTime(2024, 02, 17),
-                    ReservaEstado = ReservaEstado.Activo,
-                    IdPublicacion = 2,
-                    TituloPublicacion = "Escapada de fin de semana a las montañas",
-                    PuntuacionPublicacion = 4.7m,
-                    NumeroResenasPublicacion = 59,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726500087639-0a68be284497?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdAliado = "XYZ123",
-                    NombreAliado = "Mountain Escape",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    VerificadoAliado = true,
-                    NumeroPublicacionesPublicacion = 234
-                },
-                new ReservaTarjetaBasicaVM {
-                    IdReserva = 4,
-                    FechaInicial = new DateTime(2024, 03, 10),
-                    FechaFinal = new DateTime(2024, 03, 12),
-                    ReservaEstado = ReservaEstado.Cancelado,
-                    IdPublicacion = 3,
-                    TituloPublicacion = "Aventura tropical en la playa",
-                    PuntuacionPublicacion = 3.8m,
-                    NumeroResenasPublicacion = 481,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726677644019-c010b789cf12?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdAliado = "BEACH789",
-                    NombreAliado = "Tropical Vibes",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    VerificadoAliado = false,
-                    NumeroPublicacionesPublicacion = 674
-                }
-            };
-
-            return datosTest;
         }
+
 
         public async Task<int> ObtenerTotalReservas(string idUsuario, string? estado)
         {

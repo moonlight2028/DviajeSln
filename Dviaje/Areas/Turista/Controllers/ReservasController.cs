@@ -47,18 +47,19 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> MisReservas(int? pagina, string? estado)
         {
             // Obtiene el ID del usuario autenticado
-           // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = "26cfe5c9-00f8-411e-b589-df3405a8b798";
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var reservas = await _reservaRepository.ObtenerListaReservaTarjetaBasicaVMAsync(userId);
+            // Llama al repositorio con los parámetros de paginación y estado
+            var reservas = await _reservaRepository.ObtenerListaReservaTarjetaBasicaVMAsync(userId, pagina ?? 1, 10, estado);
 
-            // Paso de argumentos de paginación a la vista
-            //ViewBag.PaginacionPaginas = paginasTotales;
-            //ViewBag.PaginacionItems = numeroPublicaciones;
-            //ViewBag.PaginacionResultados = await _reservaRepository.ObtenerTotalReservas(userId, estado);
+            // Lógica para la paginación (descomentar si es necesaria)
+            ViewBag.PaginacionPaginas = (reservas?.Count ?? 0) / 10;
+            ViewBag.PaginacionItems = 10;
+            ViewBag.PaginacionResultados = await _reservaRepository.ObtenerTotalReservas(userId, estado);
 
             return View(reservas);
         }
+
 
         [Route("reservar/{id?}")]
         public async Task<IActionResult> Reservar(int? id)
