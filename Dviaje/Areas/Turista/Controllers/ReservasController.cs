@@ -84,14 +84,20 @@ namespace Dviaje.Areas.Turista.Controllers
         [HttpPost]
         public async Task<IActionResult> ReservaCrear(ReservaCrearVM reservaFormCrear)
         {
-            // Verifica si el modelo es válido
-
-
             // Obtiene el ID del usuario autenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            reservaFormCrear.IdUsuario = userId; // Asigna el ID del usuario (string) al ViewModel
-            // ToDo: Calcular precio
-            reservaFormCrear.PrecioTotal = 156156;
+            reservaFormCrear.IdUsuario = userId; // Asigna el ID del usuario al ViewModel
+
+
+
+            // Validaciones en el servidor
+            if (reservaFormCrear.FechaFinal > DateTime.UtcNow.AddYears(1))
+            {
+                return Json(new { success = false, message = "La fecha seleccionada es demasiado posterior. Selecciona una fecha dentro del próximo año." });
+            }
+
+
+
 
             // Llama al método del repositorio para registrar la reserva
             var success = await _reservaRepository.RegistrarReservaAsync(reservaFormCrear);
@@ -99,13 +105,13 @@ namespace Dviaje.Areas.Turista.Controllers
             // Si la reserva es exitosa
             if (success)
             {
-                // Opción para enviar correos de confirmación
-                // await _envioEmail.EnviarCorreoDeReservaAsync(...);
-                return RedirectToAction(nameof(MisReservas)); // Redirige a la lista de reservas
+                return RedirectToAction(nameof(MisReservas));
             }
 
-            return View(reservaFormCrear); // Si falla, muestra nuevamente el formulario
+            // Si falla la reserva, retorna un mensaje de error
+            return Json(new { success = false, message = "Hubo un problema al registrar la reserva. Por favor, inténtalo nuevamente." });
         }
+
 
 
         [HttpPut]
@@ -113,7 +119,7 @@ namespace Dviaje.Areas.Turista.Controllers
         public async Task<IActionResult> CancelarReserva(int? id)
         {
             // Llama al método del repositorio para cancelar la reserva
-            var success = await _reservaRepository.CancelarReservaAsync((int)id,"sdfsadf");
+            var success = await _reservaRepository.CancelarReservaAsync((int)id, "sdfsadf");
 
             // Si la cancelación es exitosa, retorna una respuesta Ok
             if (success)

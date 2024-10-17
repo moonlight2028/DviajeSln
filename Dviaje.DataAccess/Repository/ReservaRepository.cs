@@ -337,7 +337,7 @@ namespace Dviaje.DataAccess.Repository
                     }
                     catch
                     {
-                        // Si algo falla, revertir la transacción
+                        // Si algo falla, revertir la transaccionn
                         transaction.Rollback();
                         return false;
                     }
