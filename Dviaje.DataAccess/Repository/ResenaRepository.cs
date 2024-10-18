@@ -62,7 +62,7 @@ namespace Dviaje.DataAccess.Repository
                        r.FechaInicial, r.FechaFinal
                 FROM Reservas r
                 INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                LEFT JOIN PublicacionImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
+                LEFT JOIN PublicacionesImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
                 WHERE r.IdUsuario = @IdUsuario
                 AND r.FechaFinal <= CURRENT_DATE
                 AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)
@@ -149,7 +149,7 @@ namespace Dviaje.DataAccess.Repository
                 INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
                 INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
                 INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-                LEFT JOIN PublicacionImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
                 WHERE r.IdUsuario = @IdUsuario
                 ORDER BY rs.Fecha DESC
                 LIMIT @ElementosPorPagina OFFSET @Offset";
@@ -250,7 +250,7 @@ namespace Dviaje.DataAccess.Repository
                 SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
                        (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
                        p.IdPublicacion, p.Titulo AS TituloPublicacion, 
-                       (SELECT pi.Ruta FROM PublicacionImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
+                       (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
                        u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista,
                        (SELECT COUNT(*) FROM Resenas r WHERE r.IdUsuario = u.Id) AS NumeroResenasTurista
                 FROM Resenas rs
