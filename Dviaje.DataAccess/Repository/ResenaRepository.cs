@@ -331,7 +331,7 @@ namespace Dviaje.DataAccess.Repository
                 FROM Reservas r
                 WHERE r.IdReserva = @IdReserva
                 AND r.IdUsuario = @IdUsuario
-                AND r.Estado = 'Aprobado'
+                AND r.ReservaEstado = 'Aprovado'
                 AND r.FechaFinal <= CURRENT_DATE
                 AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)";
 

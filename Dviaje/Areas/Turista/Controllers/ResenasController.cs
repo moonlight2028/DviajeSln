@@ -39,33 +39,48 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Crear(ResenaCrearVM resenaCrear)
+        public async Task<IActionResult> CrearResena(ResenaCrearVM resenaCrear)
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(resenaCrear);
+            //}
+
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //if (userId == null)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            var validacion = await _resenaRepository.ValidarReservaParaResenaAsync(16, "6437755a-e607-44c4-a282-599e5f7ad36d");
+
+            //if (!validacion)
+            //{
+            //    return RedirectToAction(nameof(MisReseñas));
+            //}
+
+            var ssj = 0;
+
+            var test = new ResenaCrearVM
             {
-                return View(resenaCrear);
-            }
+                IdReserva = 16,
+                Calificacion = 5,
+                Fecha = DateTime.UtcNow,
+                Opinion = "sex?"
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            };
 
-            var validacion = await _resenaRepository.ValidarReservaParaResenaAsync(resenaCrear.IdReserva, userId);
 
-            if (!validacion)
-            {
-                return RedirectToAction(nameof(MisReseñas));
-            }
-
-            var success = await _resenaRepository.CrearResenaAsync(resenaCrear);
+            var success = await _resenaRepository.CrearResenaAsync(test);
             if (success)
             {
                 return RedirectToAction(nameof(MisReseñas));
             }
 
             return View(resenaCrear);
+
+
+
         }
 
         [Route("reseñas/disponibles/{pagina?}")]
