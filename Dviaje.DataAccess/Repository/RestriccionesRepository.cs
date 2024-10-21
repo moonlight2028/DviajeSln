@@ -1,33 +1,73 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
+﻿using Dapper;
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
+using System.Data;
 
 namespace Dviaje.DataAccess.Repository
 {
     public class RestriccionesRepository : IRestriccionesRepository
     {
-        public Task<bool> CrearRestriccionAsync(Restriccion restriccion)
+        private readonly IDbConnection _db;
+
+        public RestriccionesRepository(IDbConnection db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task<Restriccion?> ObtenerRestriccionPorIdAsync(int idRestriccion)
+        public async Task<bool> CrearRestriccionAsync(Restriccion restriccion)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    INSERT INTO restricciones (NombreRestriccion, RutaIcono) 
+                    VALUES (@NombreRestriccion, @RutaIcono)";
+
+            var result = await _db.ExecuteAsync(sql, restriccion);
+            return result > 0;
         }
 
-        public Task<List<Restriccion>?> ObtenerRestriccionesAsync()
+
+        public async Task<Restriccion?> ObtenerRestriccionPorIdAsync(int idRestriccion)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT IdRestriccion, NombreRestriccion, RutaIcono 
+                    FROM restricciones 
+                    WHERE IdRestriccion = @IdRestriccion";
+
+            return await _db.QueryFirstOrDefaultAsync<Restriccion>(sql, new { IdRestriccion = idRestriccion });
         }
 
-        public Task<bool> ActualizarRestriccionAsync(Restriccion restriccion)
+
+        public async Task<List<Restriccion>> ObtenerRestriccionesAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                        SELECT IdRestriccion, NombreRestriccion, RutaIcono 
+                        FROM restricciones";
+
+            var restricciones = await _db.QueryAsync<Restriccion>(sql);
+            return restricciones.ToList();
         }
 
-        public Task<bool> EliminarRestriccionAsync(int idRestriccion)
+
+        public async Task<bool> ActualizarRestriccionAsync(Restriccion restriccion)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    UPDATE restricciones 
+                    SET NombreRestriccion = @NombreRestriccion, RutaIcono = @RutaIcono 
+                    WHERE IdRestriccion = @IdRestriccion";
+
+            var result = await _db.ExecuteAsync(sql, restriccion);
+            return result > 0;
         }
+
+
+        public async Task<bool> EliminarRestriccionAsync(int idRestriccion)
+        {
+            var sql = @"
+                    DELETE FROM restricciones 
+                    WHERE IdRestriccion = @IdRestriccion";
+
+            var result = await _db.ExecuteAsync(sql, new { IdRestriccion = idRestriccion });
+            return result > 0;
+        }
+
     }
 }
