@@ -1,4 +1,5 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
+﻿using Dapper;
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
 using System.Data;
@@ -17,17 +18,32 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<PerfilPublicoVM?> ObtenerPerfilPublicoVMAsync(string idUsuario)
         {
-            // Corregir
-            //var sql = @"
-            //    SELECT u.UserName AS Nombre, u.Avatar, 
-            //           COUNT(r.IdReserva) AS NumeroReservas
-            //    FROM Usuarios u
-            //    LEFT JOIN Reservas r ON u.IdUsuario = r.IdUsuario
-            //    WHERE u.IdUsuario = @IdUsuario
-            //    GROUP BY u.UserName, u.Avatar";
+            // Consulta - detalles del perfil público
+            var sql = @"
+        SELECT 
+            u.Id AS Id, 
+            u.UserName, 
+            u.Avatar, 
+            u.Banner,
+            CASE 
+                WHEN EXISTS(SELECT 1 FROM Publicaciones p WHERE p.IdAliado = u.Id) THEN 1 
+                ELSE 0 
+            END AS EsAliado,
+            u.Verificado,
+            u.RazonSocial,
+            u.SitioWeb,
+            u.Direccion,
+            u.Puntuacion,
+            u.AliadoEstado,
+            (SELECT COUNT(*) FROM Reservas r WHERE r.IdUsuario = u.Id) AS NumeroReservas,
+            (SELECT COUNT(*) FROM Publicaciones p WHERE p.IdAliado = u.Id) AS NumeroPulicaciones,
+            (SELECT COUNT(*) FROM Resenas re INNER JOIN Reservas r ON re.IdReserva = r.IdReserva WHERE r.IdUsuario = u.Id) AS NumeroResenas
+        FROM 
+            aspnetusers u
+        WHERE 
+            u.Id = @IdUsuario";
 
-            //return await _db.QueryFirstOrDefaultAsync<PerfilPublicoVM>(sql, new { IdUsuario = idUsuario });
-
+            return await _db.QueryFirstOrDefaultAsync<PerfilPublicoVM>(sql, new { IdUsuario = idUsuario });
 
             // Datos de test borrar cuando esté la consulta
             PerfilPublicoVM datosTest = new PerfilPublicoVM

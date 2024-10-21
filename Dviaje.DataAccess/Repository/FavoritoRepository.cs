@@ -14,13 +14,13 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-       // Obtiene los favoritos del usuario
+        // Obtiene los favoritos del usuario
         public async Task<List<FavoritoTarjetaVM>?> ObtenerListaFavoritoTarjetaVMAsync(string idUsuario, int pagina = 1, int resultadosPorPagina = 10)
         {
             // Consulta con paginación
             var sql = @"
                      SELECT p.IdPublicacion, p.Titulo, p.Descripcion, p.Puntuacion, p.NumeroResenas, 
-                     (SELECT pi.Ruta FROM publicacionimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen
+                     (SELECT pi.Ruta FROM publicacionesimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen
                      FROM Favoritos f
                      INNER JOIN Publicaciones p ON f.IdPublicacion = p.IdPublicacion
                      WHERE f.IdUsuario = @IdUsuario
@@ -38,17 +38,18 @@ namespace Dviaje.DataAccess.Repository
 
             return favoritos.ToList();
 
-       
-         }
+
+        }
 
 
         // Agrega un favorito para el usuario
         public async Task<bool> CrearFavoritoAsync(int idPublicacion, string idUsuario)
         {
-            var sql = "INSERT INTO Favoritos (IdPublicacion, IdUsuario, FechaAgregado) VALUES (@IdPublicacion, @IdUsuario, @FechaAgregado)";
-            var result = await _db.ExecuteAsync(sql, new { IdPublicacion = idPublicacion, IdUsuario = idUsuario, FechaAgregado = DateTime.Now });
+            var sql = "INSERT INTO Favoritos (IdPublicacion, IdUsuario) VALUES (@IdPublicacion, @IdUsuario)";
+            var result = await _db.ExecuteAsync(sql, new { IdPublicacion = idPublicacion, IdUsuario = idUsuario });
             return result > 0;
         }
+
 
         // Elimina un favorito del usuario
         public async Task<bool> EliminarFavoritoAsync(int idPublicacion, string idUsuario)
