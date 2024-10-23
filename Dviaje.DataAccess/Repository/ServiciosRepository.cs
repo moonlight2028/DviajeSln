@@ -1,33 +1,88 @@
-﻿using Dviaje.DataAccess.Repository.IRepository;
+﻿using Dapper;
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
+using System.Data;
 
 namespace Dviaje.DataAccess.Repository
 {
     public class ServiciosRepository : IServiciosRepository
     {
-        public Task<bool> CrearServicioAsync(Servicio servicio)
+        private readonly IDbConnection _db;
+
+        public ServiciosRepository(IDbConnection db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task<Servicio?> ObtenerServicioPorIdAsync(int idServicio)
+        // Crear un nuevo servicio
+        public async Task<bool> CrearServicioAsync(Servicio servicio)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                INSERT INTO Servicios (NombreServicio, RutaIcono, ServicioTipo)
+                VALUES (@NombreServicio, @RutaIcono, @ServicioTipo)";
+
+            var result = await _db.ExecuteAsync(sql, new
+            {
+                NombreServicio = servicio.NombreServicio,
+                RutaIcono = servicio.RutaIcono,  // RutaIcono puede ser null
+                ServicioTipo = servicio.ServicioTipo.ToString() // Convertir el enum a string
+            });
+
+            return result > 0;
         }
 
-        public Task<List<Servicio>?> ObtenerServiciosAsync()
+        // Obtener un servicio por ID
+        public async Task<Servicio?> ObtenerServicioPorIdAsync(int idServicio)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                SELECT IdServicio, NombreServicio, RutaIcono, ServicioTipo
+                FROM Servicios
+                WHERE IdServicio = @IdServicio";
+
+            return await _db.QueryFirstOrDefaultAsync<Servicio>(sql, new { IdServicio = idServicio });
         }
 
-        public Task<bool> ActualizarServicioAsync(Servicio servicio)
+        // Obtener todos los servicios
+        public async Task<List<Servicio>?> ObtenerServiciosAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                SELECT IdServicio, NombreServicio, RutaIcono, ServicioTipo
+                FROM Servicios";
+
+            var servicios = await _db.QueryAsync<Servicio>(sql);
+            return servicios.ToList();
         }
 
-        public Task<bool> EliminarServicioAsync(int idServicio)
+        // Actualizar un servicio
+        public async Task<bool> ActualizarServicioAsync(Servicio servicio)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                UPDATE Servicios
+                SET NombreServicio = @NombreServicio,
+                    RutaIcono = @RutaIcono,
+                    ServicioTipo = @ServicioTipo
+                WHERE IdServicio = @IdServicio";
+
+            var result = await _db.ExecuteAsync(sql, new
+            {
+                IdServicio = servicio.IdServicio,
+                NombreServicio = servicio.NombreServicio,
+                RutaIcono = servicio.RutaIcono,  // RutaIcono puede ser null
+                ServicioTipo = servicio.ServicioTipo.ToString() // Convertir el enum a string
+            });
+
+            return result > 0;
+        }
+
+        // Eliminar un servicio
+        public async Task<bool> EliminarServicioAsync(int idServicio)
+        {
+            var sql = @"
+                DELETE FROM Servicios
+                WHERE IdServicio = @IdServicio";
+
+            var result = await _db.ExecuteAsync(sql, new { IdServicio = idServicio });
+            return result > 0;
         }
     }
 }
