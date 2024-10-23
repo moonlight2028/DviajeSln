@@ -62,9 +62,16 @@ namespace Dviaje.DataAccess.Repository
 
 
         // solo el numero total de los favoritos (numero total)
-        public Task<int> FavoritosGuardadosTotal(string idUsuario)
+        public async Task<int> FavoritosGuardadosTotal(string idUsuario)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                SELECT COUNT(*)
+                FROM Favoritos
+                WHERE IdUsuario = @IdUsuario";
+
+            // Ejecuta la consulta y retorna el número total de favoritos
+            var totalFavoritos = await _db.ExecuteScalarAsync<int>(sql, new { IdUsuario = idUsuario });
+            return totalFavoritos;
         }
     }
 }
