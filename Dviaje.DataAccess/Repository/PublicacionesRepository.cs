@@ -305,11 +305,20 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        //Cambiar estado de la publicacion a activo o pasuado segun corresponda
-        public Task<bool> EstadoCambiarPublicacionAsync(int idPublicacion, int idAliado, string estado)
+        // Cambiar estado de la publicacion a activo o pausado según corresponda
+        public async Task<bool> EstadoCambiarPublicacionAsync(int idPublicacion, int idAliado, string estado)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    UPDATE publicaciones 
+                    SET EstadoPublicacion = @Estado
+                    WHERE IdPublicacion = @IdPublicacion 
+                    AND IdAliado = @IdAliado";
+
+            var result = await _db.ExecuteAsync(sql, new { Estado = estado, IdPublicacion = idPublicacion, IdAliado = idAliado });
+
+            return result > 0;
         }
+
 
 
 
