@@ -7,7 +7,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<int> PublicacionesTotales();
         Task<List<PublicacionTarjetaBusquedaVM>> ObtenerListaPublicacionTarjetaBusquedaVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null);
         Task<PublicacionDetalleVM?> ObtenerPublicacionDetalleVMAsync(int idPublicacion);
-        Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsyn(int idPublicacion);
+        Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsync(int idPublicacion);
         Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion);
         Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync(int idPublicacion);
         Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion);
