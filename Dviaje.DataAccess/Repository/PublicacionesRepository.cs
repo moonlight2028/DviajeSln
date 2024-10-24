@@ -223,24 +223,26 @@ namespace Dviaje.DataAccess.Repository
             return publicacion;
         }
 
-        public async Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsyn(int idPublicacion)
+        public async Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsync(int idPublicacion)
         {
-            // Corregir consulta retornar solo la informacion del modelo PublicacionResenasVM
-            //var sql = @"
-            //    SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, rs.MeGusta, NULL AS AvatarTurista
-            //    FROM Resenas rs
-            //    WHERE rs.IdPublicacion = @IdPublicacion
-            //    ORDER BY rs.Calificacion DESC
-            //    LIMIT @ElementosPorPagina OFFSET @Offset";
+            // Consulta para obtener los detalles de la publicación junto con su primera reseña
+            string consulta = @"
+                            SELECT 
+                                p.IdPublicacion, 
+                                p.Titulo AS TituloPublicacion,
+                                p.Puntuacion AS PuntuacionPublicacion,
+                                p.Descripcion AS DescripcionPublicacion,
+                                p.Direccion AS DireccionPublicacion,
+                                (SELECT pi.Ruta FROM publicacionesimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
+                            FROM 
+                                publicaciones p
+                            WHERE 
+                                p.IdPublicacion = @IdPublicacion
+                        ";
 
-            //var offset = (paginaActual - 1) * elementosPorPagina;
+            var publicacion = await _db.QueryFirstOrDefaultAsync<PublicacionResenasVM>(consulta, new { IdPublicacion = idPublicacion });
 
-            //return (await _db.QueryAsync<ResenasTarjetaVM>(sql, new
-            //{
-            //    IdPublicacion = idPublicacion,
-            //    ElementosPorPagina = elementosPorPagina,
-            //    Offset = offset
-            //})).ToList();
+            return publicacion;
 
 
             // Datos de test borrar cuando esté lista la consulta
@@ -256,6 +258,9 @@ namespace Dviaje.DataAccess.Repository
 
             return (informacionResenaPublicacion);
         }
+
+
+        //aun no es posible
 
         public Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion)
         {
@@ -277,46 +282,85 @@ namespace Dviaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public Task<bool> EstadoEliminarPublicacionAsync(int idPublicacion, int idAliado)
+
+
+
+
+        // realizar  consultas
+
+
+        //cambiar el estado de la publicacion a eliminar  
+        public async Task<bool> EstadoEliminarPublicacionAsync(int idPublicacion, int idAliado)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    UPDATE publicaciones 
+                    SET EstadoPublicacion = 'Eliminada'
+                    WHERE IdPublicacion = @IdPublicacion 
+                    AND IdAliado = @IdAliado";
+
+            var result = await _db.ExecuteAsync(sql, new { IdPublicacion = idPublicacion, IdAliado = idAliado });
+
+            return result > 0; 
         }
 
+
+
+        //Cambiar estado de la publicacion a activo o pasuado segun corresponda
         public Task<bool> EstadoCambiarPublicacionAsync(int idPublicacion, int idAliado, string estado)
         {
             throw new NotImplementedException();
         }
+
+
 
         public Task<List<PublicacionTablaItemVM>?> ObtenerListaPublicacionTablaItemVMAsync()
         {
             throw new NotImplementedException();
         }
 
+
+
+
+        //Realizar consultas
+
+
+
+
+        // realizar una consulta que traiga la cantidad (numero) de publicaciones uqe se hicieron, que tambien traiga el año y mes de todas la publicaciones
         public Task<List<ReportesPublicacionesPorMesVM>?> ReportePublicacionesPorMesAsync()
         {
             throw new NotImplementedException();
         }
 
+
+        // realizar una conulta, que triaga la categorias mas usadas en la publicaciones, en ranking de top 10
         public Task<List<ReportesPublicacionesTopCategoriaVM>?> ReporteTopCategoriasAsync()
         {
             throw new NotImplementedException();
         }
 
+        // realizar una consulta que traiga la cantidad (numero) de publicaciones que esten activas por mes 
         public Task<List<ReportesPublicacionesActivasVM>?> ReportePublicacionesActivasAsync()
         {
             throw new NotImplementedException();
         }
 
+
+        //realizar una consulta que traiga por mes el promedio de precio de la publicaciones 
         public Task<List<ReportesPublicacionesPreciosVM>?> ReportePreciosPromediosAsync()
         {
             throw new NotImplementedException();
         }
 
+
+        // realizar consulta que triga por mes el top de las publicaciones con mas likes 
         public Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync()
         {
             throw new NotImplementedException();
         }
 
+
+        //realizar consulta que traiga las publicaciones, hechas ayer, hoy, en el mes, en el año
         public Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual)
         {
             throw new NotImplementedException();
