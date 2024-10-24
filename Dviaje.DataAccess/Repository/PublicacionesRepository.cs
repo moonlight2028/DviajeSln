@@ -300,7 +300,7 @@ namespace Dviaje.DataAccess.Repository
 
             var result = await _db.ExecuteAsync(sql, new { IdPublicacion = idPublicacion, IdAliado = idAliado });
 
-            return result > 0; 
+            return result > 0;
         }
 
 
@@ -321,7 +321,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-
+        //Pendiente
         public Task<List<PublicacionTablaItemVM>?> ObtenerListaPublicacionTablaItemVMAsync()
         {
             throw new NotImplementedException();
@@ -336,43 +336,133 @@ namespace Dviaje.DataAccess.Repository
 
 
         // realizar una consulta que traiga la cantidad (numero) de publicaciones uqe se hicieron, que tambien traiga el año y mes de todas la publicaciones
-        public Task<List<ReportesPublicacionesPorMesVM>?> ReportePublicacionesPorMesAsync()
+        public async Task<List<ReportesPublicacionesPorMesVM>?> ReportePublicacionesPorMesAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                            SELECT 
+                                YEAR(Fecha) AS Anio, 
+                                MONTH(Fecha) AS Mes, 
+                                COUNT(*) AS NumeroPublicaciones
+                            FROM publicaciones
+                            GROUP BY YEAR(Fecha), MONTH(Fecha)
+                            ORDER BY YEAR(Fecha), MONTH(Fecha)";
+
+            var result = await _db.QueryAsync<ReportesPublicacionesPorMesVM>(sql);
+            return result.ToList();
         }
+
 
 
         // realizar una conulta, que triaga la categorias mas usadas en la publicaciones, en ranking de top 10
-        public Task<List<ReportesPublicacionesTopCategoriaVM>?> ReporteTopCategoriasAsync()
+        public async Task<List<ReportesPublicacionesTopCategoriaVM>?> ReporteTopCategoriasAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT c.NombreCategoria, 
+                           COUNT(pc.IdCategoria) * 100.0 / (SELECT COUNT(*) FROM publicacionescategorias) AS Porcentaje
+                    FROM publicacionescategorias pc
+                    INNER JOIN categorias c ON pc.IdCategoria = c.IdCategoria
+                    GROUP BY c.NombreCategoria
+                    ORDER BY COUNT(pc.IdCategoria) DESC
+                    LIMIT 10";
+
+            var result = await _db.QueryAsync<ReportesPublicacionesTopCategoriaVM>(sql);
+
+            return result.ToList();
         }
 
+
         // realizar una consulta que traiga la cantidad (numero) de publicaciones que esten activas por mes 
-        public Task<List<ReportesPublicacionesActivasVM>?> ReportePublicacionesActivasAsync()
+        public async Task<List<ReportesPublicacionesActivasVM>?> ReportePublicacionesActivasAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        DATE_FORMAT(p.Fecha, '%Y-%m') AS Mes,
+                        SUM(CASE WHEN p.EstadoPublicacion = 'Activa' THEN 1 ELSE 0 END) AS PublicacionesActivas,
+                        SUM(CASE WHEN p.EstadoPublicacion = 'Inactiva' THEN 1 ELSE 0 END) AS PublicacionesInactivas
+                    FROM 
+                        publicaciones p
+                    GROUP BY 
+                        DATE_FORMAT(p.Fecha, '%Y-%m')
+                    ORDER BY 
+                        DATE_FORMAT(p.Fecha, '%Y-%m') DESC";
+
+            var result = await _db.QueryAsync<ReportesPublicacionesActivasVM>(sql);
+
+            return result.ToList();
         }
 
 
         //realizar una consulta que traiga por mes el promedio de precio de la publicaciones 
-        public Task<List<ReportesPublicacionesPreciosVM>?> ReportePreciosPromediosAsync()
+        public async Task<List<ReportesPublicacionesPreciosVM>?> ReportePreciosPromediosAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        DATE_FORMAT(p.Fecha, '%Y-%m') AS Mes,
+                        AVG(p.Precio) AS PrecioPromedio
+                    FROM 
+                        publicaciones p
+                    GROUP BY 
+                        DATE_FORMAT(p.Fecha, '%Y-%m')
+                    ORDER BY 
+                        DATE_FORMAT(p.Fecha, '%Y-%m') DESC";
+
+            var result = await _db.QueryAsync<ReportesPublicacionesPreciosVM>(sql);
+
+            return result.ToList();
         }
 
 
-        // realizar consulta que triga por mes el top de las publicaciones con mas likes 
-        public Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync()
+
+        public async Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        p.IdPublicacion,
+                        p.Titulo AS TituloPublicacion,
+                        COUNT(rmg.IdResena) AS NotaPublicacion
+                    FROM 
+                        publicaciones p
+                    JOIN 
+                        resenasmegustas rmg ON p.IdPublicacion = rmg.IdPublicacion
+                    GROUP BY 
+                        p.IdPublicacion, 
+                        p.Titulo, 
+                        DATE_FORMAT(p.Fecha, '%Y-%m')
+                    ORDER BY 
+                        COUNT(rmg.IdResena) DESC
+                    LIMIT 10";
+
+            var result = await _db.QueryAsync<ReportesPublicacionesTopPublicacionesVM>(sql);
+
+            return result.ToList();
         }
+
 
 
         //realizar consulta que traiga las publicaciones, hechas ayer, hoy, en el mes, en el año
-        public Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual)
+        public async Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        (SELECT COUNT(*) 
+                         FROM publicaciones 
+                         WHERE DATE(Fecha) = CURDATE()) AS PublicacionesHoy,
+                        (SELECT COUNT(*) 
+                         FROM publicaciones 
+                         WHERE DATE(Fecha) = CURDATE() - INTERVAL 1 DAY) AS PublicacionesAyer,
+                        (SELECT COUNT(*) 
+                         FROM publicaciones 
+                         WHERE YEAR(Fecha) = YEAR(CURDATE()) 
+                           AND MONTH(Fecha) = MONTH(CURDATE())) AS PublicacionesPorMes,
+                        (SELECT COUNT(*) 
+                         FROM publicaciones 
+                         WHERE Fecha >= CURDATE() - INTERVAL 7 DAY) AS PublicacionesSemanaAnterior;
+                ";
+
+            var resultado = await _db.QueryFirstOrDefaultAsync<ReportesPublicacionesDetallesVM>(sql);
+
+            return resultado;
         }
+
     }
 }
