@@ -254,26 +254,27 @@ namespace Dviaje.DataAccess.Repository
 
         }
 
+        // Revisión de la consulta RegistrarReservaAsync
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             try
             {
-                //Conexion 
+                // Conexión
                 if (_db.State != ConnectionState.Open)
                 {
                     _db.Open();
                 }
 
-                // Validación 1: No permitir fechas exgeradas 
+                // Validación 1: No permitir fechas exageradas
                 if (reservaCrearVM.FechaFinal > DateTime.UtcNow.AddYears(1))
                 {
                     return false; // La fecha es demasiado posterior
                 }
 
-                // Validación 2: No permitir si ya existe una reserva con las mismmas fechas
+                // Validación 2: No permitir si ya existe una reserva en el mismo rango de fechas
                 var sqlVerificarReserva = @"
                                         SELECT COUNT(*)
-                                        FROM Reservas
+                                        FROM reservas
                                         WHERE IdUsuario = @IdUsuario
                                         AND IdPublicacion = @IdPublicacion
                                         AND ReservaEstado = 'Activo'
@@ -289,23 +290,23 @@ namespace Dviaje.DataAccess.Repository
 
                 if (reservasConflicto > 0)
                 {
-                    return false; // Ya existe una reserva en ese periodo 
+                    return false; // Ya existe una reserva en ese periodo
                 }
 
                 using (var transaction = _db.BeginTransaction())
                 {
                     try
                     {
-                        // Inserción de la reserva en la tabla Reservas
+                        // Inserción de la reserva en la tabla reservas
                         var sqlReserva = @"
-                                        INSERT INTO Reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                                        VALUES (@FechaReserva, @Estado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                                        INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
+                                        VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
                                         SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
                         var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
                             FechaReserva = DateTime.UtcNow,
-                            Estado = ReservaEstado.Activo,
+                            ReservaEstado = "Activo", 
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
                             NumeroPersonas = reservaCrearVM.NumeroPersonas,
@@ -318,8 +319,8 @@ namespace Dviaje.DataAccess.Repository
                         if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
                         {
                             var sqlServiciosAdicionales = @"
-                        INSERT INTO ReservaServicioAdicional (IdReserva, IdServicioAdicional)
-                        VALUES (@IdReserva, @IdServicioAdicional);";
+                                                        INSERT INTO reservaserviciosadicionales (IdReserva, IdServicioAdicional)
+                                                        VALUES (@IdReserva, @IdServicioAdicional);";
 
                             foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
                             {
@@ -337,7 +338,7 @@ namespace Dviaje.DataAccess.Repository
                     }
                     catch
                     {
-                        // Si algo falla, revertir la transaccionn
+                        // Si algo falla, revertir la transacción
                         transaction.Rollback();
                         return false;
                     }
