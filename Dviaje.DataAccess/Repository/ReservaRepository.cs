@@ -17,6 +17,7 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+        //Obtener MiReserva, Detalles de la reserva
         public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario)
         {
             var sql = @"
@@ -134,10 +135,15 @@ namespace Dviaje.DataAccess.Repository
             return datosTest;
         }
 
+
+        //Faltante
         public Task<ReservaMiReservaVM?> ObtenerReservaMiReservaPorAliadoAsync(int idReserva, string idAliado)
         {
             throw new NotImplementedException();
         }
+
+
+        // Obtner las tarjetas de las reservas hechas por el turista
         public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10, string? estado = null)
         {
             var sql = @"
@@ -202,7 +208,7 @@ namespace Dviaje.DataAccess.Repository
 
 
         // id del aliado (se guarda en idUsuario, se encuentra en la tabla publicaciones), servicios adicionales que tenga la publicacion
-        // 
+        
         public async Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion)
         {
             // Consulta para obtener los datos de la publicación, incluyendo el IdAliado como IdUsuario
@@ -254,7 +260,7 @@ namespace Dviaje.DataAccess.Repository
 
         }
 
-        // Revisión de la consulta RegistrarReservaAsync
+        // Crear una reserva 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             try
@@ -357,6 +363,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
+        //Cancelar una rerserva
         public async Task<bool> CancelarReservaAsync(int idReserva, string idUsuario)
         {
             // verifica si esta activa y si pertenece como tal al usuario 
@@ -384,7 +391,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        // Paginar
+        // obtener el resumen de la tarjeta de reserva
         public async Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
         {
             // obtener los datos de la reserva y la publicación
