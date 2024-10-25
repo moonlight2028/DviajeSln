@@ -335,7 +335,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        // realizar una consulta que traiga la cantidad (numero) de publicaciones uqe se hicieron, que tambien traiga el año y mes de todas la publicaciones
+        // consulta que trae la cantidad (numero) de publicaciones que se hicieron, que tambien trae el año y mes de todas la publicaciones
         public async Task<List<ReportesPublicacionesPorMesVM>?> ReportePublicacionesPorMesAsync()
         {
             var sql = @"
@@ -353,7 +353,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        // realizar una conulta, que triaga la categorias mas usadas en la publicaciones, en ranking de top 10
+        // conulta que trae la categorias mas usadas en la publicaciones, en ranking de top 10
         public async Task<List<ReportesPublicacionesTopCategoriaVM>?> ReporteTopCategoriasAsync()
         {
             var sql = @"
@@ -371,7 +371,7 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-        // realizar una consulta que traiga la cantidad (numero) de publicaciones que esten activas por mes 
+        // consulta que trae la cantidad (numero) de publicaciones que esten activas por mes 
         public async Task<List<ReportesPublicacionesActivasVM>?> ReportePublicacionesActivasAsync()
         {
             var sql = @"
@@ -392,7 +392,7 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-        //realizar una consulta que traiga por mes el promedio de precio de la publicaciones 
+        // consulta que trae por mes el promedio de precio de la publicaciones 
         public async Task<List<ReportesPublicacionesPreciosVM>?> ReportePreciosPromediosAsync()
         {
             var sql = @"
@@ -413,6 +413,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
+        //consulta que trae el top 10 de las publicaciones con mas like
         public async Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync()
         {
             var sql = @"
@@ -439,7 +440,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        //realizar consulta que traiga las publicaciones, hechas ayer, hoy, en el mes, en el año
+        //consulta que trae las publicaciones, hechas ayer, hoy, en el mes, en el año
         public async Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual)
         {
             var sql = @"
