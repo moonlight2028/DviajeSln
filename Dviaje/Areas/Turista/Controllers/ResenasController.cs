@@ -38,50 +38,49 @@ namespace Dviaje.Areas.Turista.Controllers
             return View(resenaFormulario);
         }
 
+
+        //crear Reseña 
         [HttpPost]
         public async Task<IActionResult> CrearResena(ResenaCrearVM resenaCrear)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(resenaCrear);
-            //}
-
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //if (userId == null)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
-            var validacion = await _resenaRepository.ValidarReservaParaResenaAsync(16, "6437755a-e607-44c4-a282-599e5f7ad36d");
-
-            //if (!validacion)
-            //{
-            //    return RedirectToAction(nameof(MisReseñas));
-            //}
-
-            var ssj = 0;
-
-            var test = new ResenaCrearVM
+            // Valida el modelo antes de continuar
+            if (!ModelState.IsValid)
             {
-                IdReserva = 16,
-                Calificacion = 5,
-                Fecha = DateTime.UtcNow,
-                Opinion = "sex?"
+                return View(resenaCrear);
+            }
 
-            };
+            // Obtiene el ID del usuario autenticado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home"); // Redirige a la página principal si no hay usuario
+            }
 
+            // Validación para asegurarse de que el usuario puede dejar una reseña para esta reserva
+            var esValido = await _resenaRepository.ValidarReservaParaResenaAsync(resenaCrear.IdReserva, userId);
+            if (!esValido)
+            {
+                TempData["Error"] = "No puedes realizar una reseña para esta reserva.";
+                return RedirectToAction(nameof(MisReseñas)); // Redirige a la página de reseñas del usuario
+            }
 
-            var success = await _resenaRepository.CrearResenaAsync(test);
+            // Completa la información de la reseña antes de guardar
+            resenaCrear.Fecha = DateTime.UtcNow;
+
+            // Llama al repositorio para crear la reseña
+            var success = await _resenaRepository.CrearResenaAsync(resenaCrear);
+
+            // Si la creación de la reseña fue exitosa, redirige a "MisReseñas"
             if (success)
             {
                 return RedirectToAction(nameof(MisReseñas));
             }
 
+            // Si la creación falla, muestra nuevamente el formulario de creación de reseña con un mensaje de error
+            TempData["Error"] = "Ocurrió un error al intentar crear la reseña. Por favor, inténtalo de nuevo.";
             return View(resenaCrear);
-
-
-
         }
+
 
         [Route("reseñas/disponibles/{pagina?}")]
         public async Task<IActionResult> Disponibles(int? pagina)

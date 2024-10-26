@@ -8,63 +8,66 @@ using System.Security.Claims;
 namespace Dviaje.Areas.Aliado.Controllers
 {
     [Area("Aliado")]
-    //[Authorize(Roles = RolesUtility.RoleAliado)]
+    [Authorize(Roles = RolesUtility.RoleAliado)]
     public class ReservasController : Controller
     {
         private readonly IReservaRepository _reservaRepository;
-
 
         public ReservasController(IReservaRepository reservaRepository)
         {
             _reservaRepository = reservaRepository;
         }
 
-
+        // Muestra el detalle de una reserva específica en una publicación del aliado
         [Route("reservas/detalle/{id?}")]
         public async Task<IActionResult> Detalle(int? id)
         {
-            var reservaDetalles = await _reservaRepository.ObtenerReservaMiReservaAsync((int)id, "IDALIADO");
+            if (!id.HasValue)
+            {
+                return NotFound("La reserva especificada no existe.");
+            }
 
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reservaDetalles = await _reservaRepository.ObtenerReservaMiReservaAsync(id.Value, userId);
+
+            if (reservaDetalles == null)
+            {
+                return NotFound("No se encontró la reserva para la publicación del aliado.");
+            }
+
+            return View(reservaDetalles);
         }
 
-
+        // Obtiene la lista de reservas en las publicaciones del aliado
         [HttpGet]
         [Route("reservas")]
         public async Task<IActionResult> Reservas()
         {
-            // Id del usuario auntenticado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reservas = await _reservaRepository.ObtenerListaReservaTablaItemVMAsync(userId);
 
-            // Llamada al metodo
-            List<ReservaTablaItemVM>? reservas = await _reservaRepository.ObtenerListaReservaTablaItemVMAsync("01bfd429-16ea-44b3-902c-794e2c78dfa7");
-
-            if (reservas == null || !reservas.Any()) { 
-                return NotFound();
+            if (reservas == null || !reservas.Any())
+            {
+                return NotFound("No se encontraron reservas en las publicaciones del aliado.");
             }
 
-            return Ok(reservas);
+            return View(reservas); // Cambia a una vista en lugar de un Ok() para un mejor contexto en la interfaz
         }
 
-
+        // Cancela una reserva específica en una publicación del aliado
         [HttpPut]
-        [Route("reserva/alido/cancelar/{id?}")]
+        [Route("reserva/aliado/cancelar/{id?}")]
         public async Task<IActionResult> CancelarReserva(int id)
         {
-            // Obtener ID del usuario 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            //cancelar la reserva
             var success = await _reservaRepository.CancelarReservaAsync(id, userId);
 
             if (success)
             {
-                // respuesta si la cancelación se cumplio 
-                return Ok();
+                return Ok("La reserva ha sido cancelada exitosamente.");
             }
 
             return BadRequest("No se pudo cancelar la reserva.");
         }
-
     }
 }
