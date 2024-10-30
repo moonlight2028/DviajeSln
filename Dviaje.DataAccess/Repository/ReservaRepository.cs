@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
 using Dviaje.Models.VM;
 using System.Data;
 
@@ -16,124 +15,26 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-
         //Obtener MiReserva, Detalles de la reserva
         public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario)
         {
             var sql = @"
-                SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.Estado AS ReservaEstado,
-                p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Ubicacion,
-                u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
-                pi.Ruta AS Imagen
-                FROM Reservas r
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-                LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-                WHERE r.IdReserva = @IdReserva AND r.IdUsuario = @IdUsuario
-                ORDER BY pi.Orden 
-                LIMIT 5";
+                    SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.ReservaEstado AS ReservaEstado,
+                    p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Direccion,
+                    u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
+                    pi.Ruta AS Imagen
+                    FROM Reservas r
+                    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN aspnetusers u ON p.IdAliado = u.Id
+                    LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                    WHERE r.IdReserva = @IdReserva AND r.IdUsuario = @IdUsuario
+                    ORDER BY pi.Orden 
+                    LIMIT 5";
 
-
-            // Datos de test borrar cuando esté la consulta
-            ReservaMiReservaVM datosTest = new ReservaMiReservaVM
-            {
-                IdPublicacion = 1,
-                TituloPublicacion = "Titulo publicación ajdsklfjkaldsf adsfjakldsjfl aldkfjlkadsjfl adslkfjkladsjf aadkfjlkadj aldskfjkalds adsfjlkjdkls",
-                PuntuacionPublicacion = 4.3m,
-                NumeroReseñasPublicacion = 1156,
-                Direccion = "Calle 186 #48 - 45",
-                DescripcionPublicacion = "La comunicación efectiva es fundamental en todos los aspectos de la vida. Permite expresar ideas, compartir conocimientos y construir relaciones sólidas. En el ámbito profesional, la comunicación clara y precisa es clave para alcanzar objetivos, resolver conflictos y fomentar la colaboración. Además, una buena comunicación ayuda a motivar a los equipos, a mejorar la productividad y a garantizar el éxito en proyectos. Dominar esta habilidad es esencial para el desarrollo personal y profesional en un entorno cada vez más interconectado.",
-                IdAliado = "DFSS",
-                AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                NombreAliado = "Barca",
-                VerificadoAliado = true,
-                NumeroPublicacionesAliado = 4562,
-                FechaInicial = new DateTime(2023, 11, 18),
-                FechaFinal = new DateTime(2023, 11, 20),
-                Personas = 10,
-                ReservaEstado = ReservaEstado.Aprobado,
-                Precio = 464165m,
-                ServiciosAdicionalesPublicacion = new List<ServicioVM> {
-                    new ServicioVM {
-                        NombreServicio = "Tour Guiado por la Ciudad",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        NombreServicio = "Aventura en Montaña",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        NombreServicio = "Spa y Relajación",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        NombreServicio = "Alquiler de Bicicletas",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        NombreServicio = "Clases de Surf",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    }
-                },
-                ServiciosPublicacion = new List<ServicioVM> {
-                    new ServicioVM {
-                        IdServicio = 1,
-                        NombreServicio = "Tour Guiado por la Ciudad",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        IdServicio = 2,
-                        NombreServicio = "Aventura en Montaña",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        IdServicio = 3,
-                        NombreServicio = "Spa y Relajación",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        IdServicio = 4,
-                        NombreServicio = "Alquiler de Bicicletas",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        IdServicio = 5,
-                        NombreServicio = "Clases de Surf",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        IdServicio = 6,
-                        NombreServicio = "Visita a Viñedos",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    },
-                    new ServicioVM {
-                        IdServicio = 7,
-                        NombreServicio = "Cena Romántica",
-                        RutaIcono = "fa-solid fa-fire-burner"
-                    }
-                },
-                ImagenesPublicacion = new List<PublicacionImagenVM> {
-                    new PublicacionImagenVM{
-                        Ruta = "https://images.unsplash.com/photo-1726461974101-d98a3c616dcc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        Alt = "Vista panorámica del paisaje al atardecer"
-                    },
-                    new PublicacionImagenVM{
-                        Ruta = "https://images.unsplash.com/photo-1726533870778-8be51bf99bb1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        Alt = "Interior de una cabaña de lujo en la montaña"
-                    },
-                    new PublicacionImagenVM{
-                        Ruta = "https://images.unsplash.com/photo-1726715245558-69afa5ded798?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        Alt = "Turistas disfrutando de una caminata por el bosque"
-                    },
-                    new PublicacionImagenVM{
-                        Ruta = "https://plus.unsplash.com/premium_photo-1699566447802-0551b84a186d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        Alt = "Piscina al aire libre con vistas a las montañas"
-                    }
-                }
-            };
-
-            return datosTest;
+            var reserva = await _db.QueryFirstOrDefaultAsync<ReservaMiReservaVM>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
+            return reserva;
         }
+
 
 
         //Faltante
@@ -208,7 +109,7 @@ namespace Dviaje.DataAccess.Repository
 
 
         // id del aliado (se guarda en idUsuario, se encuentra en la tabla publicaciones), servicios adicionales que tenga la publicacion
-        
+
         public async Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion)
         {
             // Consulta para obtener los datos de la publicación, incluyendo el IdAliado como IdUsuario
@@ -312,7 +213,7 @@ namespace Dviaje.DataAccess.Repository
                         var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
                             FechaReserva = DateTime.UtcNow,
-                            ReservaEstado = "Activo", 
+                            ReservaEstado = "Activo",
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
                             NumeroPersonas = reservaCrearVM.NumeroPersonas,

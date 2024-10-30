@@ -36,7 +36,7 @@ namespace Dviaje.DataAccess.Repository
             var sql = @"
                 SELECT r.IdReserva, u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista, 
                        rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
-                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumeroLikes
+                       (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
                 FROM Resenas rs
                 INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
                 INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
