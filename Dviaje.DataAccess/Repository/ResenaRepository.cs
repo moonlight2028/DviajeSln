@@ -16,6 +16,8 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+
+        //crear una Reseña
         public async Task<bool> CrearResenaAsync(ResenaCrearVM resenaCrear)
         {
             var sql = @"
@@ -27,6 +29,8 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+
+        //Obtner las resenas para las tarjetas 
         public async Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
@@ -53,7 +57,7 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-
+        // Obtner las reseñas que estan disponibles 
         public async Task<List<ResenaTarjetaDisponibleVM>> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
@@ -137,6 +141,8 @@ namespace Dviaje.DataAccess.Repository
             return datosTest;
         }
 
+
+        // Obtner los detalles de la reseña
         public async Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
@@ -244,6 +250,8 @@ namespace Dviaje.DataAccess.Repository
             return datosTest;
         }
 
+
+        //obtener la lista de reservas 
         public async Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null)
         {
             var sql = @"
@@ -280,7 +288,7 @@ namespace Dviaje.DataAccess.Repository
             return result.ToList();
         }
 
-
+        // Agregar me gusta del usuario
         public async Task<bool> AgregarMeGustaAsync(int idResena, string idUsuario)
         {
             // Verificar si el usuario ya ha dado "Me Gusta"
@@ -306,6 +314,8 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
+
+        //eliminar me gusta 
         public async Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario)
         {
             var sql = @"
@@ -316,6 +326,8 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
+
+        //Traer me gusta (cantidad numerada)
         public async Task<int> ObtenerMeGustaCountAsync(int idResena)
         {
             var sql = "SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = @IdResena";
@@ -324,6 +336,7 @@ namespace Dviaje.DataAccess.Repository
             return count;
         }
 
+        //Validar resena
         public async Task<bool> ValidarReservaParaResenaAsync(int idReserva, string idUsuario)
         {
             var sql = @"

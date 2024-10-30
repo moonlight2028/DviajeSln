@@ -25,30 +25,26 @@ namespace Dviaje.Areas.Turista.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Obtener el ID del usuario autenticado
 
-            var favoritos = await _favoritoRepository.ObtenerListaFavoritoTarjetaVMAsync(userId);
-
-            //if (favoritos == null || !favoritos.Any())
-            //{
-            //    ViewBag.favoritos = false;
-            //    return View();
-            //}
-
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account"); // Redirige al login si el usuario no está autenticado
+            }
 
             var paginaActual = pagina ?? 1;
             int favoritosPorPagina = 10;
-            //int totalFavoritos = await _favoritoRepository.FavoritosGuardadosTotal(userId);
-            int totalFavoritos = 10;
+            int totalFavoritos = await _favoritoRepository.FavoritosGuardadosTotal(userId);
             int paginasTotales = (int)Math.Ceiling((double)totalFavoritos / favoritosPorPagina);
 
+            var favoritos = await _favoritoRepository.ObtenerListaFavoritoTarjetaVMAsync(userId, paginaActual, favoritosPorPagina);
 
-            // Datos requeridos para la paginación
+            // Configuración de la vista y datos para la paginación
             ViewBag.PaginacionPaginas = paginasTotales;
             ViewBag.PaginacionItems = favoritosPorPagina;
             ViewBag.PaginacionResultados = totalFavoritos;
 
-
             return View(favoritos);
         }
+
 
 
         [HttpPost]

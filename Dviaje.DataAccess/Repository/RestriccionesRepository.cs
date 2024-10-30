@@ -14,6 +14,7 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
+        // crear una restriccion
         public async Task<bool> CrearRestriccionAsync(Restriccion restriccion)
         {
             var sql = @"
@@ -24,7 +25,7 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-
+        //traer una restriccion por ID
         public async Task<Restriccion?> ObtenerRestriccionPorIdAsync(int idRestriccion)
         {
             var sql = @"
@@ -35,7 +36,7 @@ namespace Dviaje.DataAccess.Repository
             return await _db.QueryFirstOrDefaultAsync<Restriccion>(sql, new { IdRestriccion = idRestriccion });
         }
 
-
+        //traer restricciones
         public async Task<List<Restriccion>> ObtenerRestriccionesAsync()
         {
             var sql = @"
@@ -46,7 +47,7 @@ namespace Dviaje.DataAccess.Repository
             return restricciones.ToList();
         }
 
-
+        //actualizar una restriccion 
         public async Task<bool> ActualizarRestriccionAsync(Restriccion restriccion)
         {
             var sql = @"
@@ -58,7 +59,7 @@ namespace Dviaje.DataAccess.Repository
             return result > 0;
         }
 
-
+        //eliminar restriccion 
         public async Task<bool> EliminarRestriccionAsync(int idRestriccion)
         {
             var sql = @"

@@ -83,6 +83,7 @@ namespace Dviaje.DataAccess.Repository
             }
         }
 
+        //Regustrar un adjunto (si es necesario)
         public async Task<bool> RegistrarAdjuntosAsync(List<AdjuntosVM> adjuntos)
         {
             var sql = @"

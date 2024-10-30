@@ -15,7 +15,7 @@ namespace Dviaje.DataAccess.Repository
             _db = db;
         }
 
-
+        //Obtner Usuario por ID - Perfil del usuario 
         public async Task<PerfilPublicoVM?> ObtenerPerfilPublicoVMAsync(string idUsuario)
         {
             // Consulta - detalles del perfil público

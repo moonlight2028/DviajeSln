@@ -17,6 +17,7 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+        //Obtener MiReserva, Detalles de la reserva
         public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario)
         {
             var sql = @"
@@ -134,10 +135,15 @@ namespace Dviaje.DataAccess.Repository
             return datosTest;
         }
 
+
+        //Faltante
         public Task<ReservaMiReservaVM?> ObtenerReservaMiReservaPorAliadoAsync(int idReserva, string idAliado)
         {
             throw new NotImplementedException();
         }
+
+
+        // Obtner las tarjetas de las reservas hechas por el turista
         public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10, string? estado = null)
         {
             var sql = @"
@@ -202,7 +208,7 @@ namespace Dviaje.DataAccess.Repository
 
 
         // id del aliado (se guarda en idUsuario, se encuentra en la tabla publicaciones), servicios adicionales que tenga la publicacion
-        // 
+        
         public async Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion)
         {
             // Consulta para obtener los datos de la publicación, incluyendo el IdAliado como IdUsuario
@@ -254,26 +260,27 @@ namespace Dviaje.DataAccess.Repository
 
         }
 
+        // Crear una reserva 
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             try
             {
-                //Conexion 
+                // Conexión
                 if (_db.State != ConnectionState.Open)
                 {
                     _db.Open();
                 }
 
-                // Validación 1: No permitir fechas exgeradas 
+                // Validación 1: No permitir fechas exageradas
                 if (reservaCrearVM.FechaFinal > DateTime.UtcNow.AddYears(1))
                 {
                     return false; // La fecha es demasiado posterior
                 }
 
-                // Validación 2: No permitir si ya existe una reserva con las mismmas fechas
+                // Validación 2: No permitir si ya existe una reserva en el mismo rango de fechas
                 var sqlVerificarReserva = @"
                                         SELECT COUNT(*)
-                                        FROM Reservas
+                                        FROM reservas
                                         WHERE IdUsuario = @IdUsuario
                                         AND IdPublicacion = @IdPublicacion
                                         AND ReservaEstado = 'Activo'
@@ -289,23 +296,23 @@ namespace Dviaje.DataAccess.Repository
 
                 if (reservasConflicto > 0)
                 {
-                    return false; // Ya existe una reserva en ese periodo 
+                    return false; // Ya existe una reserva en ese periodo
                 }
 
                 using (var transaction = _db.BeginTransaction())
                 {
                     try
                     {
-                        // Inserción de la reserva en la tabla Reservas
+                        // Inserción de la reserva en la tabla reservas
                         var sqlReserva = @"
-                                        INSERT INTO Reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                                        VALUES (@FechaReserva, @Estado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                                        INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
+                                        VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
                                         SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
                         var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
                             FechaReserva = DateTime.UtcNow,
-                            Estado = ReservaEstado.Activo,
+                            ReservaEstado = "Activo", 
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
                             NumeroPersonas = reservaCrearVM.NumeroPersonas,
@@ -318,8 +325,8 @@ namespace Dviaje.DataAccess.Repository
                         if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
                         {
                             var sqlServiciosAdicionales = @"
-                        INSERT INTO ReservaServicioAdicional (IdReserva, IdServicioAdicional)
-                        VALUES (@IdReserva, @IdServicioAdicional);";
+                                                        INSERT INTO reservaserviciosadicionales (IdReserva, IdServicioAdicional)
+                                                        VALUES (@IdReserva, @IdServicioAdicional);";
 
                             foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
                             {
@@ -337,7 +344,7 @@ namespace Dviaje.DataAccess.Repository
                     }
                     catch
                     {
-                        // Si algo falla, revertir la transaccionn
+                        // Si algo falla, revertir la transacción
                         transaction.Rollback();
                         return false;
                     }
@@ -356,6 +363,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
+        //Cancelar una rerserva
         public async Task<bool> CancelarReservaAsync(int idReserva, string idUsuario)
         {
             // verifica si esta activa y si pertenece como tal al usuario 
@@ -383,7 +391,7 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        // Paginar
+        // obtener el resumen de la tarjeta de reserva
         public async Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
         {
             // obtener los datos de la reserva y la publicación
