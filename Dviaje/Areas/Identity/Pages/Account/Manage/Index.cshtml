@@ -1,32 +1,85 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Perfil";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
+@section Styles {
+    <!-- Toast v1.4 -->
+    <link href="~/lib/iziToast/iziToast.min.css" rel="stylesheet" />
 
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/identity/manage-index.css" />
+}
 
-@* <h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<section class="contenedor-manage">
+    <div class="contenedor-manage-contenido b-s-95">
         <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
-                <label asp-for="Username" class="form-label"></label>
+            <div class="contenedor-input-banner b-sc-1">
+                <img class="imagen-avatar" src="@Model.IdentityPerfil.Banner" alt="@($"Banner del usuario {Model.IdentityPerfil.NombreUsuario}")">
+                <div class="input-img-placeholder">
+                    <span>
+                        Clic para Actualizar el Banner.
+                    </span>
+                    <i class="fa-solid fa-camera-retro"></i>
+                </div>
+                <input type="file" class="input-archivo-img" accept="image/*" asp-for="IdentityPerfil.InputBanner">
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <div class="contenedor-inputs-datos">
+                <div class="contenedor-input-img">
+                    <img class="imagen-avatar" src="@Model.IdentityPerfil.Avatar" alt="@($"Avatar del usuario {Model.IdentityPerfil.NombreUsuario}")">
+                    <div class="input-img-placeholder">
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <input type="file" class="input-archivo-img" accept="image/*" asp-for="IdentityPerfil.InputAvatar">
+                </div>
+
+                <div class="contenedor-manage-inputs">
+                    <div>
+                        <label asp-for="IdentityPerfil.NombreUsuario" class="input-label">
+                            <input asp-for="IdentityPerfil.NombreUsuario" autocomplete="on" aria-required="true" class="input-field" />
+                            <span class="input-placeholder">Nombre de Usuario</span>
+                        </label>
+                        <span asp-validation-for="IdentityPerfil.NombreUsuario" class="validation-message"></span>
+                    </div>
+                    <div>
+                        <label asp-for="IdentityPerfil.NumeroTelefono" class="input-label">
+                            <input asp-for="IdentityPerfil.NumeroTelefono" autocomplete="on" aria-required="true" class="input-field" type="tel" />
+                            <span class="input-placeholder">Teléfono</span>
+                        </label>
+                        <span asp-validation-for="IdentityPerfil.NumeroTelefono" class="validation-message"></span>
+                    </div>
+                    <div class="hr"></div>
+                    <div asp-validation-summary="ModelOnly" class="validation-message-all"></div>
+                    <span asp-validation-for="IdentityPerfil.InputBanner" class="validation-message"></span>
+                    <span asp-validation-for="IdentityPerfil.InputAvatar" class="validation-message"></span>
+                    <button id="update-profile-button" type="submit" class="button-87-main">Actualizar</button>
+                </div>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
+
+        <section class="manage-informacion-adicional">
+            <a asp-area="Turista" asp-controller="Reservas" asp-action="MisReservas" class="informacion-adicional-datos">
+                <span>@Model.IdentityPerfil.NumeroReservas.ToString("N0")</span>
+                <span>Reservas</span>
+            </a>
+            <div class="hr-v"></div>
+            <a asp-area="Turista" asp-controller="Resenas" asp-action="MisReseñas" class="informacion-adicional-datos">
+                <span>@Model.IdentityPerfil.NumeroReseñas.ToString("N0")</span>
+                <span>Reseñas</span>
+            </a>
+        </section>
     </div>
-</div> *@
+</section>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    @if (Model.Notificacion != null && Model.NotificacionTitulo != null && Model.NotificacionMensaje != null)
+    {
+        <partial name="_IziToastPartial" />
+    }
+    <script src="~/js/identity/manage-index.js"></script>
 }

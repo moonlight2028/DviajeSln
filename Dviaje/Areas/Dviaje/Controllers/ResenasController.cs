@@ -29,14 +29,15 @@ namespace Dviaje.Areas.Dviaje.Controllers
             }
 
             // Corregir consulta retornar solo la informacion del modelo ResenasPublicacionVM
-            var publicacion = await _publicacionesRepository.ObtenerPublicacionResenasVMAsyn((int)id);
+            //var publicacion = await _publicacionesRepository.ObtenerPublicacionResenasVMAsyn((int)id);
 
-            if (publicacion == null)
-            {
-                return RedirectToAction("Publicaciones", "Publicaciones");
-            }
+            //if (publicacion == null)
+            //{
+            //    return RedirectToAction("Publicaciones", "Publicaciones");
+            //}
 
-            return View(publicacion);
+            //return View(publicacion);
+            return View();
         }
 
 

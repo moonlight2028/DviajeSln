@@ -56,7 +56,7 @@ namespace Dviaje.Services
                 {
                     File = new FileDescription(nombre, stream),
                     Folder = carpeta,
-                    Type = "private" // Tipo de acceso privado
+                    Type = "private"
                 };
 
                 var uploadResult = await _cloudinary.UploadAsync(uploadParams);

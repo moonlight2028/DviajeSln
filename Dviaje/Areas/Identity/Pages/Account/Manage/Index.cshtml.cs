@@ -1,11 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
+using Dviaje.Models.VM;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,69 +12,55 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IReservaRepository _reservaRepository;
+        private readonly IResenasRepository _resenasRepository;
+        private IValidator<IdentityPerfilVM> _identityPerfilVMValidator;
+
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IReservaRepository reservaRepository,
+            IResenasRepository resenasRepository,
+            IValidator<IdentityPerfilVM> identityPerfilVMValidator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _reservaRepository = reservaRepository;
+            _resenasRepository = resenasRepository;
+            _identityPerfilVMValidator = identityPerfilVMValidator;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public string Username { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [TempData]
-        public string StatusMessage { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public IdentityPerfilVM IdentityPerfil { get; set; }
+        [TempData]
+        public string Notificacion { get; set; }
+        [TempData]
+        public string NotificacionTitulo { get; set; }
+        [TempData]
+        public string NotificacionMensaje { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public class InputModel
+
+        private async Task LoadAsync(Usuario user)
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
-
-        private async Task LoadAsync(IdentityUser user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-
-            Input = new InputModel
+            IdentityPerfil = new IdentityPerfilVM
             {
-                PhoneNumber = phoneNumber
+                NombreUsuario = await _userManager.GetUserNameAsync(user),
+                NumeroTelefono = await _userManager.GetPhoneNumberAsync(user),
+                Banner = user.Banner,
+                Avatar = user.Avatar,
+                NumeroReservas = await _reservaRepository.ObtenerTotalReservas(user.Id),
+                NumeroReseñas = await _resenasRepository.ObtenerTotalResenas(user.Id)
             };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User) as Usuario;
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return RedirectToPage("/Account/Register");
             }
 
             await LoadAsync(user);
@@ -87,31 +69,66 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User) as Usuario;
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return RedirectToPage("/Account/Register");
             }
 
-            if (!ModelState.IsValid)
+            var validacion = await _identityPerfilVMValidator.ValidateAsync(IdentityPerfil);
+            if (!validacion.IsValid)
             {
+                foreach (var error in validacion.Errors)
+                {
+                    ModelState.AddModelError($"IdentityPerfil.{error.PropertyName}", error.ErrorMessage);
+                }
+
                 await LoadAsync(user);
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            var numeroTelefono = await _userManager.GetPhoneNumberAsync(user);
+            if (IdentityPerfil.NumeroTelefono != numeroTelefono)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var resultado = await _userManager.SetPhoneNumberAsync(user, IdentityPerfil.NumeroTelefono);
+                if (!resultado.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar cambiar el número de teléfono.";
                     return RedirectToPage();
                 }
             }
 
+            var nombreUsuarioActual = await _userManager.GetUserNameAsync(user);
+            var nuevoNombreUsuario = IdentityPerfil.NombreUsuario;
+            if (nuevoNombreUsuario != nombreUsuarioActual)
+            {
+                var existeUsuario = await _userManager.FindByNameAsync(nuevoNombreUsuario);
+                if (existeUsuario == null)
+                {
+                    var resultado = await _userManager.SetUserNameAsync(user, nuevoNombreUsuario);
+                    if (!resultado.Succeeded)
+                    {
+                        Notificacion = "error";
+                        NotificacionTitulo = "Perfil";
+                        NotificacionMensaje = "Error inesperado al intentar cambiar el nombre de usuario.";
+                        return RedirectToPage();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("IdentityPerfil.NombreUsuario", "El nombre de usuario ya está en uso");
+
+                    await LoadAsync(user);
+                    return Page();
+                }
+            }
+
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            Notificacion = "success";
+            NotificacionTitulo = "Perfil";
+            NotificacionMensaje = "Tu perfil ha sido actualizado.";
             return RedirectToPage();
         }
     }

@@ -74,6 +74,7 @@ builder.Services.AddScoped<IServiciosRepository, ServiciosRepository>();
 // Inyección de Validadores
 builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearAutenticadoVMValidator>();
 builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearVMValidator>();
+builder.Services.AddScoped<IValidator<IdentityPerfilVM>, IdentityPerfilVMValidator>();
 
 
 var app = builder.Build();
