@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Dviaje.Models;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Http;
 
@@ -27,7 +28,6 @@ namespace Dviaje.Services
                 return null;
             }
 
-            // Convierte el archivo en un stream para subirlo
             using (var stream = archivo.OpenReadStream())
             {
                 var uploadParams = new RawUploadParams
@@ -65,7 +65,45 @@ namespace Dviaje.Services
             }
         }
 
+        public async Task<List<ImagenCloudinary?>> SubirImagenesAsync(List<(byte[] imagen, string nombre)> imagenes, string carpeta)
+        {
+            var tareasDeSubida = new List<Task<ImagenCloudinary?>>();
 
+            foreach (var (imagen, nombre) in imagenes)
+            {
+                tareasDeSubida.Add(SubirImagenAsync(imagen, nombre, carpeta));
+            }
+
+            var resultados = await Task.WhenAll(tareasDeSubida);
+
+            return resultados.ToList();
+        }
+
+        private async Task<ImagenCloudinary?> SubirImagenAsync(byte[] imagen, string nombre, string carpeta)
+        {
+            if (imagen == null || imagen.Length == 0)
+            {
+                return null;
+            }
+
+            using (var stream = new MemoryStream(imagen))
+            {
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(nombre, stream),
+                    Folder = carpeta,
+                    Type = "upload"
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                return new ImagenCloudinary
+                {
+                    PublicId = uploadResult.PublicId,
+                    Url = uploadResult.SecureUrl?.ToString()
+                };
+            }
+        }
 
 
     }

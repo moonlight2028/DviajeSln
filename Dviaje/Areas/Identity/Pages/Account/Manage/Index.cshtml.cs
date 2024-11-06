@@ -1,9 +1,11 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
+using Dviaje.Services.IServices;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dviaje.Areas.Identity.Pages.Account.Manage
@@ -15,6 +17,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
         private readonly IReservaRepository _reservaRepository;
         private readonly IResenasRepository _resenasRepository;
         private IValidator<IdentityPerfilVM> _identityPerfilVMValidator;
+        private IOptimizacionImagenesService _optimizacionImagenes;
 
 
         public IndexModel(
@@ -22,31 +25,47 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             SignInManager<IdentityUser> signInManager,
             IReservaRepository reservaRepository,
             IResenasRepository resenasRepository,
-            IValidator<IdentityPerfilVM> identityPerfilVMValidator)
+            IValidator<IdentityPerfilVM> identityPerfilVMValidator,
+            IOptimizacionImagenesService optimizacionImagenes)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _reservaRepository = reservaRepository;
             _resenasRepository = resenasRepository;
             _identityPerfilVMValidator = identityPerfilVMValidator;
+            _optimizacionImagenes = optimizacionImagenes;
         }
 
 
         [BindProperty]
         public IdentityPerfilVM IdentityPerfil { get; set; }
+
+        [BindProperty]
+        [ValidateNever]
+        public IFormFile InputAvatar { get; set; }
+
+        [BindProperty]
+        [ValidateNever]
+        public IFormFile InputBanner { get; set; }
+
         [TempData]
         public string Notificacion { get; set; }
+
         [TempData]
         public string NotificacionTitulo { get; set; }
+
         [TempData]
         public string NotificacionMensaje { get; set; }
 
 
         private async Task LoadAsync(Usuario user)
         {
+            var nombreUsuario = await _userManager.GetUserNameAsync(user);
+
             IdentityPerfil = new IdentityPerfilVM
             {
-                NombreUsuario = await _userManager.GetUserNameAsync(user),
+                NombreUsuario = nombreUsuario,
+                NombreUsuarioOriginal = nombreUsuario,
                 NumeroTelefono = await _userManager.GetPhoneNumberAsync(user),
                 Banner = user.Banner,
                 Avatar = user.Avatar,
@@ -75,6 +94,11 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                 return RedirectToPage("/Account/Register");
             }
 
+            // Validaciones
+            IdentityPerfil.NombreUsuarioOriginal = user.UserName;
+            ModelState.Remove("InputAvatar");
+            ModelState.Remove("InputBanner");
+
             var validacion = await _identityPerfilVMValidator.ValidateAsync(IdentityPerfil);
             if (!validacion.IsValid)
             {
@@ -82,11 +106,26 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                 {
                     ModelState.AddModelError($"IdentityPerfil.{error.PropertyName}", error.ErrorMessage);
                 }
-
+            }
+            if (InputAvatar != null)
+            {
+                var validacionImagen = ValidarInputImagen(InputAvatar);
+                if (!validacionImagen) ModelState.AddModelError("InputAvatar", "El avatar debe ser una imagen en formato JPG, JPEG, WEBP o PNG.");
+            }
+            if (InputBanner != null)
+            {
+                var validacionImagen = ValidarInputImagen(InputBanner);
+                if (!validacionImagen) ModelState.AddModelError("InputBanner", "El banner debe ser una imagen en formato JPG, JPEG, WEBP o PNG.");
+            }
+            if (!ModelState.IsValid)
+            {
+                string d = "df";
                 await LoadAsync(user);
                 return Page();
             }
 
+
+            // Registro de datos
             var numeroTelefono = await _userManager.GetPhoneNumberAsync(user);
             if (IdentityPerfil.NumeroTelefono != numeroTelefono)
             {
@@ -125,11 +164,30 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if (InputAvatar != null)
+            {
+                var imagenes = await _optimizacionImagenes.GenerarVariacionesWebPCuadradoAsync(InputAvatar.OpenReadStream(), 75, new[] { 50, 200 });
+
+
+                string d = "sdf";
+            }
+
+
+
+
             await _signInManager.RefreshSignInAsync(user);
             Notificacion = "success";
             NotificacionTitulo = "Perfil";
             NotificacionMensaje = "Tu perfil ha sido actualizado.";
             return RedirectToPage();
+        }
+
+        private bool ValidarInputImagen(IFormFile imagen)
+        {
+            var extenciones = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            var extencion = Path.GetExtension(imagen.FileName).ToLower();
+
+            return extenciones.Contains(extencion);
         }
     }
 }

@@ -7,8 +7,6 @@
         public string? NumeroTelefono { get; set; }
         public string? Banner { get; set; }
         public string? Avatar { get; set; }
-        public string? InputBanner { get; set; }
-        public string? InputAvatar { get; set; }
         public int NumeroReservas { get; set; }
         public int NumeroReseñas { get; set; }
     }

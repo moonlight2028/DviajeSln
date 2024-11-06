@@ -15,7 +15,7 @@
 
 <section class="contenedor-manage">
     <div class="contenedor-manage-contenido b-s-95">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
             <div class="contenedor-input-banner b-sc-1">
                 <img class="imagen-avatar" src="@Model.IdentityPerfil.Banner" alt="@($"Banner del usuario {Model.IdentityPerfil.NombreUsuario}")">
                 <div class="input-img-placeholder">
@@ -24,7 +24,7 @@
                     </span>
                     <i class="fa-solid fa-camera-retro"></i>
                 </div>
-                <input type="file" class="input-archivo-img" accept="image/*" asp-for="IdentityPerfil.InputBanner">
+                <input type="file" class="input-archivo-img" accept="image/*" asp-for="InputBanner" formnovalidate>
             </div>
             <div class="contenedor-inputs-datos">
                 <div class="contenedor-input-img">
@@ -32,7 +32,7 @@
                     <div class="input-img-placeholder">
                         <i class="fa-solid fa-camera-retro"></i>
                     </div>
-                    <input type="file" class="input-archivo-img" accept="image/*" asp-for="IdentityPerfil.InputAvatar">
+                    <input type="file" class="input-archivo-img" accept="image/*" asp-for="InputAvatar" formnovalidate>
                 </div>
 
                 <div class="contenedor-manage-inputs">
@@ -52,8 +52,8 @@
                     </div>
                     <div class="hr"></div>
                     <div asp-validation-summary="ModelOnly" class="validation-message-all"></div>
-                    <span asp-validation-for="IdentityPerfil.InputBanner" class="validation-message"></span>
-                    <span asp-validation-for="IdentityPerfil.InputAvatar" class="validation-message"></span>
+                    <span asp-validation-for="InputBanner" class="validation-message"></span>
+                    <span asp-validation-for="InputAvatar" class="validation-message"></span>
                     <button id="update-profile-button" type="submit" class="button-87-main">Actualizar</button>
                 </div>
             </div>
