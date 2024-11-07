@@ -294,7 +294,7 @@ namespace Dviaje.DataAccess.Repository
         {
             var sql = @"
                     UPDATE publicaciones 
-                    SET EstadoPublicacion = 'Eliminada'
+                    SET PublicacionEstado = 'Eliminada'
                     WHERE IdPublicacion = @IdPublicacion 
                     AND IdAliado = @IdAliado";
 
@@ -310,7 +310,7 @@ namespace Dviaje.DataAccess.Repository
         {
             var sql = @"
                     UPDATE publicaciones 
-                    SET EstadoPublicacion = @Estado
+                    SET PublicacionEstado = @Estado
                     WHERE IdPublicacion = @IdPublicacion 
                     AND IdAliado = @IdAliado";
 
@@ -377,8 +377,8 @@ namespace Dviaje.DataAccess.Repository
             var sql = @"
                     SELECT 
                         DATE_FORMAT(p.Fecha, '%Y-%m') AS Mes,
-                        SUM(CASE WHEN p.EstadoPublicacion = 'Activa' THEN 1 ELSE 0 END) AS PublicacionesActivas,
-                        SUM(CASE WHEN p.EstadoPublicacion = 'Inactiva' THEN 1 ELSE 0 END) AS PublicacionesInactivas
+                        SUM(CASE WHEN p.PublicacionEstado = 'Activa' THEN 1 ELSE 0 END) AS PublicacionesActivas,
+                        SUM(CASE WHEN p.PublicacionEstado = 'Inactiva' THEN 1 ELSE 0 END) AS PublicacionesInactivas
                     FROM 
                         publicaciones p
                     GROUP BY 
@@ -417,26 +417,30 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync()
         {
             var sql = @"
-                    SELECT 
-                        p.IdPublicacion,
-                        p.Titulo AS TituloPublicacion,
-                        COUNT(rmg.IdResena) AS NotaPublicacion
-                    FROM 
-                        publicaciones p
-                    JOIN 
-                        resenasmegustas rmg ON p.IdPublicacion = rmg.IdPublicacion
-                    GROUP BY 
-                        p.IdPublicacion, 
-                        p.Titulo, 
-                        DATE_FORMAT(p.Fecha, '%Y-%m')
-                    ORDER BY 
-                        COUNT(rmg.IdResena) DESC
-                    LIMIT 10";
+        SELECT 
+            p.IdPublicacion,
+            p.Titulo AS TituloPublicacion,
+            COUNT(rmg.IdResena) AS NotaPublicacion
+        FROM 
+            publicaciones p
+        JOIN 
+            reservas r ON p.IdPublicacion = r.IdPublicacion
+        JOIN 
+            resenas rs ON r.IdReserva = rs.IdReserva
+        JOIN 
+            resenamegusta rmg ON rs.IdResena = rmg.IdResena
+        GROUP BY 
+            p.IdPublicacion, 
+            p.Titulo
+        ORDER BY 
+            COUNT(rmg.IdResena) DESC
+        LIMIT 10";
 
             var result = await _db.QueryAsync<ReportesPublicacionesTopPublicacionesVM>(sql);
 
             return result.ToList();
         }
+
 
 
 
