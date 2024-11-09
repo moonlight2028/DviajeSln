@@ -3,6 +3,10 @@ using FluentValidation;
 
 namespace Dviaje.Validators
 {
+    /// <summary>
+    /// Validador personalizado para el modelo <see cref="IdentityPerfilVM"/> utilizando la librería FluentValidation.
+    /// Realiza validaciones de los campos del modelo, como el nombre de usuario y el número de teléfono.
+    /// </summary>
     public class IdentityPerfilVMValidator : AbstractValidator<IdentityPerfilVM>
     {
         public IdentityPerfilVMValidator()
@@ -18,17 +22,14 @@ namespace Dviaje.Validators
                 .Matches(@"^\+?[0-9]{7,15}$")
                 .When(x => !string.IsNullOrEmpty(x.NumeroTelefono))
                 .WithMessage("El número de teléfono debe ser válido y contener entre 7 y 15 dígitos.");
-
-            //RuleFor(x => x.InputBanner)
-            //    .Must(ValidarInputImagenONull)
-            //    .WithMessage("El banner debe ser una imagen en formato JPG, JPEG, WEBP o PNG.");
-
-            //RuleFor(x => x.InputAvatar)
-            //    .Must(ValidarInputImagenONull)
-            //    .WithMessage("El avatar debe ser una imagen en formato JPG, JPEG, WEBP o PNG.");
         }
 
 
+        /// <summary>
+        /// Método auxiliar para validar si un valor es una dirección de correo electrónico válida.
+        /// </summary>
+        /// <param name="valor">El valor a verificar como dirección de correo electrónico.</param>
+        /// <returns>Devuelve <c>true</c> si el valor es un correo electrónico válido, <c>false</c> en caso contrario.</returns>
         private bool EsCorreo(string? valor)
         {
             if (string.IsNullOrEmpty(valor))
@@ -36,16 +37,5 @@ namespace Dviaje.Validators
 
             return System.Text.RegularExpressions.Regex.IsMatch(valor, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
-
-
-        //private bool ValidarInputImagenONull(string? ruta)
-        //{
-        //    if (string.IsNullOrEmpty(ruta))
-        //        return true;
-
-        //    var extenciones = new[] { ".jpg", ".jpeg", ".png", ".webp" };
-        //    var fileExtension = System.IO.Path.GetExtension(ruta).ToLower();
-        //    return extenciones.Contains(fileExtension);
-        //}
     }
 }

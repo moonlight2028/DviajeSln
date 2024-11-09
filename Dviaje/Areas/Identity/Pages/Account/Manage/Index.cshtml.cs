@@ -2,6 +2,7 @@
 using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
+using Dviaje.Utility;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dviaje.Areas.Identity.Pages.Account.Manage
 {
+    /// <summary>
+    /// Representa la página de inicio del módulo de gestión de usuarios. 
+    /// Esta página sirve como punto de entrada al panel de administración de usuarios y muestra 
+    /// los datos básicos del usuario actualmente autenticado, permitiendo gestionar su información y configuración.
+    /// </summary>
     public class IndexModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -18,6 +24,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
         private readonly IResenasRepository _resenasRepository;
         private IValidator<IdentityPerfilVM> _identityPerfilVMValidator;
         private IOptimizacionImagenesService _optimizacionImagenes;
+        private ISubirArchivosService _subirArchivos;
 
 
         public IndexModel(
@@ -26,7 +33,8 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             IReservaRepository reservaRepository,
             IResenasRepository resenasRepository,
             IValidator<IdentityPerfilVM> identityPerfilVMValidator,
-            IOptimizacionImagenesService optimizacionImagenes)
+            IOptimizacionImagenesService optimizacionImagenes,
+            ISubirArchivosService subirArchivos)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -34,6 +42,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             _resenasRepository = resenasRepository;
             _identityPerfilVMValidator = identityPerfilVMValidator;
             _optimizacionImagenes = optimizacionImagenes;
+            _subirArchivos = subirArchivos;
         }
 
 
@@ -58,6 +67,14 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
         public string NotificacionMensaje { get; set; }
 
 
+        /// <summary>
+        /// Carga de forma asíncrona la información del perfil de un usuario.
+        /// Este método obtiene los datos básicos del usuario, como el nombre de usuario, 
+        /// número de teléfono, banner, avatar, número de reservas y número de reseñas,
+        /// y los asigna a una instancia del modelo de vista <see cref="IdentityPerfilVM"/>.
+        /// </summary>
+        /// <param name="user">El usuario cuya información se va a cargar.</param>
+        /// <returns>Carga y procesa la informacion del usuario.</returns>
         private async Task LoadAsync(Usuario user)
         {
             var nombreUsuario = await _userManager.GetUserNameAsync(user);
@@ -67,13 +84,19 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                 NombreUsuario = nombreUsuario,
                 NombreUsuarioOriginal = nombreUsuario,
                 NumeroTelefono = await _userManager.GetPhoneNumberAsync(user),
-                Banner = user.Banner,
-                Avatar = user.Avatar,
+                Banner = await _subirArchivos.GenerarUrlAsync(user.Banner),
+                Avatar = await _subirArchivos.GenerarUrlAsync($"{user.Avatar}-200"),
                 NumeroReservas = await _reservaRepository.ObtenerTotalReservas(user.Id),
                 NumeroReseñas = await _resenasRepository.ObtenerTotalResenas(user.Id)
             };
         }
 
+        /// <summary>
+        /// Solicitud GET para cargar la página de perfil de usuario.
+        /// Obtiene el usuario actual a partir de la identidad autenticada, y si no se encuentra un usuario, 
+        /// redirige al usuario a la página de registro. Si el usuario es válido, carga su información de perfil.
+        /// </summary>
+        /// <returns>Una instancia de <see cref="IActionResult"/> que puede redirigir a la página de registro o mostrar la página actual.</returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User) as Usuario;
@@ -86,6 +109,13 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// Solicitud POST para procesar los cambios en el perfil de usuario.
+        /// Este método recibe los datos enviados desde la página y actualiza la información del usuario,
+        /// actualiza el UserName, PhoneNumber, Avatar y Banner
+        /// luego guarda los cambios y redirige al usuario a la página de perfil.
+        /// </summary>
+        /// <returns>Una instancia de <see cref="IActionResult"/> que redirige a la página de perfil.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User) as Usuario;
@@ -93,6 +123,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             {
                 return RedirectToPage("/Account/Register");
             }
+
 
             // Validaciones
             IdentityPerfil.NombreUsuarioOriginal = user.UserName;
@@ -119,7 +150,6 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             }
             if (!ModelState.IsValid)
             {
-                string d = "df";
                 await LoadAsync(user);
                 return Page();
             }
@@ -164,15 +194,42 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+
+            // Actualización de imágenes
             if (InputAvatar != null)
             {
-                var imagenes = await _optimizacionImagenes.GenerarVariacionesWebPCuadradoAsync(InputAvatar.OpenReadStream(), 75, new[] { 50, 200 });
+                var imagenes = await _optimizacionImagenes.OptimizarMultiplesImagenesAWebPAsync(InputAvatar.OpenReadStream(), 75, $"avatar-{user.Id}", ArchivosUtility.ResolucionesAvatar);
 
+                var resultado = await _subirArchivos.SubirImagenesAsync(imagenes, ArchivosUtility.CarpetaAvatares);
 
-                string d = "sdf";
+                user.Avatar = $"avatares/avatar-{user.Id}";
+
+                var resultadoAvatar = await _userManager.UpdateAsync(user);
+                if (!resultadoAvatar.Succeeded)
+                {
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar actualizar el avatar.";
+                    return RedirectToPage();
+                }
             }
+            if (InputBanner != null)
+            {
+                var imagen = await _optimizacionImagenes.OptimizarImagenAWebPAsync(InputBanner.OpenReadStream(), 75, $"banner-{user.Id}", ArchivosUtility.ResolucionAnchoBanner, ArchivosUtility.ResolucionAltoBanner);
 
+                var resultado = await _subirArchivos.SubirImagenAsync(imagen.imagen, imagen.nombre, ArchivosUtility.CarpetaBanners);
 
+                user.Banner = resultado.PublicId;
+
+                var resultadoBanner = await _userManager.UpdateAsync(user);
+                if (!resultadoBanner.Succeeded)
+                {
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar actualizar el banner.";
+                    return RedirectToPage();
+                }
+            }
 
 
             await _signInManager.RefreshSignInAsync(user);
@@ -182,6 +239,12 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             return RedirectToPage();
         }
 
+        /// <summary>
+        /// Valida si el archivo de imagen tiene una extensión soportada por el sistema.
+        /// Las extensiones válidas incluyen JPG, JPEG, PNG y WEBP.
+        /// </summary>
+        /// <param name="imagen">El archivo de imagen a validar.</param>
+        /// <returns>Devuelve <c>true</c> si la imagen tiene una extensión soportada, de lo contrario <c>false</c>.</returns>
         private bool ValidarInputImagen(IFormFile imagen)
         {
             var extenciones = new[] { ".jpg", ".jpeg", ".png", ".webp" };

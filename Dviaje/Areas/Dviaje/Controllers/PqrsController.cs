@@ -109,7 +109,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
                     }
                     else
                     {
-                        var imagenOptimizada = await _optimizarImagen.ConvertirAWebPAsync(archivo.OpenReadStream(), 75);
+                        var imagenOptimizada = await _optimizarImagen.OptimizarImagenAWebPAsync(archivo.OpenReadStream(), 75);
 
                         var publicId = await _subirArchivos.SubirImagenPrivadaAsync(imagenOptimizada, archivo.FileName, ArchivosUtility.CarpetaPQRS((int)resultado));
 
