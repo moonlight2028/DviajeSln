@@ -146,19 +146,33 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
-                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                       p.Titulo AS TituloPublicacion, pi.Ruta AS ImagenPublicacion, 
-                       u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, 
-                       u.NumeroPublicaciones AS NumeroPublicacionesAliado
-                FROM Resenas rs
-                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-                LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-                WHERE r.IdUsuario = @IdUsuario
-                ORDER BY rs.Fecha DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
+                    SELECT 
+                    p.IdPublicacion, 
+                    rs.Opinion, 
+                    rs.Fecha, 
+                    rs.Calificacion AS Puntuacion, 
+                    (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                    p.Titulo AS TituloPublicacion, 
+                    pi.Ruta AS ImagenPublicacion, 
+                    u.Id AS IdAliado, 
+                    u.UserName AS NombreAliado, 
+                    u.Avatar AS AvatarAliado, 
+                    u.NumeroPublicaciones AS NumeroPublicacionesAliado
+                FROM 
+                    Resenas rs
+                INNER JOIN 
+                    Reservas r ON rs.IdReserva = r.IdReserva
+                INNER JOIN 
+                    Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN 
+                    aspnetusers u ON p.IdAliado = u.Id
+                LEFT JOIN 
+                    PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                WHERE 
+                    r.IdUsuario = '@IdUsuario'
+                ORDER BY 
+                    rs.Fecha DESC
+                LIMIT ELEMENTOS_POR_PAGINA OFFSET OFFSET";
 
             var offset = (pagina - 1) * resultadosMostrados;
             var result = await _db.QueryAsync<ResenaTarjetaDetalleVM>(sql, new
@@ -256,7 +270,7 @@ namespace Dviaje.DataAccess.Repository
         {
             var sql = @"
                 SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
-                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                       (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
                        p.IdPublicacion, p.Titulo AS TituloPublicacion, 
                        (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
                        u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista,
@@ -293,9 +307,9 @@ namespace Dviaje.DataAccess.Repository
         {
             // Verificar si el usuario ya ha dado "Me Gusta"
             var sqlCheck = @"
-        SELECT COUNT(*)
-        FROM ResenasMeGusta
-        WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
+                        SELECT COUNT(*)
+                        FROM ResenaMeGusta
+                        WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
 
             var yaDioMeGusta = await _db.ExecuteScalarAsync<int>(sqlCheck, new { IdResena = idResena, IdUsuario = idUsuario });
 
@@ -307,8 +321,8 @@ namespace Dviaje.DataAccess.Repository
 
             // Insertar un nuevo "Me Gusta"
             var sqlInsert = @"
-        INSERT INTO ResenasMeGusta (IdResena, IdUsuario)
-        VALUES (@IdResena, @IdUsuario)";
+                        INSERT INTO ResenaMeGusta (IdResena, IdUsuario)
+                        VALUES (@IdResena, @IdUsuario)";
 
             var result = await _db.ExecuteAsync(sqlInsert, new { IdResena = idResena, IdUsuario = idUsuario });
             return result > 0;
@@ -319,7 +333,7 @@ namespace Dviaje.DataAccess.Repository
         public async Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario)
         {
             var sql = @"
-                DELETE FROM ResenasMeGusta
+                DELETE FROM ResenaMeGusta
                 WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
 
             var result = await _db.ExecuteAsync(sql, new { IdResena = idResena, IdUsuario = idUsuario });
@@ -330,7 +344,7 @@ namespace Dviaje.DataAccess.Repository
         //Traer me gusta (cantidad numerada)
         public async Task<int> ObtenerMeGustaCountAsync(int idResena)
         {
-            var sql = "SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = @IdResena";
+            var sql = "SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = @IdResena";
 
             var count = await _db.ExecuteScalarAsync<int>(sql, new { IdResena = idResena });
             return count;
