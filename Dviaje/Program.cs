@@ -76,6 +76,7 @@ builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearAutenticadoVMValida
 builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityPerfilVM>, IdentityPerfilVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityManageEmailVM>, IdentityManageEmailVMValidator>();
+builder.Services.AddScoped<IValidator<IdentityManagePasswordVM>, IdentityManagePasswordVMValidator>();
 
 
 var app = builder.Build();
