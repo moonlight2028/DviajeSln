@@ -126,6 +126,8 @@ namespace Dviaje.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.Avatar = "avatares/avatar";
+                user.Banner = "banners/banner";
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

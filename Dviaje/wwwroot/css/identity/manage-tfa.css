@@ -4,6 +4,11 @@
     margin-bottom: 20px;
 }
 
+h2 {
+    font-size: 1.2rem;
+    color: var(--color-gris-700);
+}
+
 .contenedor-manage-contenido {
     display: flex;
     align-items: center;
@@ -19,31 +24,16 @@
     border-radius: 10px;
 }
 
-form {
+.autenticacion-enable-reseet {
     display: flex;
     flex-direction: column;
-    gap: 30px;
 }
 
-.contenedor-form-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#email-verification {
-    font-weight: 400;
-    font-size: .8rem;
-    cursor: pointer;
-    padding-left: 15px;
-    text-align: start;
-}
-
-    #email-verification:hover {
-        font-weight: 500;
-        text-decoration: underline;
+    .autenticacion-enable-reseet a {
+        font-size: .8rem;
+        width: fit-content;
     }
 
-.hr-m {
-    background-color: var(--color-gris-200);
-}
+        .autenticacion-enable-reseet a:hover {
+            text-decoration: underline;
+        }

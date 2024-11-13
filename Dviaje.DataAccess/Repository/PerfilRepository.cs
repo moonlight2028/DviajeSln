@@ -6,6 +6,10 @@ using System.Data;
 
 namespace Dviaje.DataAccess.Repository
 {
+    /// <summary>
+    /// Repositorio especializado en las operaciones relacionadas con el perfil de usuario y su información asociada.
+    /// Proporciona métodos para gestionar y acceder a los datos del perfil de usuario en la base de datos.
+    /// </summary>
     public class PerfilRepository : IPerfilRepository
     {
         private readonly IDbConnection _db;
@@ -66,5 +70,56 @@ namespace Dviaje.DataAccess.Repository
 
             return (datosTest);
         }
+
+        /// <summary>
+        /// Verifica si la razón social proporcionada ya existe en el sistema, indicando si está en uso.
+        /// Retorna true si existe, de lo contrario false.
+        /// </summary>
+        /// <param name="razonSocial">La razón social a validar.</param>
+        /// <returns>Booleano indicando si la razón social ya está en uso.</returns>
+        public async Task<bool> ExisteRazonSocialAsync(string razonSocial)
+        {
+            var consulta = "SELECT COUNT(*) FROM AspNetUsers WHERE RazonSocial = @RazonSocial;";
+
+            var count = await _db.ExecuteScalarAsync<int>(consulta, new { RazonSocial = razonSocial });
+            return count > 0;
+        }
+
+        /// <summary>
+        /// Verifica si la dirección proporcionada ya existe en el sistema, indicando si está en uso.
+        /// Retorna true si existe, de lo contrario false.
+        /// </summary>
+        /// <param name="direccion">La dirección a validar.</param>
+        /// <returns>Booleano indicando si la dirección ya está en uso.</returns>
+        public async Task<bool> ExisteDireccionAsync(string direccion)
+        {
+            var consulta = "SELECT COUNT(*) FROM AspNetUsers WHERE Direccion = @Direccion;";
+
+            var count = await _db.ExecuteScalarAsync<int>(consulta, new { Direccion = direccion });
+            return count > 0;
+        }
+
+        /// <summary>
+        /// Comprueba si el usuario aliado está en estado pendiente en la obtención del verificado de su cuenta.
+        /// Recibe el ID del aliado para realizar la validación.
+        /// </summary>
+        /// <param name="idAliado">El ID del aliado a verificar.</param>
+        /// <returns>Booleano indicando si el aliado tiene una solicitud pendiente de cuenta verificada.</returns>
+        public async Task<bool> VerificadoTieneEstadoPendienteAsync(string idAliado)
+        {
+            var consulta = @"
+                SELECT COUNT(*) > 0
+                FROM Verificados
+                WHERE IdAliado = @IdAliado
+                AND VerificadoEstado = @Estado;
+            ";
+
+            var parametros = new { IdAliado = idAliado, Estado = VerificadoEstado.Pendiente.ToString() };
+
+            var resultado = await _db.ExecuteScalarAsync<bool>(consulta, parametros);
+            return resultado;
+        }
+
+
     }
 }

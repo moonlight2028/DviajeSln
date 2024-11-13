@@ -16,7 +16,6 @@ using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Conexión a la base de datos para Identity
@@ -77,6 +76,7 @@ builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityPerfilVM>, IdentityPerfilVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityManageEmailVM>, IdentityManageEmailVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityManagePasswordVM>, IdentityManagePasswordVMValidator>();
+builder.Services.AddScoped<IValidator<IdentityManageAliadoVM>, IdentityManageAliadoVMValidator>();
 
 
 var app = builder.Build();
