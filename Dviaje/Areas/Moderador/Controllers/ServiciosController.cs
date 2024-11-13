@@ -12,47 +12,67 @@ namespace Dviaje.Areas.Moderador.Controllers
     {
         private readonly IServiciosRepository _serviciosRepository;
 
-
         public ServiciosController(IServiciosRepository serviciosRepository)
         {
             _serviciosRepository = serviciosRepository;
         }
 
-
+        // Acción para crear un servicio
         [HttpPost]
         [Route("servicios")]
         public async Task<IActionResult> CrearServicio(Servicio servicio)
         {
             bool resultado = await _serviciosRepository.CrearServicioAsync(servicio);
 
-            return Ok();
+            if (resultado)
+                return Ok(new { success = true, message = "Servicio creado exitosamente." });
+
+            return BadRequest(new { success = false, message = "No se pudo crear el servicio." });
         }
 
+        // Acción para obtener un servicio por ID
         [HttpGet]
         [Route("servicios/{id?}")]
         public async Task<IActionResult> ObtenerServicio(int? id)
         {
-            Servicio? servicio = await _serviciosRepository.ObtenerServicioPorIdAsync((int)id);
+            if (!id.HasValue)
+                return BadRequest(new { success = false, message = "ID de servicio no proporcionado." });
 
-            return Ok(servicio);
+            Servicio? servicio = await _serviciosRepository.ObtenerServicioPorIdAsync(id.Value);
+
+            if (servicio == null)
+                return NotFound(new { success = false, message = "Servicio no encontrado." });
+
+            return Ok(new { success = true, data = servicio });
         }
 
+        // Acción para actualizar un servicio
         [HttpPut]
         [Route("servicios")]
         public async Task<IActionResult> ActualizarServicio(Servicio servicio)
         {
             bool resultado = await _serviciosRepository.ActualizarServicioAsync(servicio);
 
-            return Ok();
+            if (resultado)
+                return Ok(new { success = true, message = "Servicio actualizado exitosamente." });
+
+            return BadRequest(new { success = false, message = "No se pudo actualizar el servicio." });
         }
 
+        // Acción para eliminar un servicio por ID
         [HttpDelete]
         [Route("servicios/{id?}")]
         public async Task<IActionResult> EliminarServicio(int? id)
         {
-            bool resultado = await _serviciosRepository.EliminarServicioAsync((int)id);
+            if (!id.HasValue)
+                return BadRequest(new { success = false, message = "ID de servicio no proporcionado." });
 
-            return Ok();
+            bool resultado = await _serviciosRepository.EliminarServicioAsync(id.Value);
+
+            if (resultado)
+                return Ok(new { success = true, message = "Servicio eliminado exitosamente." });
+
+            return BadRequest(new { success = false, message = "No se pudo eliminar el servicio." });
         }
     }
 }
