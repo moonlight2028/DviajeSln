@@ -4,31 +4,34 @@ export const likeResena = () => {
     likeButtons.forEach((element) => {
         let likeIcon = element.querySelector("i");
         let resenaId = element.dataset.resenaId;
-        let userHasLiked = element.dataset.userHasLiked === 'true'; // Verifica si el usuario ya ha dado "Me Gusta"
+        let userHasLiked = element.dataset.userHasLiked === 'true'; // Inicializa el estado de "Me Gusta"
 
         element.addEventListener("click", () => {
-            const url = `/Turista/Resena/MeGusta/${resenaId}`;
-            const method = userHasLiked ? 'DELETE' : 'POST'; // Cambia entre agregar o eliminar "Me Gusta"
+            const url = "/Dviaje/Resenas/me-gusta";
 
             fetch(url, {
-                method: method,
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('input[name="__RequestVerificationToken"]').value
-                }
+                },
+                body: JSON.stringify({ idResena: resenaId })
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Actualizar el contador de "Me Gusta" en el DOM
-                    const meGustaCount = document.querySelector(`#me-gusta-count-${resenaId}`);
-                    meGustaCount.textContent = data.meGusta;
+                    // Actualiza el contador de "Me Gusta" en el DOM
+                    const meGustaCount = document.querySelector(`#likeCount-${resenaId}`);
+                    meGustaCount.textContent = data.likes;
 
-                    if (method === 'POST') {
+                    // Cambia el icono y el estado del botón según el nuevo valor
+                    if (data.yaLeDioLike) {
                         likeIcon.classList.replace("fa-regular", "fa-solid");
-                        userHasLiked = true; // Cambia el estado a "liked"
+                        element.classList.add("liked");
+                        userHasLiked = true;
                     } else {
                         likeIcon.classList.replace("fa-solid", "fa-regular");
-                        userHasLiked = false; // Cambia el estado a "unliked"
+                        element.classList.remove("liked");
+                        userHasLiked = false;
                     }
                 })
                 .catch(error => console.error('Error:', error));

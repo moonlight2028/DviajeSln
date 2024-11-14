@@ -13,5 +13,6 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario);
         Task<int> ObtenerMeGustaCountAsync(int idResena);
         Task<bool> ValidarReservaParaResenaAsync(int idReserva, string idUsuario);
+        Task<bool> VerificarSiUsuarioLeDioLike(int idResena, string idUsuario);
     }
 }
