@@ -13,7 +13,7 @@
     height: 100%;
     padding: 80px 0 20px 20px;
     color: var(--color-gris-100);
-    z-index:100;
+    z-index: 100;
 }
 
 .menu-lateral-contenido {
@@ -23,14 +23,14 @@
     width: 250px;
     height: 100%;
     padding: 5px;
-    background-color: var(--color-dark-900);
+    background-color: var(--color-gris-100);
     overflow: hidden;
     transition: width 0.3s ease;
     border-radius: 10px;
 }
 
     .menu-lateral-contenido li .active {
-        background-color: var(--color-dark-700);
+        background-color: var(--color-gris-200);
     }
 
     .menu-lateral-contenido li a {
@@ -44,11 +44,11 @@
 
         .menu-lateral-contenido li a i {
             font-size: 1.2rem;
-            color: var(--color-gris-200);
+            color: var(--color-gris-700);
         }
 
         .menu-lateral-contenido li a:hover {
-            background-color: var(--color-dark-800);
+            background-color: var(--color-gris-300);
         }
 
         .menu-lateral-contenido li a span {
@@ -59,7 +59,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: var(--color-gris-50);
+            color: var(--color-gris-700);
         }
 
 .lateral-contenido-label {
@@ -70,10 +70,11 @@
     padding: 15px;
     border-radius: 10px;
     cursor: pointer;
+    color: var(--color-gris-700);
 }
 
     .lateral-contenido-label:hover {
-        background-color: var(--color-dark-800);
+        background-color: var(--color-gris-300);
     }
 
     .lateral-contenido-label i {
@@ -95,7 +96,7 @@
     }
 
 .hr {
-    background-color: var(--color-dark-700);
+    background-color: var(--color-gris-300);
 }
 
 
@@ -122,7 +123,7 @@
     }
 
     #nav-menu-lateral:checked ~ .menu-lateral-contenido li a i {
-        color: var(--color-gris-100);
+        color: var(--color-gris-700);
     }
 
 /* Fin SideMenu */
@@ -135,7 +136,7 @@
 }
 
 .contenedor-manage-contenido {
-    position:relative;
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: 10px;

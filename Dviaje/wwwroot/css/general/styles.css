@@ -48,6 +48,7 @@
     --color-gris-50: #f9fafb;
     --color-gris-100: #f3f4f6;
     --color-gris-200: #e5e7eb;
+    --color-gris-300: #d1d5db;
     --color-gris-500: #6b7280;
     --color-gris-700: #374151;
 }
@@ -298,7 +299,7 @@ svg {
 }
 
     .input-select:focus {
-        outline-color:var(--color-primario-500);
+        outline-color: var(--color-primario-500);
     }
 
 .select-icono {
@@ -316,15 +317,15 @@ svg {
     color: var(--color-terciario-500);
 }
 
-.validation-message-all ul li:before {
-    display: inline-block;
-    content: "";
-    width: 5px;
-    height: 5px;
-    border-radius: 100%;
-    background-color: var(--color-terciario-500);
-    margin: 0 10px 2px 0;
-}
+    .validation-message-all ul li:before {
+        display: inline-block;
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 100%;
+        background-color: var(--color-terciario-500);
+        margin: 0 10px 2px 0;
+    }
 
 /* Input type file */
 .upload-container {
@@ -386,28 +387,28 @@ ul#fileList {
     }
 
         ul#fileList li div {
-            display:flex;
-            flex-direction:column;
+            display: flex;
+            flex-direction: column;
         }
 
-        ul#fileList li div span {
-            font-size: .8rem;
-            font-weight:500;
-            color: var(--color-gris-50);
-        }
+            ul#fileList li div span {
+                font-size: .8rem;
+                font-weight: 500;
+                color: var(--color-gris-50);
+            }
 
-        ul#fileList li div .file-size {
-            font-weight: 300;
-            color: var(--color-gris-200);
-            font-size: 0.7rem;
-        }
+            ul#fileList li div .file-size {
+                font-weight: 300;
+                color: var(--color-gris-200);
+                font-size: 0.7rem;
+            }
 
         ul#fileList li button {
             background-color: var(--color-dark-800);
             color: white;
             border: none;
             height: 30px;
-            width:30px;
+            width: 30px;
             border-radius: 100%;
             cursor: pointer;
             transition: background-color 0.3s ease;

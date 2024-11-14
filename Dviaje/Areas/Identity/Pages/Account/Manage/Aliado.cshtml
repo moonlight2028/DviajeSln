@@ -6,6 +6,7 @@
     ViewData["ActivePage"] = ManageNavPages.Aliado;
 }
 
+
 @section Styles {
     <!-- Toast v1.4 -->
     <link href="~/lib/iziToast/iziToast.min.css" rel="stylesheet" />
@@ -31,7 +32,10 @@
             }
             @if (Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificadoSolicitado)
             {
-                <h1>Verificado solicitado, estamos validando tu información.</h1>
+                <div class="h1-verificado-solicitado">
+                    <h1>Verificado Solicitado.</h1>
+                    <span>Estamos validando tu información.</span>
+                </div>
             }
             @if (Model.AliadoEstado == IdentityAliadoEstado.NoEsAliado)
             {
@@ -39,6 +43,10 @@
             }
 
             <form method="post">
+                @if (Model.AliadoEstado == IdentityAliadoEstado.Aliado)
+                {
+                    @Html.AntiForgeryToken();
+                }
                 <div class="contenedor-form-inputs">
                     <div>
                         <label asp-for="ManageAliado.RazonSocial" class="input-label">
@@ -99,15 +107,15 @@
         @if (Model.AliadoEstado != IdentityAliadoEstado.NoEsAliado)
         {
             <section class="manage-informacion-adicional">
-                <a asp-area="Turista" asp-controller="Reservas" asp-action="MisReservas" class="informacion-adicional-datos">
+                <a asp-area="Aliado" asp-controller="Publicaciones" asp-action="MisPublicaciones" class="informacion-adicional-datos">
                     <span>@Model.NumeroPublicaciones.ToString()</span>
                     <span>Publicaciones</span>
                 </a>
                 <div class="hr-v"></div>
-                <a asp-area="Turista" asp-controller="Resenas" asp-action="MisReseñas" class="informacion-adicional-datos">
+                <div class="informacion-adicional-datos">
                     <span>@Model.Puntuacion.ToString()</span>
                     <span>Puntuación</span>
-                </a>
+                </div>
             </section>
         }
     </div>    
@@ -122,5 +130,10 @@
         <partial name="_IziToastPartial" />
     }
 
-    <script type="module" src="~/js/identity/manage-aliado.js"></script>
+    @if (Model.AliadoEstado == IdentityAliadoEstado.Aliado)
+    {
+        <!-- SweetAlert2 v11 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="module" src="~/js/identity/manageAliado.js"></script>   
+    }
 }

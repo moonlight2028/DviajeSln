@@ -8,5 +8,6 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<bool> ExisteRazonSocialAsync(string razonSocial);
         Task<bool> ExisteDireccionAsync(string direccion);
         Task<bool> VerificadoTieneEstadoPendienteAsync(string idAliado);
+        Task<bool> SolicitarVerificado(string idAliado);
     }
 }

@@ -136,7 +136,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
 
 
             await CargarAliadoEstadoAsync(user);
-            if (ManageAliado.RazonSocial != user.RazonSocial || ManageAliado.Direccion != user.Direccion || !string.IsNullOrEmpty(ManageAliado.SitioWeb))
+            if (ManageAliado.RazonSocial != user.RazonSocial || ManageAliado.Direccion != user.Direccion || ManageAliado.SitioWeb != user.SitioWeb)
             {
                 if (AliadoEstado == IdentityAliadoEstado.NoEsAliado || AliadoEstado == IdentityAliadoEstado.Aliado)
                 {

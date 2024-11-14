@@ -120,6 +120,29 @@ namespace Dviaje.DataAccess.Repository
             return resultado;
         }
 
+        /// <summary>
+        /// Registra una solicitud de verificación en la tabla de verificados para el aliado especificado.
+        /// Almacena la fecha de solicitud, el estado de verificación como pendiente, y el ID del aliado.
+        /// </summary>
+        /// <param name="idAliado">ID único del aliado que solicita la verificación.</param>
+        /// <returns>Verdadero si la solicitud fue registrada correctamente; falso en caso contrario.</returns>
+        public async Task<bool> SolicitarVerificado(string idAliado)
+        {
+            var consulta = @"
+                INSERT INTO verificados (FechaSolicitud, VerificadoEstado, IdAliado) 
+                VALUES (@FechaSolicitud, @VerificadoEstado, @IdAliado);
+            ";
 
+            var parametros = new
+            {
+                FechaSolicitud = DateTime.UtcNow,
+                VerificadoEstado = VerificadoEstado.Pendiente.ToString(),
+                IdAliado = idAliado
+            };
+
+            var filasAfectadas = await _db.ExecuteAsync(consulta, parametros);
+
+            return filasAfectadas > 0;
+        }
     }
 }
