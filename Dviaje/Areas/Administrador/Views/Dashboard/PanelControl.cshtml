@@ -1,0 +1,49 @@
+﻿@model Dviaje.Models.VM.DashboardVM
+
+<div class="container mt-5">
+    <h1>Dashboard del Administrador</h1>
+
+    <div class="row mt-4">
+        <!-- Métricas -->
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>Total Usuarios</h5>
+                    <h3>@Model.TotalUsuarios</h3>
+                </div>
+            </div>
+        </div>
+        <!-- Más tarjetas de métricas... -->
+        <!-- Gráfica de Reservas Mensuales -->
+        <div class="col-md-12 mt-4">
+            <canvas id="reservasMensualesChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('/Administrador/Dashboard/ObtenerDatosReservasMensuales')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const ctx = document.getElementById('reservasMensualesChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.data.map(r => r.mes),
+                        datasets: [{
+                            label: 'Reservas por Mes',
+                            data: data.data.map(r => r.totalReservas),
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+        });
+</script>
