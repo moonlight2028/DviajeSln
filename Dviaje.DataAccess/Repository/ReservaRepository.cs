@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using System.Data;
 
@@ -102,9 +103,19 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-        public async Task<int> ObtenerTotalReservas(string idUsuario, string? estado)
+        public async Task<int> ObtenerTotalReservas(string idUsuario, ReservaEstado? estado = null)
         {
-            return 10;
+            var consulta = @"SELECT COUNT(*) FROM reservas WHERE IdUsuario = @IdUsuario AND ReservaEstado = @Estado";
+
+            var parametros = new
+            {
+                IdUsuario = idUsuario,
+                Estado = estado == null ? ReservaEstado.Activo.ToString() : estado.ToString()
+            };
+
+            var resultado = await _db.QuerySingleAsync<int>(consulta, parametros);
+
+            return resultado;
         }
 
 

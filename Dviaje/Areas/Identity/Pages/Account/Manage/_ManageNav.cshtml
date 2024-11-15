@@ -19,6 +19,11 @@
             </a>
         </li>
         <li>
+            <a class="@ManageNavPages.AliadoNavClass(ViewContext)" id="aliado" asp-page="./Aliado">
+                <i class="fa-solid fa-suitcase"></i><span>Aliado</span>
+            </a>
+        </li>
+        <li>
             <a class="@ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">
                 <i class="fa-solid fa-envelope"></i><span>Correo</span>
             </a>
@@ -41,15 +46,5 @@
                 <i class="fa-solid fa-mobile-screen-button"></i><span>Autenticación</span>
             </a>
         </li>
-        <li>
-            <a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">
-                <i class="fa-solid fa-file-shield"></i><span>Datos personales</span>
-            </a>
-        </li>
     </ul>
 </nav>
-
-
-@section Scripts{
-
-}

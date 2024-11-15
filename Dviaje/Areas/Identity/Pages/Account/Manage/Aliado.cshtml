@@ -1,0 +1,139 @@
+﻿@page
+@model AliadoModel
+@using Dviaje.Models.VM
+@{
+    ViewData["Title"] = "Aliado";
+    ViewData["ActivePage"] = ManageNavPages.Aliado;
+}
+
+
+@section Styles {
+    <!-- Toast v1.4 -->
+    <link href="~/lib/iziToast/iziToast.min.css" rel="stylesheet" />
+
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/identity/manage-aliado.css" />
+}
+
+
+<section class="contenedor-manage">
+    <div class="contenedor-manage-contenido b-s-95">
+        <div class="contenedor-datos b-s-93">
+            @if (Model.AliadoEstado == IdentityAliadoEstado.Aliado)
+            {
+                <h1>Conviértete en un Aliado Verificado</h1>
+            }
+            @if (Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificado)
+            {
+                <div class="verificado">
+                    <h1>Actualizar datos de Aliado</h1>
+                    <i class="fa-solid fa-suitcase-rolling"></i>
+                </div>
+            }
+            @if (Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificadoSolicitado)
+            {
+                <div class="h1-verificado-solicitado">
+                    <h1>Verificado Solicitado.</h1>
+                    <span>Estamos validando tu información.</span>
+                </div>
+            }
+            @if (Model.AliadoEstado == IdentityAliadoEstado.NoEsAliado)
+            {
+                <h1>Conviértete en Aliado</h1>
+            }
+
+            <form method="post">
+                @if (Model.AliadoEstado == IdentityAliadoEstado.Aliado)
+                {
+                    @Html.AntiForgeryToken();
+                }
+                <div class="contenedor-form-inputs">
+                    <div>
+                        <label asp-for="ManageAliado.RazonSocial" class="input-label">
+                            @if (Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificado || Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificadoSolicitado)
+                            {
+                                <input asp-for="ManageAliado.RazonSocial" class="input-field" aria-required="true" disabled/>
+                            } else { 
+                                <input asp-for="ManageAliado.RazonSocial" class="input-field" aria-required="true" />
+                            }
+                            <span class="input-placeholder">Razón Social</span>
+                        </label>
+                        <span asp-validation-for="ManageAliado.RazonSocial" class="validation-message"></span>
+                    </div>
+                    <div>
+                        <label asp-for="ManageAliado.SitioWeb" class="input-label">
+                            <input asp-for="ManageAliado.SitioWeb" class="input-field" aria-required="true" />
+                            <span class="input-placeholder">Sitio Web</span>
+                        </label>
+                        <span asp-validation-for="ManageAliado.SitioWeb" class="validation-message"></span>
+                    </div>
+                    <div>
+                        <label asp-for="ManageAliado.Direccion" class="input-label">
+                            @if (Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificado || Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificadoSolicitado)
+                            {
+                                <input asp-for="ManageAliado.Direccion" class="input-field" aria-required="true" disabled/>
+                            }
+                            else
+                            {
+                                <input asp-for="ManageAliado.Direccion" class="input-field" aria-required="true" />
+                            }
+                            <span class="input-placeholder">Dirección</span>
+                        </label>
+                        <span asp-validation-for="ManageAliado.Direccion" class="validation-message"></span>
+                    </div>
+
+                    <div asp-validation-summary="ModelOnly" class="validation-message-all"></div>
+                </div>
+
+                <div class="hr hr-m"></div>
+
+                @if (Model.AliadoEstado == IdentityAliadoEstado.Aliado)
+                {
+                    <div class="botones-aliado">
+                        <button type="submit" class="button-23">Actualizar Datos</button>
+                        <button class="button-87-main" id="btn-solicitar-verificado">Solicitar Verificado</button>
+                    </div>
+                }
+                @if (Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificado || Model.AliadoEstado == IdentityAliadoEstado.AliadoVerificadoSolicitado)
+                {
+                    <button type="submit" class="button-87-main">Actualizar Datos</button>
+                }
+                @if (Model.AliadoEstado == IdentityAliadoEstado.NoEsAliado)
+                {
+                    <button type="submit" class="button-87-main">Conviértete en Aliado</button>
+                }
+            </form>
+        </div>    
+        @if (Model.AliadoEstado != IdentityAliadoEstado.NoEsAliado)
+        {
+            <section class="manage-informacion-adicional">
+                <a asp-area="Aliado" asp-controller="Publicaciones" asp-action="MisPublicaciones" class="informacion-adicional-datos">
+                    <span>@Model.NumeroPublicaciones.ToString()</span>
+                    <span>Publicaciones</span>
+                </a>
+                <div class="hr-v"></div>
+                <div class="informacion-adicional-datos">
+                    <span>@Model.Puntuacion.ToString()</span>
+                    <span>Puntuación</span>
+                </div>
+            </section>
+        }
+    </div>    
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    @if (Model.Notificacion != null && Model.NotificacionTitulo != null && Model.NotificacionMensaje != null)
+    {
+        <partial name="_IziToastPartial" />
+    }
+
+    @if (Model.AliadoEstado == IdentityAliadoEstado.Aliado)
+    {
+        <!-- SweetAlert2 v11 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="module" src="~/js/identity/manageAliado.js"></script>   
+    }
+}

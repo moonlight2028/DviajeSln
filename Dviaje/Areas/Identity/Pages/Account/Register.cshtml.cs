@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -26,6 +27,8 @@ namespace Dviaje.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private IPerfilRepository _perfilRepository;
+
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -33,7 +36,8 @@ namespace Dviaje.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IPerfilRepository perfilRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -42,6 +46,7 @@ namespace Dviaje.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _perfilRepository = perfilRepository;
         }
 
         /// <summary>
@@ -145,6 +150,9 @@ namespace Dviaje.Areas.Identity.Pages.Account
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    await _perfilRepository.SetBanner(ArchivosUtility.UrlDefaultBanner, userId);
+                    await _perfilRepository.SetAvatar(ArchivosUtility.UrlDefaultAvatarCincuentaPx, ArchivosUtility.UrlDefaultAvatarDoscientosPx, userId);
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

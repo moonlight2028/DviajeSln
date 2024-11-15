@@ -76,7 +76,6 @@
     fileInput.addEventListener('change', (e) => {
         const selectedFiles = Array.from(e.target.files); // Convierte el FileList a un Array
         addFiles(selectedFiles); // Agrega los archivos seleccionados
-        // No restablecer el valor del input aquí
     });
 
     // Click para abrir el diálogo de archivos

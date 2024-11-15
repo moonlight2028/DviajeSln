@@ -11,6 +11,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/identity/layout.css">
+    @RenderSection("Styles", required: false)
 }
 
 @* <h1>Manage your account</h1> *@
@@ -28,7 +29,7 @@
 </div>
 
 @section Scripts {
-    @RenderSection("Scripts", required: false)
-
     <script src="~/js/identity/layout.js"></script>
+
+    @RenderSection("Scripts", required: false)
 }

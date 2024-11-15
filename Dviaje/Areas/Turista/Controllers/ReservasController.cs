@@ -55,7 +55,7 @@ namespace Dviaje.Areas.Turista.Controllers
             // Lógica para la paginación (descomentar si es necesaria)
             ViewBag.PaginacionPaginas = (reservas?.Count ?? 0) / 10;
             ViewBag.PaginacionItems = 10;
-            ViewBag.PaginacionResultados = await _reservaRepository.ObtenerTotalReservas(userId, estado);
+            ViewBag.PaginacionResultados = await _reservaRepository.ObtenerTotalReservas(userId);
 
             return View(reservas);
         }

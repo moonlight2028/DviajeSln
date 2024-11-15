@@ -1,0 +1,39 @@
+﻿h1 {
+    color: var(--color-gris-700);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: var(--color-gris-700);
+}
+
+.contenedor-manage-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-manage-contenido, .contenedor-datos {
+    padding: 20px;
+}
+
+.contenedor-datos {
+    background-color: var(--color-default);
+    border-radius: 10px;
+}
+
+.autenticacion-enable-reseet {
+    display: flex;
+    flex-direction: column;
+}
+
+    .autenticacion-enable-reseet a {
+        font-size: .8rem;
+        width: fit-content;
+    }
+
+        .autenticacion-enable-reseet a:hover {
+            text-decoration: underline;
+        }

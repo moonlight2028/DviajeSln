@@ -282,7 +282,7 @@ namespace Dviaje.DataAccess.Repository
         //Traer me gusta (cantidad numerada)
         public async Task<int> ObtenerMeGustaCountAsync(int idResena)
         {
-            var sql = "SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = @IdResena";
+            var sql = @"SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = @IdResena";
 
             var count = await _db.ExecuteScalarAsync<int>(sql, new { IdResena = idResena });
             return count;
@@ -301,6 +301,17 @@ namespace Dviaje.DataAccess.Repository
                 AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)";
 
             return await _db.ExecuteScalarAsync<bool>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
+        }
+
+
+        public async Task<int> ObtenerTotalResenas(string idUsuairo)
+        {
+            var consulta = @"SELECT COUNT(*)
+                FROM resenas r
+                JOIN reservas res ON r.IdReserva = res.IdReserva
+                WHERE res.IdUsuario = @IdUsuario;";
+
+            return await _db.QuerySingleAsync<int>(consulta, new { IdUsuario = idUsuairo });
         }
     }
 }

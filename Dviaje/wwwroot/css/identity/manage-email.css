@@ -1,0 +1,49 @@
+﻿h1 {
+    color: var(--color-gris-700);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contenedor-manage-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-manage-contenido, .contenedor-datos {
+    padding: 20px;
+}
+
+.contenedor-datos {
+    background-color: var(--color-default);
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.contenedor-form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#email-verification {
+    font-weight: 400;
+    font-size: .8rem;
+    cursor: pointer;
+    padding-left: 15px;
+    text-align: start;
+}
+
+    #email-verification:hover {
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+.hr-m {
+    background-color: var(--color-gris-200);
+}

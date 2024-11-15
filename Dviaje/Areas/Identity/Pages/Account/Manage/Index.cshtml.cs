@@ -1,118 +1,255 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
+using Dviaje.Models.VM;
+using Dviaje.Services.IServices;
+using Dviaje.Utility;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dviaje.Areas.Identity.Pages.Account.Manage
 {
+    /// <summary>
+    /// Representa la página de inicio del módulo de gestión de usuarios. 
+    /// Esta página sirve como punto de entrada al panel de administración de usuarios y muestra 
+    /// los datos básicos del usuario actualmente autenticado, permitiendo gestionar su información y configuración.
+    /// </summary>
     public class IndexModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IReservaRepository _reservaRepository;
+        private readonly IResenasRepository _resenasRepository;
+        private IPerfilRepository _perfilRepository;
+        private IValidator<IdentityPerfilVM> _identityPerfilVMValidator;
+        private IOptimizacionImagenesService _optimizacionImagenes;
+        private ISubirArchivosService _subirArchivos;
+
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IReservaRepository reservaRepository,
+            IResenasRepository resenasRepository,
+            IPerfilRepository perfilRepository,
+            IValidator<IdentityPerfilVM> identityPerfilVMValidator,
+            IOptimizacionImagenesService optimizacionImagenes,
+            ISubirArchivosService subirArchivos)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _reservaRepository = reservaRepository;
+            _resenasRepository = resenasRepository;
+            _perfilRepository = perfilRepository;
+            _identityPerfilVMValidator = identityPerfilVMValidator;
+            _optimizacionImagenes = optimizacionImagenes;
+            _subirArchivos = subirArchivos;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public string Username { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [TempData]
-        public string StatusMessage { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public IdentityPerfilVM IdentityPerfil { get; set; }
+
+        [BindProperty]
+        [ValidateNever]
+        public IFormFile InputAvatar { get; set; }
+
+        [BindProperty]
+        [ValidateNever]
+        public IFormFile InputBanner { get; set; }
+
+        [TempData]
+        public string Notificacion { get; set; }
+
+        [TempData]
+        public string NotificacionTitulo { get; set; }
+
+        [TempData]
+        public string NotificacionMensaje { get; set; }
+
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// Carga de forma asíncrona la información del perfil de un usuario.
+        /// Este método obtiene los datos básicos del usuario, como el nombre de usuario, 
+        /// número de teléfono, banner, avatar, número de reservas y número de reseñas,
+        /// y los asigna a una instancia del modelo de vista <see cref="IdentityPerfilVM"/>.
         /// </summary>
-        public class InputModel
+        /// <param name="user">El usuario cuya información se va a cargar.</param>
+        /// <returns>Carga y procesa la informacion del usuario.</returns>
+        private async Task LoadAsync(Usuario user)
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
+            var nombreUsuario = await _userManager.GetUserNameAsync(user);
+            var avatarBanner = await _perfilRepository.ObtenerBannerAvatar(user.Id);
 
-        private async Task LoadAsync(IdentityUser user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-
-            Input = new InputModel
+            IdentityPerfil = new IdentityPerfilVM
             {
-                PhoneNumber = phoneNumber
+                NombreUsuario = nombreUsuario,
+                NombreUsuarioOriginal = nombreUsuario,
+                NumeroTelefono = await _userManager.GetPhoneNumberAsync(user),
+                Banner = avatarBanner?.Banner,
+                Avatar = avatarBanner?.Avatar,
+                NumeroReservas = await _reservaRepository.ObtenerTotalReservas(user.Id),
+                NumeroReseñas = await _resenasRepository.ObtenerTotalResenas(user.Id)
             };
         }
 
+        /// <summary>
+        /// Solicitud GET para cargar la página de perfil de usuario.
+        /// Obtiene el usuario actual a partir de la identidad autenticada, y si no se encuentra un usuario, 
+        /// redirige al usuario a la página de registro. Si el usuario es válido, carga su información de perfil.
+        /// </summary>
+        /// <returns>Una instancia de <see cref="IActionResult"/> que puede redirigir a la página de registro o mostrar la página actual.</returns>
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User) as Usuario;
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return RedirectToPage("/Account/Register");
             }
 
             await LoadAsync(user);
             return Page();
         }
 
+        /// <summary>
+        /// Solicitud POST para procesar los cambios en el perfil de usuario.
+        /// Este método recibe los datos enviados desde la página y actualiza la información del usuario,
+        /// actualiza el UserName, PhoneNumber, Avatar y Banner
+        /// luego guarda los cambios y redirige al usuario a la página de perfil.
+        /// </summary>
+        /// <returns>Una instancia de <see cref="IActionResult"/> que redirige a la página de perfil.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User) as Usuario;
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return RedirectToPage("/Account/Register");
             }
 
+
+            // Validaciones
+            IdentityPerfil.NombreUsuarioOriginal = user.UserName;
+            ModelState.Remove("InputAvatar");
+            ModelState.Remove("InputBanner");
+
+            var validacion = await _identityPerfilVMValidator.ValidateAsync(IdentityPerfil);
+            if (!validacion.IsValid)
+            {
+                foreach (var error in validacion.Errors)
+                {
+                    ModelState.AddModelError($"IdentityPerfil.{error.PropertyName}", error.ErrorMessage);
+                }
+            }
+            if (InputAvatar != null)
+            {
+                var validacionImagen = ValidarInputImagen(InputAvatar);
+                if (!validacionImagen) ModelState.AddModelError("InputAvatar", "El avatar debe ser una imagen en formato JPG, JPEG, WEBP o PNG.");
+            }
+            if (InputBanner != null)
+            {
+                var validacionImagen = ValidarInputImagen(InputBanner);
+                if (!validacionImagen) ModelState.AddModelError("InputBanner", "El banner debe ser una imagen en formato JPG, JPEG, WEBP o PNG.");
+            }
             if (!ModelState.IsValid)
             {
                 await LoadAsync(user);
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+
+            // Registro de datos
+            var numeroTelefono = await _userManager.GetPhoneNumberAsync(user);
+            if (IdentityPerfil.NumeroTelefono != numeroTelefono)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var resultado = await _userManager.SetPhoneNumberAsync(user, IdentityPerfil.NumeroTelefono);
+                if (!resultado.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar cambiar el número de teléfono.";
                     return RedirectToPage();
                 }
             }
 
+            var nombreUsuarioActual = await _userManager.GetUserNameAsync(user);
+            var nuevoNombreUsuario = IdentityPerfil.NombreUsuario;
+            if (nuevoNombreUsuario != nombreUsuarioActual)
+            {
+                var existeUsuario = await _userManager.FindByNameAsync(nuevoNombreUsuario);
+                if (existeUsuario == null)
+                {
+                    var resultado = await _userManager.SetUserNameAsync(user, nuevoNombreUsuario);
+                    if (!resultado.Succeeded)
+                    {
+                        Notificacion = "error";
+                        NotificacionTitulo = "Perfil";
+                        NotificacionMensaje = "Error inesperado al intentar cambiar el nombre de usuario.";
+                        return RedirectToPage();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("IdentityPerfil.NombreUsuario", "El nombre de usuario ya está en uso");
+
+                    await LoadAsync(user);
+                    return Page();
+                }
+            }
+
+
+            // Actualización de imágenes
+            if (InputAvatar != null)
+            {
+                var imagenes = await _optimizacionImagenes.OptimizarMultiplesImagenesAWebPAsync(InputAvatar.OpenReadStream(), 75, $"avatar-{user.Id}", ArchivosUtility.ResolucionesAvatar);
+
+                var resultado = await _subirArchivos.SubirImagenesAsync(imagenes, ArchivosUtility.CarpetaAvatares);
+
+                var resultadoAvatar = await _perfilRepository.SetAvatar(resultado[0].Url, resultado[1].Url, user.Id, $"avatar-{user.Id}");
+                if (!resultadoAvatar)
+                {
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar actualizar el avatar.";
+                    return RedirectToPage();
+                }
+            }
+            if (InputBanner != null)
+            {
+                var imagen = await _optimizacionImagenes.OptimizarImagenAWebPAsync(InputBanner.OpenReadStream(), 75, $"banner-{user.Id}", ArchivosUtility.ResolucionAnchoBanner, ArchivosUtility.ResolucionAltoBanner);
+
+                var resultado = await _subirArchivos.SubirImagenAsync(imagen.imagen, imagen.nombre, ArchivosUtility.CarpetaBanners);
+                var resultadoBanner = await _perfilRepository.SetBanner(resultado.Url, user.Id, $"banner-{user.Id}");
+                if (!resultadoBanner)
+                {
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar actualizar el banner.";
+                    return RedirectToPage();
+                }
+            }
+
+
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            Notificacion = "success";
+            NotificacionTitulo = "Perfil";
+            NotificacionMensaje = "Tu perfil ha sido actualizado.";
             return RedirectToPage();
+        }
+
+        /// <summary>
+        /// Valida si el archivo de imagen tiene una extensión soportada por el sistema.
+        /// Las extensiones válidas incluyen JPG, JPEG, PNG y WEBP.
+        /// </summary>
+        /// <param name="imagen">El archivo de imagen a validar.</param>
+        /// <returns>Devuelve <c>true</c> si la imagen tiene una extensión soportada, de lo contrario <c>false</c>.</returns>
+        private bool ValidarInputImagen(IFormFile imagen)
+        {
+            var extenciones = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            var extencion = Path.GetExtension(imagen.FileName).ToLower();
+
+            return extenciones.Contains(extencion);
         }
     }
 }
