@@ -112,15 +112,17 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<MensajesPqrsVM>?> ObtenerMensajesPqrsVmAsync(int idAtencionViajero)
         {
             var sql = @"
-                SELECT 
+                    SELECT 
                     m.Fecha AS Fecha, 
                     m.Descripcion, 
                     u.Id AS IdUsuario, 
-                    u.Avatar AS AvatarUsuario
+                    a.Url_50px AS AvatarUsuario
                 FROM 
                     Mensajes m
                 INNER JOIN 
                     aspnetusers u ON m.IdUsuario = u.Id
+                LEFT JOIN 
+                    avatares a ON u.Id = a.IdTurista
                 WHERE 
                     m.IdAtencionViajero = @IdAtencionViajero";
 

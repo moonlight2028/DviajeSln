@@ -34,16 +34,18 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                SELECT r.IdReserva, u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista, 
-                       rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
-                       (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
-                FROM Resenas rs
-                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
-                WHERE p.IdPublicacion = @IdPublicacion
-                ORDER BY rs.Fecha DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
+                    SELECT r.IdReserva, u.Id AS IdTurista, u.UserName AS NombreTurista, 
+                           av.Url_50px AS AvatarTurista, 
+                           rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
+                           (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
+                    FROM Resenas rs
+                    INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
+                    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
+                    LEFT JOIN avatares av ON u.Id = av.IdTurista
+                    WHERE p.IdPublicacion = @IdPublicacion
+                    ORDER BY rs.Fecha DESC
+                    LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
             var result = await _db.QueryAsync<ResenaTarjetaBasicaVM>(sql, new
@@ -191,26 +193,27 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null)
         {
             var sql = @"
-                SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
-                       (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                       p.IdPublicacion, p.Titulo AS TituloPublicacion, 
-                       (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
-                       u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista,
-                       (SELECT COUNT(*) FROM Resenas r WHERE r.IdUsuario = u.Id) AS NumeroResenasTurista
-                FROM Resenas rs
-                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
-                WHERE p.IdAliado = @IdAliado
-                ORDER BY CASE WHEN @Ordenar IS NOT NULL THEN
-                        CASE @Ordenar
-                            WHEN 'Fecha' THEN rs.Fecha
-                            WHEN 'Puntuacion' THEN rs.Calificacion
-                            WHEN 'Likes' THEN NumerosLikes
-                        END
-                        ELSE rs.Fecha
-                    END DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
+                    SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
+                           (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                           p.IdPublicacion, p.Titulo AS TituloPublicacion, 
+                           (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
+                           u.Id AS IdTurista, u.UserName AS NombreTurista, av.Url_50px AS AvatarTurista,
+                           (SELECT COUNT(*) FROM Resenas r WHERE r.IdUsuario = u.Id) AS NumeroResenasTurista
+                    FROM Resenas rs
+                    INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
+                    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
+                    LEFT JOIN avatares av ON u.Id = av.IdTurista
+                    WHERE p.IdAliado = @IdAliado
+                    ORDER BY CASE WHEN @Ordenar IS NOT NULL THEN
+                            CASE @Ordenar
+                                WHEN 'Fecha' THEN rs.Fecha
+                                WHEN 'Puntuacion' THEN rs.Calificacion
+                                WHEN 'Likes' THEN NumerosLikes
+                            END
+                            ELSE rs.Fecha
+                        END DESC
+                    LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
             var result = await _db.QueryAsync<ResenaTarjetaRecibidaVM>(sql, new

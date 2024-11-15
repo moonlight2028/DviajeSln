@@ -21,12 +21,13 @@ namespace Dviaje.DataAccess.Repository
         {
             var sql = @"
                     SELECT r.IdReserva, r.FechaInicial, r.FechaFinal, r.NumeroPersonas, r.ReservaEstado AS ReservaEstado,
-                    p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Direccion,
-                    u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, u.Verificado AS Verificado,
-                    pi.Ruta AS Imagen
+                           p.IdPublicacion, p.Titulo AS TituloPublicacion, p.Puntuacion, p.NumeroResenas, p.Direccion,
+                           u.Id AS IdAliado, u.UserName AS NombreAliado, av.Url_50px AS AvatarAliado, u.Verificado AS Verificado,
+                           pi.Ruta AS Imagen
                     FROM Reservas r
                     INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
                     INNER JOIN aspnetusers u ON p.IdAliado = u.Id
+                    LEFT JOIN avatares av ON u.Id = av.IdTurista
                     LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
                     WHERE r.IdReserva = @IdReserva AND r.IdUsuario = @IdUsuario
                     ORDER BY pi.Orden 
@@ -49,40 +50,42 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ReservaTarjetaBasicaVM>?> ObtenerListaReservaTarjetaBasicaVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10, string? estado = null)
         {
             var sql = @"
-        SELECT 
-            r.IdReserva, 
-            r.FechaInicial, 
-            r.FechaFinal, 
-            r.ReservaEstado AS Estado,
-            p.IdPublicacion, 
-            p.Titulo AS TituloPublicacion, 
-            p.Puntuacion AS PuntuacionPublicacion, 
-            p.NumeroResenas AS NumeroResenasPublicacion,
-            (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
-            -- Aquí seleccionamos una sola imagen por publicación
-            (SELECT pi.Ruta 
-             FROM PublicacionesImagenes pi 
-             WHERE pi.IdPublicacion = p.IdPublicacion 
-             ORDER BY pi.Orden 
-             LIMIT 1) AS ImagenPublicacion,
-            u.Id AS IdAliado, 
-            u.UserName AS NombreAliado, 
-            u.Avatar AS AvatarAliado, 
-            u.Verificado AS VerificadoAliado
-        FROM 
-            Reservas r
-        INNER JOIN 
-            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-        INNER JOIN 
-            aspnetusers u ON p.IdAliado = u.Id
-        WHERE 
-            r.IdUsuario = @IdUsuario 
-            AND (@Estado IS NULL OR r.ReservaEstado = @Estado)
-        ORDER BY 
-            r.FechaInicial DESC
-        LIMIT 
-            @ResultadosMostrados OFFSET @Offset;
-    ";
+                    SELECT 
+                        r.IdReserva, 
+                        r.FechaInicial, 
+                        r.FechaFinal, 
+                        r.ReservaEstado AS Estado,
+                        p.IdPublicacion, 
+                        p.Titulo AS TituloPublicacion, 
+                        p.Puntuacion AS PuntuacionPublicacion, 
+                        p.NumeroResenas AS NumeroResenasPublicacion,
+                        (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesPublicacion,
+                        -- Aquí seleccionamos una sola imagen por publicación
+                        (SELECT pi.Ruta 
+                         FROM PublicacionesImagenes pi 
+                         WHERE pi.IdPublicacion = p.IdPublicacion 
+                         ORDER BY pi.Orden 
+                         LIMIT 1) AS ImagenPublicacion,
+                        u.Id AS IdAliado, 
+                        u.UserName AS NombreAliado, 
+                        av.Url_50px AS AvatarAliado, 
+                        u.Verificado AS VerificadoAliado
+                    FROM 
+                        Reservas r
+                    INNER JOIN 
+                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN 
+                        aspnetusers u ON p.IdAliado = u.Id
+                    LEFT JOIN 
+                        avatares av ON u.Id = av.IdTurista
+                    WHERE 
+                        r.IdUsuario = @IdUsuario 
+                        AND (@Estado IS NULL OR r.ReservaEstado = @Estado)
+                    ORDER BY 
+                        r.FechaInicial DESC
+                    LIMIT 
+                        @ResultadosMostrados OFFSET @Offset;
+                ";
 
             // Cálculo del offset para paginación
             var offset = (pagina - 1) * resultadosMostrados;
@@ -338,29 +341,32 @@ namespace Dviaje.DataAccess.Repository
         {
             // obtener los detalles de las reservas y las publicaciones asociadas al aliado
             var sql = @"
-        SELECT 
-            r.IdReserva,
-            r.ReservaEstado AS Estado ,
-            r.PrecioTotal AS PrecioReserva,
-            r.FechaInicial,
-            r.FechaFinal,
-            u.Id AS IdUsuario,
-            u.UserName AS NombreUsuario,
-            u.Avatar AS AvatarUsuario,
-            p.IdPublicacion,
-            p.Titulo AS TituloPublicacion,
-            (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
-        FROM 
-            Reservas r
-        INNER JOIN 
-            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-        INNER JOIN 
-            aspnetusers u ON r.IdUsuario = u.Id
-        WHERE 
-            p.IdAliado = @IdAliado
-        ORDER BY 
-            r.FechaInicial DESC;
-    ";
+                    SELECT 
+                        r.IdReserva,
+                        r.ReservaEstado AS Estado,
+                        r.PrecioTotal AS PrecioReserva,
+                        r.FechaInicial,
+                        r.FechaFinal,
+                        u.Id AS IdUsuario,
+                        u.UserName AS NombreUsuario,
+                        av.Url_50px AS AvatarUsuario,
+                        p.IdPublicacion,
+                        p.Titulo AS TituloPublicacion,
+                        (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
+                    FROM 
+                        Reservas r
+                    INNER JOIN 
+                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN 
+                        aspnetusers u ON r.IdUsuario = u.Id
+                    LEFT JOIN 
+                        avatares av ON u.Id = av.IdTurista
+                    WHERE 
+                        p.IdAliado = @IdAliado
+                    ORDER BY 
+                        r.FechaInicial DESC;
+                ";
+
 
             // Ejecutar la consulta utilizando Dapper
             var reservas = await _db.QueryAsync<ReservaTablaItemVM>(sql, new { IdAliado = idAliado });

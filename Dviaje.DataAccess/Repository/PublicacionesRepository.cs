@@ -29,66 +29,69 @@ namespace Dviaje.DataAccess.Repository
         {
             // Consulta para obtener las publicaciones
             string consultaPublicaciones = @"
-                SELECT 
-                    p.IdPublicacion,
-                    a.Id AS AliadoId,
-                    a.Avatar AS AvatarAliado,
-                    a.UserName AS NombreAliado,
-                    IFNULL(a.NumeroPublicaciones, 0) AS TotalPublicacionesAliado,
-                    IFNULL(a.Verificado, 0) AS Verificado,
-                    p.Precio,
-                    p.Titulo,
-                    p.Direccion,
-                    p.Puntuacion,
-                    p.NumeroResenas,
-                    p.Descripcion
-                FROM 
-                    publicaciones p
-                LEFT JOIN 
-                    aspnetusers a ON p.IdAliado = a.Id
-                ORDER BY 
-                    CASE 
-                        WHEN @orderBy IS NULL OR @orderBy NOT IN ('precio_mayor', 'precio_menor') THEN p.Puntuacion 
-                    END DESC,
-                    CASE 
-                        WHEN @orderBy = 'precio_mayor' THEN p.Precio 
-                    END DESC,
-                    CASE 
-                        WHEN @orderBy = 'precio_menor' THEN p.Precio 
-                    END ASC
-                LIMIT @pageSize OFFSET @offset;
-            ";
+                                   SELECT 
+                                        p.IdPublicacion,
+                                        a.Id AS AliadoId,
+                                        av.Url_50px AS AvatarAliado,
+                                        a.UserName AS NombreAliado,
+                                        IFNULL(a.NumeroPublicaciones, 0) AS TotalPublicacionesAliado,
+                                        IFNULL(a.Verificado, 0) AS Verificado,
+                                        p.Precio,
+                                        p.Titulo,
+                                        p.Direccion,
+                                        p.Puntuacion,
+                                        p.NumeroResenas,
+                                        p.Descripcion
+                                    FROM 
+                                        publicaciones p
+                                    LEFT JOIN 
+                                        aspnetusers a ON p.IdAliado = a.Id
+                                    LEFT JOIN 
+                                        avatares av ON a.Id = av.IdTurista
+                                    ORDER BY 
+                                        CASE 
+                                            WHEN @orderBy IS NULL OR @orderBy NOT IN ('precio_mayor', 'precio_menor') THEN p.Puntuacion 
+                                        END DESC,
+                                        CASE 
+                                            WHEN @orderBy = 'precio_mayor' THEN p.Precio 
+                                        END DESC,
+                                        CASE 
+                                            WHEN @orderBy = 'precio_menor' THEN p.Precio 
+                                        END ASC
+                                    LIMIT @pageSize OFFSET @offset";
 
             // Consulta para obtener las categorías
             string consultaCategorias = @"
-                SELECT 
-                    pc.IdPublicacion,
-                    c.IdCategoria,
-                    c.NombreCategoria,
-                    c.RutaIcono
-                FROM 
-                    publicacionescategorias pc
-                JOIN 
-                    categorias c ON pc.IdCategoria = c.IdCategoria
-                WHERE 
-                    pc.IdPublicacion IN @idsPublicaciones
-            ";
+        SELECT 
+            pc.IdPublicacion,
+            c.IdCategoria,
+            c.NombreCategoria,
+            c.RutaIcono
+        FROM 
+            publicacionescategorias pc
+        JOIN 
+            categorias c ON pc.IdCategoria = c.IdCategoria
+        WHERE 
+            pc.IdPublicacion IN @idsPublicaciones";
 
             // Consulta para obtener las imágenes
             string consultaImagenes = @"
-                SELECT 
-                    pi.IdPublicacion,
-                    pi.Ruta,
-                    pi.Alt
-                FROM 
-                    publicacionesimagenes pi
-                WHERE 
-                    pi.IdPublicacion IN @idsPublicaciones
-            ";
-
+        SELECT 
+            pi.IdPublicacion,
+            pi.Ruta,
+            pi.Alt
+        FROM 
+            publicacionesimagenes pi
+        WHERE 
+            pi.IdPublicacion IN @idsPublicaciones";
 
             // Ejecuta y obtiene la consulta de las publicaciones
-            var publicaciones = await _db.QueryAsync<PublicacionTarjetaBusquedaVM>(consultaPublicaciones, new { orderBy = ordenarPor, pageSize = numeroPublicaciones, offset = (pagina - 1) * numeroPublicaciones });
+            var publicaciones = await _db.QueryAsync<PublicacionTarjetaBusquedaVM>(consultaPublicaciones, new
+            {
+                orderBy = ordenarPor,
+                pageSize = numeroPublicaciones,
+                offset = (pagina - 1) * numeroPublicaciones
+            });
 
             // Obtiene los Id de las publicaciones para usarlos en las siguientes consultas
             var idsPublicaciones = publicaciones.Select(p => p.IdPublicacion).ToList();
@@ -98,7 +101,6 @@ namespace Dviaje.DataAccess.Repository
 
             // Ejecuta y obtiene la consulta de las imágenes
             var imagenes = await _db.QueryAsync<PublicacionImagenVM>(consultaImagenes, new { idsPublicaciones });
-
 
             // Carga las categorías y las imágenes en las publicaciones
             foreach (var publicacion in publicaciones)
@@ -110,26 +112,29 @@ namespace Dviaje.DataAccess.Repository
             return publicaciones.ToList();
         }
 
+
         public async Task<PublicacionDetalleVM?> ObtenerPublicacionDetalleVMAsync(int idPublicacion)
         {
-            // // Consulta para obtener la publicación
+            // Consulta para obtener la publicación
             string consultaPublicacion = @"
-                SELECT 
-                    p.IdPublicacion,
-                    p.Titulo,
-                    p.Puntuacion,
-                    p.NumeroResenas,
-                    p.Descripcion,
-                    p.Precio,
-                    p.Direccion AS Ubicacion,
-                    a.Id AS IdAliado,
-                    a.Avatar AS AvatarAliado,
-                    a.UserName AS NombreAliado,
-                    a.NumeroPublicaciones AS PublicacionesAliado,
-                    IFNULL(a.Verificado, 0) AS VerificadoAliado
-                FROM Publicaciones p
-                LEFT JOIN aspnetusers a ON p.IdAliado = a.Id
-                WHERE p.IdPublicacion = @IdPublicacion;";
+                                    SELECT 
+                                        p.IdPublicacion,
+                                        p.Titulo,
+                                        p.Puntuacion,
+                                        p.NumeroResenas,
+                                        p.Descripcion,
+                                        p.Precio,
+                                        p.Direccion AS Ubicacion,
+                                        a.Id AS IdAliado,
+                                        av.Url_50px AS AvatarAliado,
+                                        a.UserName AS NombreAliado,
+                                        a.NumeroPublicaciones AS PublicacionesAliado,
+                                        IFNULL(a.Verificado, 0) AS VerificadoAliado
+                                    FROM Publicaciones p
+                                    LEFT JOIN aspnetusers a ON p.IdAliado = a.Id
+                                    LEFT JOIN avatares av ON a.Id = av.IdTurista
+                                    WHERE p.IdPublicacion = @IdPublicacion;";
+
 
 
             // Ejecutar las consultas
