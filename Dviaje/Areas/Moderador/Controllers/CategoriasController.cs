@@ -12,47 +12,93 @@ namespace Dviaje.Areas.Moderador.Controllers
     {
         private readonly ICategoriasRepository _categoriasRepository;
 
-
         public CategoriasController(ICategoriasRepository categoriasRepository)
         {
             _categoriasRepository = categoriasRepository;
         }
 
-
+        /// <summary>
+        /// Crea una nueva categoría.
+        /// </summary>
         [HttpPost]
         [Route("categorias")]
         public async Task<IActionResult> CrearCategoria(Categoria categoria)
         {
-            bool resultado = await _categoriasRepository.CrearCategoriaAsync(categoria);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok();
+            var resultado = await _categoriasRepository.CrearCategoriaAsync(categoria);
+            if (resultado)
+            {
+                return Ok(new { success = true, message = "Categoría creada exitosamente." });
+            }
+
+            return BadRequest(new { success = false, message = "Error al crear la categoría." });
         }
 
+        /// <summary>
+        /// Obtiene una categoría por su ID.
+        /// </summary>
         [HttpGet]
         [Route("categorias/{id?}")]
         public async Task<IActionResult> ObtenerCategoria(int? id)
         {
-            Restriccion? restriccion = await _categoriasRepository.ObtenerCategoriaPorIdAsync((int)id);
+            if (!id.HasValue)
+            {
+                return BadRequest(new { success = false, message = "ID de categoría no proporcionado." });
+            }
 
-            return Ok(restriccion);
+            var categoria = await _categoriasRepository.ObtenerCategoriaPorIdAsync(id.Value);
+            if (categoria == null)
+            {
+                return NotFound(new { success = false, message = "Categoría no encontrada." });
+            }
+
+            return Ok(new { success = true, data = categoria });
         }
 
+        /// <summary>
+        /// Actualiza una categoría existente.
+        /// </summary>
         [HttpPut]
         [Route("categorias")]
         public async Task<IActionResult> ActualizarCategoria(Categoria categoria)
         {
-            bool resultado = await _categoriasRepository.ActualizarCategoriaAsync(categoria);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok();
+            var resultado = await _categoriasRepository.ActualizarCategoriaAsync(categoria);
+            if (resultado)
+            {
+                return Ok(new { success = true, message = "Categoría actualizada exitosamente." });
+            }
+
+            return BadRequest(new { success = false, message = "Error al actualizar la categoría." });
         }
 
+        /// <summary>
+        /// Elimina una categoría por su ID.
+        /// </summary>
         [HttpDelete]
         [Route("categorias/{id?}")]
         public async Task<IActionResult> EliminarCategoria(int? id)
         {
-            bool resultado = await _categoriasRepository.EliminarCategoriaAsync((int)id);
+            if (!id.HasValue)
+            {
+                return BadRequest(new { success = false, message = "ID de categoría no proporcionado." });
+            }
 
-            return Ok();
+            var resultado = await _categoriasRepository.EliminarCategoriaAsync(id.Value);
+            if (resultado)
+            {
+                return Ok(new { success = true, message = "Categoría eliminada exitosamente." });
+            }
+
+            return BadRequest(new { success = false, message = "Error al eliminar la categoría." });
         }
     }
 }

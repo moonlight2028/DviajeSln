@@ -146,19 +146,33 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                SELECT rs.IdPublicacion, rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
-                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                       p.Titulo AS TituloPublicacion, pi.Ruta AS ImagenPublicacion, 
-                       u.Id AS IdAliado, u.UserName AS NombreAliado, u.Avatar AS AvatarAliado, 
-                       u.NumeroPublicaciones AS NumeroPublicacionesAliado
-                FROM Resenas rs
-                INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN aspnetusers u ON p.IdAliado = u.Id
-                LEFT JOIN PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-                WHERE r.IdUsuario = @IdUsuario
-                ORDER BY rs.Fecha DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
+                    SELECT 
+                    p.IdPublicacion, 
+                    rs.Opinion, 
+                    rs.Fecha, 
+                    rs.Calificacion AS Puntuacion, 
+                    (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                    p.Titulo AS TituloPublicacion, 
+                    pi.Ruta AS ImagenPublicacion, 
+                    u.Id AS IdAliado, 
+                    u.UserName AS NombreAliado, 
+                    u.Avatar AS AvatarAliado, 
+                    u.NumeroPublicaciones AS NumeroPublicacionesAliado
+                FROM 
+                    Resenas rs
+                INNER JOIN 
+                    Reservas r ON rs.IdReserva = r.IdReserva
+                INNER JOIN 
+                    Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN 
+                    aspnetusers u ON p.IdAliado = u.Id
+                LEFT JOIN 
+                    PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
+                WHERE 
+                    r.IdUsuario = '@IdUsuario'
+                ORDER BY 
+                    rs.Fecha DESC
+                LIMIT ELEMENTOS_POR_PAGINA OFFSET OFFSET";
 
             var offset = (pagina - 1) * resultadosMostrados;
             var result = await _db.QueryAsync<ResenaTarjetaDetalleVM>(sql, new
@@ -170,84 +184,6 @@ namespace Dviaje.DataAccess.Repository
 
             return result.ToList();
 
-
-
-            // Datos de test borrar cuando esté la consulta
-            List<ResenaTarjetaDetalleVM>? datosTest = new List<ResenaTarjetaDetalleVM>
-            {
-                new ResenaTarjetaDetalleVM
-                {
-                    IdPublicacion = 1,
-                    TituloPublicacion = "Aventura en la Montaña",
-                    Opinion = "Una experiencia increíble, todo estuvo perfecto.",
-                    Fecha = new DateTime(2024, 1, 15),
-                    Puntuacion = 4.8m,
-                    NumerosLikes = 120,
-                    IdAliado = "A123",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    NombreAliado = "Juan Pérez",
-                    NumeroPublicacionesAliado = 15,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                },
-                new ResenaTarjetaDetalleVM
-                {
-                    IdPublicacion = 2,
-                    TituloPublicacion = "Relajación en la Playa",
-                    Opinion = "El lugar es hermoso, pero el servicio podría mejorar.",
-                    Fecha = new DateTime(2023, 8, 23),
-                    Puntuacion = 3.7m,
-                    NumerosLikes = 85,
-                    IdAliado = "B456",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    NombreAliado = "María Gómez",
-                    NumeroPublicacionesAliado = 10,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                },
-                new ResenaTarjetaDetalleVM
-                {
-                    IdPublicacion = 3,
-                    TituloPublicacion = "Escapada Rural",
-                    Opinion = "La cabaña era acogedora y perfecta para desconectar.",
-                    Fecha = new DateTime(2024, 2, 10),
-                    Puntuacion = 4.5m,
-                    NumerosLikes = 95,
-                    IdAliado = "C789",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    NombreAliado = "Pedro Sánchez",
-                    NumeroPublicacionesAliado = 8,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                },
-                new ResenaTarjetaDetalleVM
-                {
-                    IdPublicacion = 4,
-                    TituloPublicacion = "Tour por la Ciudad klajdslkfjalk adslkfjalksd aldkjflkads alsdkjflk adkjflkadsjf adkfjlkadsjfl asdfjkladsjf adfjlkadsjflk",
-                    Opinion = "La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse a estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar constantemente es esencial en un mundo donde la innovación es la norma diaria.",
-                    Fecha = new DateTime(2023, 11, 18),
-                    Puntuacion = 4.9m,
-                    NumerosLikes = 135,
-                    IdAliado = "D321",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    NombreAliado = "Ana López",
-                    NumeroPublicacionesAliado = 20,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                },
-                new ResenaTarjetaDetalleVM
-                {
-                    IdPublicacion = 5,
-                    TituloPublicacion = "Viaje en Familia",
-                    Opinion = "Todo estuvo bien, aunque la comida no fue tan buena.",
-                    Fecha = new DateTime(2023, 5, 5),
-                    Puntuacion = 3.9m,
-                    NumerosLikes = 65,
-                    IdAliado = "E654",
-                    AvatarAliado = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
-                    NombreAliado = "Carlos Ruiz",
-                    NumeroPublicacionesAliado = 12,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1637419567748-6789aec01324?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
-            };
-
-            return datosTest;
         }
 
 
@@ -256,7 +192,7 @@ namespace Dviaje.DataAccess.Repository
         {
             var sql = @"
                 SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
-                       (SELECT COUNT(*) FROM ResenasMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
+                       (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
                        p.IdPublicacion, p.Titulo AS TituloPublicacion, 
                        (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
                        u.Id AS IdTurista, u.UserName AS NombreTurista, u.Avatar AS AvatarTurista,
@@ -293,9 +229,9 @@ namespace Dviaje.DataAccess.Repository
         {
             // Verificar si el usuario ya ha dado "Me Gusta"
             var sqlCheck = @"
-        SELECT COUNT(*)
-        FROM ResenasMeGusta
-        WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
+                        SELECT COUNT(*)
+                        FROM ResenaMeGusta
+                        WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
 
             var yaDioMeGusta = await _db.ExecuteScalarAsync<int>(sqlCheck, new { IdResena = idResena, IdUsuario = idUsuario });
 
@@ -307,11 +243,27 @@ namespace Dviaje.DataAccess.Repository
 
             // Insertar un nuevo "Me Gusta"
             var sqlInsert = @"
-        INSERT INTO ResenasMeGusta (IdResena, IdUsuario)
-        VALUES (@IdResena, @IdUsuario)";
+                        INSERT INTO ResenaMeGusta (IdResena, IdUsuario)
+                        VALUES (@IdResena, @IdUsuario)";
 
             var result = await _db.ExecuteAsync(sqlInsert, new { IdResena = idResena, IdUsuario = idUsuario });
             return result > 0;
+        }
+
+
+        //verifica si el usuario ya dio me gusta a una reseña
+        public async Task<bool> VerificarSiUsuarioLeDioLike(int idResena, string idUsuario)
+        {
+            var sql = @"
+                    SELECT COUNT(*)
+                    FROM ResenaMeGusta
+                    WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
+
+            // Ejecuta la consulta y verifica si existe al menos un registro
+            var likeCount = await _db.ExecuteScalarAsync<int>(sql, new { IdResena = idResena, IdUsuario = idUsuario });
+
+            // Si el conteo es mayor que 0, significa que el usuario ya dio "like"
+            return likeCount > 0;
         }
 
 
@@ -319,7 +271,7 @@ namespace Dviaje.DataAccess.Repository
         public async Task<bool> EliminarMeGustaAsync(int idResena, string idUsuario)
         {
             var sql = @"
-                DELETE FROM ResenasMeGusta
+                DELETE FROM ResenaMeGusta
                 WHERE IdResena = @IdResena AND IdUsuario = @IdUsuario";
 
             var result = await _db.ExecuteAsync(sql, new { IdResena = idResena, IdUsuario = idUsuario });

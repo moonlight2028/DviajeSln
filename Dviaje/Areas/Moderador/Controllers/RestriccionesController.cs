@@ -12,47 +12,93 @@ namespace Dviaje.Areas.Moderador.Controllers
     {
         private readonly IRestriccionesRepository _restriccionesRepository;
 
-
         public RestriccionesController(IRestriccionesRepository restriccionesRepository)
         {
             _restriccionesRepository = restriccionesRepository;
         }
 
-
+        /// <summary>
+        /// Crea una nueva restricción.
+        /// </summary>
         [HttpPost]
         [Route("restricciones")]
         public async Task<IActionResult> CrearRestriccion(Restriccion restriccion)
         {
-            bool resultado = await _restriccionesRepository.CrearRestriccionAsync(restriccion);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok();
+            var resultado = await _restriccionesRepository.CrearRestriccionAsync(restriccion);
+            if (resultado)
+            {
+                return Ok(new { success = true, message = "Restricción creada exitosamente." });
+            }
+
+            return BadRequest(new { success = false, message = "Error al crear la restricción." });
         }
 
+        /// <summary>
+        /// Obtiene una restricción por su ID.
+        /// </summary>
         [HttpGet]
         [Route("restricciones/{id?}")]
         public async Task<IActionResult> ObtenerRestriccion(int? id)
         {
-            Restriccion? restriccion = await _restriccionesRepository.ObtenerRestriccionPorIdAsync((int)id);
+            if (!id.HasValue)
+            {
+                return BadRequest(new { success = false, message = "ID de restricción no proporcionado." });
+            }
 
-            return Ok(restriccion);
+            var restriccion = await _restriccionesRepository.ObtenerRestriccionPorIdAsync(id.Value);
+            if (restriccion == null)
+            {
+                return NotFound(new { success = false, message = "Restricción no encontrada." });
+            }
+
+            return Ok(new { success = true, data = restriccion });
         }
 
+        /// <summary>
+        /// Actualiza una restricción existente.
+        /// </summary>
         [HttpPut]
         [Route("restricciones")]
         public async Task<IActionResult> ActualizarRestriccion(Restriccion restriccion)
         {
-            bool resultado = await _restriccionesRepository.ActualizarRestriccionAsync(restriccion);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok();
+            var resultado = await _restriccionesRepository.ActualizarRestriccionAsync(restriccion);
+            if (resultado)
+            {
+                return Ok(new { success = true, message = "Restricción actualizada exitosamente." });
+            }
+
+            return BadRequest(new { success = false, message = "Error al actualizar la restricción." });
         }
 
+        /// <summary>
+        /// Elimina una restricción por su ID.
+        /// </summary>
         [HttpDelete]
         [Route("restricciones/{id?}")]
         public async Task<IActionResult> EliminarRestriccion(int? id)
         {
-            bool resultado = await _restriccionesRepository.EliminarRestriccionAsync((int)id);
+            if (!id.HasValue)
+            {
+                return BadRequest(new { success = false, message = "ID de restricción no proporcionado." });
+            }
 
-            return Ok();
+            var resultado = await _restriccionesRepository.EliminarRestriccionAsync(id.Value);
+            if (resultado)
+            {
+                return Ok(new { success = true, message = "Restricción eliminada exitosamente." });
+            }
+
+            return BadRequest(new { success = false, message = "Error al eliminar la restricción." });
         }
     }
 }
