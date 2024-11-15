@@ -6,13 +6,22 @@
     /// </summary>
     public static class ArchivosUtility
     {
+        // Archivos
         public static string[] ArchivosValidos = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
-        public static string[] ImagenesValidas = ["image/jpeg", "image/png", "image/webp"];
+
+        // Resoluciones
         public static List<(int ancho, int alto)> ResolucionesAvatar = [(50, 50), (200, 200)];
         public static int ResolucionAnchoBanner = 1920;
         public static int ResolucionAltoBanner = 350;
+
+        // Carpetas
         public static string CarpetaAvatares = "avatares";
         public static string CarpetaBanners = "banners";
+
+        // Cloudinary
+        public static string UrlDefaultBanner = "https://res.cloudinary.com/dgjjvf1g5/image/upload/v1731055009/banners/banner.webp";
+        public static string UrlDefaultAvatarCincuentaPx = "https://res.cloudinary.com/dgjjvf1g5/image/upload/v1731027237/avatares/avatar-50.webp";
+        public static string UrlDefaultAvatarDoscientosPx = "https://res.cloudinary.com/dgjjvf1g5/image/upload/v1731028735/avatares/avatar-200.webp";
 
 
         /// <summary>

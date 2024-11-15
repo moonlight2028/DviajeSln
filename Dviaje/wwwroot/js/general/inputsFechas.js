@@ -1,8 +1,4 @@
 ﻿export const validacionInputFechas = (fechaInicial, fechaFinal) => {
-    // Fechas del booking
-    //const bookingLlegada = document.getElementById("booking-busqueda-llegada");
-    //const bookingSalida = document.getElementById("booking-busqueda-salida");
-
     const bookingLlegada = document.getElementById(fechaInicial);
     const bookingSalida = document.getElementById(fechaFinal);
 

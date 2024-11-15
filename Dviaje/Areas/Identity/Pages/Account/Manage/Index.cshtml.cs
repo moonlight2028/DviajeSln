@@ -22,6 +22,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IReservaRepository _reservaRepository;
         private readonly IResenasRepository _resenasRepository;
+        private IPerfilRepository _perfilRepository;
         private IValidator<IdentityPerfilVM> _identityPerfilVMValidator;
         private IOptimizacionImagenesService _optimizacionImagenes;
         private ISubirArchivosService _subirArchivos;
@@ -32,6 +33,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             SignInManager<IdentityUser> signInManager,
             IReservaRepository reservaRepository,
             IResenasRepository resenasRepository,
+            IPerfilRepository perfilRepository,
             IValidator<IdentityPerfilVM> identityPerfilVMValidator,
             IOptimizacionImagenesService optimizacionImagenes,
             ISubirArchivosService subirArchivos)
@@ -40,6 +42,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
             _reservaRepository = reservaRepository;
             _resenasRepository = resenasRepository;
+            _perfilRepository = perfilRepository;
             _identityPerfilVMValidator = identityPerfilVMValidator;
             _optimizacionImagenes = optimizacionImagenes;
             _subirArchivos = subirArchivos;
@@ -78,14 +81,15 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
         private async Task LoadAsync(Usuario user)
         {
             var nombreUsuario = await _userManager.GetUserNameAsync(user);
+            var avatarBanner = await _perfilRepository.ObtenerBannerAvatar(user.Id);
 
             IdentityPerfil = new IdentityPerfilVM
             {
                 NombreUsuario = nombreUsuario,
                 NombreUsuarioOriginal = nombreUsuario,
                 NumeroTelefono = await _userManager.GetPhoneNumberAsync(user),
-                Banner = await _subirArchivos.GenerarUrlAsync(user.Banner),
-                Avatar = await _subirArchivos.GenerarUrlAsync($"{user.Avatar}-200"),
+                Banner = avatarBanner?.Banner,
+                Avatar = avatarBanner?.Avatar,
                 NumeroReservas = await _reservaRepository.ObtenerTotalReservas(user.Id),
                 NumeroReseñas = await _resenasRepository.ObtenerTotalResenas(user.Id)
             };
@@ -202,10 +206,8 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
 
                 var resultado = await _subirArchivos.SubirImagenesAsync(imagenes, ArchivosUtility.CarpetaAvatares);
 
-                user.Avatar = $"avatares/avatar-{user.Id}";
-
-                var resultadoAvatar = await _userManager.UpdateAsync(user);
-                if (!resultadoAvatar.Succeeded)
+                var resultadoAvatar = await _perfilRepository.SetAvatar(resultado[0].Url, resultado[1].Url, user.Id, $"avatar-{user.Id}");
+                if (!resultadoAvatar)
                 {
                     Notificacion = "error";
                     NotificacionTitulo = "Perfil";
@@ -218,11 +220,8 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                 var imagen = await _optimizacionImagenes.OptimizarImagenAWebPAsync(InputBanner.OpenReadStream(), 75, $"banner-{user.Id}", ArchivosUtility.ResolucionAnchoBanner, ArchivosUtility.ResolucionAltoBanner);
 
                 var resultado = await _subirArchivos.SubirImagenAsync(imagen.imagen, imagen.nombre, ArchivosUtility.CarpetaBanners);
-
-                user.Banner = resultado.PublicId;
-
-                var resultadoBanner = await _userManager.UpdateAsync(user);
-                if (!resultadoBanner.Succeeded)
+                var resultadoBanner = await _perfilRepository.SetBanner(resultado.Url, user.Id, $"banner-{user.Id}");
+                if (!resultadoBanner)
                 {
                     Notificacion = "error";
                     NotificacionTitulo = "Perfil";

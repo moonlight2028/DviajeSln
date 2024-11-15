@@ -2,7 +2,7 @@
     const reservaForm = document.getElementById("reservaForm");
 
     reservaForm.addEventListener("submit", async function (e) {
-        e.preventDefault(); // Previene el envío del formulario normal
+        e.preventDefault();
 
         // Recoge los datos del formulario
         const formData = new FormData(reservaForm);

@@ -6,12 +6,6 @@ namespace Dviaje.Models
 {
     public class Usuario : IdentityUser
     {
-        [StringLength(255)]
-        public string? Avatar { get; set; }
-
-        [StringLength(255)]
-        public string? Banner { get; set; }
-
         [StringLength(40)]
         public string? RazonSocial { get; set; }
 

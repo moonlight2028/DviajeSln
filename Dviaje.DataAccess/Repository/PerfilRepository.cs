@@ -14,38 +14,41 @@ namespace Dviaje.DataAccess.Repository
     {
         private readonly IDbConnection _db;
 
+
         public PerfilRepository(IDbConnection db)
         {
             _db = db;
         }
+
 
         //Obtner Usuario por ID - Perfil del usuario 
         public async Task<PerfilPublicoVM?> ObtenerPerfilPublicoVMAsync(string idUsuario)
         {
             // Consulta - detalles del perfil público
             var sql = @"
-        SELECT 
-            u.Id AS Id, 
-            u.UserName, 
-            u.Avatar, 
-            u.Banner,
-            CASE 
-                WHEN EXISTS(SELECT 1 FROM Publicaciones p WHERE p.IdAliado = u.Id) THEN 1 
-                ELSE 0 
-            END AS EsAliado,
-            u.Verificado,
-            u.RazonSocial,
-            u.SitioWeb,
-            u.Direccion,
-            u.Puntuacion,
-            u.AliadoEstado,
-            (SELECT COUNT(*) FROM Reservas r WHERE r.IdUsuario = u.Id) AS NumeroReservas,
-            (SELECT COUNT(*) FROM Publicaciones p WHERE p.IdAliado = u.Id) AS NumeroPulicaciones,
-            (SELECT COUNT(*) FROM Resenas re INNER JOIN Reservas r ON re.IdReserva = r.IdReserva WHERE r.IdUsuario = u.Id) AS NumeroResenas
-        FROM 
-            aspnetusers u
-        WHERE 
-            u.Id = @IdUsuario";
+                SELECT 
+                    u.Id AS Id, 
+                    u.UserName, 
+                    u.Avatar, 
+                    u.Banner,
+                    CASE 
+                        WHEN EXISTS(SELECT 1 FROM Publicaciones p WHERE p.IdAliado = u.Id) THEN 1 
+                        ELSE 0 
+                    END AS EsAliado,
+                    u.Verificado,
+                    u.RazonSocial,
+                    u.SitioWeb,
+                    u.Direccion,
+                    u.Puntuacion,
+                    u.AliadoEstado,
+                    (SELECT COUNT(*) FROM Reservas r WHERE r.IdUsuario = u.Id) AS NumeroReservas,
+                    (SELECT COUNT(*) FROM Publicaciones p WHERE p.IdAliado = u.Id) AS NumeroPulicaciones,
+                    (SELECT COUNT(*) FROM Resenas re INNER JOIN Reservas r ON re.IdReserva = r.IdReserva WHERE r.IdUsuario = u.Id) AS NumeroResenas
+                FROM 
+                    aspnetusers u
+                WHERE 
+                    u.Id = @IdUsuario
+            ";
 
             return await _db.QueryFirstOrDefaultAsync<PerfilPublicoVM>(sql, new { IdUsuario = idUsuario });
 
@@ -143,6 +146,91 @@ namespace Dviaje.DataAccess.Repository
             var filasAfectadas = await _db.ExecuteAsync(consulta, parametros);
 
             return filasAfectadas > 0;
+        }
+
+        /// <summary>
+        /// Asigna o actualiza el banner asociado al turista especificado. 
+        /// Si el turista no tiene un banner, crea un nuevo registro; si ya existe, actualiza la información del banner.
+        /// </summary>
+        /// <param name="url">URL de la imagen del banner.</param>
+        /// <param name="idTurista">ID del turista al que se le asigna el banner.</param>
+        /// <param name="idPublico">ID opcional para el banner público, si corresponde. Usa como valor predeterminado "default" si es nulo o vacío.</param>
+        /// <returns>Retorna true si la operación fue exitosa, false en caso contrario.</returns>
+        public async Task<bool> SetBanner(string url, string idTurista, string? idPublico = null)
+        {
+            var consulta = @"
+                INSERT INTO banners (IdPublico, Url, IdTurista) 
+                VALUES (@IdPublico, @Url, @IdTurista)
+                ON DUPLICATE KEY UPDATE 
+                    Url = @Url,
+                    IdPublico = @IdPublico;
+            ";
+
+            var parametros = new
+            {
+                IdPublico = string.IsNullOrEmpty(idPublico) ? "default" : idPublico,
+                Url = url,
+                IdTurista = idTurista
+            };
+
+            var filasAfectadas = await _db.ExecuteAsync(consulta, parametros);
+
+            return filasAfectadas > 0;
+        }
+
+        /// <summary>
+        /// Asigna o actualiza el avatar asociado al turista especificado.
+        /// Si el turista no tiene avatar, crea un nuevo registro; si ya existe, actualiza las URLs de los avatares.
+        /// </summary>
+        /// <param name="urlCincuentaPx">URL de la imagen del avatar en tamaño de 50px x 50px.</param>
+        /// <param name="urlDoscientosPx">URL de la imagen del avatar en tamaño de 200px x 200px.</param>
+        /// <param name="idTurista">ID del turista al que se le asigna el avatar.</param>
+        /// <param name="idPublico">ID opcional para el avatar público, si corresponde. Usa como valor predeterminado "default" si es nulo o vacío.</param>
+        /// <returns>Retorna true si la operación fue exitosa, false en caso contrario.</returns>
+        public async Task<bool> SetAvatar(string urlCincuentaPx, string urlDoscientosPx, string idTurista, string? idPublico = null)
+        {
+            var consulta = @"
+                INSERT INTO avatares (IdPublico, Url_50px, Url_200px, IdTurista) 
+                VALUES (@IdPublico, @UrlCincuentaPx, @UrlDoscientosPx, @IdTurista)
+                ON DUPLICATE KEY UPDATE 
+                    Url_50px = @UrlCincuentaPx,
+                    Url_200px = @UrlDoscientosPx,
+                    IdPublico = @IdPublico;
+            ";
+
+            var parametros = new
+            {
+                IdPublico = string.IsNullOrEmpty(idPublico) ? "default" : idPublico,
+                UrlCincuentaPx = urlCincuentaPx,
+                UrlDoscientosPx = urlDoscientosPx,
+                IdTurista = idTurista
+            };
+
+            var filasAfectadas = await _db.ExecuteAsync(consulta, parametros);
+
+            return filasAfectadas > 0;
+        }
+
+        /// <summary>
+        /// Obtiene el avatar en resolución de 200px junto con el banner asociado a un turista especificado.
+        /// </summary>
+        /// <param name="idTurista">ID del turista cuyo avatar y banner se desean obtener.</param>
+        /// <returns>
+        /// Una tupla que contiene la URL del avatar (Avatar) y la URL del banner (Banner). 
+        /// Retorna null si no se encuentra información para el turista especificado.
+        /// </returns>
+        public async Task<(string Avatar, string Banner)?> ObtenerBannerAvatar(string idTurista)
+        {
+            var consulta = @"
+                SELECT a.Url_200px AS Avatar, b.Url AS Banner
+                    FROM avatares a
+                    JOIN banners b ON a.IdTurista = b.IdTurista
+                    WHERE a.IdTurista = @IdTurista;
+            ";
+
+            var resultado = await _db.QueryFirstOrDefaultAsync<(string Avatar, string Banner)>(consulta, new { IdTurista = idTurista });
+
+            return resultado;
         }
     }
 }
