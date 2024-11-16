@@ -1,1 +1,40 @@
-﻿@model PublicacionCrearVM
+﻿@model Dviaje.Models.VM.PublicacionCrearVM
+
+@{
+    ViewData["Title"] = "Crear Publicación";
+}
+
+<h2>Crear Publicación</h2>
+
+<form asp-action="Crear" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="Titulo">Título</label>
+        <input asp-for="Titulo" class="form-control" id="Titulo" />
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Descripcion">Descripción</label>
+        <textarea asp-for="Descripcion" class="form-control" id="Descripcion"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Precio">Precio</label>
+        <input asp-for="Precio" class="form-control" id="Precio" type="number" step="0.01" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Direccion">Dirección</label>
+        <input asp-for="Direccion" class="form-control" id="Direccion" />
+        <span asp-validation-for="Direccion" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Imagenes">Imágenes</label>
+        <input asp-for="Imagenes" class="form-control-file" id="Imagenes" multiple />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear</button>
+</form>
