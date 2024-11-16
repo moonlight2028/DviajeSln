@@ -40,10 +40,53 @@ namespace Dviaje.DataAccess.Repository
 
 
         //Faltante
-        public Task<ReservaMiReservaVM?> ObtenerReservaMiReservaPorAliadoAsync(int idReserva, string idAliado)
+        public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaPorAliadoAsync(int idReserva, string idAliado)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        r.FechaInicial, 
+                        r.FechaFinal, 
+                        r.NumeroPersonas AS Personas, 
+                        r.ReservaEstado, 
+                        r.PrecioTotal AS Precio, 
+                        p.IdPublicacion, 
+                        p.Titulo AS TituloPublicacion, 
+                        p.Descripcion AS DescripcionPublicacion, 
+                        p.Puntuacion AS PuntuacionPublicacion, 
+                        p.NumeroResenas AS NumeroReseñasPublicacion, 
+                        (SELECT JSON_ARRAYAGG(JSON_OBJECT('IdServicio', s.IdServicio, 'NombreServicio', s.NombreServicio, 'RutaIcono', s.RutaIcono, 'ServicioTipo', s.ServicioTipo))
+                         FROM Servicios s
+                         JOIN ServiciosAdicionales sa ON s.IdServicio = sa.IdServicio
+                         WHERE sa.IdPublicacion = p.IdPublicacion) AS ServiciosAdicionalesPublicacion,
+                        (SELECT JSON_ARRAYAGG(JSON_OBJECT('IdServicio', s.IdServicio, 'NombreServicio', s.NombreServicio, 'RutaIcono', s.RutaIcono, 'ServicioTipo', s.ServicioTipo))
+                         FROM Servicios s
+                         JOIN PublicacionesServicios ps ON s.IdServicio = ps.IdServicio
+                         WHERE ps.IdPublicacion = p.IdPublicacion) AS ServiciosPublicacion,
+                        (SELECT JSON_ARRAYAGG(JSON_OBJECT('Ruta', pi.Ruta, 'Alt', pi.Alt, 'Orden', pi.Orden))
+                         FROM PublicacionesImagenes pi
+                         WHERE pi.IdPublicacion = p.IdPublicacion) AS ImagenesPublicacion,
+                        u.Id AS IdAliado,
+                        u.UserName AS NombreAliado,
+                        av.Url_200px AS AvatarAliado,
+                        (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesAliado,
+                        u.Verificado AS VerificadoAliado
+                    FROM 
+                        Reservas r
+                    INNER JOIN 
+                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN 
+                        aspnetusers u ON p.IdAliado = u.Id
+                    LEFT JOIN 
+                        Avatares av ON u.Id = av.IdTurista
+                    WHERE 
+                        r.IdReserva = @IdReserva 
+                        AND u.Id = @IdAliado;
+                ";
+
+            var reserva = await _db.QueryFirstOrDefaultAsync<ReservaMiReservaVM>(sql, new { IdReserva = idReserva, IdAliado = idAliado });
+            return reserva;
         }
+
 
 
         // Obtner las tarjetas de las reservas hechas por el turista

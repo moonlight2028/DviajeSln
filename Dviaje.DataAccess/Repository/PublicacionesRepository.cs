@@ -267,25 +267,109 @@ namespace Dviaje.DataAccess.Repository
 
         //aun no es posible
 
-        public Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion)
+        public async Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion)
         {
-            return Task.FromResult<PublicacionTarjetaImagenVM?>(null);
+            var sql = @"
+                    SELECT 
+                        p.IdPublicacion,
+                        (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen,
+                        p.Direccion,
+                        p.Puntuacion,
+                        a.Id AS IdAliado,
+                        av.Url_50px AS AvatarAliado,
+                        a.UserName AS NombreAliado
+                    FROM 
+                        Publicaciones p
+                    LEFT JOIN 
+                        aspnetusers a ON p.IdAliado = a.Id
+                    LEFT JOIN 
+                        avatares av ON a.Id = av.IdTurista
+                    WHERE 
+                        p.IdPublicacion = @IdPublicacion";
+
+            return await _db.QueryFirstOrDefaultAsync<PublicacionTarjetaImagenVM>(sql, new { IdPublicacion = idPublicacion });
         }
 
-        public Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion)
+
+        public async Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion)
         {
-            throw new NotImplementedException();
+            using var transaction = _db.BeginTransaction();
+            try
+            {
+                var sqlPublicacion = @"
+                                INSERT INTO Publicaciones (Titulo, Descripcion, Precio, Fecha, Direccion, IdAliado)
+                                VALUES (@Titulo, @Descripcion, @Precio, @Fecha, @Direccion, @IdAliado);
+                                SELECT LAST_INSERT_ID();";
+
+                var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
+
+                if (publicacion.Imagenes != null)
+                {
+                    var sqlImagenes = @"
+                                    INSERT INTO PublicacionesImagenes (IdPublicacion, Ruta, Alt, Orden)
+                                    VALUES (@IdPublicacion, @Ruta, @Alt, @Orden);";
+
+                    foreach (var imagen in publicacion.Imagenes)
+                    {
+                        await _db.ExecuteAsync(sqlImagenes, new { IdPublicacion = idPublicacion, imagen.Ruta, imagen.Alt, imagen.Orden }, transaction);
+                    }
+                }
+
+                if (publicacion.FechasNoDisponibles != null)
+                {
+                    var sqlFechas = @"
+                                INSERT INTO FechasNoDisponibles (FechaInicial, FechaFinal, IdPublicacion)
+                                VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);";
+
+                    foreach (var fecha in publicacion.FechasNoDisponibles)
+                    {
+                        await _db.ExecuteAsync(sqlFechas, new { IdPublicacion = idPublicacion, fecha.FechaInicial, fecha.FechaFinal }, transaction);
+                    }
+                }
+
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                transaction.Rollback();
+                return false;
+            }
         }
 
-        public Task<bool> EditarPublicacionAsync(PublicacionCrearVM publicacion)
+
+        public async Task<bool> EditarPublicacionAsync(PublicacionCrearVM publicacion)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    UPDATE Publicaciones 
+                    SET Titulo = @Titulo, Descripcion = @Descripcion, Precio = @Precio, Direccion = @Direccion
+                    WHERE IdPublicacion = @IdPublicacion";
+
+            var resultado = await _db.ExecuteAsync(sql, publicacion);
+            return resultado > 0;
         }
 
-        public Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync(int idPublicacion)
+
+        public async Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync(int idPublicacion)
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        p.Titulo, 
+                        p.Descripcion, 
+                        p.Precio, 
+                        p.Fecha, 
+                        p.Direccion, 
+                        p.IdAliado,
+                        (SELECT JSON_ARRAYAGG(JSON_OBJECT('Ruta', pi.Ruta, 'Alt', pi.Alt, 'Orden', pi.Orden))
+                         FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion) AS Imagenes
+                    FROM 
+                        Publicaciones p
+                    WHERE 
+                        p.IdPublicacion = @IdPublicacion";
+
+            return await _db.QueryFirstOrDefaultAsync<PublicacionCrearVM>(sql, new { IdPublicacion = idPublicacion });
         }
+
 
 
 
@@ -327,10 +411,40 @@ namespace Dviaje.DataAccess.Repository
 
 
         //Pendiente
-        public Task<List<PublicacionTablaItemVM>?> ObtenerListaPublicacionTablaItemVMAsync()
+        public async Task<List<PublicacionTablaItemVM>?> ObtenerListaPublicacionTablaItemVMAsync()
         {
-            throw new NotImplementedException();
+            var sql = @"
+                    SELECT 
+                        p.IdPublicacion,
+                        (SELECT pi.Ruta 
+                         FROM PublicacionesImagenes pi 
+                         WHERE pi.IdPublicacion = p.IdPublicacion 
+                         ORDER BY pi.Orden 
+                         LIMIT 1) AS ImagenPublicacion,
+                        p.Titulo AS TituloPublicacion,
+                        p.Precio AS PrecioPublicacion,
+                        p.PublicacionEstado,
+                        u.Id AS IdTurista,
+                        av.Url_50px AS AvatarTurista,
+                        u.UserName AS NombreTurista
+                    FROM 
+                        Publicaciones p
+                    INNER JOIN 
+                        Reservas r ON p.IdPublicacion = r.IdPublicacion
+                    INNER JOIN 
+                        aspnetusers u ON r.IdUsuario = u.Id
+                    LEFT JOIN 
+                        Avatares av ON u.Id = av.IdTurista
+                    WHERE 
+                        p.PublicacionEstado = 'Activa'
+                    ORDER BY 
+                        p.Fecha DESC;
+                ";
+
+            var publicaciones = await _db.QueryAsync<PublicacionTablaItemVM>(sql);
+            return publicaciones.ToList();
         }
+
 
 
 
