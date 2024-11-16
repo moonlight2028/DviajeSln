@@ -1,10 +1,10 @@
 ﻿namespace Dviaje.Models.VM
 {
-    public class ResenaCrearVM
+    public class ResenaLikeVM
     {
-        public string? Opinion { get; set; }
-        public DateTime Fecha { get; set; }
-        public int Calificacion { get; set; }
-        public int IdReserva { get; set; }
+        public int IdResena { get; set; }      // ID de la reseña
+        public int Likes { get; set; }         // Número de likes de la reseña
+        public bool YaLeDioLike { get; set; }  // Estado de "Me Gusta" del usuario actual
     }
+
 }
