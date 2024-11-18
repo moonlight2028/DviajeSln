@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+@section Styles {
+    <!-- Estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+}
+
+<h2>Gestión de Usuarios</h2>
+
+<table id="tablaUsuarios" class="display nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablaUsuarios').DataTable({
+                ajax: {
+                    url: '/Administrador/GestionUsuarios/GetUsuarios',
+                    type: 'GET',
+                    datatype: 'json'
+                },
+                columns: [
+                    {
+                        data: 'avatar',
+                        render: function (data) {
+                            return `<img src="${data}" class="img-thumbnail" style="width:50px; height:50px;" />`;
+                        }
+                    },
+                    { data: 'nombre' },
+                    { data: 'email' },
+                    {
+                        data: 'rol',
+                        render: function (data, type, row) {
+                            return `
+                                <select class="form-select cambiar-rol" data-id="${row.id}">
+                                    ${row.rolesDisponibles.map(rol => `
+                                        <option value="${rol}" ${rol === data ? 'selected' : ''}>${rol}</option>
+                                    `).join('')}
+                                </select>`;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function (data) {
+                            return `
+                                <button class="btn btn-danger btn-eliminar" data-id="${data}">Eliminar</button>
+                                <button class="btn btn-warning btn-banear" data-id="${data}">Banear</button>
+                            `;
+                        }
+                    }
+                ]
+            });
+
+            // Cambiar rol
+            $('#tablaUsuarios').on('change', '.cambiar-rol', function () {
+                const idUsuario = $(this).data('id');
+                const nuevoRol = $(this).val();
+
+                $.post('/Administrador/GestionUsuarios/CambiarRol', { idUsuario, nuevoRol }, function (data) {
+                    if (data.success) {
+                        alert(data.message);
+                    } else {
+                        alert('Error al cambiar el rol.');
+                    }
+                });
+            });
+
+            // Eliminar usuario
+            $('#tablaUsuarios').on('click', '.btn-eliminar', function () {
+                const idUsuario = $(this).data('id');
+                if (confirm('¿Estás seguro de eliminar este usuario?')) {
+                    $.post('/Administrador/GestionUsuarios/EliminarUsuario', { idUsuario }, function (data) {
+                        if (data.success) {
+                            alert(data.message);
+                            $('#tablaUsuarios').DataTable().ajax.reload();
+                        } else {
+                            alert('Error al eliminar el usuario.');
+                        }
+                    });
+                }
+            });
+
+            // Banear usuario
+            $('#tablaUsuarios').on('click', '.btn-banear', function () {
+                const idUsuario = $(this).data('id');
+                if (confirm('¿Estás seguro de banear este usuario?')) {
+                    $.post('/Administrador/GestionUsuarios/BanearUsuario', { idUsuario }, function (data) {
+                        if (data.success) {
+                            alert(data.message);
+                            $('#tablaUsuarios').DataTable().ajax.reload();
+                        } else {
+                            alert('Error al banear el usuario.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -18,7 +18,7 @@ namespace Dviaje.Areas.Administrador.Controllers
             _roleManager = roleManager;
         }
 
-        public IActionResult Index()
+        public IActionResult GestionUsuario()
         {
             return View();
         }
