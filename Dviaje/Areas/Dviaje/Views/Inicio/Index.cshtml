@@ -2,8 +2,99 @@
     ViewData["Title"] = "Dviaje";
 }
 
-
 @section Styles {
-    <!-- Estilos custom -->
-    @* <link rel="stylesheet" href="~/css/landing/landing.css"> *@
+    <link rel="stylesheet" href="~/css/inicio/inicio.css">
 }
+
+@model Dviaje.Models.VM.LandingPageVM
+
+<!-- Start Banner Hero -->
+@if (Model.PublicacionesDestacadas != null && Model.PublicacionesDestacadas.Any())
+{
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.PublicacionesDestacadas.Count; i++)
+            {
+                <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.PublicacionesDestacadas.Count; i++)
+            {
+                var publicacion = Model.PublicacionesDestacadas[i];
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="container">
+                        <div class="row p-5">
+                            <!-- Imagen principal -->
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last text-center">
+                                <img class="img-fluid1" src="@publicacion.ImagenPrincipal" alt="Imagen principal de @publicacion.Titulo">
+                                <!-- Contenedor para miniaturas -->
+                                @if (publicacion.Imagenes != null && publicacion.Imagenes.Any())
+                                {
+                                    <div class="d-flex justify-content-center mt-3">
+                                        @foreach (var miniatura in publicacion.Imagenes)
+                                        {
+                                            <img src="@miniatura.Ruta" class="img-thumbnail rounded-circle" alt="@miniatura.Alt" style="width: 120px; height: 120px; margin: 0 10px;">
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <!-- Texto descriptivo -->
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left">
+                                    <h1 class="h1">@publicacion.Titulo</h1>
+                                    <h3 class="h2">@publicacion.Ubicacion</h3>
+                                    <p>@publicacion.Descripcion</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+}
+else
+{
+    <p>No hay publicaciones destacadas disponibles.</p>
+}
+<!-- End Banner Hero -->
+<!-- Start Categories Section -->
+<div class="container1">
+    <a class="letterc">Categorías</a>
+</div>
+<div class="row1 text-center pt-3">
+    <video autoplay loop muted>
+        <source src="/assets/videos/1090581705-preview.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+    </video>
+</div>
+<section class="container py-5">
+    <div class="row horizontal-row">
+        @if (Model.Categorias != null && Model.Categorias.Any())
+        {
+            @foreach (var categoria in Model.Categorias)
+            {
+                <div class="col-12 col-md-3 p-5 mt-3">
+                    <a href="@categoria.Url">
+                        <img src="@categoria.RutaIcono" class="carousel-image rounded-circle img-fluid border" style="margin-bottom: 20px;">
+                    </a>
+                    <p class="text-center mt-2">
+                        <a class="btn btn-custom">@categoria.NombreCategoria</a>
+                    </p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No hay categorías disponibles.</p>
+        }
+    </div>
+</section>
+<!-- End Categories Section -->
