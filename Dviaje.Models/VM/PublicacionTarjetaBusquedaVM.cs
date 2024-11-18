@@ -1,4 +1,6 @@
-﻿namespace Dviaje.Models.VM
+﻿using Dviaje.Models.VM.Dviaje.Models.VM;
+
+namespace Dviaje.Models.VM
 {
     public class PublicacionTarjetaBusquedaVM
     {
