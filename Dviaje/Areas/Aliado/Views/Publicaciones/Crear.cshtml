@@ -1,40 +1,56 @@
-﻿@model Dviaje.Models.VM.PublicacionCrearVM
+﻿@model PublicacionCrearVM
 
 @{
     ViewData["Title"] = "Crear Publicación";
 }
 
-<h2>Crear Publicación</h2>
 
-<form asp-action="Crear" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="Titulo">Título</label>
-        <input asp-for="Titulo" class="form-control" id="Titulo" />
-        <span asp-validation-for="Titulo" class="text-danger"></span>
-    </div>
+@section Styles {
+    <!-- Fancybox ui v5.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@@5.0/dist/fancybox/fancybox.css" />
 
-    <div class="form-group">
-        <label for="Descripcion">Descripción</label>
-        <textarea asp-for="Descripcion" class="form-control" id="Descripcion"></textarea>
-        <span asp-validation-for="Descripcion" class="text-danger"></span>
-    </div>
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/publicaciones/publicacion-crear.css">
+}
 
-    <div class="form-group">
-        <label for="Precio">Precio</label>
-        <input asp-for="Precio" class="form-control" id="Precio" type="number" step="0.01" />
-        <span asp-validation-for="Precio" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label for="Direccion">Dirección</label>
-        <input asp-for="Direccion" class="form-control" id="Direccion" />
-        <span asp-validation-for="Direccion" class="text-danger"></span>
-    </div>
+<div class="contenedor-crear">
+    <form asp-area="Aliado" asp-controller="Publicaciones" asp-action="Crear" method="post" enctype="multipart/form-data">
+        <div class="titulo-imagenes">
+            <section class="section-titulo">
+                <div class="editable" contenteditable="true">Titulo</div>
+                <div class="editable-direccion" contenteditable="true">Dirección</div>
+                <div class="editable-descripcion" contenteditable="true">Descripción</div>
+                <input type="text" asp-for="Titulo" hidden />
+                <input type="text" asp-for="Direccion" hidden />
+                <input type="text" asp-for="Descripcion" hidden />
+            </section>
 
-    <div class="form-group">
-        <label for="Imagenes">Imágenes</label>
-        <input asp-for="Imagenes" class="form-control-file" id="Imagenes" multiple />
-    </div>
+            <section class="upload-container">
+                <h2>Arrastra y Suelta Tus Imágenes</h2>
+                <div id="drop-zone" class="drop-zone">
+                    <p>Arrastra y suelta tus imágenes aquí o haz clic para cargar</p>
+                    <input type="file" id="imageInput" accept="image/*" multiple>
+                </div>
+                <div id="preview-container" class="preview-container"></div>
+            </section>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Crear</button>
-</form>
+
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    <!-- Sortable.js -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script type="module" src="~/js/publicaciones/publicacionCrear.js"></script>
+}

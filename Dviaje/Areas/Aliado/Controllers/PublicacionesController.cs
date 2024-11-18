@@ -1,4 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -12,19 +13,66 @@ namespace Dviaje.Areas.Aliado.Controllers
     public class PublicacionesController : Controller
     {
         private readonly IPublicacionesRepository _publicacionesRepository;
+        private readonly IServiciosRepository _serviciosRepository;
+        private readonly IRestriccionesRepository _restriccionesRepository;
+        private readonly ICategoriasRepository _categoriasRepository;
 
-        public PublicacionesController(IPublicacionesRepository publicacionesRepository)
+
+        public PublicacionesController(
+            IPublicacionesRepository publicacionesRepository,
+            IServiciosRepository serviciosRepository,
+            IRestriccionesRepository restriccionesRepository,
+            ICategoriasRepository categoriasRepository)
         {
             _publicacionesRepository = publicacionesRepository;
+            _serviciosRepository = serviciosRepository;
+            _restriccionesRepository = restriccionesRepository;
+            _categoriasRepository = categoriasRepository;
         }
+
 
         /// <summary>
         /// Vista para crear una nueva publicación.
         /// </summary>
         [Route("publicacion/crear")]
-        public IActionResult Crear()
+        public async Task<IActionResult> Crear()
         {
-            return View();
+            // var datos = await _publicacionesRepository.ObtenerPublicacionCrearVMAsync();
+
+            var servicios = await _serviciosRepository.ObtenerServiciosAsync();
+            var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
+            var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
+
+            var publicacion = new PublicacionCrearVM
+            {
+                ServiciosHabitacion = servicios
+                    .Where(s => s.ServicioTipo == ServicioTipo.Habitacion)
+                    .Select(s => new SeleccionSRCVM
+                    {
+                        Id = s.IdServicio,
+                        Nombre = s.NombreServicio,
+                        Icono = s.RutaIcono
+                    }).ToList(),
+                ServiciosEstablecimiento = servicios
+                    .Where(s => s.ServicioTipo == ServicioTipo.Establecimiento)
+                    .Select(s => new SeleccionSRCVM
+                    {
+                        Id = s.IdServicio,
+                        Nombre = s.NombreServicio,
+                        Icono = s.RutaIcono
+                    }).ToList(),
+                ServiciosAccesibilidad = servicios
+                    .Where(s => s.ServicioTipo == ServicioTipo.Accesibilidad)
+                    .Select(s => new SeleccionSRCVM
+                    {
+                        Id = s.IdServicio,
+                        Nombre = s.NombreServicio,
+                        Icono = s.RutaIcono
+                    }).ToList()
+            };
+
+
+            return View(publicacion);
         }
 
         /// <summary>

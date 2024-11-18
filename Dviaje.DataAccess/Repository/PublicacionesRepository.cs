@@ -371,6 +371,12 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+        public Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+
 
 
 
