@@ -60,6 +60,8 @@ builder.Services.AddScoped<ISubirArchivosService, CloudinaryService>();
 builder.Services.AddScoped<IOptimizacionImagenesService, ImageSharpService>();
 
 // Inyección de Repositorios
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<ILandingPageRepository, LandingPageRepository>();
 builder.Services.AddScoped<ICategoriasRepository, CategoriasRepository>();
 builder.Services.AddScoped<IFavoritosRepository, FavoritoRepository>();
 builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();

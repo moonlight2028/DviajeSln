@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models.VM;
-using Dviaje.Models.VM.Dviaje.Models.VM;
-using Dviaje.Models.VM.Dviaje.Models.VM.Dviaje.Models.VM;
 using System.Data;
 
 public class LandingPageRepository : ILandingPageRepository

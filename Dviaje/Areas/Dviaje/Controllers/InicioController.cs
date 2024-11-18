@@ -1,5 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models.VM.Dviaje.Models.VM;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
