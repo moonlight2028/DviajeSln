@@ -2,13 +2,12 @@
 
 galeriaImagenes();
 document.addEventListener('DOMContentLoaded', () => {
-    // Elemnetos DOM
-    // Inputs
     const editables = [
-        { divId: 'DivInputTitulo', defaultValue: 'Titulo' },
-        { divId: 'DivInputDireccion', defaultValue: 'Direccion' },
-        { divId: 'DivInputDescripcion', defaultValue: 'Descripcion' }
+        { divId: 'DivInputTitulo', inputId: 'Titulo' },
+        { divId: 'DivInputDireccion', inputId: 'Direccion' },
+        { divId: 'DivInputDescripcion', inputId: 'Descripcion' }
     ];
+
 
     // Imagenes
     const dropZone = document.getElementById('drop-zone');
@@ -29,52 +28,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Eventos DOM
     // Eventos inputs
-    //editables.forEach(({ divId, defaultValue }) => {
-    //    const div = document.getElementById(divId);
+    editables.forEach(({ divId, inputId }) => {
+        const div = document.getElementById(divId);
+        const input = document.getElementById(inputId);
 
-    //    if (div) {
-    //        // Configurar el valor por defecto al cargar la página si está vacío
-    //        if (!div.textContent.trim()) {
-    //            div.textContent = defaultValue;
-    //        }
+        if (div && input) {
+            const defaultValue = div.textContent.trim(); // Valor inicial del div editable
 
-    //        // Evento al perder el foco (blur)
-    //        div.addEventListener('blur', () => {
-    //            if (!div.textContent.trim()) {
-    //                div.textContent = defaultValue; // Restablecer al valor por defecto
-    //            }
-    //        });
-    //    } else {
-    //        console.error(`No se encontró el elemento con id "${divId}"`);
-    //    }
-    //});
-    //editables.forEach(({ divId, defaultValue }) => {
-    //    const div = document.getElementById(divId);
-    //    const input = document.getElementById(defaultValue);
-    //     // Asumiendo que el input tiene el id sin "Div" como prefijo
+            // Evento al perder el foco (blur)
+            div.addEventListener('blur', () => {
+                const value = div.textContent.trim();
+                if (!value) {
+                    div.textContent = defaultValue;
+                    input.value = "";
+                } else {
+                    input.value = div.textContent;
+                }
+            });
 
-    //    if (div && input) {
-    //        // Configurar el valor por defecto al cargar la página si está vacío
-    //        if (!div.textContent.trim()) {
-    //            div.textContent = defaultValue;
-    //        }
-
-    //        // Evento al perder el foco (blur) en el div
-    //        div.addEventListener('blur', () => {
-    //            // Solo actualizar el input si el div tiene texto que no esté vacío
-    //            if (div.textContent.trim() !== defaultValue && div.textContent.trim() !== '') {
-    //                console.log(input);
-    //                //input.value = div.textContent.trim();
-    //                input.value = "dsafasdfasdf";
-    //            } else if (!div.textContent.trim()) {
-    //                // Si el div está vacío, restablecer el valor del div al valor por defecto
-    //                div.textContent = defaultValue;
-    //            }
-    //        });
-    //    } else {
-    //        console.error(`No se encontró el elemento con id "${divId}" o el input correspondiente.`);
-    //    }
-    //});
+            // Evento mientras se escribe (input)
+            div.addEventListener('input', () => {
+                input.value = div.textContent;
+            });
+        } else {
+            console.error(`No se encontró el elemento con id "${divId}" o "${inputId}"`);
+        }
+    });
 
 
     // Eventos imagenes
@@ -213,28 +192,4 @@ document.addEventListener('DOMContentLoaded', () => {
             updateInput();
         },
     });
-
-
-
-
-
-
-
-
-    // Botón para mostrar valores
-    const mostrarValoresBtn = document.getElementById('mostrarValores');
-    if (mostrarValoresBtn) {
-        mostrarValoresBtn.addEventListener('click', () => {
-            const titulo = document.getElementById('Titulo');
-            const direccion = document.getElementById('Direccion').value;
-            const descripcion = document.getElementById('Descripcion').value;
-
-            console.log(titulo);
-
-            console.log('Valores de los inputs:');
-            console.log(`Título: ${titulo}`);
-            console.log(`Dirección: ${direccion}`);
-            console.log(`Descripción: ${descripcion}`);
-        });
-    }
 });

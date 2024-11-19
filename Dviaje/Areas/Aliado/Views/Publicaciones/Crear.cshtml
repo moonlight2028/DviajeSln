@@ -22,10 +22,9 @@
                     <div class="editable" contenteditable="true" id="DivInputTitulo">Titulo</div>
                     <div class="editable-direccion" contenteditable="true" id="DivInputDireccion">Dirección</div>
                     <div class="editable-descripcion" contenteditable="true" id="DivInputDescripcion">Descripción</div>
-                    @* <input type="text" id="Titulo" name="Titulo" /> *@
-                    <input type="text" asp-for="Titulo" />
-                    <input type="text" asp-for="Direccion" hidden />
-                    <input type="text" asp-for="Descripcion" hidden />
+                    <input type="text" asp-for="Titulo"  class="input-oculto"/>
+                    <input type="text" asp-for="Direccion" class="input-oculto"/>
+                    <input type="text" asp-for="Descripcion" class="input-oculto"/>
                 </section>
 
                 <section class="upload-container">
