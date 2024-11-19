@@ -8,5 +8,8 @@
         public string? DescripcionPublicacion { get; set; }
         public string? DireccionPublicacion { get; set; }
         public string? ImagenPublicacion { get; set; }
+
+        // Lista de reseñas para esta publicación
+        public List<ResenaTarjetaBasicaVM> Resenas { get; set; } = new List<ResenaTarjetaBasicaVM>();
     }
 }

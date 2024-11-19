@@ -1,4 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -72,10 +73,10 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
                 if (resenas == null || !resenas.Any())
                 {
-                    return NoContent();
+                    return NoContent(); // Devuelve 204 si no hay contenido
                 }
 
-                return Ok(resenas);
+                return Ok(new { success = true, data = resenas });
             }
             catch (Exception ex)
             {
@@ -94,30 +95,42 @@ namespace Dviaje.Areas.Dviaje.Controllers
             var idUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (idUsuario == null)
             {
-                return Challenge(); // Redirige al inicio de sesión
+                return Unauthorized(new { success = false, message = "Usuario no autenticado." });
             }
 
             try
             {
+                // Verificar si el usuario ya dio "Me gusta"
                 var yaLeDioLike = await _resenaRepository.VerificarSiUsuarioLeDioLike(idResena, idUsuario);
 
                 if (yaLeDioLike)
                 {
+                    // Elimina el "Me gusta"
                     await _resenaRepository.EliminarMeGustaAsync(idResena, idUsuario);
                 }
                 else
                 {
+                    // Agrega el "Me gusta"
                     await _resenaRepository.AgregarMeGustaAsync(idResena, idUsuario);
                 }
 
+                // Obtener el nuevo conteo de likes
                 var nuevoConteoLikes = await _resenaRepository.ObtenerMeGustaCountAsync(idResena);
 
-                return Json(new { likes = nuevoConteoLikes, yaLeDioLike = !yaLeDioLike });
+                // Crear objeto de respuesta
+                var response = new ResenaLikeVM
+                {
+                    IdResena = idResena,
+                    Likes = nuevoConteoLikes,
+                    YaLeDioLike = !yaLeDioLike // Estado actualizado
+                };
+
+                return Json(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al gestionar el 'me gusta' para la reseña {idResena} por el usuario {idUsuario}.", idResena, idUsuario);
-                return StatusCode(500, new { success = false, message = "Ocurrió un error al procesar el 'me gusta'." });
+                _logger.LogError(ex, "Error al gestionar el 'me gusta' de la reseña {idResena}.", idResena);
+                return StatusCode(500, new { success = false, message = "Ocurrió un error al procesar la solicitud." });
             }
         }
     }
