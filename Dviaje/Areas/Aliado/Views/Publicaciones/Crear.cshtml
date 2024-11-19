@@ -36,6 +36,55 @@
             </section>
         </div>
 
+        <div class="hr"></div>
+
+        @foreach (var servicio in Model.ServiciosHabitacion)
+        {
+            <div>
+                <input type="checkbox" asp-for="@servicio.Seleccionado" id="@servicio.Id" />
+                <label for="@servicio.Id">@servicio.Nombre</label>
+            </div>
+        }
+
+        <div class="hr"></div>
+
+
+        @foreach (var servicio in Model.ServiciosEstablecimiento)
+        {
+            <div>
+                <input type="checkbox" asp-for="@servicio.Seleccionado" id="@servicio.Id" />
+                <label for="@servicio.Id">@servicio.Nombre</label>
+            </div>
+        }
+
+        <div class="hr"></div>
+
+        @foreach (var servicio in Model.ServiciosAccesibilidad)
+        {
+            <div>
+                <input type="checkbox" asp-for="@servicio.Seleccionado" id="@servicio.Id" />
+                <label for="@servicio.Id">@servicio.Nombre</label>
+            </div>
+        }
+
+        <div class="hr"></div>
+
+
+
+
+
+        <button type="submit">Enviar</button>
+
+
+
+
+
+
+
+
+
+
+
 
     </form>
 </div>
