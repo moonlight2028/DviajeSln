@@ -68,7 +68,19 @@ namespace Dviaje.Areas.Aliado.Controllers
                         Id = s.IdServicio,
                         Nombre = s.NombreServicio,
                         Icono = s.RutaIcono
-                    }).ToList()
+                    }).ToList(),
+                Restricciones = restricciones.Select(r => new SeleccionSRCVM
+                {
+                    Id = r.IdRestriccion,
+                    Nombre = r.NombreRestriccion,
+                    Icono = r.RutaIcono
+                }).ToList(),
+                Categorias = categorias.Select(c => new SeleccionSRCVM
+                {
+                    Id = c.IdCategoria,
+                    Nombre = c.NombreCategoria,
+                    Icono = c.RutaIcono
+                }).ToList()
             };
 
 

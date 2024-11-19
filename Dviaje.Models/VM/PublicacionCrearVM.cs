@@ -6,29 +6,30 @@
         public string? Titulo { get; set; }
         public string? Direccion { get; set; }
         public string? Descripcion { get; set; }
+        public int NumeroCamas { get; set; }
+        public decimal Precio { get; set; }
         public List<SeleccionSRCVM>? ServiciosHabitacion { get; set; }
         public List<SeleccionSRCVM>? ServiciosAccesibilidad { get; set; }
         public List<SeleccionSRCVM>? ServiciosEstablecimiento { get; set; }
         public List<SeleccionSRCVM>? Restricciones { get; set; }
         public List<SeleccionSRCVM>? Categorias { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public decimal Precio { get; set; }
-        public List<PublicacionImagenVM>? Imagenes { get; set; }
         public List<FechasNoDisponibles>? FechasNoDisponibles { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public List<PublicacionImagenVM>? Imagenes { get; set; }
 
 
         //public DateTime? Fecha { get; set; }
