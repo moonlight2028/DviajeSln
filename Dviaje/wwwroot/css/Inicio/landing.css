@@ -1,0 +1,153 @@
+﻿/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+    color: #333;
+}
+
+/* Carrusel */
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    margin-top: 80px; /* Evita que choque con la barra de navegación */
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carousel-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 100%;
+    padding: 20px;
+    box-shadow: 0px 0px 14px -7px #f09819;
+    height: 400px; /* Ajuste para reducir el tamaño del carrusel */
+}
+
+.carousel-image {
+    width: 40%; /* Reduce el ancho para dejar espacio al texto */
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.carousel-text {
+    width: 50%;
+}
+
+    .carousel-text h1 {
+        font-size: 2rem;
+        color: #FF512F;
+    }
+
+    .carousel-text h3 {
+        font-size: 1.2rem;
+        color: #F09819;
+    }
+
+    .carousel-text p {
+        font-size: 0.9rem;
+        color: #333;
+    }
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #FF512F;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+    .carousel-control.prev {
+        left: 10px;
+    }
+
+    .carousel-control.next {
+        right: 10px;
+    }
+
+/* Categorías */
+#categories-section {
+    text-align: center;
+    padding: 50px 20px;
+    background: #f09819;
+}
+
+.categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-item {
+    margin: 15px;
+    text-align: center;
+}
+
+    .category-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0px 0px 14px -7px #FF512F;
+    }
+
+    .category-item h3 {
+        margin-top: 10px;
+        font-size: 1rem;
+        color: #333;
+    }
+
+/* Secciones de información */
+#about-section, #why-travel-section, #cundinamarca-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+    #about-section h2, #why-travel-section h2, #cundinamarca-section h2 {
+        color: #FF512F;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    #about-section p, #why-travel-section p, #cundinamarca-section p {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.6;
+    }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #FF512F;
+    color: white;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+    .footer-links a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+
+footer p {
+    font-size: 0.9rem;
+}
