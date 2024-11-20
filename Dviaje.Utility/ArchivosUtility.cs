@@ -8,6 +8,7 @@
     {
         // Archivos
         public static string[] ArchivosValidos = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+        public static string[] ArchivosValidosImagenes = ["image/jpg", "image/jpeg", "image/png", "image/webp",];
 
         // Resoluciones
         public static List<(int ancho, int alto)> ResolucionesAvatar = [(50, 50), (200, 200)];
@@ -30,5 +31,7 @@
         /// <param name="id">ID del usuario para el cual se genera la ruta.</param>
         /// <returns>Ruta de almacenamiento en Cloudinary para los PQRS del usuario especificado.</returns>
         public static string CarpetaPQRS(int id) => $"pqrs/{id}";
+
+        public static string CarpetaPublicaciones(int id) => $"publicaciones/{id}";
     }
 }

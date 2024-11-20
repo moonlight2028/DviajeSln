@@ -2,12 +2,12 @@
 
 galeriaImagenes();
 document.addEventListener('DOMContentLoaded', () => {
+    // Inputs datos
     const editables = [
         { divId: 'DivInputTitulo', inputId: 'Titulo' },
         { divId: 'DivInputDireccion', inputId: 'Direccion' },
         { divId: 'DivInputDescripcion', inputId: 'Descripcion' }
     ];
-
 
     // Imagenes
     const dropZone = document.getElementById('drop-zone');
@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fechaInicialInput = document.getElementById('booking-busqueda-llegada');
     const fechaFinalInput = document.getElementById('booking-busqueda-salida');
     const fechasAgregadasContainer = document.getElementById('fechas-agregadas');
-
+    let indiceFechaNoDisponible = 0;
+    
 
     // Eventos DOM
     // Eventos inputs
@@ -33,7 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const input = document.getElementById(inputId);
 
         if (div && input) {
-            const defaultValue = div.textContent.trim(); // Valor inicial del div editable
+            const defaultValue = div.textContent.trim();
+
+            // Evento al enfocar (focus)
+            div.addEventListener('focus', () => {
+                if (div.textContent.trim() === defaultValue) {
+                    div.textContent = '';
+                }
+            });
 
             // Evento al perder el foco (blur)
             div.addEventListener('blur', () => {
@@ -98,47 +106,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // Funcion fechas
+    // Función para agregar fechas
     const agregarFecha = () => {
         const fechaInicial = fechaInicialInput.value;
         const fechaFinal = fechaFinalInput.value;
 
-        if (fechaInicial && fechaFinal) {
-            const fechaItem = document.createElement('div');
-            fechaItem.classList.add('fecha-item');
-            fechaItem.innerHTML = `
-                <div class="fecha">
-                    <div>
-                        <span class="fecha-agregada-titulo">Fecha Inicial</span>
-                        <span class="fecha-agregada-valor">${fechaInicial}</span>
-                    </div>
-                    <div>
-                        <span class="fecha-agregada-titulo">Fecha Final</span>
-                        <span class="fecha-agregada-valor">${fechaFinal}</span>
-                    </div>
-                </div>
-                <button class="remove-fecha">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            `;
-
-            fechasAgregadasContainer.appendChild(fechaItem);
-
-            fechaInicialInput.value = '';
-            fechaFinalInput.value = '';
-
-            const removeButton = fechaItem.querySelector('.remove-fecha');
-            removeButton.addEventListener('click', () => {
-                fechaItem.remove();
-            });
-        } else {
+        if (!fechaInicial || !fechaFinal) {
             alert('Por favor, ingrese ambas fechas.');
+            return;
         }
+
+        if (new Date(fechaInicial) > new Date(fechaFinal)) {
+            alert('La fecha inicial no puede ser mayor que la fecha final.');
+            return;
+        }
+
+        // Crear un nuevo elemento de fecha
+        const fechaItem = document.createElement('div');
+        fechaItem.classList.add('fecha-item');
+        fechaItem.innerHTML = `
+            <div class="fecha">
+                <div>
+                    <span class="fecha-agregada-titulo">Fecha Inicial</span>
+                    <input type="hidden" name="FechasNoDisponibles[${indiceFechaNoDisponible}].FechaInicial" value="${fechaInicial}" />
+                    <span class="fecha-agregada-valor">${fechaInicial}</span>
+                </div>
+                <div>
+                    <span class="fecha-agregada-titulo">Fecha Final</span>
+                    <input type="hidden" name="FechasNoDisponibles[${indiceFechaNoDisponible}].FechaFinal" value="${fechaFinal}" />
+                    <span class="fecha-agregada-valor">${fechaFinal}</span>
+                </div>
+            </div>
+            <button class="remove-fecha">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        fechasAgregadasContainer.appendChild(fechaItem);
+
+        // Limpiar los campos de entrada
+        fechaInicialInput.value = '';
+        fechaFinalInput.value = '';
+
+        // Incrementar el índice
+        indiceFechaNoDisponible++;
     };
 
-    // Evento fechas
+    // Evento para agregar fechas
     agregarFechaButtonSm.addEventListener('click', agregarFecha);
     agregarFechaButtonLg.addEventListener('click', agregarFecha);
+
+    // Delegación de eventos para eliminar fechas
+    fechasAgregadasContainer.addEventListener('click', (event) => {
+        if (event.target.closest('.remove-fecha')) {
+            const fechaItem = event.target.closest('.fecha-item');
+            if (fechaItem) {
+                fechaItem.remove();
+            }
+        }
+    });
 
 
     // Funciones imagenes

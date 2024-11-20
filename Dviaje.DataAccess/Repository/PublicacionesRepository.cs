@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using System.Data;
 
@@ -291,49 +292,116 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-        public async Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion)
+        public async Task<int?> CrearPublicacionAsync(PublicacionCrearVM publicacion)
         {
-            using var transaction = _db.BeginTransaction();
             try
             {
-                var sqlPublicacion = @"
-                                INSERT INTO Publicaciones (Titulo, Descripcion, Precio, Fecha, Direccion, IdAliado)
-                                VALUES (@Titulo, @Descripcion, @Precio, @Fecha, @Direccion, @IdAliado);
-                                SELECT LAST_INSERT_ID();";
-
-                var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
-
-                if (publicacion.Imagenes != null)
+                if (_db.State != ConnectionState.Open)
                 {
-                    var sqlImagenes = @"
-                                    INSERT INTO PublicacionesImagenes (IdPublicacion, Ruta, Alt, Orden)
-                                    VALUES (@IdPublicacion, @Ruta, @Alt, @Orden);";
-
-                    foreach (var imagen in publicacion.Imagenes)
-                    {
-                        await _db.ExecuteAsync(sqlImagenes, new { IdPublicacion = idPublicacion, imagen.Ruta, imagen.Alt, imagen.Orden }, transaction);
-                    }
+                    _db.Open();
                 }
 
-                if (publicacion.FechasNoDisponibles != null)
+                using var transaction = _db.BeginTransaction();
+                try
                 {
-                    var sqlFechas = @"
-                                INSERT INTO FechasNoDisponibles (FechaInicial, FechaFinal, IdPublicacion)
-                                VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);";
+                    // Registro tabla Publicaciones
+                    var sqlPublicacion = @"
+                    INSERT INTO Publicaciones (Titulo, Descripcion, Precio, Fecha, Direccion, CamasMaximo, PublicacionEstado, IdAliado)
+                    VALUES (@Titulo, @Descripcion, @Precio, @Fecha, @Direccion, @NumeroCamas, 'Activa', @IdAliado);
+                    SELECT LAST_INSERT_ID();
+                ";
 
-                    foreach (var fecha in publicacion.FechasNoDisponibles)
+                    var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
+
+
+                    // Registro tabla PublicacionesServicios
+                    var todosServiciosSeleccionados = new List<object>();
+
+                    todosServiciosSeleccionados.AddRange(publicacion.ServiciosHabitacionSeleccionados?.Select(IdServicio => new { IdPublicacion = idPublicacion, IdServicio }) ?? Enumerable.Empty<object>());
+                    todosServiciosSeleccionados.AddRange(publicacion.ServiciosEstablecimientoSeleccionados?.Select(IdServicio => new { IdPublicacion = idPublicacion, IdServicio }) ?? Enumerable.Empty<object>());
+                    todosServiciosSeleccionados.AddRange(publicacion.ServiciosAccesibilidadSeleccionados?.Select(IdServicio => new { IdPublicacion = idPublicacion, IdServicio }) ?? Enumerable.Empty<object>());
+
+                    if (todosServiciosSeleccionados.Any())
                     {
-                        await _db.ExecuteAsync(sqlFechas, new { IdPublicacion = idPublicacion, fecha.FechaInicial, fecha.FechaFinal }, transaction);
-                    }
-                }
+                        var sqlServicios = @"
+                        INSERT INTO PublicacionesServicios (IdPublicacion, IdServicio)
+                        VALUES (@IdPublicacion, @IdServicio);
+                    ";
 
-                transaction.Commit();
-                return true;
+                        await _db.ExecuteAsync(sqlServicios, todosServiciosSeleccionados, transaction);
+                    }
+
+
+                    // Registro tabla PublicacionesRestricciones
+                    if (publicacion.RestriccionesSeleccionadas != null)
+                    {
+                        var sqlRestricciones = @"
+                        INSERT INTO PublicacionesRestricciones (IdPublicacion, IdRestriccion)
+                        VALUES (@IdPublicacion, @IdRestriccion);
+                    ";
+
+                        var restricciones = publicacion.RestriccionesSeleccionadas.Select(restriccion => new
+                        {
+                            IdPublicacion = idPublicacion,
+                            IdRestriccion = restriccion
+                        });
+
+                        await _db.ExecuteAsync(sqlRestricciones, restricciones, transaction);
+                    }
+
+
+                    // Registro tabla PublicacionesCategorias
+                    if (publicacion.CategoriasSeleccionadas != null)
+                    {
+                        var sqlCategorias = @"
+                        INSERT INTO PublicacionesCategorias (IdPublicacion, IdCategoria)
+                        VALUES (@IdPublicacion, @IdCategoria);
+                    ";
+
+                        var categorias = publicacion.CategoriasSeleccionadas.Select(categoria => new
+                        {
+                            IdPublicacion = idPublicacion,
+                            IdCategoria = categoria
+                        });
+
+                        await _db.ExecuteAsync(sqlCategorias, categorias, transaction);
+                    }
+
+
+                    // Registro tabla FechasNoDisponibles
+                    if (publicacion.FechasNoDisponibles != null)
+                    {
+                        var sqlFechas = @"
+                        INSERT INTO FechasNoDisponibles (FechaInicial, FechaFinal, IdPublicacion)
+                        VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);
+                    ";
+
+                        var fechas = publicacion.FechasNoDisponibles.Select(fecha => new
+                        {
+                            fecha.FechaInicial,
+                            fecha.FechaFinal,
+                            IdPublicacion = idPublicacion
+                        }).ToList();
+
+                        await _db.ExecuteAsync(sqlFechas, fechas, transaction);
+                    }
+
+
+                    transaction.Commit();
+                    return idPublicacion;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return null;
+                }
             }
-            catch
+            finally
             {
-                transaction.Rollback();
-                return false;
+                if (_db.State == ConnectionState.Open)
+                {
+                    _db.Close();
+                }
             }
         }
 
@@ -593,6 +661,23 @@ namespace Dviaje.DataAccess.Repository
 
             return resultado;
         }
+
+
+
+
+        public async Task<bool> RegistrarImagenes(List<PublicacionesImagenes> imagenes)
+        {
+            var consulta = @"
+                INSERT INTO PublicacionesImagenes (Ruta, Alt, IdPublicacion)
+                VALUES (@Ruta, @Alt, @IdPublicacion);
+            ";
+
+            var filasAfectadas = await _db.ExecuteAsync(consulta, imagenes);
+
+            return filasAfectadas > 0;
+        }
+
+
 
     }
 }

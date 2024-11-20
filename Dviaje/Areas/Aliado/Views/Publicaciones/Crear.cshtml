@@ -31,7 +31,7 @@
                     <h2>Arrastra y Suelta Tus Imágenes</h2>
                     <div id="drop-zone" class="drop-zone">
                         <p>Arrastra y suelta tus imágenes aquí o haz clic para cargar</p>
-                        <input type="file" id="imageInput" accept="image/*" multiple>
+                        <input type="file" id="imageInput" name="imagenes" accept="image/*" multiple>
                     </div>
                     <div id="preview-container" class="preview-container"></div>
                 </section>
@@ -43,13 +43,16 @@
                 <div class="checkbox-servicios">
                     <h2>Servicios de Habitación</h2>
                     <div class="checkbox-items">
-                        @foreach (var servicio in Model.ServiciosHabitacion)
+                        @if(Model.ServiciosHabitacion != null)
                         {
-                            <div class="checkbox-item">
-                                <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-habitacion")" />
-                                <i class="@servicio.Icono"></i>
-                                <label for="@($"{servicio.Id}-servicio-habitacion")">@servicio.Nombre</label>
-                            </div>
+                            foreach (var servicio in Model.ServiciosHabitacion)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-habitacion")" value="@servicio.Id" name="ServiciosHabitacionSeleccionados" />
+                                    <i class="@servicio.Icono"></i>
+                                    <label for="@($"{servicio.Id}-servicio-habitacion")">@servicio.Nombre</label>
+                                </div>
+                            }
                         }
                     </div>
                 </div>
@@ -58,14 +61,17 @@
                 <div class="checkbox-servicios">
                     <h2>Servicios de Establecimiento</h2>
                     <div class="checkbox-items">
-                        @foreach (var servicio in Model.ServiciosEstablecimiento)
+                        @if (Model.ServiciosEstablecimiento != null)
                         {
-                            <div class="checkbox-item">
-                                <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-establecimiento")" />
-                                <i class="@servicio.Icono"></i>
-                                <label for="@($"{servicio.Id}-servicio-establecimiento")">@servicio.Nombre</label>
-                            </div>
-                        }
+                            foreach (var servicio in Model.ServiciosEstablecimiento)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-establecimiento")" value="@servicio.Id" name="ServiciosEstablecimientoSeleccionados" />
+                                    <i class="@servicio.Icono"></i>
+                                    <label for="@($"{servicio.Id}-servicio-establecimiento")">@servicio.Nombre</label>
+                                </div>
+                            }
+                        }                        
                     </div>
                 </div>
                 <div class="hr"></div>
@@ -73,13 +79,16 @@
                 <div class="checkbox-servicios">
                     <h2>Servicios de Accesibilidad</h2>
                     <div class="checkbox-items">
-                        @foreach (var servicio in Model.ServiciosAccesibilidad)
+                        @if (Model.ServiciosAccesibilidad != null)
                         {
-                            <div class="checkbox-item">
-                                <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-accesibilidad")" />
-                                <i class="@servicio.Icono"></i>
-                                <label for="@($"{servicio.Id}-servicio-accesibilidad")">@servicio.Nombre</label>
-                            </div>
+                            foreach (var servicio in Model.ServiciosAccesibilidad)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-accesibilidad")" value="@servicio.Id" name="ServiciosAccesibilidadSeleccionados" />
+                                    <i class="@servicio.Icono"></i>
+                                    <label for="@($"{servicio.Id}-servicio-accesibilidad")">@servicio.Nombre</label>
+                                </div>
+                            }
                         }
                     </div>
                 </div>
@@ -90,13 +99,16 @@
                 <div class="checkbox-servicios">
                     <h2>Restricciones</h2>
                     <div class="checkbox-items">
-                        @foreach (var restriccion in Model.Restricciones)
+                        @if (Model.Restricciones != null)
                         {
-                            <div class="checkbox-item">
-                                <input type="checkbox" asp-for="@restriccion.Seleccionado" id="@($"{restriccion.Id}-restriccion")" />
-                                <i class="@restriccion.Icono"></i>
-                                <label for="@($"{restriccion.Id}-restriccion")">@restriccion.Nombre</label>
-                            </div>
+                            foreach (var restriccion in Model.Restricciones)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" asp-for="@restriccion.Seleccionado" id="@($"{restriccion.Id}-restriccion")" value="@restriccion.Id" name="RestriccionesSeleccionadas" />
+                                    <i class="@restriccion.Icono"></i>
+                                    <label for="@($"{restriccion.Id}-restriccion")">@restriccion.Nombre</label>
+                                </div>
+                            }
                         }
                     </div>
                 </div>
@@ -105,13 +117,16 @@
                 <div class="checkbox-servicios">
                     <h2>Categorías</h2>
                     <div class="checkbox-items">
-                        @foreach (var categoria in Model.Categorias)
+                        @if (Model.Categorias != null)
                         {
-                            <div class="checkbox-item">
-                                <input type="checkbox" asp-for="@categoria.Seleccionado" id="@($"{categoria.Id}-categoria")" />
-                                <i class="@categoria.Icono"></i>
-                                <label for="@($"{categoria.Id}-categoria")">@categoria.Nombre</label>
-                            </div>
+                            foreach (var categoria in Model.Categorias)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" asp-for="@categoria.Seleccionado" id="@($"{categoria.Id}-categoria")" value="@categoria.Id" name="CategoriasSeleccionadas" />
+                                    <i class="@categoria.Icono"></i>
+                                    <label for="@($"{categoria.Id}-categoria")">@categoria.Nombre</label>
+                                </div>
+                            }
                         }
                     </div>
                 </div>
@@ -165,6 +180,7 @@
                 </div>
                 <div class="hr"></div>
                 
+                <div asp-validation-summary="All" class="validation-message-all"></div>
                 <button type="submit" class="button-87-main">Publicar</button>
             </section>
         </div>
@@ -175,6 +191,13 @@
 
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    @if (TempData["Notificacion"] != null && TempData["NotificacionTitulo"] != null && TempData["NotificacionMensaje"] != null)
+    {
+        <partial name="_IziToastPartial" />
+    }
+
     <!-- Sortable.js -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 

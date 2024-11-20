@@ -8,32 +8,23 @@
         public string? Descripcion { get; set; }
         public int NumeroCamas { get; set; }
         public decimal Precio { get; set; }
+        public DateTime? Fecha { get; set; }
+        public string? IdAliado { get; set; }
         public List<SeleccionSRCVM>? ServiciosHabitacion { get; set; }
+        public List<int>? ServiciosHabitacionSeleccionados { get; set; }
         public List<SeleccionSRCVM>? ServiciosAccesibilidad { get; set; }
+        public List<int>? ServiciosAccesibilidadSeleccionados { get; set; }
         public List<SeleccionSRCVM>? ServiciosEstablecimiento { get; set; }
+        public List<int>? ServiciosEstablecimientoSeleccionados { get; set; }
         public List<SeleccionSRCVM>? Restricciones { get; set; }
+        public List<int>? RestriccionesSeleccionadas { get; set; }
         public List<SeleccionSRCVM>? Categorias { get; set; }
+        public List<int>? CategoriasSeleccionadas { get; set; }
         public List<FechasNoDisponibles>? FechasNoDisponibles { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public List<PublicacionImagenVM>? Imagenes { get; set; }
 
 
-        //public DateTime? Fecha { get; set; }
-        //public string? IdAliado { get; set; }
+
         //public List<int>? IdServicios { get; set; }
         //public List<ServiciosAdicionales>? ServiciosAdicionales { get; set; }
         //public List<int>? Restricciones { get; set; }
