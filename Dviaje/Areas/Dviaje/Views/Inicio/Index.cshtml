@@ -47,7 +47,14 @@
                 {
                     <div class="category-item">
                         <a href="@categoria.Url">
-                            <img src="@categoria.RutaIcono" alt="@categoria.NombreCategoria">
+                            @if (!string.IsNullOrEmpty(categoria.RutaIcono))
+                            {
+                                <i class="@categoria.RutaIcono category-icon"></i> <!-- Usa el icono de Font Awesome -->
+                            }
+                            else
+                            {
+                                <i class="fa-solid fa-map-marker-alt category-icon"></i> <!-- Icono por defecto -->
+                            }
                         </a>
                         <h3>@categoria.NombreCategoria</h3>
                     </div>
@@ -59,6 +66,7 @@
             }
         </div>
     </section>
+
 
     <!-- Información sobre la página -->
     <section id="about-section">
