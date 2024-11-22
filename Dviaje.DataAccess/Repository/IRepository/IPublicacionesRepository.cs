@@ -17,6 +17,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<bool> EstadoEliminarPublicacionAsync(int idPublicacion, int idAliado);
         Task<bool> EstadoCambiarPublicacionAsync(int idPublicacion, int idAliado, string estado);
         Task<List<PublicacionTablaItemVM>?> ObtenerListaPublicacionTablaItemVMAsync();
+        Task<List<PublicacionCategoriaVM>> ObtenerPublicacionesPorCategoriaAsync(int idCategoria);
         Task<List<ReportesPublicacionesPorMesVM>?> ReportePublicacionesPorMesAsync();
         Task<List<ReportesPublicacionesTopCategoriaVM>?> ReporteTopCategoriasAsync();
         Task<List<ReportesPublicacionesActivasVM>?> ReportePublicacionesActivasAsync();

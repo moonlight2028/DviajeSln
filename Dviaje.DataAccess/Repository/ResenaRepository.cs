@@ -31,32 +31,54 @@ namespace Dviaje.DataAccess.Repository
 
 
         //Obtner las resenas para las tarjetas 
-        public async Task<List<ResenaTarjetaBasicaVM>?> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
+        public async Task<List<ResenaTarjetaBasicaVM>> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                    SELECT r.IdReserva, u.Id AS IdTurista, u.UserName AS NombreTurista, 
-                           av.Url_50px AS AvatarTurista, 
-                           rs.Opinion, rs.Fecha, rs.Calificacion AS Puntuacion, 
-                           (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
-                    FROM Resenas rs
-                    INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                    INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
-                    LEFT JOIN avatares av ON u.Id = av.IdTurista
-                    WHERE p.IdPublicacion = @IdPublicacion
-                    ORDER BY rs.Fecha DESC
+                    SELECT 
+                        r.IdReserva, 
+                        u.Id AS IdTurista, 
+                        u.UserName AS NombreTurista, 
+                        av.Url_50px AS AvatarTurista, 
+                        rs.Opinion, 
+                        rs.Fecha, 
+                        rs.Calificacion AS Puntuacion, 
+                        (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
+                    FROM 
+                        Resenas rs
+                    INNER JOIN 
+                        Reservas r ON rs.IdReserva = r.IdReserva
+                    INNER JOIN 
+                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                    INNER JOIN 
+                        aspnetusers u ON r.IdUsuario = u.Id
+                    LEFT JOIN 
+                        avatares av ON u.Id = av.IdTurista
+                    WHERE 
+                        p.IdPublicacion = @IdPublicacion
+                    ORDER BY 
+                        rs.Fecha DESC
                     LIMIT @ElementosPorPagina OFFSET @Offset";
 
-            var offset = (pagina - 1) * resultadosMostrados;
-            var result = await _db.QueryAsync<ResenaTarjetaBasicaVM>(sql, new
+            try
             {
-                IdPublicacion = idPublicacion,
-                ElementosPorPagina = resultadosMostrados,
-                Offset = offset
-            });
+                var offset = (pagina - 1) * resultadosMostrados;
+                var result = await _db.QueryAsync<ResenaTarjetaBasicaVM>(sql, new
+                {
+                    IdPublicacion = idPublicacion,
+                    ElementosPorPagina = resultadosMostrados,
+                    Offset = offset
+                });
 
-            return result.ToList();
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                // Loggear errores si es necesario
+                Console.WriteLine($"Error en la consulta de reseñas: {ex.Message}");
+                return new List<ResenaTarjetaBasicaVM>(); // Devolver una lista vacía si ocurre un error
+            }
         }
+
 
 
         // Obtner las reseñas que estan disponibles 

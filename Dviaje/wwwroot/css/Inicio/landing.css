@@ -1,0 +1,250 @@
+﻿/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    color: #333;
+}
+
+/* Secciones */
+section {
+    padding: 50px 20px;
+    margin-bottom: 30px;
+}
+
+/* Carrusel */
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carousel-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 100%;
+    padding: 20px;
+    box-shadow: 0 0 14px -7px #F09819;
+    gap: 30px;
+    height: 300px;
+}
+
+.carousel-image {
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.carousel-text {
+    flex: 1;
+    text-align: left;
+}
+
+    .carousel-text h1 {
+        font-size: 2rem;
+        color: #FF512F;
+        margin-bottom: 10px;
+    }
+
+    .carousel-text h3 {
+        font-size: 1.2rem;
+        color: #F09819;
+        margin-bottom: 10px;
+    }
+
+    .carousel-text p {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.6;
+    }
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #FF512F;
+    color: #FFF;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.5rem;
+}
+
+    .carousel-control.prev {
+        left: 10px;
+    }
+
+    .carousel-control.next {
+        right: 10px;
+    }
+
+/* Categorías */
+#categories-section h2 {
+    text-align: center;
+    color: #FF512F;
+    margin-bottom: 20px;
+}
+
+.categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.category-item {
+    text-align: center;
+    width: 120px;
+    transition: transform 0.3s ease-in-out;
+}
+
+    .category-item:hover {
+        transform: scale(1.1);
+    }
+
+.category-icon {
+    font-size: 50px;
+    color: #FF512F;
+    background-color: #FFF;
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 0 14px -7px #FF512F;
+    margin-bottom: 10px;
+}
+
+.category-item h3 {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Secciones de información */
+#about-section, #why-travel-section, #cundinamarca-section {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+    #about-section h2, #why-travel-section h2, #cundinamarca-section h2 {
+        color: #FF512F;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    #about-section p, #why-travel-section p, #cundinamarca-section p {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.6;
+    }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #FF512F;
+    color: #FFF;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+    .footer-links a {
+        color: #FFF;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+
+footer p {
+    font-size: 0.9rem;
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+    .carousel-item {
+        height: 250px;
+        gap: 20px;
+    }
+
+    .carousel-image {
+        width: 50%;
+    }
+
+    .carousel-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .carousel-text h3 {
+        font-size: 1rem;
+    }
+
+    .carousel-text p {
+        font-size: 0.9rem;
+    }
+
+    .categories-container {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+    }
+
+    .carousel-image {
+        width: 80%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .carousel-text {
+        text-align: center;
+        width: 100%;
+    }
+
+    .categories-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .category-item {
+        width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-text h1 {
+        font-size: 1.5rem;
+    }
+
+    .carousel-text h3 {
+        font-size: 0.9rem;
+    }
+
+    .carousel-text p {
+        font-size: 0.8rem;
+    }
+
+    .category-icon {
+        font-size: 40px;
+    }
+}

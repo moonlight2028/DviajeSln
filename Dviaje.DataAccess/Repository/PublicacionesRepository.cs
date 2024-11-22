@@ -520,6 +520,40 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+        //traer publicaciones segun la categoria
+
+        public async Task<List<PublicacionCategoriaVM>> ObtenerPublicacionesPorCategoriaAsync(int idCategoria)
+        {
+            var sql = @"
+        SELECT 
+            p.IdPublicacion, 
+            p.Titulo, 
+            p.Puntuacion, 
+            p.NumeroResenas, 
+            p.Descripcion, 
+            p.Precio, 
+            p.Direccion, 
+            p.PublicacionEstado, 
+            pi.Ruta AS ImagenPrincipal, 
+            c.NombreCategoria
+        FROM 
+            publicacionescategorias pc
+        INNER JOIN 
+            publicaciones p ON pc.IdPublicacion = p.IdPublicacion
+        LEFT JOIN 
+            publicacionesimagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
+        INNER JOIN 
+            categorias c ON pc.IdCategoria = c.IdCategoria
+        WHERE 
+            c.IdCategoria = @IdCategoria
+          AND 
+            p.PublicacionEstado = 'Activa'
+        ORDER BY 
+            p.Fecha DESC;
+    ";
+
+            return (await _db.QueryAsync<PublicacionCategoriaVM>(sql, new { IdCategoria = idCategoria })).ToList();
+        }
 
 
 

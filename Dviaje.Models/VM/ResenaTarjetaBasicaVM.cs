@@ -10,5 +10,6 @@
         public DateTime? Fecha { get; set; }
         public decimal Puntuacion { get; set; }
         public int NumeroLikes { get; set; }
+        public bool YaLeDioLike { get; set; } // Estado del "Me Gusta"
     }
 }

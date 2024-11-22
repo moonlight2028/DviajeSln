@@ -1,40 +1,49 @@
 export const likeResena = () => {
     const likeButtons = document.querySelectorAll('[data-like="resena"]');
 
-    likeButtons.forEach((element) => {
-        let likeIcon = element.querySelector("i");
-        let resenaId = element.dataset.resenaId;
-        let userHasLiked = element.dataset.userHasLiked === 'true'; // Inicializa el estado de "Me Gusta"
+    likeButtons.forEach((button) => {
+        const resenaId = button.dataset.resenaId;
+        const likeCountElement = document.querySelector(`#likeCount-${resenaId}`);
+        const likeIcon = button.querySelector("i");
 
-        element.addEventListener("click", () => {
+        button.addEventListener("click", () => {
             const url = "/Dviaje/Resenas/me-gusta";
 
             fetch(url, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('input[name="__RequestVerificationToken"]').value
                 },
-                body: JSON.stringify({ idResena: resenaId })
+                body: JSON.stringify({ idResena: parseInt(resenaId) }) // Asegurarse de que el ID sea numérico
             })
-                .then(response => response.json())
-                .then(data => {
-                    // Actualiza el contador de "Me Gusta" en el DOM
-                    const meGustaCount = document.querySelector(`#likeCount-${resenaId}`);
-                    meGustaCount.textContent = data.likes;
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error en la solicitud: " + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data && typeof data.likes === "number") {
+                        // Actualizar contador de likes
+                        likeCountElement.textContent = data.likes;
 
-                    // Cambia el icono y el estado del botón según el nuevo valor
-                    if (data.yaLeDioLike) {
-                        likeIcon.classList.replace("fa-regular", "fa-solid");
-                        element.classList.add("liked");
-                        userHasLiked = true;
+                        // Actualizar estado del botón
+                        if (data.yaLeDioLike) {
+                            likeIcon.classList.replace("fa-regular", "fa-solid");
+                            button.classList.add("liked");
+                        } else {
+                            likeIcon.classList.replace("fa-solid", "fa-regular");
+                            button.classList.remove("liked");
+                        }
                     } else {
-                        likeIcon.classList.replace("fa-solid", "fa-regular");
-                        element.classList.remove("liked");
-                        userHasLiked = false;
+                        console.warn("Respuesta inesperada del servidor", data);
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Ocurrió un error al intentar actualizar el 'Me Gusta'. Por favor, inténtalo más tarde.");
+                });
         });
     });
-}
+};
