@@ -1,4 +1,5 @@
-﻿using Dviaje.Models.VM;
+﻿using Dviaje.Models;
+using Dviaje.Models.VM;
 
 namespace Dviaje.DataAccess.Repository.IRepository
 {
@@ -10,7 +11,8 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsync(int idPublicacion);
         Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion);
         Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync(int idPublicacion);
-        Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion);
+        Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync();
+        Task<int?> CrearPublicacionAsync(PublicacionCrearVM publicacion);
         Task<bool> EditarPublicacionAsync(PublicacionCrearVM publicacion);
         Task<bool> EstadoEliminarPublicacionAsync(int idPublicacion, int idAliado);
         Task<bool> EstadoCambiarPublicacionAsync(int idPublicacion, int idAliado, string estado);
@@ -22,5 +24,6 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<List<ReportesPublicacionesPreciosVM>?> ReportePreciosPromediosAsync();
         Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync();
         Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual);
+        Task<bool> RegistrarImagenes(List<PublicacionesImagenes> imagenes);
     }
 }

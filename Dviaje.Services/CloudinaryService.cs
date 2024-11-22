@@ -160,5 +160,36 @@ namespace Dviaje.Services
 
             return $"https://res.cloudinary.com/{CloudName}/image/upload/v{version}/{publicId}.{formato}";
         }
+
+
+        public async Task<List<ImagenCloudinary?>> SubirImagenesDesdeIFormFileAsync(List<IFormFile> imagenes, string carpeta, string nombreBase)
+        {
+            var tareasDeSubida = new List<Task<ImagenCloudinary?>>();
+
+            var contadorImagenes = 0;
+            foreach (var imagen in imagenes)
+            {
+                contadorImagenes++;
+
+                // Convertir IFormFile a byte[]
+                using (var memoryStream = new MemoryStream())
+                {
+                    await imagen.CopyToAsync(memoryStream); // Copia el contenido del IFormFile al MemoryStream
+                    var imagenBytes = memoryStream.ToArray(); // Obtiene el array de bytes
+
+                    // Usamos el nombre original del archivo, pero puedes personalizarlo si es necesario
+                    var nombreImagen = $"{nombreBase}-{contadorImagenes}";
+
+                    // Agregar la tarea para subir la imagen a Cloudinary
+                    tareasDeSubida.Add(SubirImagenAsync(imagenBytes, nombreImagen, carpeta));
+                }
+            }
+
+            // Esperamos que todas las tareas de subida se completen
+            var resultados = await Task.WhenAll(tareasDeSubida);
+
+            return resultados.ToList();
+        }
+
     }
 }
