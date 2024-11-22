@@ -8,12 +8,15 @@ namespace Dviaje.Areas.Dviaje.Controllers
     public class InicioController : Controller
     {
         private readonly ILandingPageRepository _landingPageRepository;
+        private readonly IPublicacionesRepository _publicacionesRepository;
 
-        public InicioController(ILandingPageRepository landingPageRepository)
+        public InicioController(ILandingPageRepository landingPageRepository, IPublicacionesRepository publicacionesRepository)
         {
             _landingPageRepository = landingPageRepository;
+            _publicacionesRepository = publicacionesRepository;
         }
 
+        // Acción para la página de inicio (landing)
         public async Task<IActionResult> Index()
         {
             var landingPageData = new LandingPageVM
@@ -23,6 +26,20 @@ namespace Dviaje.Areas.Dviaje.Controllers
             };
 
             return View(landingPageData);
+        }
+
+        // Acción para listar publicaciones por categoría
+        [HttpGet]
+        public async Task<IActionResult> PorCategoria(int id)
+        {
+            var publicaciones = await _publicacionesRepository.ObtenerPublicacionesPorCategoriaAsync(id);
+            if (publicaciones == null || !publicaciones.Any())
+            {
+                TempData["Info"] = "No hay publicaciones disponibles en esta categoría.";
+                return RedirectToAction("Index");
+            }
+
+            return View(publicaciones);
         }
     }
 }
