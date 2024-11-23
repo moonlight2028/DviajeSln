@@ -239,11 +239,12 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        public async Task<bool> CrearPublicacionAsync(PublicacionCrearVM publicacion)
+        public async Task<int> CrearPublicacionAsync(PublicacionCrearVM publicacion)
         {
             using var transaction = _db.BeginTransaction();
             try
             {
+                // Inserta la publicación y obtiene su ID
                 var sqlPublicacion = @"
             INSERT INTO publicaciones (Titulo, Descripcion, PrecioNoche, Fecha, Direccion, IdAliado)
             VALUES (@Titulo, @Descripcion, @PrecioNoche, @Fecha, @Direccion, @IdAliado);
@@ -251,6 +252,7 @@ namespace Dviaje.DataAccess.Repository
 
                 var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
 
+                // Si hay imágenes, insértalas
                 if (publicacion.Imagenes != null)
                 {
                     var sqlImagenes = @"
@@ -263,6 +265,7 @@ namespace Dviaje.DataAccess.Repository
                     }
                 }
 
+                // Si hay fechas no disponibles, insértalas
                 if (publicacion.FechasNoDisponibles != null)
                 {
                     var sqlFechas = @"
@@ -276,12 +279,12 @@ namespace Dviaje.DataAccess.Repository
                 }
 
                 transaction.Commit();
-                return true;
+                return idPublicacion; // Devuelve el ID de la publicación creada
             }
             catch
             {
                 transaction.Rollback();
-                return false;
+                return -1; // Devuelve un valor especial en caso de error
             }
         }
 
@@ -325,6 +328,10 @@ namespace Dviaje.DataAccess.Repository
 
             return await _db.QueryFirstOrDefaultAsync<PublicacionCrearVM>(sql, new { IdPublicacion = idPublicacion });
         }
+
+
+
+
 
 
 
