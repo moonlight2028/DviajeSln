@@ -25,37 +25,34 @@ namespace Dviaje.DataAccess.Repository
         public async Task<PerfilPublicoVM?> ObtenerPerfilPublicoVMAsync(string idUsuario)
         {
             var sql = @"
-                    SELECT 
-                        u.Id AS Id, 
-                        u.UserName, 
-                        a.Url_200px AS Avatar, 
-                        b.Url AS Banner,
-                        CASE 
-                            WHEN EXISTS(SELECT 1 FROM Publicaciones p WHERE p.IdAliado = u.Id) THEN 1 
-                            ELSE 0 
-                        END AS EsAliado,
-                        u.Verificado,
-                        u.RazonSocial,
-                        u.SitioWeb,
-                        u.Direccion,
-                        u.Puntuacion,
-                        u.AliadoEstado,
-                        (SELECT COUNT(*) FROM Reservas r WHERE r.IdUsuario = u.Id) AS NumeroReservas,
-                        (SELECT COUNT(*) FROM Publicaciones p WHERE p.IdAliado = u.Id) AS NumeroPublicaciones,
-                        (SELECT COUNT(*) FROM Resenas re 
-                            INNER JOIN Reservas r ON re.IdReserva = r.IdReserva 
-                            WHERE r.IdUsuario = u.Id) AS NumeroResenas
-                    FROM 
-                        aspnetusers u
-                    LEFT JOIN 
-                        avatares a ON u.Id = a.IdTurista
-                    LEFT JOIN 
-                        banners b ON u.Id = b.IdTurista
-                    WHERE 
-                        u.Id = @IdUsuario";
+        SELECT 
+            u.Id AS Id, 
+            u.UserName, 
+            u.Avatar, 
+            u.Banner,
+            CASE 
+                WHEN EXISTS(SELECT 1 FROM publicaciones p WHERE p.IdAliado = u.Id) THEN 1 
+                ELSE 0 
+            END AS EsAliado,
+            u.Verificado,
+            u.RazonSocial,
+            u.SitioWeb,
+            u.Direccion,
+            u.Puntuacion,
+            u.AliadoEstado,
+            (SELECT COUNT(*) FROM reservas r WHERE r.IdUsuario = u.Id) AS NumeroReservas,
+            (SELECT COUNT(*) FROM publicaciones p WHERE p.IdAliado = u.Id) AS NumeroPublicaciones,
+            (SELECT COUNT(*) FROM resenas re 
+                INNER JOIN reservas r ON re.IdReserva = r.IdReserva 
+                WHERE r.IdUsuario = u.Id) AS NumeroResenas
+        FROM 
+            aspnetusers u
+        WHERE 
+            u.Id = @IdUsuario";
 
             return await _db.QueryFirstOrDefaultAsync<PerfilPublicoVM>(sql, new { IdUsuario = idUsuario });
         }
+
 
 
         /// <summary>
@@ -143,16 +140,12 @@ namespace Dviaje.DataAccess.Repository
         public async Task<bool> SetBanner(string url, string idTurista, string? idPublico = null)
         {
             var consulta = @"
-                INSERT INTO banners (IdPublico, Url, IdTurista) 
-                VALUES (@IdPublico, @Url, @IdTurista)
-                ON DUPLICATE KEY UPDATE 
-                    Url = @Url,
-                    IdPublico = @IdPublico;
-            ";
+        UPDATE aspnetusers
+        SET Banner = @Url
+        WHERE Id = @IdTurista";
 
             var parametros = new
             {
-                IdPublico = string.IsNullOrEmpty(idPublico) ? "default" : idPublico,
                 Url = url,
                 IdTurista = idTurista
             };
@@ -161,6 +154,8 @@ namespace Dviaje.DataAccess.Repository
 
             return filasAfectadas > 0;
         }
+
+
 
         /// <summary>
         /// Asigna o actualiza el avatar asociado al turista especificado.
@@ -174,18 +169,12 @@ namespace Dviaje.DataAccess.Repository
         public async Task<bool> SetAvatar(string urlCincuentaPx, string urlDoscientosPx, string idTurista, string? idPublico = null)
         {
             var consulta = @"
-                INSERT INTO avatares (IdPublico, Url_50px, Url_200px, IdTurista) 
-                VALUES (@IdPublico, @UrlCincuentaPx, @UrlDoscientosPx, @IdTurista)
-                ON DUPLICATE KEY UPDATE 
-                    Url_50px = @UrlCincuentaPx,
-                    Url_200px = @UrlDoscientosPx,
-                    IdPublico = @IdPublico;
-            ";
+        UPDATE aspnetusers
+        SET Avatar = @UrlDoscientosPx
+        WHERE Id = @IdTurista";
 
             var parametros = new
             {
-                IdPublico = string.IsNullOrEmpty(idPublico) ? "default" : idPublico,
-                UrlCincuentaPx = urlCincuentaPx,
                 UrlDoscientosPx = urlDoscientosPx,
                 IdTurista = idTurista
             };
@@ -194,6 +183,8 @@ namespace Dviaje.DataAccess.Repository
 
             return filasAfectadas > 0;
         }
+
+
 
         /// <summary>
         /// Obtiene el avatar en resolución de 200px junto con el banner asociado a un turista especificado.
@@ -206,15 +197,18 @@ namespace Dviaje.DataAccess.Repository
         public async Task<(string Avatar, string Banner)?> ObtenerBannerAvatar(string idTurista)
         {
             var consulta = @"
-                SELECT a.Url_200px AS Avatar, b.Url AS Banner
-                    FROM avatares a
-                    JOIN banners b ON a.IdTurista = b.IdTurista
-                    WHERE a.IdTurista = @IdTurista;
-            ";
+        SELECT 
+            Avatar, 
+            Banner
+        FROM 
+            aspnetusers
+        WHERE 
+            Id = @IdTurista";
 
             var resultado = await _db.QueryFirstOrDefaultAsync<(string Avatar, string Banner)>(consulta, new { IdTurista = idTurista });
 
             return resultado;
         }
+
     }
 }
