@@ -37,11 +37,11 @@ public class LandingPageRepository : ILandingPageRepository
             p.Descripcion,
             p.Direccion AS Ubicacion,
             (SELECT Ruta 
-             FROM PublicacionesImagenes pi 
+             FROM publicacionesimagenes pi 
              WHERE pi.IdPublicacion = p.IdPublicacion 
              ORDER BY pi.Orden LIMIT 1) AS ImagenPrincipal
         FROM 
-            Publicaciones p
+            publicaciones p
         WHERE 
             p.Puntuacion >= 4.5
         ORDER BY 
@@ -49,9 +49,13 @@ public class LandingPageRepository : ILandingPageRepository
         LIMIT 5;
     ";
 
-        var publicaciones = await _db.QueryAsync<PublicacionDestacadaVM>(sql);
+        var publicaciones = (await _db.QueryAsync<PublicacionDestacadaVM>(sql)).ToList();
 
-        // Subconsulta para las miniaturas (lista de imágenes)
+        if (!publicaciones.Any())
+        {
+            return publicaciones; // Si no hay publicaciones, retorna una lista vacía
+        }
+
         var ids = publicaciones.Select(p => p.IdPublicacion).ToList();
 
         var sqlImagenes = @"
@@ -60,7 +64,7 @@ public class LandingPageRepository : ILandingPageRepository
             pi.Ruta AS Imagen,
             pi.Alt AS Alt
         FROM 
-            PublicacionesImagenes pi
+            publicacionesimagenes pi
         WHERE 
             pi.IdPublicacion IN @Ids
         ORDER BY 
@@ -77,7 +81,8 @@ public class LandingPageRepository : ILandingPageRepository
                 .ToList();
         }
 
-        return publicaciones.ToList();
+        return publicaciones;
     }
+
 
 }
