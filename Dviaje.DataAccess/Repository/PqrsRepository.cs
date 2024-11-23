@@ -19,38 +19,36 @@ namespace Dviaje.DataAccess.Repository
         {
             try
             {
-                // Asegurarse de que la conexión esté abierta antes de comenzar la transacción
                 if (_db.State != ConnectionState.Open)
                 {
-                    _db.Open();  // Usar Open() sincrónico en lugar de OpenAsync()
+                    _db.Open();
                 }
 
                 using (var transaction = _db.BeginTransaction())
                 {
                     try
                     {
-                        int idAtencionViajeros;
-                        int idMensaje;
-
+                        // Inserción en atencionesviajeros
                         var sqlAtencionesViajeros = @"
-                            INSERT INTO atencionesviajeros (FechaAtencion, TipoPqrs, Estado, IdTurista)
-                            VALUES (@FechaAtencion, @TipoPqrs, @Estado, @IdTurista);
-                            SELECT LAST_INSERT_ID();";
+                    INSERT INTO atencionesviajeros (FechaAtencion, TipoPqrs, Estado, IdUsuario)
+                    VALUES (@FechaAtencion, @TipoPqrs, @Estado, @IdUsuario);
+                    SELECT LAST_INSERT_ID();";
 
-                        idAtencionViajeros = await _db.ExecuteScalarAsync<int>(sqlAtencionesViajeros, new
+                        var idAtencionViajeros = await _db.ExecuteScalarAsync<int>(sqlAtencionesViajeros, new
                         {
                             FechaAtencion = pqrs.FechaAtencion,
                             TipoPqrs = pqrs.AtencionesViajerosTipoPqrs.ToString(),
                             Estado = pqrs.AtencionesViajerosEstado.ToString(),
-                            IdTurista = pqrs.IdTurista
+                            IdUsuario = pqrs.IdTurista
                         }, transaction);
 
+                        // Inserción en mensajes
                         var sqlMensaje = @"
-                            INSERT INTO Mensajes (Fecha, Descripcion, Nombre, Apellidos, Correo, Telefono, IdUsuario, IdAtencionViajero)
-                            VALUES (@Fecha, @Descripcion, @Nombre, @Apellidos, @Correo, @Telefono, @IdUsuario, @IdAtencionViajero);
-                            SELECT LAST_INSERT_ID();";
+                    INSERT INTO mensajes (Fecha, Descripcion, Nombre, Apellidos, Correo, Telefono, IdUsuario, IdAtencionViajero)
+                    VALUES (@Fecha, @Descripcion, @Nombre, @Apellidos, @Correo, @Telefono, @IdUsuario, @IdAtencionViajero);
+                    SELECT LAST_INSERT_ID();";
 
-                        idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensaje, new
+                        var idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensaje, new
                         {
                             Fecha = pqrs.FechaAtencion,
                             Descripcion = pqrs.Descripcion,
@@ -59,11 +57,10 @@ namespace Dviaje.DataAccess.Repository
                             Correo = pqrs.Correo,
                             Telefono = pqrs.Telefono,
                             IdUsuario = pqrs.IdTurista,
-                            IdAtencionViajero = idAtencionViajeros  // Usar el ID generado en la primera inserción
+                            IdAtencionViajero = idAtencionViajeros
                         }, transaction);
 
                         transaction.Commit();
-
                         return idMensaje;
                     }
                     catch
@@ -75,13 +72,13 @@ namespace Dviaje.DataAccess.Repository
             }
             finally
             {
-                // Cerrar la conexión si está abierta
                 if (_db.State == ConnectionState.Open)
                 {
                     _db.Close();
                 }
             }
         }
+
 
         //Regustrar un adjunto (si es necesario)
         public async Task<bool> RegistrarAdjuntosAsync(List<AdjuntosVM> adjuntos)
@@ -98,37 +95,48 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<AtencionViajerosPqrsVM>?> ObtenerListaAtencionViajerosPqrsVMAsync(string idUsuario)
         {
             var sql = @"
-                SELECT av.IdAtencionViajero AS IdAtencion, av.FechaAtencion, av.TipoPqrs, av.Estado,
-                (SELECT m.Descripcion FROM Mensajes m WHERE m.IdAtencionViajero = av.IdAtencionViajero ORDER BY m.Fecha DESC LIMIT 1) AS DescripcionMensajes
-                FROM AtencionesViajeros av
-                WHERE av.IdUsuario = @IdUsuario
-                ORDER BY av.FechaAtencion DESC";
+        SELECT 
+            av.IdAtencionViajero AS IdAtencion, 
+            av.FechaAtencion, 
+            av.TipoPqrs, 
+            av.Estado,
+            (SELECT m.Descripcion 
+             FROM mensajes m 
+             WHERE m.IdAtencionViajero = av.IdAtencionViajero 
+             ORDER BY m.Fecha DESC 
+             LIMIT 1) AS DescripcionMensajes
+        FROM 
+            atencionesviajeros av
+        WHERE 
+            av.IdUsuario = @IdUsuario
+        ORDER BY 
+            av.FechaAtencion DESC";
 
             var result = await _db.QueryAsync<AtencionViajerosPqrsVM>(sql, new { IdUsuario = idUsuario });
             return result.ToList();
         }
 
+
         // mensajes de una atención al viajero
         public async Task<List<MensajesPqrsVM>?> ObtenerMensajesPqrsVmAsync(int idAtencionViajero)
         {
             var sql = @"
-                    SELECT 
-                    m.Fecha AS Fecha, 
-                    m.Descripcion, 
-                    u.Id AS IdUsuario, 
-                    a.Url_50px AS AvatarUsuario
-                FROM 
-                    Mensajes m
-                INNER JOIN 
-                    aspnetusers u ON m.IdUsuario = u.Id
-                LEFT JOIN 
-                    avatares a ON u.Id = a.IdTurista
-                WHERE 
-                    m.IdAtencionViajero = @IdAtencionViajero";
+        SELECT 
+            m.Fecha, 
+            m.Descripcion, 
+            u.Id AS IdUsuario, 
+            u.Avatar AS AvatarUsuario
+        FROM 
+            mensajes m
+        INNER JOIN 
+            aspnetusers u ON m.IdUsuario = u.Id
+        WHERE 
+            m.IdAtencionViajero = @IdAtencionViajero";
 
             var mensajes = await _db.QueryAsync<MensajesPqrsVM>(sql, new { IdAtencionViajero = idAtencionViajero });
             return mensajes.ToList();
         }
+
 
         // Registrar un nuevo mensaje
         public async Task<bool> RegistrarMensajeAsync(MensajesPqrsPostVM mensaje)
@@ -139,10 +147,10 @@ namespace Dviaje.DataAccess.Repository
                 {
                     // Insertar el mensaje
                     var sqlMensaje = @"
-                        INSERT INTO Mensajes (Fecha, Descripcion, IdUsuario, IdAtencionViajero)
-                        VALUES (@Fecha, @Descripcion, @IdUsuario, @IdAtencionViajero)";
+                INSERT INTO mensajes (Fecha, Descripcion, IdUsuario, IdAtencionViajero)
+                VALUES (@Fecha, @Descripcion, @IdUsuario, @IdAtencionViajero)";
 
-                    await _db.ExecuteAsync(sqlMensaje, new
+                    var idMensaje = await _db.ExecuteScalarAsync<int>(sqlMensaje, new
                     {
                         Fecha = mensaje.Fecha ?? DateTime.Now,
                         Descripcion = mensaje.Descripcion,
@@ -150,18 +158,19 @@ namespace Dviaje.DataAccess.Repository
                         IdAtencionViajero = mensaje.IdAtencionViajero
                     }, transaction);
 
-                    // Insertar en la tabla de Adjuntos (pruba, reutilizada)
+                    // Insertar en la tabla de Adjuntos
                     if (mensaje.Adjuntos != null && mensaje.Adjuntos.Any())
                     {
                         var sqlAdjuntos = @"
-                            INSERT INTO Adjuntos (RutaAdjunto, IdMensaje)
-                            VALUES (@RutaAdjunto, (SELECT LAST_INSERT_ID()))";
+                    INSERT INTO adjuntos (RutaAdjunto, IdMensaje)
+                    VALUES (@RutaAdjunto, @IdMensaje)";
 
                         foreach (var adjunto in mensaje.Adjuntos)
                         {
                             await _db.ExecuteAsync(sqlAdjuntos, new
                             {
-                                RutaAdjunto = adjunto.RutaAdjunto
+                                RutaAdjunto = adjunto.RutaAdjunto,
+                                IdMensaje = idMensaje
                             }, transaction);
                         }
                     }
@@ -176,5 +185,6 @@ namespace Dviaje.DataAccess.Repository
                 }
             }
         }
+
     }
 }
