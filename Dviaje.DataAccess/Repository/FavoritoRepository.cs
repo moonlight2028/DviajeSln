@@ -17,15 +17,28 @@ namespace Dviaje.DataAccess.Repository
         // Obtiene los favoritos del usuario
         public async Task<List<FavoritoTarjetaVM>?> ObtenerListaFavoritoTarjetaVMAsync(string idUsuario, int pagina = 1, int resultadosPorPagina = 10)
         {
-            // Consulta con paginación
             var sql = @"
-                     SELECT p.IdPublicacion, p.Titulo, p.Descripcion, p.Puntuacion, p.NumeroResenas, 
-                     (SELECT pi.Ruta FROM publicacionesimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen
-                     FROM Favoritos f
-                     INNER JOIN Publicaciones p ON f.IdPublicacion = p.IdPublicacion
-                     WHERE f.IdUsuario = @IdUsuario
-                     ORDER BY f.FechaAgregado DESC
-                     LIMIT @ResultadosPorPagina OFFSET @Offset";
+        SELECT 
+            p.IdPublicacion, 
+            p.Titulo, 
+            p.Descripcion, 
+            p.Puntuacion, 
+            p.NumeroResenas, 
+            (SELECT pi.Ruta 
+             FROM publicacionesimagenes pi 
+             WHERE pi.IdPublicacion = p.IdPublicacion 
+             ORDER BY pi.Orden 
+             LIMIT 1) AS Imagen
+        FROM 
+            Favoritos f
+        INNER JOIN 
+            publicaciones p ON f.IdPublicacion = p.IdPublicacion
+        WHERE 
+            f.IdUsuario = @IdUsuario
+        ORDER BY 
+            f.FechaAgregado DESC
+        LIMIT 
+            @ResultadosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosPorPagina;
 
@@ -37,9 +50,8 @@ namespace Dviaje.DataAccess.Repository
             });
 
             return favoritos.ToList();
-
-
         }
+
 
 
         // Agrega un favorito para el usuario
@@ -49,6 +61,7 @@ namespace Dviaje.DataAccess.Repository
             var result = await _db.ExecuteAsync(sql, new { IdPublicacion = idPublicacion, IdUsuario = idUsuario });
             return result > 0;
         }
+
 
 
         // Elimina un favorito del usuario
