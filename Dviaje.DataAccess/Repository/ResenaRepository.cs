@@ -34,50 +34,41 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaBasicaVM>> ObtenerListaResenaTarjetaBasicaVMAsync(int idPublicacion, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                    SELECT 
-                        r.IdReserva, 
-                        u.Id AS IdTurista, 
-                        u.UserName AS NombreTurista, 
-                        av.Url_50px AS AvatarTurista, 
-                        rs.Opinion, 
-                        rs.Fecha, 
-                        rs.Calificacion AS Puntuacion, 
-                        (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
-                    FROM 
-                        Resenas rs
-                    INNER JOIN 
-                        Reservas r ON rs.IdReserva = r.IdReserva
-                    INNER JOIN 
-                        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                    INNER JOIN 
-                        aspnetusers u ON r.IdUsuario = u.Id
-                    LEFT JOIN 
-                        avatares av ON u.Id = av.IdTurista
-                    WHERE 
-                        p.IdPublicacion = @IdPublicacion
-                    ORDER BY 
-                        rs.Fecha DESC
-                    LIMIT @ElementosPorPagina OFFSET @Offset";
+        SELECT 
+            r.IdReserva, 
+            u.Id AS IdTurista, 
+            u.UserName AS NombreTurista, 
+            u.Avatar AS AvatarTurista, 
+            rs.Opinion, 
+            rs.Fecha, 
+            rs.Calificacion AS Puntuacion, 
+            (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes
+        FROM 
+            resenas rs
+        INNER JOIN 
+            reservas r ON rs.IdReserva = r.IdReserva
+        INNER JOIN 
+            publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        INNER JOIN 
+            aspnetusers u ON r.IdUsuario = u.Id
+        WHERE 
+            p.IdPublicacion = @IdPublicacion
+        ORDER BY 
+            rs.Fecha DESC
+        LIMIT @ElementosPorPagina OFFSET @Offset";
 
-            try
-            {
-                var offset = (pagina - 1) * resultadosMostrados;
-                var result = await _db.QueryAsync<ResenaTarjetaBasicaVM>(sql, new
-                {
-                    IdPublicacion = idPublicacion,
-                    ElementosPorPagina = resultadosMostrados,
-                    Offset = offset
-                });
+            var offset = (pagina - 1) * resultadosMostrados;
 
-                return result.ToList();
-            }
-            catch (Exception ex)
+            var result = await _db.QueryAsync<ResenaTarjetaBasicaVM>(sql, new
             {
-                // Loggear errores si es necesario
-                Console.WriteLine($"Error en la consulta de reseñas: {ex.Message}");
-                return new List<ResenaTarjetaBasicaVM>(); // Devolver una lista vacía si ocurre un error
-            }
+                IdPublicacion = idPublicacion,
+                ElementosPorPagina = resultadosMostrados,
+                Offset = offset
+            });
+
+            return result.ToList();
         }
+
 
 
 
@@ -85,19 +76,31 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<ResenaTarjetaDisponibleVM>> ObtenerListaResenaTarjetaDisponibleVMAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                SELECT r.IdReserva, p.Titulo AS TituloPublicacion, p.Descripcion AS DescripcionPublicacion, 
-                       p.Puntuacion AS PuntuacionPublicacion, pi.Ruta AS ImagenPublicacion, 
-                       r.FechaInicial, r.FechaFinal
-                FROM Reservas r
-                INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                LEFT JOIN PublicacionesImagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
-                WHERE r.IdUsuario = @IdUsuario
-                AND r.FechaFinal <= CURRENT_DATE
-                AND NOT EXISTS (SELECT 1 FROM Resenas rs WHERE rs.IdReserva = r.IdReserva)
-                ORDER BY r.FechaFinal DESC
-                LIMIT @ElementosPorPagina OFFSET @Offset";
+        SELECT 
+            r.IdReserva, 
+            p.Titulo AS TituloPublicacion, 
+            p.Descripcion AS DescripcionPublicacion, 
+            p.Puntuacion AS PuntuacionPublicacion, 
+            (SELECT pi.Ruta 
+             FROM publicacionesimagenes pi 
+             WHERE pi.IdPublicacion = p.IdPublicacion 
+             ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion, 
+            r.FechaInicial, 
+            r.FechaFinal
+        FROM 
+            reservas r
+        INNER JOIN 
+            publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        WHERE 
+            r.IdUsuario = @IdUsuario
+            AND r.FechaFinal <= CURRENT_DATE
+            AND NOT EXISTS (SELECT 1 FROM resenas rs WHERE rs.IdReserva = r.IdReserva)
+        ORDER BY 
+            r.FechaFinal DESC
+        LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
+
             var result = await _db.QueryAsync<ResenaTarjetaDisponibleVM>(sql, new
             {
                 IdUsuario = idUsuario,
@@ -106,64 +109,8 @@ namespace Dviaje.DataAccess.Repository
             });
 
             return result.ToList();
-
-
-            // Datos de test borrar cuando esté la consulta
-            List<ResenaTarjetaDisponibleVM>? datosTest = new List<ResenaTarjetaDisponibleVM> {
-                new ResenaTarjetaDisponibleVM {
-                    TituloPublicacion = "Aventura en la Montaña",
-                    DescripcionPublicacion = "Una experiencia inolvidable rodeado de naturaleza, perfecta para quienes buscan desconectarse y disfrutar del aire libre.",
-                    IdPublicacion = 2,
-                    PuntuacionPublicacion = 4.8m,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdReserva = 3,
-                    FechaInicial = new DateTime(2024, 01, 15),
-                    FechaFinal = new DateTime(2024, 01, 18)
-                },
-                new ResenaTarjetaDisponibleVM {
-                    TituloPublicacion = "Relax en la Playa",
-                    DescripcionPublicacion = "El lugar perfecto para relajarse con vistas al mar, disfrutar de la tranquilidad y desconectar del mundo.",
-                    IdPublicacion = 3,
-                    PuntuacionPublicacion = 4.5m,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdReserva = 4,
-                    FechaInicial = new DateTime(2024, 02, 05),
-                    FechaFinal = new DateTime(2024, 02, 10)
-                },
-                new ResenaTarjetaDisponibleVM {
-                    TituloPublicacion = "Escapada Rural",
-                    DescripcionPublicacion = "Una hermosa casa de campo con vistas espectaculares, ideal para una escapada romántica o con amigos.",
-                    IdPublicacion = 4,
-                    PuntuacionPublicacion = 4.9m,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdReserva = 5,
-                    FechaInicial = new DateTime(2024, 03, 12),
-                    FechaFinal = new DateTime(2024, 03, 15)
-                },
-                new ResenaTarjetaDisponibleVM {
-                    TituloPublicacion = "Tour en la Ciudad",
-                    DescripcionPublicacion = "Descubre los secretos y maravillas de la ciudad con este tour guiado por los principales puntos de interés.",
-                    IdPublicacion = 5,
-                    PuntuacionPublicacion = 4.3m,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdReserva = 6,
-                    FechaInicial = new DateTime(2024, 04, 02),
-                    FechaFinal = new DateTime(2024, 04, 05)
-                },
-                new ResenaTarjetaDisponibleVM {
-                    TituloPublicacion = "Aventura en la Selva",
-                    DescripcionPublicacion = "Una experiencia emocionante para quienes buscan adentrarse en la selva y vivir la naturaleza de cerca.",
-                    IdPublicacion = 6,
-                    PuntuacionPublicacion = 4.7m,
-                    ImagenPublicacion = "https://images.unsplash.com/photo-1726266852936-bb4cfcdffaf0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    IdReserva = 7,
-                    FechaInicial = new DateTime(2024, 05, 10),
-                    FechaFinal = new DateTime(2024, 05, 15)
-                }
-            };
-
-            return datosTest;
         }
+
 
 
         // Obtner los detalles de la reseña
@@ -212,32 +159,45 @@ namespace Dviaje.DataAccess.Repository
 
 
         //obtener la lista de reservas 
-        public async Task<List<ResenaTarjetaRecibidaVM>?> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null)
+        public async Task<List<ResenaTarjetaRecibidaVM>> ObtenerListaResenaTarjetaRecibidaVMAsync(string idAliado, int pagina = 1, int resultadosMostrados = 10, string? ordenar = null)
         {
             var sql = @"
-                    SELECT rs.Opinion, rs.Calificacion AS Puntuacion, rs.Fecha, 
-                           (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                           p.IdPublicacion, p.Titulo AS TituloPublicacion, 
-                           (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
-                           u.Id AS IdTurista, u.UserName AS NombreTurista, av.Url_50px AS AvatarTurista,
-                           (SELECT COUNT(*) FROM Resenas r WHERE r.IdUsuario = u.Id) AS NumeroResenasTurista
-                    FROM Resenas rs
-                    INNER JOIN Reservas r ON rs.IdReserva = r.IdReserva
-                    INNER JOIN Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                    INNER JOIN aspnetusers u ON r.IdUsuario = u.Id
-                    LEFT JOIN avatares av ON u.Id = av.IdTurista
-                    WHERE p.IdAliado = @IdAliado
-                    ORDER BY CASE WHEN @Ordenar IS NOT NULL THEN
-                            CASE @Ordenar
-                                WHEN 'Fecha' THEN rs.Fecha
-                                WHEN 'Puntuacion' THEN rs.Calificacion
-                                WHEN 'Likes' THEN NumerosLikes
-                            END
-                            ELSE rs.Fecha
-                        END DESC
-                    LIMIT @ElementosPorPagina OFFSET @Offset";
+        SELECT 
+            rs.Opinion, 
+            rs.Calificacion AS Puntuacion, 
+            rs.Fecha, 
+            (SELECT COUNT(*) FROM resenamegusta WHERE IdResena = rs.IdResena) AS NumeroLikes,
+            p.IdPublicacion, 
+            p.Titulo AS TituloPublicacion, 
+            (SELECT pi.Ruta 
+             FROM publicacionesimagenes pi 
+             WHERE pi.IdPublicacion = p.IdPublicacion 
+             ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion,
+            u.Id AS IdTurista, 
+            u.UserName AS NombreTurista, 
+            u.Avatar AS AvatarTurista
+        FROM 
+            resenas rs
+        INNER JOIN 
+            reservas r ON rs.IdReserva = r.IdReserva
+        INNER JOIN 
+            publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        INNER JOIN 
+            aspnetusers u ON r.IdUsuario = u.Id
+        WHERE 
+            p.IdAliado = @IdAliado
+        ORDER BY 
+            CASE WHEN @Ordenar IS NOT NULL THEN
+                CASE @Ordenar
+                    WHEN 'Fecha' THEN rs.Fecha
+                    WHEN 'Puntuacion' THEN rs.Calificacion
+                    WHEN 'Likes' THEN NumeroLikes
+                END
+            ELSE rs.Fecha END DESC
+        LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
+
             var result = await _db.QueryAsync<ResenaTarjetaRecibidaVM>(sql, new
             {
                 IdAliado = idAliado,
@@ -248,6 +208,7 @@ namespace Dviaje.DataAccess.Repository
 
             return result.ToList();
         }
+
 
         // Agregar me gusta del usuario
         public async Task<bool> AgregarMeGustaAsync(int idResena, string idUsuario)
