@@ -31,15 +31,16 @@ namespace Dviaje.DataAccess.Repository
         }
 
         // Obtener una restricción por su ID
-        public async Task<Restriccion?> ObtenerCategoriaPorIdAsync(int idCategoria)
+        public async Task<Categoria?> ObtenerCategoriaPorIdAsync(int idCategoria)
         {
             var sql = @"
-                SELECT IdCategoria AS IdRestriccion, NombreCategoria AS NombreRestriccion, RutaIcono
-                FROM Categorias
-                WHERE IdCategoria = @IdCategoria";
+        SELECT IdCategoria, NombreCategoria, RutaIcono
+        FROM Categorias
+        WHERE IdCategoria = @IdCategoria";
 
-            return await _db.QueryFirstOrDefaultAsync<Restriccion>(sql, new { IdCategoria = idCategoria });
+            return await _db.QueryFirstOrDefaultAsync<Categoria>(sql, new { IdCategoria = idCategoria });
         }
+
 
         // Obtener todas las categorías
         public async Task<List<Categoria>> ObtenerCategoriasAsync()
