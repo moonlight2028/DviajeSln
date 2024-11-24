@@ -15,27 +15,34 @@ public class UserRepository : IUserRepository
     public async Task<List<UsuarioVM>> ObtenerUsuariosAsync()
     {
         var sql = @"
-            SELECT u.Id AS IdUsuario, u.UserName, u.Email, u.Avatar, u.PhoneNumber, 
-                   (SELECT STRING_AGG(r.Name, ', ') 
-                    FROM AspNetUserRoles ur
-                    JOIN AspNetRoles r ON ur.RoleId = r.Id
-                    WHERE ur.UserId = u.Id) AS Roles
-            FROM AspNetUsers u";
+        SELECT 
+            u.Id AS IdUsuario, 
+            u.UserName, 
+            u.Email, 
+            u.Avatar, 
+            u.PhoneNumber, 
+            (SELECT GROUP_CONCAT(r.Name SEPARATOR ', ') 
+             FROM aspnetuserroles ur
+             JOIN aspnetroles r ON ur.RoleId = r.Id
+             WHERE ur.UserId = u.Id) AS Roles
+        FROM 
+            aspnetusers u";
 
         return (await _db.QueryAsync<UsuarioVM>(sql)).ToList();
     }
 
+
     public async Task<bool> CambiarRolUsuarioAsync(string idUsuario, string nuevoRol)
     {
         var eliminarRoles = @"
-            DELETE FROM AspNetUserRoles 
-            WHERE UserId = @IdUsuario";
+        DELETE FROM aspnetuserroles 
+        WHERE UserId = @IdUsuario";
 
         var agregarRol = @"
-            INSERT INTO AspNetUserRoles (UserId, RoleId)
-            SELECT @IdUsuario, Id 
-            FROM AspNetRoles 
-            WHERE Name = @NuevoRol";
+        INSERT INTO aspnetuserroles (UserId, RoleId)
+        SELECT @IdUsuario, Id 
+        FROM aspnetroles 
+        WHERE Name = @NuevoRol";
 
         using var transaction = _db.BeginTransaction();
 
@@ -53,25 +60,28 @@ public class UserRepository : IUserRepository
         }
     }
 
+
     public async Task<bool> BanearUsuarioAsync(string idUsuario)
     {
         var sql = @"
-            UPDATE AspNetUsers 
-            SET LockoutEnd = @LockoutEnd 
-            WHERE Id = @IdUsuario";
+        UPDATE aspnetusers 
+        SET LockoutEnd = @LockoutEnd 
+        WHERE Id = @IdUsuario";
 
         var lockoutEnd = DateTime.UtcNow.AddYears(100);
         var rowsAffected = await _db.ExecuteAsync(sql, new { LockoutEnd = lockoutEnd, IdUsuario = idUsuario });
         return rowsAffected > 0;
     }
 
+
     public async Task<bool> EliminarUsuarioAsync(string idUsuario)
     {
         var sql = @"
-            DELETE FROM AspNetUsers 
-            WHERE Id = @IdUsuario";
+        DELETE FROM aspnetusers 
+        WHERE Id = @IdUsuario";
 
         var rowsAffected = await _db.ExecuteAsync(sql, new { IdUsuario = idUsuario });
         return rowsAffected > 0;
     }
+
 }
