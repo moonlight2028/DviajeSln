@@ -1,1 +1,122 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Gestión de Categorías";
+}
+
+<h2>Gestión de Categorías</h2>
+
+<table id="tablaCategorias" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Ícono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+</table>
+
+<!-- Modal para Crear/Editar -->
+<div class="modal fade" id="modalCategoria" tabindex="-1" aria-labelledby="modalCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCategoriaLabel">Nueva Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formCategoria">
+                <div class="modal-body">
+                    <input type="hidden" id="IdCategoria" name="IdCategoria" />
+                    <div class="mb-3">
+                        <label for="NombreCategoria" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="RutaIcono" class="form-label">Ícono</label>
+                        <input type="text" class="form-control" id="RutaIcono" name="RutaIcono" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var tabla = $("#tablaCategorias").DataTable({
+                ajax: {
+                    url: "/Moderador/categorias",
+                    type: "GET",
+                    dataSrc: "data"
+                },
+                columns: [
+                    { data: "idCategoria" },
+                    { data: "nombreCategoria" },
+                    { data: "rutaIcono" },
+                    {
+                        data: "idCategoria",
+                        render: function (data) {
+                            return `
+                                        <button class="btn btn-primary btn-sm editar" data-id="${data}">Editar</button>
+                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                                    `;
+                        }
+                    }
+                ]
+            });
+
+            // Lógica CRUD similar a Servicios.cshtml
+            $("#btnNuevaCategoria").on("click", function () {
+                $("#modalCategoriaLabel").text("Nueva Categoría");
+                $("#formCategoria")[0].reset();
+                $("#modalCategoria").modal("show");
+            });
+
+            $("#formCategoria").on("submit", function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                var id = $("#IdCategoria").val();
+                var url = id ? `/categorias/${id}` : "/categorias";
+                var type = id ? "PUT" : "POST";
+
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: formData,
+                    success: function () {
+                        $("#modalCategoria").modal("hide");
+                        tabla.ajax.reload();
+                    }
+                });
+            });
+
+            $("#tablaCategorias").on("click", ".editar", function () {
+                var id = $(this).data("id");
+                $.get(`/categorias/${id}`, function (res) {
+                    $("#IdCategoria").val(res.data.idCategoria);
+                    $("#NombreCategoria").val(res.data.nombreCategoria);
+                    $("#RutaIcono").val(res.data.rutaIcono);
+                    $("#modalCategoriaLabel").text("Editar Categoría");
+                    $("#modalCategoria").modal("show");
+                });
+            });
+
+            $("#tablaCategorias").on("click", ".eliminar", function () {
+                var id = $(this).data("id");
+                if (confirm("¿Está seguro de eliminar esta categoría?")) {
+                    $.ajax({
+                        url: `/categorias/${id}`,
+                        type: "DELETE",
+                        success: function () {
+                            tabla.ajax.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

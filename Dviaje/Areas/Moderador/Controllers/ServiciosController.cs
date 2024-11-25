@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dviaje.Areas.Moderador.Controllers
 {
     [Area("Moderador")]
+    [Route("servicios")]
     [Authorize(Roles = RolesUtility.RoleModerador)]
     public class ServiciosController : Controller
     {

@@ -1,1 +1,135 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Gestión de Servicios";
+}
+
+<h2>Gestión de Servicios</h2>
+
+<table id="tablaServicios" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Ícono</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+</table>
+
+<!-- Modal para Crear/Editar -->
+<div class="modal fade" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalServicioLabel">Nuevo Servicio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formServicio">
+                <div class="modal-body">
+                    <input type="hidden" id="IdServicio" name="IdServicio" />
+                    <div class="mb-3">
+                        <label for="NombreServicio" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="NombreServicio" name="NombreServicio" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="RutaIcono" class="form-label">Ícono</label>
+                        <input type="text" class="form-control" id="RutaIcono" name="RutaIcono" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="ServicioTipo" class="form-label">Tipo</label>
+                        <select class="form-select" id="ServicioTipo" name="ServicioTipo" required>
+                            <option value="Adicional">Adicional</option>
+                            <option value="Principal">Principal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var tabla = $("#tablaServicios").DataTable({
+                ajax: {
+                    url: "/Moderador/servicios",
+                    type: "GET",
+                    dataSrc: "data"
+                },
+                columns: [
+                    { data: "idServicio" },
+                    { data: "nombreServicio" },
+                    { data: "rutaIcono" },
+                    { data: "servicioTipo" },
+                    {
+                        data: "idServicio",
+                        render: function (data) {
+                            return `
+                                <button class="btn btn-primary btn-sm editar" data-id="${data}">Editar</button>
+                                <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                            `;
+                        }
+                    }
+                ]
+            });
+
+            // Abrir modal para crear
+            $("#btnNuevoServicio").on("click", function () {
+                $("#modalServicioLabel").text("Nuevo Servicio");
+                $("#formServicio")[0].reset();
+                $("#modalServicio").modal("show");
+            });
+
+            // Enviar formulario (Crear/Editar)
+            $("#formServicio").on("submit", function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                var id = $("#IdServicio").val();
+                var url = id ? `/servicios/${id}` : "/servicios";
+                var type = id ? "PUT" : "POST";
+
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: formData,
+                    success: function () {
+                        $("#modalServicio").modal("hide");
+                        tabla.ajax.reload();
+                    }
+                });
+            });
+
+            // Cargar datos en el modal para editar
+            $("#tablaServicios").on("click", ".editar", function () {
+                var id = $(this).data("id");
+                $.get(`/servicios/${id}`, function (res) {
+                    $("#IdServicio").val(res.data.idServicio);
+                    $("#NombreServicio").val(res.data.nombreServicio);
+                    $("#RutaIcono").val(res.data.rutaIcono);
+                    $("#ServicioTipo").val(res.data.servicioTipo);
+                    $("#modalServicioLabel").text("Editar Servicio");
+                    $("#modalServicio").modal("show");
+                });
+            });
+
+            // Eliminar servicio
+            $("#tablaServicios").on("click", ".eliminar", function () {
+                var id = $(this).data("id");
+                if (confirm("¿Está seguro de eliminar este servicio?")) {
+                    $.ajax({
+                        url: `/servicios/${id}`,
+                        type: "DELETE",
+                        success: function () {
+                            tabla.ajax.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
