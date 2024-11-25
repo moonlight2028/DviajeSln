@@ -1,14 +1,213 @@
-﻿.contenedor-nav-main {
+﻿.contador-text {
+    font-size: .7rem;
+    color: Var(--color-gris-500);
+    margin-top: 4px;
+    padding-left: 15px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--color-default);
+}
+
+h2 {
+    color: var(--color-dark-800);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Sección layout */
+.contenedor-layout {
+    width: 100%;
+    height: 100dvh;
+}
+
+.banner-datos {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+/* Fin Sección layout */
+
+/* Sección banner */
+.contenedor-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+/* Fin Sección banner */
+
+/* Sección datos */
+.contenedor-extra-datos {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 100%;
+    max-width: 1536px;
+    height: 100%;
+    padding: 20px;
+}
+
+.banner-titulo {
+    display: flex;
+    align-items: center;
+    height: 40%;
+    padding: 50px 0;
+}
+
+.contenedor-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 60%;
+    padding: 40px;
+    border-radius: 50px 10px 10px;
+    background-color: var(--color-default);
+    overflow: hidden;
+}
+
+.datos-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    overflow: auto;
+}
+
+.informacion-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.datos-botones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+    .datos-botones .button-87-main {
+        border-radius: 10px;
+    }
+
+.btn-atras {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+    .btn-atras i {
+        font-size: 1rem;
+    }
+
+    .btn-atras:hover span {
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+.btn-siguiente-deshabilitado {
+    background-image: linear-gradient(45deg, #756d6d 0%, #6b6b6b 51%, #333333 100%);
+}
+
+.input-field-textarea {
+    resize: none;
+}
+/* Fin Sección datos */
+
+
+@media (min-width: 1024px) {
+    /* Sección banner */
+    .contenedor-banner {
+        width: 50%;
+        height: 100%;
+        border-radius: 0 0 50px 0;
+    }
+    /* Fin Sección banner */
+
+    /* Sección datos */
+    .contenedor-extra-datos {
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        padding: 20px;
+    }
+
+    .banner-titulo {
+        width: 40%;
+        height: 100%;
+        padding-right: 20px;
+    }
+
+    .contenedor-datos {
+        width: 60%;
+        height: auto;
+        max-height: 80%;
+        border-radius: 10px;
+    }
+    /* Fin Sección datos */
+}
+
+@media (min-width: 1536px) {
+    /* Sección datos */
+    .contenedor-extra-datos {
+        padding: 20px 0;
+    }
+    /* Fin Sección datos */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.contenedor-nav-main {
     color: var(--color-default);
 }
 
 .contenedor-crear {
     background-color: var(--color-dark-950);
-}
+}*/
 
 
 /* Sección información */
-.titulo-imagenes {
+/*.titulo-imagenes {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -53,12 +252,12 @@
 
 .input-oculto {
     display: none;
-}
+}*/
 /* Fin Sección información */
 
 
 /* Sección subida imágenes */
-.upload-container {
+/*.upload-container {
     text-align: center;
     border: 2px dashed var(--color-gris-200);
     padding: 20px;
@@ -146,12 +345,12 @@
         .preview-item .remove-btn:hover {
             background-color: var(--color-gris-200);
             color: var(--color-dark-950);
-        }
+        }*/
 /* Fin Sección subida imágenes */
 
 
 /* Sección servicios */
-.lista-checks {
+/*.lista-checks {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -199,12 +398,12 @@
     .checkbox-item label.active {
         text-decoration: underline;
         font-weight: 500;
-    }
+    }*/
 /* Fin Sección servicios */
 
 
 /* Sección inputs */
-.contenedor-datos {
+/*.contenedor-datos {
     padding: 20px;
     margin-bottom: 80px;
 }
@@ -298,32 +497,32 @@
 
 .btn-fecha-sm {
     display: none;
-}
+}*/
 /* Fin Sección inputs */
 
 
-@media (min-width: 640px) {
-    /* Sección servicios */
-    .checkbox-items {
+/*@media (min-width: 640px) {*/
+/* Sección servicios */
+/*.checkbox-items {
         grid-template-columns: repeat(2,1fr);
-    }
-    /* Fin Sección servicios */
+    }*/
+/* Fin Sección servicios */
 
 
-    /* Sección inputs */
-    .datos-adicionales {
+/* Sección inputs */
+/*.datos-adicionales {
         max-width: 500px;
     }
 
     .inputs-fechas {
         flex-direction: row;
-    }
-    /* Fin Sección inputs */
-}
+    }*/
+/* Fin Sección inputs */
+/*}
 
-@media (min-width: 768px) {
-    /* Sección inputs */
-    .datos-adicionales {
+@media (min-width: 768px) {*/
+/* Sección inputs */
+/*.datos-adicionales {
         max-width: 600px;
     }
 
@@ -334,13 +533,13 @@
 
     .btn-fecha {
         display: none;
-    }
-    /* Fin Sección inputs */
-}
+    }*/
+/* Fin Sección inputs */
+/*}
 
-@media (min-width: 1024px) {
-    /* Sección información */
-    .titulo-imagenes {
+@media (min-width: 1024px) {*/
+/* Sección información */
+/*.titulo-imagenes {
         flex-direction: row;
         align-items: start;
     }
@@ -351,12 +550,12 @@
 
     .upload-container {
         width: 60%;
-    }
-    /* Fin Sección información */
+    }*/
+/* Fin Sección información */
 
 
-    /* Sección servicios */
-    .servicios {
+/* Sección servicios */
+/*.servicios {
         flex-direction: row;
         justify-content: center;
     }
@@ -368,22 +567,22 @@
 
     .checkbox-items {
         grid-template-columns: 1fr;
-    }
-    /* Fin Sección servicios */
-}
+    }*/
+/* Fin Sección servicios */
+/*}
 
-@media (min-width: 1536px) {
-    /* Sección información */
-    .titulo-imagenes {
+@media (min-width: 1536px) {*/
+/* Sección información */
+/*.titulo-imagenes {
         flex-direction: row;
         align-items: start;
         padding: 100px 0;
-    }
-    /* Fin Sección información */
+    }*/
+/* Fin Sección información */
 
 
-    /* Sección servicios */
-    .lista-checks {
+/* Sección servicios */
+/*.lista-checks {
         flex-direction: row;
         justify-content: center;
         padding: 40px 0;
@@ -392,6 +591,6 @@
     .hr-check {
         height: auto;
         width: 1px;
-    }
-    /* Fin Sección servicios */
-}
+    }*/
+/* Fin Sección servicios */
+/*}*/

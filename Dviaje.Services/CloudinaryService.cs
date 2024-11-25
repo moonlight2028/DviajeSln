@@ -13,9 +13,9 @@ namespace Dviaje.Services
     public class CloudinaryService : ISubirArchivosService
     {
         private readonly Cloudinary _cloudinary;
-        private string CloudName { get; } = "dgjjvf1g5";
-        private string ApiKey { get; } = "551693267758256";
-        private string ApiSecret { get; } = "IpjPuMVZapruMGPQW3KZvs1k4ZY";
+        private string CloudName { get; } = "dfpdbr5mk";
+        private string ApiKey { get; } = "231467288445945";
+        private string ApiSecret { get; } = "-ZvUlSdYz_OuksU8bWdXqohOiwA";
 
 
         public CloudinaryService()

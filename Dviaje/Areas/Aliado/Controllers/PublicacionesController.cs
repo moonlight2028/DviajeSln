@@ -1,10 +1,8 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Dviaje.Utility;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -46,8 +44,8 @@ namespace Dviaje.Areas.Aliado.Controllers
         [Route("publicacion/crear")]
         public async Task<IActionResult> Crear()
         {
-            var publicacion = await ObtenerDatosCrearPublicacionAsyn(new PublicacionCrearVM());
-            return View(publicacion);
+            //var publicacion = await ObtenerDatosCrearPublicacionAsyn(new PublicacionCrearVM());
+            return View();
         }
 
         /// <summary>
@@ -57,151 +55,158 @@ namespace Dviaje.Areas.Aliado.Controllers
         [Route("publicacion/crear")]
         public async Task<IActionResult> Crear(PublicacionCrearVM publicacion, List<IFormFile> imagenes)
         {
-            // Validaciones
-            var validacion = await _publicacionCrearVMValidator.ValidateAsync(publicacion);
-            if (!validacion.IsValid)
-            {
-                validacion.AddToModelState(this.ModelState);
-            }
-
-            if (imagenes == null || imagenes.Count < 3)
-            {
-                ModelState.AddModelError("imagenes", "La publicación debe contener al menos tres imágenes.");
-            }
-            else
-            {
-                foreach (var imagen in imagenes)
-                {
-                    if (!ArchivosUtility.ArchivosValidosImagenes.Contains(imagen.ContentType))
-                    {
-                        ModelState.AddModelError("imagenes", "Formato de imagen no aceptada, formatos aceptados JPG, JPEG, WEBP o PNG.");
-                    }
-                }
-            }
-
-            if (!ModelState.IsValid)
-            {
-                var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-                return View(datos);
-            }
-            else
-            {
-                var servicios = await _serviciosRepository.ObtenerServiciosAsync();
-                var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
-                var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
-                if (publicacion.ServiciosHabitacionSeleccionados != null)
-                {
-                    foreach (var servicioId in publicacion.ServiciosHabitacionSeleccionados)
-                    {
-                        var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
-
-                        if (!servicioExistente)
-                        {
-                            ModelState.AddModelError("ServiciosHabitacionSeleccionados", "Error el servicio no existe.");
-                            break;
-                        }
-                    }
-                }
-                if (publicacion.ServiciosEstablecimientoSeleccionados != null)
-                {
-                    foreach (var servicioId in publicacion.ServiciosEstablecimientoSeleccionados)
-                    {
-                        var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
-
-                        if (!servicioExistente)
-                        {
-                            ModelState.AddModelError("ServiciosEstablecimientoSeleccionados", "Error el servicio no existe.");
-                            break;
-                        }
-                    }
-                }
-                if (publicacion.CategoriasSeleccionadas != null)
-                {
-                    foreach (var categoriaId in publicacion.CategoriasSeleccionadas)
-                    {
-                        var categoriaExistente = categorias.Any(c => c.IdCategoria == categoriaId);
-
-                        if (!categoriaExistente)
-                        {
-                            ModelState.AddModelError("CategoriasSeleccionadas", "Error la categoria no existe.");
-                            break;
-                        }
-                    }
-                }
-                if (publicacion.RestriccionesSeleccionadas != null)
-                {
-                    foreach (var resticcionId in publicacion.RestriccionesSeleccionadas)
-                    {
-                        var restriccionExistente = restricciones.Any(r => r.IdRestriccion == resticcionId);
-
-                        if (!restriccionExistente)
-                        {
-                            ModelState.AddModelError("RestriccionesSeleccionadas", "Error la restricción no existe.");
-                            break;
-                        }
-                    }
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-                    return View(datos);
-                }
-            }
 
 
-            // Registro publicación
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            publicacion.IdAliado = userId;
-            publicacion.Fecha = DateTime.UtcNow;
 
-            var resultado = await _publicacionesRepository.CrearPublicacionAsync(publicacion);
-            if (resultado == null)
-            {
-                var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
 
-                TempData["Notificacion"] = "error";
-                TempData["NotificacionTitulo"] = "Publicación";
-                TempData["NotificacionMensaje"] = "Error, publicación no registrada.";
-
-                return View(datos);
-            }
-
-            // Subida de imágenes
-            var imagenesSubidas = await _subirArchivosService.SubirImagenesDesdeIFormFileAsync(imagenes, ArchivosUtility.CarpetaPublicaciones((int)resultado), $"{resultado}");
-            if (imagenesSubidas == null)
-            {
-                var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-                TempData["Notificacion"] = "error";
-                TempData["NotificacionTitulo"] = "Publicación";
-                TempData["NotificacionMensaje"] = "Error, al subir las imágenes.";
-
-                return View(datos);
-            }
-
-            // Registro imágenes
-            var imagenesLista = imagenesSubidas.Select(img => new PublicacionesImagenes
-            {
-                Ruta = img.Url,
-                Alt = $"Imagen de la publicación {publicacion.Titulo}",
-                IdPublicacion = (int)resultado
-            }).ToList();
-            var registroImagenes = await _publicacionesRepository.RegistrarImagenes(imagenesLista);
-            if (!registroImagenes)
-            {
-                var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-                TempData["Notificacion"] = "error";
-                TempData["NotificacionTitulo"] = "Publicación";
-                TempData["NotificacionMensaje"] = "Error, al registra las imágenes.";
-
-                return View(datos);
-            }
-
-            var testdd = "dasf";
 
             return RedirectToAction(nameof(MisPublicaciones));
+
+            // Validaciones
+            //var validacion = await _publicacionCrearVMValidator.ValidateAsync(publicacion);
+            //if (!validacion.IsValid)
+            //{
+            //    validacion.AddToModelState(this.ModelState);
+            //}
+
+            //if (imagenes == null || imagenes.Count < 3)
+            //{
+            //    ModelState.AddModelError("imagenes", "La publicación debe contener al menos tres imágenes.");
+            //}
+            //else
+            //{
+            //    foreach (var imagen in imagenes)
+            //    {
+            //        if (!ArchivosUtility.ArchivosValidosImagenes.Contains(imagen.ContentType))
+            //        {
+            //            ModelState.AddModelError("imagenes", "Formato de imagen no aceptada, formatos aceptados JPG, JPEG, WEBP o PNG.");
+            //        }
+            //    }
+            //}
+
+            //if (!ModelState.IsValid)
+            //{
+            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
+            //    return View(datos);
+            //}
+            //else
+            //{
+            //    var servicios = await _serviciosRepository.ObtenerServiciosAsync();
+            //    var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
+            //    var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
+            //    if (publicacion.ServiciosHabitacionSeleccionados != null)
+            //    {
+            //        foreach (var servicioId in publicacion.ServiciosHabitacionSeleccionados)
+            //        {
+            //            var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
+
+            //            if (!servicioExistente)
+            //            {
+            //                ModelState.AddModelError("ServiciosHabitacionSeleccionados", "Error el servicio no existe.");
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    if (publicacion.ServiciosEstablecimientoSeleccionados != null)
+            //    {
+            //        foreach (var servicioId in publicacion.ServiciosEstablecimientoSeleccionados)
+            //        {
+            //            var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
+
+            //            if (!servicioExistente)
+            //            {
+            //                ModelState.AddModelError("ServiciosEstablecimientoSeleccionados", "Error el servicio no existe.");
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    if (publicacion.CategoriasSeleccionadas != null)
+            //    {
+            //        foreach (var categoriaId in publicacion.CategoriasSeleccionadas)
+            //        {
+            //            var categoriaExistente = categorias.Any(c => c.IdCategoria == categoriaId);
+
+            //            if (!categoriaExistente)
+            //            {
+            //                ModelState.AddModelError("CategoriasSeleccionadas", "Error la categoria no existe.");
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    if (publicacion.RestriccionesSeleccionadas != null)
+            //    {
+            //        foreach (var resticcionId in publicacion.RestriccionesSeleccionadas)
+            //        {
+            //            var restriccionExistente = restricciones.Any(r => r.IdRestriccion == resticcionId);
+
+            //            if (!restriccionExistente)
+            //            {
+            //                ModelState.AddModelError("RestriccionesSeleccionadas", "Error la restricción no existe.");
+            //                break;
+            //            }
+            //        }
+            //    }
+
+            //    if (!ModelState.IsValid)
+            //    {
+            //        var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
+            //        return View(datos);
+            //    }
+            //}
+
+
+            //// Registro publicación
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //publicacion.IdAliado = userId;
+            //publicacion.Fecha = DateTime.UtcNow;
+
+            //var resultado = await _publicacionesRepository.CrearPublicacionAsync(publicacion);
+            //if (resultado == null)
+            //{
+            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
+
+            //    TempData["Notificacion"] = "error";
+            //    TempData["NotificacionTitulo"] = "Publicación";
+            //    TempData["NotificacionMensaje"] = "Error, publicación no registrada.";
+
+            //    return View(datos);
+            //}
+
+            //// Subida de imágenes
+            //var imagenesSubidas = await _subirArchivosService.SubirImagenesDesdeIFormFileAsync(imagenes, ArchivosUtility.CarpetaPublicaciones((int)resultado), $"{resultado}");
+            //if (imagenesSubidas == null)
+            //{
+            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
+
+            //    TempData["Notificacion"] = "error";
+            //    TempData["NotificacionTitulo"] = "Publicación";
+            //    TempData["NotificacionMensaje"] = "Error, al subir las imágenes.";
+
+            //    return View(datos);
+            //}
+
+            //// Registro imágenes
+            //var imagenesLista = imagenesSubidas.Select(img => new PublicacionesImagenes
+            //{
+            //    Ruta = img.Url,
+            //    Alt = $"Imagen de la publicación {publicacion.Titulo}",
+            //    IdPublicacion = (int)resultado
+            //}).ToList();
+            //var registroImagenes = await _publicacionesRepository.RegistrarImagenes(imagenesLista);
+            //if (!registroImagenes)
+            //{
+            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
+
+            //    TempData["Notificacion"] = "error";
+            //    TempData["NotificacionTitulo"] = "Publicación";
+            //    TempData["NotificacionMensaje"] = "Error, al registra las imágenes.";
+
+            //    return View(datos);
+            //}
+
+            //var testdd = "dasf";
+
+
         }
 
         /// <summary>
@@ -318,51 +323,51 @@ namespace Dviaje.Areas.Aliado.Controllers
 
 
 
-        private async Task<PublicacionCrearVM> ObtenerDatosCrearPublicacionAsyn(PublicacionCrearVM publicacion)
-        {
-            var servicios = await _serviciosRepository.ObtenerServiciosAsync();
-            var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
-            var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
+        //private async Task<PublicacionCrearVM> ObtenerDatosCrearPublicacionAsyn(PublicacionCrearVM publicacion)
+        //{
+        //    var servicios = await _serviciosRepository.ObtenerServiciosAsync();
+        //    var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
+        //    var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
 
-            publicacion.ServiciosHabitacion = servicios
-                .Where(s => s.ServicioTipo == ServicioTipo.Habitacion)
-                .Select(s => new SeleccionSRCVM
-                {
-                    Id = s.IdServicio,
-                    Nombre = s.NombreServicio,
-                    Icono = s.RutaIcono
-                }).ToList();
-            publicacion.ServiciosEstablecimiento = servicios
-                    .Where(s => s.ServicioTipo == ServicioTipo.Establecimiento)
-                    .Select(s => new SeleccionSRCVM
-                    {
-                        Id = s.IdServicio,
-                        Nombre = s.NombreServicio,
-                        Icono = s.RutaIcono
-                    }).ToList();
-            publicacion.ServiciosAccesibilidad = servicios
-                    .Where(s => s.ServicioTipo == ServicioTipo.Accesibilidad)
-                    .Select(s => new SeleccionSRCVM
-                    {
-                        Id = s.IdServicio,
-                        Nombre = s.NombreServicio,
-                        Icono = s.RutaIcono
-                    }).ToList();
-            publicacion.Restricciones = restricciones.Select(r => new SeleccionSRCVM
-            {
-                Id = r.IdRestriccion,
-                Nombre = r.NombreRestriccion,
-                Icono = r.RutaIcono
-            }).ToList();
-            publicacion.Categorias = categorias.Select(c => new SeleccionSRCVM
-            {
-                Id = c.IdCategoria,
-                Nombre = c.NombreCategoria,
-                Icono = c.RutaIcono
-            }).ToList();
+        //    publicacion.ServiciosHabitacion = servicios
+        //        .Where(s => s.ServicioTipo == ServicioTipo.Habitacion)
+        //        .Select(s => new SeleccionSRCVM
+        //        {
+        //            Id = s.IdServicio,
+        //            Nombre = s.NombreServicio,
+        //            Icono = s.RutaIcono
+        //        }).ToList();
+        //    publicacion.ServiciosEstablecimiento = servicios
+        //            .Where(s => s.ServicioTipo == ServicioTipo.Establecimiento)
+        //            .Select(s => new SeleccionSRCVM
+        //            {
+        //                Id = s.IdServicio,
+        //                Nombre = s.NombreServicio,
+        //                Icono = s.RutaIcono
+        //            }).ToList();
+        //    publicacion.ServiciosAccesibilidad = servicios
+        //            .Where(s => s.ServicioTipo == ServicioTipo.Accesibilidad)
+        //            .Select(s => new SeleccionSRCVM
+        //            {
+        //                Id = s.IdServicio,
+        //                Nombre = s.NombreServicio,
+        //                Icono = s.RutaIcono
+        //            }).ToList();
+        //    publicacion.Restricciones = restricciones.Select(r => new SeleccionSRCVM
+        //    {
+        //        Id = r.IdRestriccion,
+        //        Nombre = r.NombreRestriccion,
+        //        Icono = r.RutaIcono
+        //    }).ToList();
+        //    publicacion.Categorias = categorias.Select(c => new SeleccionSRCVM
+        //    {
+        //        Id = c.IdCategoria,
+        //        Nombre = c.NombreCategoria,
+        //        Icono = c.RutaIcono
+        //    }).ToList();
 
-            return publicacion;
-        }
+        //    return publicacion;
+        //}
 
 
     }

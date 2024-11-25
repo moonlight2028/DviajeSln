@@ -1,4 +1,5 @@
-﻿@model PublicacionCrearVM
+﻿@* @model PublicacionCrearVM *@
+
 
 @{
     ViewData["Title"] = "Crear Publicación";
@@ -14,7 +15,35 @@
 }
 
 
-<div >
+<div class="contenedor-layout">
+    <div class="banner-datos">
+        <section class="contenedor-banner b-s-95" id="contenedor-imagen"></section>
+
+        <div class="contenedor-extra-datos">
+            <div class="banner-titulo" id="contenedor-titulo"></div>
+            <section class="contenedor-datos b-s-93">
+                <div class="datos-inputs" id="contenido-dinamico"></div>
+                <div class="hr"></div>
+                <div class="datos-botones" id="grupo-botones"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <!-- Sortable.js -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script type="module" src="~/js/publicaciones/publicacionCrear.js"></script>
+}
+
+
+
+
+
+
+@* <div >
     <form asp-area="Aliado" asp-controller="Publicaciones" asp-action="Crear" method="post" enctype="multipart/form-data">
         <div class="contenedor-crear">
             <div class="titulo-imagenes">
@@ -187,19 +216,4 @@
     </form>
 </div>
 
-<button id="mostrarValores" type="button">Mostrar Valores</button>
-
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-
-    @if (TempData["Notificacion"] != null && TempData["NotificacionTitulo"] != null && TempData["NotificacionMensaje"] != null)
-    {
-        <partial name="_IziToastPartial" />
-    }
-
-    <!-- Sortable.js -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-
-    <script type="module" src="~/js/publicaciones/publicacionCrear.js"></script>
-}
+<button id="mostrarValores" type="button">Mostrar Valores</button> *@
