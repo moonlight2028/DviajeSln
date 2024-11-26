@@ -127,6 +127,72 @@ h2 {
 /* Fin Sección datos */
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+    .input-group input[type="number"] {
+        width: 60px;
+        text-align: center;
+    }
+
+    .input-group button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+        .input-group button:hover {
+            background: #0056b3;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (min-width: 1024px) {
     /* Sección banner */
     .contenedor-banner {
@@ -170,6 +236,215 @@ h2 {
     /* Fin Sección datos */
 }
 
+
+
+
+
+
+
+
+
+/* Sección subida imágenes */
+.upload-container {
+    text-align: center;
+    border: 2px dashed var(--color-gris-200);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    color: var(--color-gris-200);
+}
+
+    .upload-container:hover {
+        border-color: var(--color-primario-500);
+    }
+
+    .upload-container h2 {
+        font-size: 1.2rem;
+    }
+
+.drop-zone {
+    position: relative;
+    border: 2px dashed var(--color-primario-400);
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+    .drop-zone p {
+        margin: 0;
+        color: var(--color-gris-500);
+        font-size: 14px;
+    }
+
+    .drop-zone input {
+        display: none;
+    }
+
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 10px;
+    justify-content: center;
+}
+
+.preview-item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .preview-item a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+    }
+
+    .preview-item img {
+        height: 100%;
+        width: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .preview-item .remove-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: var(--color-dark-950);
+        color: var(--color-default);
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+        .preview-item .remove-btn:hover {
+            background-color: var(--color-gris-200);
+            color: var(--color-dark-950);
+        }
+/* Fin Sección subida imágenes */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Sección inputs */
+.contenedor-datos {
+    padding: 20px;
+    margin-bottom: 80px;
+}
+
+.datos-adicionales {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--color-default);
+    margin: 0 auto;
+}
+
+.contenedor-fechas h2 {
+    font-size: 1.2rem;
+    color: Var(--color-dark-600);
+    margin-bottom: 10px;
+}
+
+.buscar-fechas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .buscar-fechas button {
+        cursor: pointer;
+    }
+
+.inputs-fechas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fechas-agregadas {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.fecha-item {
+    padding: 10px;
+    background-color: var(--color-gris-100);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fecha {
+    display: flex;
+    gap: 20px;
+}
+
+    .fecha div {
+        display: flex;
+        flex-direction: column;
+    }
+
+.fecha-agregada-titulo {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--color-gris-700);
+}
+
+.fecha-agregada-valor {
+    color: var(--color-gris-700);
+    font-size: .8rem;
+}
+
+.remove-fecha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    color: var(--color-gris-700);
+    border: 2px solid var(--color-gris-700);
+    cursor: pointer;
+}
+
+    .remove-fecha:hover {
+        color: var(--color-default);
+        background-color: var(--color-gris-700);
+    }
+
+.btn-fecha-sm {
+    display: none;
+}
+/* Fin Sección inputs */
 
 
 

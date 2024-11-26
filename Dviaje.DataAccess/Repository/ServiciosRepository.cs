@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
+using Dviaje.Models.VM;
 using System.Data;
 
 
@@ -46,13 +47,11 @@ namespace Dviaje.DataAccess.Repository
         }
 
         // Obtener todos los servicios
-        public async Task<List<Servicio>?> ObtenerServiciosAsync()
+        public async Task<List<ServicioTipoStringVM>?> ObtenerServiciosAsync()
         {
-            var sql = @"
-                SELECT IdServicio, NombreServicio, RutaIcono, ServicioTipo
-                FROM Servicios";
+            var sql = @"SELECT * FROM Servicios";
 
-            var servicios = await _db.QueryAsync<Servicio>(sql);
+            var servicios = await _db.QueryAsync<ServicioTipoStringVM>(sql);
             return servicios.ToList();
         }
 
