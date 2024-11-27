@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dviaje.Areas.Moderador.Controllers
 {
     [Area("Moderador")]
-    [Route("categorias")]
+    [Route("Moderador/categorias")]
     [Authorize(Roles = RolesUtility.RoleModerador)]
     public class CategoriasController : Controller
     {
@@ -19,10 +19,27 @@ namespace Dviaje.Areas.Moderador.Controllers
         }
 
         /// <summary>
+        /// Obtiene el listado de todas las categorías (para el DataTable).
+        /// </summary>
+        [HttpGet]
+        [Route("listar")]
+        public async Task<IActionResult> ObtenerCategorias()
+        {
+            try
+            {
+                var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
+                return Ok(new { data = categorias }); // Compatible con dataSrc: "data" en DataTable
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Error al obtener categorías.", details = ex.Message });
+            }
+        }
+
+        /// <summary>
         /// Crea una nueva categoría.
         /// </summary>
         [HttpPost]
-        [Route("categorias")]
         public async Task<IActionResult> CrearCategoria(Categoria categoria)
         {
             if (!ModelState.IsValid)
@@ -43,7 +60,7 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Obtiene una categoría por su ID.
         /// </summary>
         [HttpGet]
-        [Route("categorias/{id?}")]
+        [Route("{id?}")]
         public async Task<IActionResult> ObtenerCategoria(int? id)
         {
             if (!id.HasValue)
@@ -64,7 +81,6 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Actualiza una categoría existente.
         /// </summary>
         [HttpPut]
-        [Route("categorias")]
         public async Task<IActionResult> ActualizarCategoria(Categoria categoria)
         {
             if (!ModelState.IsValid)
@@ -85,7 +101,7 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Elimina una categoría por su ID.
         /// </summary>
         [HttpDelete]
-        [Route("categorias/{id?}")]
+        [Route("{id?}")]
         public async Task<IActionResult> EliminarCategoria(int? id)
         {
             if (!id.HasValue)

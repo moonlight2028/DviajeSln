@@ -2,6 +2,10 @@
     ViewData["Title"] = "Gestión de Categorías";
 }
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+}
 <h2>Gestión de Categorías</h2>
 
 <table id="tablaCategorias" class="table table-bordered table-striped">
@@ -45,13 +49,19 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Inicializar DataTable
             var tabla = $("#tablaCategorias").DataTable({
                 ajax: {
-                    url: "/Moderador/categorias",
+                    url: "/Moderador/Categorias", 
                     type: "GET",
-                    dataSrc: "data"
+                    dataSrc: "data", // Cambia a "" si el backend no envía datos dentro de "data"
+                    error: function (xhr, error, thrown) {
+                        console.error("Error al cargar datos:", xhr.responseText);
+                        alert("Hubo un problema al cargar los datos. Por favor, inténtelo más tarde.");
+                    }
                 },
                 columns: [
                     { data: "idCategoria" },
@@ -69,18 +79,19 @@
                 ]
             });
 
-            // Lógica CRUD similar a Servicios.cshtml
+            // Crear nueva categoría
             $("#btnNuevaCategoria").on("click", function () {
                 $("#modalCategoriaLabel").text("Nueva Categoría");
                 $("#formCategoria")[0].reset();
                 $("#modalCategoria").modal("show");
             });
 
+            // Guardar categoría (crear/editar)
             $("#formCategoria").on("submit", function (e) {
                 e.preventDefault();
                 var formData = $(this).serialize();
                 var id = $("#IdCategoria").val();
-                var url = id ? `/categorias/${id}` : "/categorias";
+                var url = id ? `/Moderador/Categorias/${id}` : "/Moderador/Categorias";
                 var type = id ? "PUT" : "POST";
 
                 $.ajax({
@@ -90,29 +101,46 @@
                     success: function () {
                         $("#modalCategoria").modal("hide");
                         tabla.ajax.reload();
+                    },
+                    error: function (xhr) {
+                        console.error("Error al guardar la categoría:", xhr.responseText);
+                        alert("Hubo un error al guardar la categoría. Por favor, inténtelo nuevamente.");
                     }
                 });
             });
 
+            // Editar categoría
             $("#tablaCategorias").on("click", ".editar", function () {
                 var id = $(this).data("id");
-                $.get(`/categorias/${id}`, function (res) {
-                    $("#IdCategoria").val(res.data.idCategoria);
-                    $("#NombreCategoria").val(res.data.nombreCategoria);
-                    $("#RutaIcono").val(res.data.rutaIcono);
-                    $("#modalCategoriaLabel").text("Editar Categoría");
-                    $("#modalCategoria").modal("show");
+                $.get(`/Moderador/Categorias/${id}`, function (res) {
+                    if (res.success) {
+                        $("#IdCategoria").val(res.data.idCategoria);
+                        $("#NombreCategoria").val(res.data.nombreCategoria);
+                        $("#RutaIcono").val(res.data.rutaIcono);
+                        $("#modalCategoriaLabel").text("Editar Categoría");
+                        $("#modalCategoria").modal("show");
+                    } else {
+                        alert("No se pudo cargar la categoría. Inténtelo nuevamente.");
+                    }
+                }).fail(function (xhr) {
+                    console.error("Error al obtener la categoría:", xhr.responseText);
+                    alert("Hubo un problema al obtener la categoría.");
                 });
             });
 
+            // Eliminar categoría
             $("#tablaCategorias").on("click", ".eliminar", function () {
                 var id = $(this).data("id");
                 if (confirm("¿Está seguro de eliminar esta categoría?")) {
                     $.ajax({
-                        url: `/categorias/${id}`,
+                        url: `/Moderador/Categorias/${id}`,
                         type: "DELETE",
                         success: function () {
                             tabla.ajax.reload();
+                        },
+                        error: function (xhr) {
+                            console.error("Error al eliminar la categoría:", xhr.responseText);
+                            alert("Hubo un error al eliminar la categoría. Inténtelo nuevamente.");
                         }
                     });
                 }

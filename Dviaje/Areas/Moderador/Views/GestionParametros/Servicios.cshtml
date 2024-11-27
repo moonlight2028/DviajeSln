@@ -1,50 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Gestión de Servicios";
 }
-
-
-@section Styles{
+@section Styles {
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
 }
-
-
-
-<table id="miTabla" class="display">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Ciudad</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Ana</td>
-            <td>23</td>
-            <td>Madrid</td>
-        </tr>
-        <tr>
-            <td>Juan</td>
-            <td>30</td>
-            <td>Barcelona</td>
-        </tr>
-        <tr>
-            <td>Carlos</td>
-            <td>28</td>
-            <td>Valencia</td>
-        </tr>
-        <!-- más filas aquí -->
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
 
 <h2>Gestión de Servicios</h2>
 
@@ -95,20 +55,17 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
-
-    <script type="module" src="/js/servicios/servicios.js"></script>
-
-@* 
     <script>
         $(document).ready(function () {
+            // Inicializar el DataTable para listar los servicios
             var tabla = $("#tablaServicios").DataTable({
                 ajax: {
-                    url: "/servicios",
+                    url: "/Moderador/servicios/listar", // Ruta corregida
                     type: "GET",
-                    dataSrc: "data"
+                    dataSrc: "data" // Verifica que el backend envíe datos en esta estructura
                 },
                 columns: [
                     { data: "idServicio" },
@@ -119,36 +76,44 @@
                         data: "idServicio",
                         render: function (data) {
                             return `
-                                <button class="btn btn-primary btn-sm editar" data-id="${data}">Editar</button>
-                                <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
-                            `;
+                                        <button class="btn btn-primary btn-sm editar" data-id="${data}">Editar</button>
+                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                                    `;
                         }
                     }
                 ]
             });
 
-            // Abrir modal para crear
+            // Abrir modal para crear un nuevo servicio
             $("#btnNuevoServicio").on("click", function () {
                 $("#modalServicioLabel").text("Nuevo Servicio");
                 $("#formServicio")[0].reset();
                 $("#modalServicio").modal("show");
             });
 
-            // Enviar formulario (Crear/Editar)
+            // Guardar cambios (crear/editar)
             $("#formServicio").on("submit", function (e) {
                 e.preventDefault();
                 var formData = $(this).serialize();
                 var id = $("#IdServicio").val();
-                var url = id ? `/servicios/${id}` : "/servicios";
+                var url = id ? `/Moderador/servicios/${id}` : "/Moderador/servicios";
                 var type = id ? "PUT" : "POST";
 
                 $.ajax({
                     url: url,
                     type: type,
                     data: formData,
-                    success: function () {
-                        $("#modalServicio").modal("hide");
-                        tabla.ajax.reload();
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            $("#modalServicio").modal("hide");
+                            tabla.ajax.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Ocurrió un error al guardar el servicio.");
                     }
                 });
             });
@@ -156,34 +121,43 @@
             // Cargar datos en el modal para editar
             $("#tablaServicios").on("click", ".editar", function () {
                 var id = $(this).data("id");
-                $.get(`/servicios/${id}`, function (res) {
-                    $("#IdServicio").val(res.data.idServicio);
-                    $("#NombreServicio").val(res.data.nombreServicio);
-                    $("#RutaIcono").val(res.data.rutaIcono);
-                    $("#ServicioTipo").val(res.data.servicioTipo);
-                    $("#modalServicioLabel").text("Editar Servicio");
-                    $("#modalServicio").modal("show");
+                $.get(`/Moderador/servicios/${id}`, function (res) {
+                    if (res.success) {
+                        $("#IdServicio").val(res.data.idServicio);
+                        $("#NombreServicio").val(res.data.nombreServicio);
+                        $("#RutaIcono").val(res.data.rutaIcono);
+                        $("#ServicioTipo").val(res.data.servicioTipo);
+                        $("#modalServicioLabel").text("Editar Servicio");
+                        $("#modalServicio").modal("show");
+                    } else {
+                        alert(res.message);
+                    }
+                }).fail(function () {
+                    alert("Error al cargar los datos del servicio.");
                 });
             });
 
-            // Eliminar servicio
+            // Eliminar un servicio
             $("#tablaServicios").on("click", ".eliminar", function () {
                 var id = $(this).data("id");
                 if (confirm("¿Está seguro de eliminar este servicio?")) {
                     $.ajax({
-                        url: `/servicios/${id}`,
+                        url: `/Moderador/servicios/${id}`,
                         type: "DELETE",
-                        success: function () {
-                            tabla.ajax.reload();
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                                tabla.ajax.reload();
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Ocurrió un error al eliminar el servicio.");
                         }
                     });
                 }
             });
         });
     </script>
-
-
- *@
 }
-
-

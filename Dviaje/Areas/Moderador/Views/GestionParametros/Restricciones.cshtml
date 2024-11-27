@@ -2,6 +2,11 @@
     ViewData["Title"] = "Gestión de Restricciones";
 }
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+}
+
 <h2>Gestión de Restricciones</h2>
 
 <table id="tablaRestricciones" class="table table-bordered table-striped">
@@ -45,13 +50,15 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Configurar el DataTable para listar restricciones
             var tabla = $("#tablaRestricciones").DataTable({
                 ajax: {
-                    url: "/Moderador/restricciones",
+                    url: "/Moderador/restricciones/listar", // RUTA CORREGIDA
                     type: "GET",
-                    dataSrc: "data"
+                    dataSrc: "data" 
                 },
                 columns: [
                     { data: "idRestriccion" },
@@ -69,50 +76,75 @@
                 ]
             });
 
-            // Lógica CRUD similar a Servicios.cshtml
+            // Abrir el modal para crear una nueva restricción
             $("#btnNuevaRestriccion").on("click", function () {
                 $("#modalRestriccionLabel").text("Nueva Restricción");
                 $("#formRestriccion")[0].reset();
                 $("#modalRestriccion").modal("show");
             });
 
+            // Guardar cambios (crear/editar)
             $("#formRestriccion").on("submit", function (e) {
                 e.preventDefault();
                 var formData = $(this).serialize();
                 var id = $("#IdRestriccion").val();
-                var url = id ? `/restricciones/${id}` : "/restricciones";
+                var url = id ? `/Moderador/restricciones/${id}` : "/Moderador/restricciones";
                 var type = id ? "PUT" : "POST";
 
                 $.ajax({
                     url: url,
                     type: type,
                     data: formData,
-                    success: function () {
-                        $("#modalRestriccion").modal("hide");
-                        tabla.ajax.reload();
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            $("#modalRestriccion").modal("hide");
+                            tabla.ajax.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Ocurrió un error al guardar la restricción.");
                     }
                 });
             });
 
+            // Cargar datos en el modal para editar
             $("#tablaRestricciones").on("click", ".editar", function () {
                 var id = $(this).data("id");
-                $.get(`/restricciones/${id}`, function (res) {
-                    $("#IdRestriccion").val(res.data.idRestriccion);
-                    $("#NombreRestriccion").val(res.data.nombreRestriccion);
-                    $("#RutaIcono").val(res.data.rutaIcono);
-                    $("#modalRestriccionLabel").text("Editar Restricción");
-                    $("#modalRestriccion").modal("show");
+                $.get(`/Moderador/restricciones/${id}`, function (res) {
+                    if (res.success) {
+                        $("#IdRestriccion").val(res.data.idRestriccion);
+                        $("#NombreRestriccion").val(res.data.nombreRestriccion);
+                        $("#RutaIcono").val(res.data.rutaIcono);
+                        $("#modalRestriccionLabel").text("Editar Restricción");
+                        $("#modalRestriccion").modal("show");
+                    } else {
+                        alert(res.message);
+                    }
+                }).fail(function () {
+                    alert("Error al cargar los datos de la restricción.");
                 });
             });
 
+            // Eliminar una restricción
             $("#tablaRestricciones").on("click", ".eliminar", function () {
                 var id = $(this).data("id");
                 if (confirm("¿Está seguro de eliminar esta restricción?")) {
                     $.ajax({
-                        url: `/restricciones/${id}`,
+                        url: `/Moderador/restricciones/${id}`,
                         type: "DELETE",
-                        success: function () {
-                            tabla.ajax.reload();
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                                tabla.ajax.reload();
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Ocurrió un error al eliminar la restricción.");
                         }
                     });
                 }
@@ -120,4 +152,3 @@
         });
     </script>
 }
-

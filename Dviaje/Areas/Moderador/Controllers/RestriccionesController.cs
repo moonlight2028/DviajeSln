@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dviaje.Areas.Moderador.Controllers
 {
     [Area("Moderador")]
-    [Route("restricciones")]
+    [Route("Moderador/restricciones")]
     [Authorize(Roles = RolesUtility.RoleModerador)]
     public class RestriccionesController : Controller
     {
@@ -19,10 +19,27 @@ namespace Dviaje.Areas.Moderador.Controllers
         }
 
         /// <summary>
+        /// Obtiene el listado de todas las restricciones (para el DataTable).
+        /// </summary>
+        [HttpGet]
+        [Route("listar")]
+        public async Task<IActionResult> ObtenerRestricciones()
+        {
+            try
+            {
+                var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
+                return Ok(new { data = restricciones }); // Compatible con dataSrc: "data" en DataTable
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Error al obtener las restricciones.", details = ex.Message });
+            }
+        }
+
+        /// <summary>
         /// Crea una nueva restricción.
         /// </summary>
         [HttpPost]
-        [Route("restricciones")]
         public async Task<IActionResult> CrearRestriccion(Restriccion restriccion)
         {
             if (!ModelState.IsValid)
@@ -43,7 +60,7 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Obtiene una restricción por su ID.
         /// </summary>
         [HttpGet]
-        [Route("restricciones/{id?}")]
+        [Route("{id?}")]
         public async Task<IActionResult> ObtenerRestriccion(int? id)
         {
             if (!id.HasValue)
@@ -64,7 +81,6 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Actualiza una restricción existente.
         /// </summary>
         [HttpPut]
-        [Route("restricciones")]
         public async Task<IActionResult> ActualizarRestriccion(Restriccion restriccion)
         {
             if (!ModelState.IsValid)
@@ -85,7 +101,7 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Elimina una restricción por su ID.
         /// </summary>
         [HttpDelete]
-        [Route("restricciones/{id?}")]
+        [Route("{id?}")]
         public async Task<IActionResult> EliminarRestriccion(int? id)
         {
             if (!id.HasValue)
