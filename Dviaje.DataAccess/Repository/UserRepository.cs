@@ -24,12 +24,15 @@ public class UserRepository : IUserRepository
             (SELECT GROUP_CONCAT(r.Name SEPARATOR ', ') 
              FROM aspnetuserroles ur
              JOIN aspnetroles r ON ur.RoleId = r.Id
-             WHERE ur.UserId = u.Id) AS Roles
+             WHERE ur.UserId = u.Id) AS Roles,
+            (SELECT GROUP_CONCAT(Name SEPARATOR ', ') 
+             FROM aspnetroles) AS RolesDisponibles
         FROM 
             aspnetusers u";
 
         return (await _db.QueryAsync<UsuarioVM>(sql)).ToList();
     }
+
 
 
     public async Task<bool> CambiarRolUsuarioAsync(string idUsuario, string nuevoRol)
