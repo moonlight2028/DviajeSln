@@ -2,6 +2,50 @@
     ViewData["Title"] = "Gestión de Servicios";
 }
 
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+}
+
+
+
+<table id="miTabla" class="display">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Ciudad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ana</td>
+            <td>23</td>
+            <td>Madrid</td>
+        </tr>
+        <tr>
+            <td>Juan</td>
+            <td>30</td>
+            <td>Barcelona</td>
+        </tr>
+        <tr>
+            <td>Carlos</td>
+            <td>28</td>
+            <td>Valencia</td>
+        </tr>
+        <!-- más filas aquí -->
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
 <h2>Gestión de Servicios</h2>
 
 <table id="tablaServicios" class="table table-bordered table-striped">
@@ -52,11 +96,17 @@
     </div>
 </div>
 @section Scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+
+    <script type="module" src="/js/servicios/servicios.js"></script>
+
+@* 
     <script>
         $(document).ready(function () {
             var tabla = $("#tablaServicios").DataTable({
                 ajax: {
-                    url: "/Moderador/servicios",
+                    url: "/servicios",
                     type: "GET",
                     dataSrc: "data"
                 },
@@ -131,5 +181,9 @@
             });
         });
     </script>
+
+
+ *@
 }
+
 
