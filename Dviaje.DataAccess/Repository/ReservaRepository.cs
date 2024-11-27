@@ -179,7 +179,7 @@ namespace Dviaje.DataAccess.Repository
                                 SELECT 
                                     p.IdAliado AS IdUsuario,
                                     p.IdPublicacion,
-                                    p.Precio AS PrecioTotal
+                                    p.PrecioNoche AS PrecioTotal
                                 FROM 
                                     Publicaciones p
                                 WHERE 
