@@ -9,10 +9,12 @@ namespace Dviaje.DataAccess.Repository
     {
         private readonly IDbConnection _db;
 
+
         public CategoriasRepository(IDbConnection db)
         {
             _db = db;
         }
+
 
         // Crear nueva categoría
         public async Task<bool> CrearCategoriaAsync(Categoria categoria)
@@ -46,8 +48,9 @@ namespace Dviaje.DataAccess.Repository
         public async Task<List<Categoria>> ObtenerCategoriasAsync()
         {
             var sql = @"
-                SELECT IdCategoria, NombreCategoria, RutaIcono
-                FROM Categorias";
+                SELECT IdCategoria, NombreCategoria, RutaIcono, Descripcion, UrlImagen
+                FROM Categorias
+            ";
 
             var categorias = await _db.QueryAsync<Categoria>(sql);
             return categorias.ToList();

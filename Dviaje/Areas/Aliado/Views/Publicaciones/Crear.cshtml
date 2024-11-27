@@ -1,4 +1,5 @@
-﻿@model PublicacionCrearVM
+﻿@* @model PublicacionCrearVM *@
+
 
 @{
     ViewData["Title"] = "Crear Publicación";
@@ -14,192 +15,26 @@
 }
 
 
-<div >
-    <form asp-area="Aliado" asp-controller="Publicaciones" asp-action="Crear" method="post" enctype="multipart/form-data">
-        <div class="contenedor-crear">
-            <div class="titulo-imagenes">
-                <section class="section-titulo">
-                    <div class="editable" contenteditable="true" id="DivInputTitulo">Titulo</div>
-                    <div class="editable-direccion" contenteditable="true" id="DivInputDireccion">Dirección</div>
-                    <div class="editable-descripcion" contenteditable="true" id="DivInputDescripcion">Descripción</div>
-                    <input type="text" asp-for="Titulo"  class="input-oculto"/>
-                    <input type="text" asp-for="Direccion" class="input-oculto"/>
-                    <input type="text" asp-for="Descripcion" class="input-oculto"/>
-                </section>
+<div class="contenedor-layout">
+    <div class="banner-datos">
+        <section class="contenedor-banner b-s-95" id="contenedor-imagen"></section>
 
-                <section class="upload-container">
-                    <h2>Arrastra y Suelta Tus Imágenes</h2>
-                    <div id="drop-zone" class="drop-zone">
-                        <p>Arrastra y suelta tus imágenes aquí o haz clic para cargar</p>
-                        <input type="file" id="imageInput" name="imagenes" accept="image/*" multiple>
-                    </div>
-                    <div id="preview-container" class="preview-container"></div>
-                </section>
-            </div>
-        </div>
-
-        <div class="lista-checks">
-            <section class="servicios">
-                <div class="checkbox-servicios">
-                    <h2>Servicios de Habitación</h2>
-                    <div class="checkbox-items">
-                        @if(Model.ServiciosHabitacion != null)
-                        {
-                            foreach (var servicio in Model.ServiciosHabitacion)
-                            {
-                                <div class="checkbox-item">
-                                    <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-habitacion")" value="@servicio.Id" name="ServiciosHabitacionSeleccionados" />
-                                    <i class="@servicio.Icono"></i>
-                                    <label for="@($"{servicio.Id}-servicio-habitacion")">@servicio.Nombre</label>
-                                </div>
-                            }
-                        }
-                    </div>
-                </div>
+        <div class="contenedor-extra-datos">
+            <div class="banner-titulo" id="contenedor-titulo"></div>
+            <section class="contenedor-datos b-s-93">
+                <div class="datos-inputs" id="contenido-dinamico"></div>
                 <div class="hr"></div>
-
-                <div class="checkbox-servicios">
-                    <h2>Servicios de Establecimiento</h2>
-                    <div class="checkbox-items">
-                        @if (Model.ServiciosEstablecimiento != null)
-                        {
-                            foreach (var servicio in Model.ServiciosEstablecimiento)
-                            {
-                                <div class="checkbox-item">
-                                    <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-establecimiento")" value="@servicio.Id" name="ServiciosEstablecimientoSeleccionados" />
-                                    <i class="@servicio.Icono"></i>
-                                    <label for="@($"{servicio.Id}-servicio-establecimiento")">@servicio.Nombre</label>
-                                </div>
-                            }
-                        }                        
-                    </div>
-                </div>
-                <div class="hr"></div>
-
-                <div class="checkbox-servicios">
-                    <h2>Servicios de Accesibilidad</h2>
-                    <div class="checkbox-items">
-                        @if (Model.ServiciosAccesibilidad != null)
-                        {
-                            foreach (var servicio in Model.ServiciosAccesibilidad)
-                            {
-                                <div class="checkbox-item">
-                                    <input type="checkbox" asp-for="@servicio.Seleccionado" id="@($"{servicio.Id}-servicio-accesibilidad")" value="@servicio.Id" name="ServiciosAccesibilidadSeleccionados" />
-                                    <i class="@servicio.Icono"></i>
-                                    <label for="@($"{servicio.Id}-servicio-accesibilidad")">@servicio.Nombre</label>
-                                </div>
-                            }
-                        }
-                    </div>
-                </div>
-            </section>
-            <div class="hr hr-check"></div>
-
-            <section class="servicios">
-                <div class="checkbox-servicios">
-                    <h2>Restricciones</h2>
-                    <div class="checkbox-items">
-                        @if (Model.Restricciones != null)
-                        {
-                            foreach (var restriccion in Model.Restricciones)
-                            {
-                                <div class="checkbox-item">
-                                    <input type="checkbox" asp-for="@restriccion.Seleccionado" id="@($"{restriccion.Id}-restriccion")" value="@restriccion.Id" name="RestriccionesSeleccionadas" />
-                                    <i class="@restriccion.Icono"></i>
-                                    <label for="@($"{restriccion.Id}-restriccion")">@restriccion.Nombre</label>
-                                </div>
-                            }
-                        }
-                    </div>
-                </div>
-                <div class="hr"></div>
-
-                <div class="checkbox-servicios">
-                    <h2>Categorías</h2>
-                    <div class="checkbox-items">
-                        @if (Model.Categorias != null)
-                        {
-                            foreach (var categoria in Model.Categorias)
-                            {
-                                <div class="checkbox-item">
-                                    <input type="checkbox" asp-for="@categoria.Seleccionado" id="@($"{categoria.Id}-categoria")" value="@categoria.Id" name="CategoriasSeleccionadas" />
-                                    <i class="@categoria.Icono"></i>
-                                    <label for="@($"{categoria.Id}-categoria")">@categoria.Nombre</label>
-                                </div>
-                            }
-                        }
-                    </div>
-                </div>
+                <div class="datos-botones" id="grupo-botones"></div>
             </section>
         </div>
-
-
-        <div class="contenedor-datos">
-            <section class="datos-adicionales b-s-95">
-                <div>
-                    <label asp-for="NumeroCamas" class="input-label">
-                        <input asp-for="NumeroCamas" type="number" autocomplete="on" aria-required="true" class="input-field" placeholder="Número de Camas" />
-                        <span class="input-placeholder">Número de Camas</span>
-                    </label>
-                </div>
-                <div class="hr"></div>
-
-                <div class="contenedor-fechas">
-                    <h2>Fechas no Disponibles</h2>
-                    <div class="buscar-fechas">
-                        <div class="inputs-fechas">
-                            <label class="input-label input-fecha">
-                                <input type="date" autocomplete="on" aria-required="true" class="input-field"
-                                       placeholder="Fecha Inicial" id="booking-busqueda-llegada" />
-                                <span class="input-placeholder">Fecha Inicial</span>
-                            </label>
-
-                            <label class="input-label input-fecha">
-                                <input type="date" autocomplete="on" aria-required="true" class="input-field"
-                                       placeholder="Fecha Final" id="booking-busqueda-salida" />
-                                <span class="input-placeholder">Fecha Final</span>
-                            </label>
-                            <button type="button" class="button-23 btn-fecha-sm" id="agregar-fecha-lg">Agregar Fecha</button>
-                        </div>
-
-                        <div class="fechas-agregadas" id="fechas-agregadas">
-
-                        </div>
-
-                
-                        <button type="button" class="button-23 btn-fecha" id="agregar-fecha-sm">Agregar Fecha</button>
-                    </div>
-                </div>
-                <div class="hr"></div>
-
-                <div>
-                    <label asp-for="Precio" class="input-label">
-                        <input asp-for="Precio" type="number" autocomplete="on" aria-required="true" class="input-field" placeholder="Precio" />
-                        <span class="input-placeholder">Precio</span>
-                    </label>
-                </div>
-                <div class="hr"></div>
-                
-                <div asp-validation-summary="All" class="validation-message-all"></div>
-                <button type="submit" class="button-87-main">Publicar</button>
-            </section>
-        </div>
-    </form>
+    </div>
 </div>
-
-<button id="mostrarValores" type="button">Mostrar Valores</button>
 
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-
-    @if (TempData["Notificacion"] != null && TempData["NotificacionTitulo"] != null && TempData["NotificacionMensaje"] != null)
-    {
-        <partial name="_IziToastPartial" />
-    }
-
     <!-- Sortable.js -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script type="module" src="~/js/publicaciones/publicacionCrear.js"></script>
 }
+

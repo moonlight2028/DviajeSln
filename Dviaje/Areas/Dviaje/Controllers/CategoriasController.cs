@@ -19,7 +19,6 @@ namespace Dviaje.Areas.Dviaje.Controllers
         [Route("categorias")]
         public async Task<IActionResult> Categorias()
         {
-            // Consulta
             List<Categoria>? categorias = await _categoriasRepository.ObtenerCategoriasAsync();
 
             return Ok(categorias);

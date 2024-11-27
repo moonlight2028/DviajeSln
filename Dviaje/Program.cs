@@ -72,6 +72,7 @@ builder.Services.AddScoped<IResenasRepository, ResenaRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 builder.Services.AddScoped<IRestriccionesRepository, RestriccionesRepository>();
 builder.Services.AddScoped<IServiciosRepository, ServiciosRepository>();
+builder.Services.AddScoped<IPropiedadesRepository, PropiedadesRepository>();
 
 // Inyección de Validadores
 builder.Services.AddScoped<IValidator<PqrsCrearVM>, PqrsCrearAutenticadoVMValidator>();

@@ -1,5 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
-using Dviaje.Models;
+using Dviaje.Models.VM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dviaje.Areas.Dviaje.Controllers
@@ -20,8 +20,9 @@ namespace Dviaje.Areas.Dviaje.Controllers
         [Route("servicios")]
         public async Task<IActionResult> Servicios()
         {
-            // Consulta
-            List<Servicio>? servicios = await _serviciosRepository.ObtenerServiciosAsync();
+            List<ServicioTipoStringVM>? servicios = await _serviciosRepository.ObtenerServiciosAsync();
+
+            if (servicios == null || !servicios.Any()) return NotFound("No se encontraron servicios.");
 
             return Ok(servicios);
         }

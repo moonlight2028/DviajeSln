@@ -150,8 +150,8 @@ namespace Dviaje.Areas.Identity.Pages.Account
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    await _perfilRepository.SetBanner(ArchivosUtility.UrlDefaultBanner, userId);
-                    await _perfilRepository.SetAvatar(ArchivosUtility.UrlDefaultAvatarCincuentaPx, ArchivosUtility.UrlDefaultAvatarDoscientosPx, userId);
+                    //await _perfilRepository.SetBanner(ArchivosUtility.UrlDefaultBanner, userId);
+                    //await _perfilRepository.SetAvatar(ArchivosUtility.UrlDefaultAvatarCincuentaPx, ArchivosUtility.UrlDefaultAvatarDoscientosPx, userId);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
