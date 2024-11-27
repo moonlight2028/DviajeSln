@@ -408,42 +408,54 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        //traer publicaciones segun la categoria
 
+        // Obtener publicaciones filtradas por categoría
         public async Task<List<PublicacionCategoriaVM>> ObtenerPublicacionesPorCategoriaAsync(int idCategoria)
         {
             var sql = @"
-        SELECT 
-            p.IdPublicacion, 
-            p.Titulo, 
-            p.Puntuacion, 
-            p.NumeroResenas, 
-            p.Descripcion, 
-            p.PrecioNoche AS Precio, 
-            p.Direccion, 
-            p.PublicacionEstado, 
-            pi.Ruta AS ImagenPrincipal, 
-            c.NombreCategoria
-        FROM 
-            publicaciones p
-        INNER JOIN 
-            categorias c ON p.IdCategoria = c.IdCategoria
-        LEFT JOIN 
-            publicacionesimagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
-        WHERE 
-            c.IdCategoria = @IdCategoria
-            AND p.PublicacionEstado = 'Activa'
-        ORDER BY 
-            p.Fecha DESC";
+    SELECT 
+        p.IdPublicacion,
+        p.Titulo,
+        p.Puntuacion,
+        p.NumeroResenas,
+        p.Descripcion,
+        p.PrecioNoche AS Precio,
+        p.Direccion,
+        p.PublicacionEstado,
+        pi.Ruta AS ImagenPrincipal,
+        c.NombreCategoria
+    FROM 
+        publicaciones p
+    INNER JOIN 
+        propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+    INNER JOIN 
+        categorias c ON pr.IdCategoria = c.IdCategoria
+    LEFT JOIN 
+        publicacionesimagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
+    WHERE 
+        c.IdCategoria = @IdCategoria 
+        AND p.PublicacionEstado = 'Activa'
+    ORDER BY 
+        p.Fecha DESC";
 
             return (await _db.QueryAsync<PublicacionCategoriaVM>(sql, new { IdCategoria = idCategoria })).ToList();
         }
 
 
 
+        // Obtener el total de publicaciones en una categoría
+        public async Task<int> ObtenerTotalPublicacionesPorCategoriaAsync(int idCategoria)
+        {
+            var sql = @"
+        SELECT COUNT(*)
+        FROM publicaciones p
+        INNER JOIN propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+        INNER JOIN categorias c ON pr.IdCategoria = c.IdCategoria
+        WHERE c.IdCategoria = @IdCategoria
+          AND p.PublicacionEstado = 'Activa'";
 
-        //Realizar consultas
-
+            return await _db.ExecuteScalarAsync<int>(sql, new { IdCategoria = idCategoria });
+        }
 
 
 

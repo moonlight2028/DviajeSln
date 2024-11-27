@@ -11,6 +11,7 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsync(int idPublicacion);
         Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion);
         Task<PublicacionCrearVM?> ObtenerPublicacionCrearVMAsync(int idPublicacion);
+        Task<int> ObtenerTotalPublicacionesPorCategoriaAsync(int categoriaId);
         Task<int> CrearPublicacionAsync(PublicacionCrearVM publicacion);
         Task<bool> EditarPublicacionAsync(PublicacionCrearVM publicacion);
         Task<bool> EstadoEliminarPublicacionAsync(int idPublicacion, int idAliado);

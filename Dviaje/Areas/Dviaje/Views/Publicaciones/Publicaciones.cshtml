@@ -1,10 +1,8 @@
 ﻿@model List<PublicacionTarjetaBusquedaVM>
 
-
 @{
     ViewData["Title"] = "Publicaciones";
 }
-
 
 @section Styles {
     <!-- Swiper v11 -->
@@ -14,8 +12,17 @@
     <link rel="stylesheet" href="~/css/publicaciones/publicaciones.css">
 }
 
-
 <div class="main">
+    <!-- Mostrar el encabezado dinámico -->
+    @if (ViewBag.CategoriaSeleccionada != null)
+    {
+        <h2>Publicaciones en la categoría: @ViewBag.CategoriaSeleccionada</h2>
+    }
+    else
+    {
+        <h2>Todas las publicaciones</h2>
+    }
+
     <!-- Sección búsqueda -->
     <div class="nav-busqueda">
         <form class="buscar b-s-95" action="">
@@ -46,7 +53,6 @@
             </div>
         </form>
     </div>
-
 
     <!-- Publicaciones -->
     <div class="resultados">
@@ -177,11 +183,9 @@
         </section>
     </div>
 
-
     <!-- Paginación -->
-     <div class="paginacion" id="paginacion" data-paginacion-paginas="@ViewBag.PaginacionPaginas" data-paginacion-items="@ViewBag.PaginacionItems" data-paginacion-resultados="@ViewBag.PaginacionResultados"></div>
+    <div class="paginacion" id="paginacion" data-paginacion-paginas="@ViewBag.PaginacionPaginas" data-paginacion-items="@ViewBag.PaginacionItems" data-paginacion-resultados="@ViewBag.PaginacionResultados"></div>
 </div>
- 
 
 @section Scripts {
     <script src="~/js/publicaciones/publicaciones.js" type="module"></script>
