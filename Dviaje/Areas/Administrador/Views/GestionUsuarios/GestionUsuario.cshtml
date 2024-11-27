@@ -28,11 +28,13 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
     <script>
         $(document).ready(function () {
-            $('#tablaUsuarios').DataTable({
+            // Inicialización del DataTable
+            const tabla = $('#tablaUsuarios').DataTable({
                 ajax: {
-                    url: '/Administrador/GestionUsuarios/GetUsuarios',
+                    url: '/Administrador/GestionUsuarios/GetUsuarios', // Ruta al controlador
                     type: 'GET',
                     datatype: 'json'
                 },
@@ -43,39 +45,42 @@
                             return `<img src="${data}" class="img-thumbnail" style="width:50px; height:50px;" />`;
                         }
                     },
-                    { data: 'nombre' },
+                    { data: 'userName' },
                     { data: 'email' },
                     {
-                        data: 'rol',
+                        data: 'roles',
                         render: function (data, type, row) {
+                            let options = row.rolesDisponibles.map(role => `
+                                        <option value="${role}" ${role === data ? 'selected' : ''}>${role}</option>
+                                    `).join('');
                             return `
-                                <select class="form-select cambiar-rol" data-id="${row.id}">
-                                    ${row.rolesDisponibles.map(rol => `
-                                        <option value="${rol}" ${rol === data ? 'selected' : ''}>${rol}</option>
-                                    `).join('')}
-                                </select>`;
+                                        <select class="form-select cambiar-rol" data-id="${row.idUsuario}">
+                                            ${options}
+                                        </select>`;
                         }
                     },
                     {
-                        data: 'id',
+                        data: 'idUsuario',
                         render: function (data) {
                             return `
-                                <button class="btn btn-danger btn-eliminar" data-id="${data}">Eliminar</button>
-                                <button class="btn btn-warning btn-banear" data-id="${data}">Banear</button>
-                            `;
+                                        <button class="btn btn-danger btn-sm btn-eliminar" data-id="${data}">Eliminar</button>
+                                        <button class="btn btn-warning btn-sm btn-banear" data-id="${data}">Banear</button>
+                                    `;
                         }
                     }
-                ]
+                ],
+                responsive: true
             });
 
-            // Cambiar rol
+            // Cambiar rol del usuario
             $('#tablaUsuarios').on('change', '.cambiar-rol', function () {
                 const idUsuario = $(this).data('id');
                 const nuevoRol = $(this).val();
 
-                $.post('/Administrador/GestionUsuarios/CambiarRol', { idUsuario, nuevoRol }, function (data) {
-                    if (data.success) {
-                        alert(data.message);
+                $.post('/Administrador/GestionUsuarios/CambiarRol', { idUsuario, nuevoRol }, function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        tabla.ajax.reload();
                     } else {
                         alert('Error al cambiar el rol.');
                     }
@@ -86,10 +91,10 @@
             $('#tablaUsuarios').on('click', '.btn-eliminar', function () {
                 const idUsuario = $(this).data('id');
                 if (confirm('¿Estás seguro de eliminar este usuario?')) {
-                    $.post('/Administrador/GestionUsuarios/EliminarUsuario', { idUsuario }, function (data) {
-                        if (data.success) {
-                            alert(data.message);
-                            $('#tablaUsuarios').DataTable().ajax.reload();
+                    $.post('/Administrador/GestionUsuarios/EliminarUsuario', { idUsuario }, function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            tabla.ajax.reload();
                         } else {
                             alert('Error al eliminar el usuario.');
                         }
@@ -101,10 +106,10 @@
             $('#tablaUsuarios').on('click', '.btn-banear', function () {
                 const idUsuario = $(this).data('id');
                 if (confirm('¿Estás seguro de banear este usuario?')) {
-                    $.post('/Administrador/GestionUsuarios/BanearUsuario', { idUsuario }, function (data) {
-                        if (data.success) {
-                            alert(data.message);
-                            $('#tablaUsuarios').DataTable().ajax.reload();
+                    $.post('/Administrador/GestionUsuarios/BanearUsuario', { idUsuario }, function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            tabla.ajax.reload();
                         } else {
                             alert('Error al banear el usuario.');
                         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dviaje.Areas.Administrador.Controllers
 {
@@ -18,27 +19,43 @@ namespace Dviaje.Areas.Administrador.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// Vista principal para la gestión de usuarios.
+        /// </summary>
         public IActionResult GestionUsuario()
         {
             return View();
         }
 
-        // Acción para devolver datos de usuarios en formato JSON para DataTables
+        /// <summary>
+        /// Obtiene los usuarios para DataTables.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetUsuarios()
         {
+            // Obtiene los usuarios desde el repositorio.
             var usuarios = await _userRepository.ObtenerUsuariosAsync();
+
+            // Asegúrate de incluir los roles disponibles para cada usuario.
+            foreach (var usuario in usuarios)
+            {
+                usuario.RolesDisponibles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
+            }
+
+            // Devuelve los datos en el formato esperado por DataTables.
             return Json(new { data = usuarios });
         }
 
-        // Cambiar rol de usuario
+        /// <summary>
+        /// Cambia el rol de un usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> CambiarRol(string idUsuario, string nuevoRol)
         {
-            // Verificar si el rol existe
+            // Verifica si el rol existe.
             if (!await _roleManager.RoleExistsAsync(nuevoRol))
             {
-                return BadRequest("El rol especificado no existe.");
+                return BadRequest(new { success = false, message = "El rol especificado no existe." });
             }
 
             var resultado = await _userRepository.CambiarRolUsuarioAsync(idUsuario, nuevoRol);
@@ -48,10 +65,12 @@ namespace Dviaje.Areas.Administrador.Controllers
                 return Ok(new { success = true, message = "Rol actualizado correctamente." });
             }
 
-            return BadRequest("Error al cambiar el rol del usuario.");
+            return BadRequest(new { success = false, message = "Error al cambiar el rol del usuario." });
         }
 
-        // Banear usuario
+        /// <summary>
+        /// Banea un usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> BanearUsuario(string idUsuario)
         {
@@ -62,10 +81,12 @@ namespace Dviaje.Areas.Administrador.Controllers
                 return Ok(new { success = true, message = "Usuario baneado correctamente." });
             }
 
-            return BadRequest("Error al banear el usuario.");
+            return BadRequest(new { success = false, message = "Error al banear el usuario." });
         }
 
-        // Eliminar usuario
+        /// <summary>
+        /// Elimina un usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> EliminarUsuario(string idUsuario)
         {
@@ -76,7 +97,7 @@ namespace Dviaje.Areas.Administrador.Controllers
                 return Ok(new { success = true, message = "Usuario eliminado correctamente." });
             }
 
-            return BadRequest("Error al eliminar el usuario.");
+            return BadRequest(new { success = false, message = "Error al eliminar el usuario." });
         }
     }
 }
