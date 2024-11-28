@@ -18,27 +18,45 @@ namespace Dviaje.Areas.Administrador.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// Vista principal para la gestión de usuarios.
+        /// </summary>
+        [Route("gestion/GestionUsuarios")]
         public IActionResult GestionUsuario()
         {
             return View();
         }
 
-        // Acción para devolver datos de usuarios en formato JSON para DataTables
+        /// <summary>
+        /// Obtiene los usuarios para DataTables.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetUsuarios()
         {
             var usuarios = await _userRepository.ObtenerUsuariosAsync();
+
+            if (usuarios == null || !usuarios.Any())
+            {
+                return Json(new { data = new List<object>() });
+            }
+
             return Json(new { data = usuarios });
         }
 
-        // Cambiar rol de usuario
+        /// <summary>
+        /// Cambia el rol de un usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> CambiarRol(string idUsuario, string nuevoRol)
         {
-            // Verificar si el rol existe
+            if (string.IsNullOrWhiteSpace(idUsuario) || string.IsNullOrWhiteSpace(nuevoRol))
+            {
+                return BadRequest(new { success = false, message = "El ID de usuario o el rol no pueden estar vacíos." });
+            }
+
             if (!await _roleManager.RoleExistsAsync(nuevoRol))
             {
-                return BadRequest("El rol especificado no existe.");
+                return BadRequest(new { success = false, message = "El rol especificado no existe." });
             }
 
             var resultado = await _userRepository.CambiarRolUsuarioAsync(idUsuario, nuevoRol);
@@ -48,13 +66,20 @@ namespace Dviaje.Areas.Administrador.Controllers
                 return Ok(new { success = true, message = "Rol actualizado correctamente." });
             }
 
-            return BadRequest("Error al cambiar el rol del usuario.");
+            return BadRequest(new { success = false, message = "Error al cambiar el rol del usuario." });
         }
 
-        // Banear usuario
+        /// <summary>
+        /// Banea un usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> BanearUsuario(string idUsuario)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario))
+            {
+                return BadRequest(new { success = false, message = "El ID de usuario no puede estar vacío." });
+            }
+
             var resultado = await _userRepository.BanearUsuarioAsync(idUsuario);
 
             if (resultado)
@@ -62,13 +87,20 @@ namespace Dviaje.Areas.Administrador.Controllers
                 return Ok(new { success = true, message = "Usuario baneado correctamente." });
             }
 
-            return BadRequest("Error al banear el usuario.");
+            return BadRequest(new { success = false, message = "Error al banear el usuario." });
         }
 
-        // Eliminar usuario
+        /// <summary>
+        /// Elimina un usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> EliminarUsuario(string idUsuario)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario))
+            {
+                return BadRequest(new { success = false, message = "El ID de usuario no puede estar vacío." });
+            }
+
             var resultado = await _userRepository.EliminarUsuarioAsync(idUsuario);
 
             if (resultado)
@@ -76,7 +108,7 @@ namespace Dviaje.Areas.Administrador.Controllers
                 return Ok(new { success = true, message = "Usuario eliminado correctamente." });
             }
 
-            return BadRequest("Error al eliminar el usuario.");
+            return BadRequest(new { success = false, message = "Error al eliminar el usuario." });
         }
     }
 }

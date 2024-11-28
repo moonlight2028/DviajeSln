@@ -174,32 +174,27 @@ namespace Dviaje.DataAccess.Repository
 
         public async Task<ReservaCrearVM?> ObtenerReservaCrearVMAsync(int idPublicacion)
         {
-            // Consulta para obtener los datos de la publicación, incluyendo el IdAliado como IdUsuario
+            // Consulta para obtener los datos de la publicación
             var sqlPublicacion = @"
-                                SELECT 
-                                    p.IdAliado AS IdUsuario,
-                                    p.IdPublicacion,
-                                    p.PrecioNoche AS PrecioTotal
-                                FROM 
-                                    Publicaciones p
-                                WHERE 
-                                    p.IdPublicacion = @IdPublicacion;
-                                ";
+                        SELECT 
+                            p.IdAliado AS IdUsuario,
+                            p.IdPublicacion,
+                            p.PrecioNoche AS PrecioTotal
+                        FROM 
+                            Publicaciones p
+                        WHERE 
+                            p.IdPublicacion = @IdPublicacion;
+                        ";
 
-            // Consulta para obtener los servicios adicionales asociados a la publicación
-            var sqlServiciosAdicionales = @"
-                                SELECT 
-                                    sa.IdServicioAdicional, 
-                                    sa.Precio, 
-                                    s.NombreServicio, 
-                                    s.RutaIcono
-                                FROM 
-                                    ServiciosAdicionales sa
-                                INNER JOIN 
-                                    Servicios s ON sa.IdServicio = s.IdServicio
-                                WHERE 
-                                    sa.IdPublicacion = @IdPublicacion;
-                                ";
+            // Consulta para obtener los servicios
+            var sqlServicios = @"
+                        SELECT 
+                            s.IdServicio, 
+                            s.NombreServicio, 
+                            s.RutaIcono
+                        FROM 
+                            Servicios s;
+                        ";
 
             // Ejecutar la consulta para obtener los datos de la publicación
             var publicacion = await _db.QueryFirstOrDefaultAsync<ReservaCrearVM>(sqlPublicacion, new { IdPublicacion = idPublicacion });
@@ -209,21 +204,17 @@ namespace Dviaje.DataAccess.Repository
                 return null; // Si no se encuentra la publicación, retorna null
             }
 
-            // Ejecutar la consulta para obtener los servicios adicionales
-            var serviciosAdicionales = await _db.QueryAsync<ServicioAdicionalVM>(sqlServiciosAdicionales, new { IdPublicacion = idPublicacion });
+            // Ejecutar la consulta para obtener los servicios
+            var servicios = await _db.QueryAsync<ServicioVM>(sqlServicios);
 
-            // Asignar los servicios adicionales a la publicación
-            publicacion.ServiciosAdicionales = serviciosAdicionales.ToList();
+            // Asignar los servicios a la publicación
+            publicacion.Servicios = servicios.ToList();
 
             return publicacion;
-
-
-
-
-
         }
 
-        // Crear una reserva 
+
+
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             try
@@ -242,12 +233,12 @@ namespace Dviaje.DataAccess.Repository
 
                 // Validación 2: No permitir si ya existe una reserva en el mismo rango de fechas
                 var sqlVerificarReserva = @"
-                                        SELECT COUNT(*)
-                                        FROM reservas
-                                        WHERE IdUsuario = @IdUsuario
-                                        AND IdPublicacion = @IdPublicacion
-                                        AND ReservaEstado = 'Activo'
-                                        AND ((FechaInicial <= @FechaFinal AND FechaFinal >= @FechaInicial))";
+                                 SELECT COUNT(*)
+                                 FROM reservas
+                                 WHERE IdUsuario = @IdUsuario
+                                 AND IdPublicacion = @IdPublicacion
+                                 AND ReservaEstado = 'Activo'
+                                 AND ((FechaInicial <= @FechaFinal AND FechaFinal >= @FechaInicial))";
 
                 var reservasConflicto = await _db.ExecuteScalarAsync<int>(sqlVerificarReserva, new
                 {
@@ -268,9 +259,9 @@ namespace Dviaje.DataAccess.Repository
                     {
                         // Inserción de la reserva en la tabla reservas
                         var sqlReserva = @"
-                                        INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                                        VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
-                                        SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
+                                 INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
+                                 VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                                 SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
 
                         var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
@@ -283,23 +274,6 @@ namespace Dviaje.DataAccess.Repository
                             IdUsuario = reservaCrearVM.IdUsuario,
                             IdPublicacion = reservaCrearVM.IdPublicacion
                         }, transaction);
-
-                        // Verificación de servicios adicionales seleccionados y su inserción en la tabla intermedia
-                        if (reservaCrearVM.ServiciosAdicionales != null && reservaCrearVM.ServiciosAdicionales.Any(s => s.Seleccionado))
-                        {
-                            var sqlServiciosAdicionales = @"
-                                                        INSERT INTO reservaserviciosadicionales (IdReserva, IdServicioAdicional)
-                                                        VALUES (@IdReserva, @IdServicioAdicional);";
-
-                            foreach (var servicio in reservaCrearVM.ServiciosAdicionales.Where(s => s.Seleccionado))
-                            {
-                                await _db.ExecuteAsync(sqlServiciosAdicionales, new
-                                {
-                                    IdReserva = idReserva,
-                                    IdServicioAdicional = servicio.IdServicioAdicional
-                                }, transaction);
-                            }
-                        }
 
                         // Confirmar la transacción
                         transaction.Commit();
@@ -322,6 +296,7 @@ namespace Dviaje.DataAccess.Repository
                 }
             }
         }
+
 
 
 
