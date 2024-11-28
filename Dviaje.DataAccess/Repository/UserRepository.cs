@@ -12,6 +12,7 @@ public class UserRepository : IUserRepository
         _db = db;
     }
 
+    // Obtener lista de usuarios con sus roles
     public async Task<List<UsuarioVM>> ObtenerUsuariosAsync()
     {
         var sql = @"
@@ -34,16 +35,21 @@ public class UserRepository : IUserRepository
         return (await _db.QueryAsync<UsuarioVM>(sql)).ToList();
     }
 
+    // Obtener lista de roles disponibles
+    public async Task<List<string>> ObtenerRolesDisponiblesAsync()
+    {
+        var sql = "SELECT Name FROM aspnetroles";
+        return (await _db.QueryAsync<string>(sql)).ToList();
+    }
 
-
-
-
-
-
-
-
+    // Cambiar rol de usuario
     public async Task<bool> CambiarRolUsuarioAsync(string idUsuario, string nuevoRol)
     {
+        if (_db.State != ConnectionState.Open)
+        {
+            _db.Open();
+        }
+
         var eliminarRoles = @"
         DELETE FROM aspnetuserroles 
         WHERE UserId = @IdUsuario";
@@ -63,14 +69,17 @@ public class UserRepository : IUserRepository
             transaction.Commit();
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"Error en CambiarRolUsuarioAsync: {ex.Message}");
             transaction.Rollback();
             return false;
         }
     }
 
 
+
+    // Banear usuario
     public async Task<bool> BanearUsuarioAsync(string idUsuario)
     {
         var sql = @"
@@ -83,7 +92,7 @@ public class UserRepository : IUserRepository
         return rowsAffected > 0;
     }
 
-
+    // Eliminar usuario
     public async Task<bool> EliminarUsuarioAsync(string idUsuario)
     {
         var sql = @"
@@ -93,5 +102,4 @@ public class UserRepository : IUserRepository
         var rowsAffected = await _db.ExecuteAsync(sql, new { IdUsuario = idUsuario });
         return rowsAffected > 0;
     }
-
 }
