@@ -49,11 +49,11 @@
 | `Identity/Account/Manage/ChangePassword`               | Turista        | Gestión de la contraseña.                                    |🤷‍♂️|
 | `Identity/Account/Manage/TwoFactorAuthentication`      | Turista        | Gestión de TF2.                                              |✖|
 | `perfil?{id}`                                          | Público        | Perfil público.                                              | |
-| `publicacion?{id}`                                     | Público        | Información completa de una publicación.                     | |
+| `publicacion?{id}`                                     | Público        | Información completa de una publicación.                     |🤷‍♂️|
 | `publicacion/crear`                                    | Aliado         | Registra una publicación en Dviaje.                          |🤷‍♂️|
 | `publicacion/editar`                                   | Aliado         | Edita una publicación realizada por el aliado.               | |
 | `publicaciones?{pagina}&&{ordenar}`                    | Público        | Lista de todas las publicaciones.                            | |
-| `publicaciones/mis-publicaciones?{pagina}&&{ordenar}`  | Aliado         | Publicaciones realizadas por el aliado.                      | |
+| `publicaciones/mis-publicaciones?{pagina}&&{ordenar}`  | Aliado         | Publicaciones realizadas por el aliado.                      |🤷‍♂️|
 | `publicaciones/administrar`                            | Moderador      | Vista Datatable de publicaciones.                            | |
 | `pqrs`                                                 | Público        | Crear PQRS.                                                  |🤷‍♂️|
 | `pqrs/mis-pqrs`                                        | Turista        | Lista de PQRS enviados.                                      | |

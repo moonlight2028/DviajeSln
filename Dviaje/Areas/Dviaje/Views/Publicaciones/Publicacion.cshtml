@@ -74,16 +74,14 @@
                 <p class="informacion-descripcion">@Model.Descripcion</p>
             </div>
             <div class="informacion-lista-categorias">
-                @if (Model.Categorias != null && Model.Categorias.Any())
-                {
-                    foreach(var categoria in Model.Categorias)
-                    {
-                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@categoria.IdCategoria" class="informacion-categoria">
-                            <i class="@categoria.RutaIcono"></i>
-                            <span>@categoria.NombreCategoria</span>
-                        </a>
-                    }
-                }
+                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@Model.Categoria.IdCategoria" class="informacion-categoria">
+                    <i class="@Model.Categoria.RutaIcono"></i>
+                    <span>@Model.Categoria.NombreCategoria</span>
+                </a>
+                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-propiedad="@Model.Propiedad.IdPropiedad" class="informacion-categoria">
+                    <i class="@Model.Propiedad.RutaIcono"></i>
+                    <span>@Model.Propiedad.Nombre</span>
+                </a>
             </div>
             <div class="contenedor-precio">
                 <span class="informacion-precio">@($"$ {Model.Precio.ToString("N0")}")</span>
@@ -156,32 +154,74 @@
         </section>
 
         <section class="contenedor-servicio">
-            <div class="accordion">
-                <div class="accordion-item">
-                    <button class="accordion-button" id="accordion-button-1" aria-expanded="true">
-                        <span class="accordion-title">Servicios</span>
-                        <span class="icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="accordion-content">
-                        @if (Model.Servicios != null && Model.Servicios.Any())
-                        {
-                            foreach(var servicio in Model.Servicios)
+            @if (Model.ServiciosHabitacion != null && Model.ServiciosHabitacion.Any())
+            {
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-1" aria-expanded="true">
+                            <span class="accordion-title">Servicios de Habitación</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+                        
+                                @foreach(var servicio in Model.ServiciosHabitacion)
+                                {
+                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="servicio-item">
+                                        <i class="@servicio.RutaIcono"></i>
+                                        <span>@servicio.NombreServicio</span>
+                                    </a>
+                                } 
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.ServiciosEstablecimiento != null && Model.ServiciosEstablecimiento.Any())
+            {
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-2" aria-expanded="false">
+                            <span class="accordion-title">Servicios de Establecimiento</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+
+                            @foreach (var servicio in Model.ServiciosEstablecimiento)
                             {
                                 <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="servicio-item">
                                     <i class="@servicio.RutaIcono"></i>
                                     <span>@servicio.NombreServicio</span>
                                 </a>
-                            }    
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            @if (Model.ServiciosAccesibilidad != null && Model.ServiciosAccesibilidad.Any())
+            {
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-3" aria-expanded="false">
+                            <span class="accordion-title">Servicios de Accesibilidad</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
 
+                            @foreach (var servicio in Model.ServiciosAccesibilidad)
+                            {
+                                <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="servicio-item">
+                                    <i class="@servicio.RutaIcono"></i>
+                                    <span>@servicio.NombreServicio</span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
             @if (Model.Restricciones != null && Model.Restricciones.Any())
             {
                 <div class="accordion">
                     <div class="accordion-item">
-                        <button class="accordion-button" id="accordion-button-2" aria-expanded="false">
+                        <button class="accordion-button" id="accordion-button-4" aria-expanded="false">
                             <span class="accordion-title">Restricciones</span>
                             <span class="icon" aria-hidden="true"></span>
                         </button>
@@ -199,30 +239,6 @@
             }
         </section>
     </div>
-
-    @if(Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
-    {
-        <form class="formualrio">
-            <div class="form-servicios b-s-93">
-                <h2>Servicios Adicionales</h2>
-                <div class="form-items">
-                    @foreach(var servicio in Model.ServiciosAdicionales)
-                    {
-                        <label for="@servicio.IdServicioAdicional">
-                            <i class="@servicio.RutaIcono"></i>
-                            <span>@servicio.NombreServicio</span>
-                            <span class="form-items-check"><i class="fa-regular fa-circle-check"></i></span>
-                        </label>
-                        <input type="checkbox" id="@servicio.IdServicioAdicional">
-                    }
-                </div>
-            </div>
-            <div class="form-boton b-s-95">
-                <span>@($"$ {Model.Precio.ToString("N0")}")</span>
-                <button class="button-87-main">Reservar</button>
-            </div>
-        </form>
-    }
 </section>
 
 <section class="top-imagenes">

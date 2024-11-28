@@ -18,9 +18,11 @@ namespace Dviaje.Models.VM
         public bool VerificadoAliado { get; set; } = false;
         public List<PuntuacionVM>? PuntuacionPorEstrellas { get; set; }
         public List<PublicacionImagenVM>? Imagenes { get; set; }
-        public List<CategoriaVM>? Categorias { get; set; }
-        public List<ServicioVM>? Servicios { get; set; }
-        public List<ServicioAdicionalVM>? ServiciosAdicionales { get; set; }
+        public CategoriaVM? Categoria { get; set; }
+        public PropiedadVM? Propiedad { get; set; }
+        public List<ServicioVM>? ServiciosHabitacion { get; set; }
+        public List<ServicioVM>? ServiciosAccesibilidad { get; set; }
+        public List<ServicioVM>? ServiciosEstablecimiento { get; set; }
         public List<RestriccionVM>? Restricciones { get; set; }
         public List<ResenaTarjetaBasicaVM>? TopResenas { get; set; }
     }

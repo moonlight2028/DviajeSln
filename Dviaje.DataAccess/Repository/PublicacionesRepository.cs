@@ -296,25 +296,26 @@ namespace Dviaje.DataAccess.Repository
         {
             // Consulta para obtener la publicación
             string consultaPublicacion = @"
-        SELECT 
-            p.IdPublicacion,
-            p.Titulo,
-            p.Puntuacion,
-            p.NumeroResenas,
-            p.Descripcion,
-            p.PrecioNoche AS Precio,
-            p.Direccion AS Ubicacion,
-            a.Id AS IdAliado,
-            a.UserName AS NombreAliado,
-            a.Avatar AS AvatarAliado,
-            IFNULL(a.NumeroPublicaciones, 0) AS PublicacionesAliado,
-            IFNULL(a.Verificado, 0) AS VerificadoAliado
-        FROM 
-            publicaciones p
-        LEFT JOIN 
-            aspnetusers a ON p.IdAliado = a.Id
-        WHERE 
-            p.IdPublicacion = @IdPublicacion";
+                SELECT 
+                    p.IdPublicacion,
+                    p.Titulo,
+                    p.Puntuacion,
+                    p.NumeroResenas,
+                    p.Descripcion,
+                    p.PrecioNoche AS Precio,
+                    p.Direccion AS Ubicacion,
+                    a.Id AS IdAliado,
+                    a.UserName AS NombreAliado,
+                    a.Avatar AS AvatarAliado,
+                    IFNULL(a.NumeroPublicaciones, 0) AS PublicacionesAliado,
+                    IFNULL(a.Verificado, 0) AS VerificadoAliado
+                FROM 
+                    publicaciones p
+                LEFT JOIN 
+                    aspnetusers a ON p.IdAliado = a.Id
+                WHERE 
+                    p.IdPublicacion = @IdPublicacion
+            ";
 
             // Ejecutar la consulta principal
             var publicacion = await _db.QueryFirstOrDefaultAsync<PublicacionDetalleVM>(consultaPublicacion, new { IdPublicacion = idPublicacion });
@@ -323,64 +324,104 @@ namespace Dviaje.DataAccess.Repository
             {
                 // Consultas relacionadas
                 string consultaPuntuaciones = @"
-            SELECT 
-                r.Calificacion AS Puntuacion,
-                COUNT(r.Calificacion) AS Cantidad
-            FROM 
-                resenas r
-            JOIN 
-                reservas res ON r.IdReserva = res.IdReserva
-            WHERE 
-                res.IdPublicacion = @IdPublicacion
-            GROUP BY 
-                r.Calificacion
-            ORDER BY 
-                r.Calificacion DESC";
+                    SELECT 
+                        r.Calificacion AS Puntuacion,
+                        COUNT(r.Calificacion) AS Cantidad
+                    FROM 
+                        resenas r
+                    JOIN 
+                        reservas res ON r.IdReserva = res.IdReserva
+                    WHERE 
+                        res.IdPublicacion = @IdPublicacion
+                    GROUP BY 
+                        r.Calificacion
+                    ORDER BY 
+                        r.Calificacion DESC
+                ";
 
                 string consultaImagenes = @"
-            SELECT 
-                pi.Ruta,
-                pi.Alt
-            FROM 
-                publicacionesimagenes pi
-            WHERE 
-                pi.IdPublicacion = @IdPublicacion";
+                    SELECT 
+                        pi.Ruta,
+                        pi.Alt
+                    FROM 
+                        publicacionesimagenes pi
+                    WHERE 
+                        pi.IdPublicacion = @IdPublicacion";
 
                 string consultaServicios = @"
-            SELECT
-                s.IdServicio,
-                s.NombreServicio,
-                s.ServicioTipo,
-                s.RutaIcono
-            FROM 
-                publicacionesservicios ps
-            INNER JOIN 
-                servicios s ON ps.IdServicio = s.IdServicio
-            WHERE 
-                ps.IdPublicacion = @IdPublicacion";
+                    SELECT
+                        s.IdServicio,
+                        s.NombreServicio,
+                        s.ServicioTipo,
+                        s.RutaIcono,
+                        s.ServicioTipo
+                    FROM 
+                        publicacionesservicios ps
+                    INNER JOIN 
+                        servicios s ON ps.IdServicio = s.IdServicio
+                    WHERE 
+                        ps.IdPublicacion = @IdPublicacion
+                ";
 
                 string consultaRestricciones = @"
-            SELECT 
-                r.NombreRestriccion,
-                r.RutaIcono
-            FROM 
-                publicacionesrestricciones pr
-            INNER JOIN 
-                restricciones r ON pr.IdRestriccion = r.IdRestriccion
-            WHERE 
-                pr.IdPublicacion = @IdPublicacion";
+                    SELECT 
+                        r.NombreRestriccion,
+                        r.RutaIcono
+                    FROM 
+                        publicacionesrestricciones pr
+                    INNER JOIN 
+                        restricciones r ON pr.IdRestriccion = r.IdRestriccion
+                    WHERE 
+                        pr.IdPublicacion = @IdPublicacion
+                ";
+
+                string consultaPropiedad = @"
+                    SELECT 
+                        p.IdPublicacion,
+                        pr.IdPropiedad,
+                        pr.Nombre,
+                        pr.RutaIcono
+                    FROM 
+                        publicaciones p
+                    INNER JOIN 
+                        propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+                    WHERE 
+                        p.IdPublicacion = @IdPublicacion;
+                ";
+
+                string consultaCategoria = @"
+                    SELECT 
+                        c.IdCategoria,
+                        c.NombreCategoria,
+                        c.RutaIcono
+                    FROM 
+                        publicaciones p
+                    INNER JOIN 
+                        propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+                    INNER JOIN 
+                        categorias c ON pr.IdCategoria = c.IdCategoria
+                    WHERE 
+                        p.IdPublicacion = @IdPublicacion;
+                ";
+
 
                 // Ejecuta las consultas relacionadas
                 var puntuaciones = await _db.QueryAsync<PuntuacionVM>(consultaPuntuaciones, new { IdPublicacion = idPublicacion });
                 var imagenes = await _db.QueryAsync<PublicacionImagenVM>(consultaImagenes, new { IdPublicacion = idPublicacion });
+                var categoria = await _db.QueryFirstOrDefaultAsync<CategoriaVM>(consultaCategoria, new { IdPublicacion = idPublicacion });
+                var propiedad = await _db.QueryFirstOrDefaultAsync<PropiedadVM>(consultaPropiedad, new { IdPublicacion = idPublicacion });
                 var servicios = await _db.QueryAsync<ServicioVM>(consultaServicios, new { IdPublicacion = idPublicacion });
                 var restricciones = await _db.QueryAsync<RestriccionVM>(consultaRestricciones, new { IdPublicacion = idPublicacion });
 
                 // Asigna los resultados a la publicación
                 publicacion.PuntuacionPorEstrellas = puntuaciones.ToList();
                 publicacion.Imagenes = imagenes.ToList();
-                publicacion.Servicios = servicios.ToList();
+                publicacion.ServiciosHabitacion = servicios.Where(s => s.ServicioTipo == ServicioTipo.Habitacion.ToString()).ToList();
+                publicacion.ServiciosEstablecimiento = servicios.Where(s => s.ServicioTipo == ServicioTipo.Establecimiento.ToString()).ToList();
+                publicacion.ServiciosAccesibilidad = servicios.Where(s => s.ServicioTipo == ServicioTipo.Accesibilidad.ToString()).ToList();
                 publicacion.Restricciones = restricciones.ToList();
+                publicacion.Categoria = categoria;
+                publicacion.Propiedad = propiedad;
                 // ToDo: Agregar lógica para TopResenas si es necesario
                 publicacion.TopResenas = null;
             }
