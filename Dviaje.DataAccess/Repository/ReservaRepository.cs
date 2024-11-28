@@ -257,9 +257,10 @@ namespace Dviaje.DataAccess.Repository
                                  VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @PrecioTotal, @IdUsuario, @IdPublicacion);
                                  SELECT LAST_INSERT_ID();";
 
-                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlInsertarReserva, new
+                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
                             FechaReserva = DateTime.UtcNow,
+                            ReservaEstado = ReservaEstado.Activo.ToString(),
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
                             PrecioTotal = reservaCrearVM.PrecioTotal,
