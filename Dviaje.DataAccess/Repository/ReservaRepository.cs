@@ -214,35 +214,36 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             try
             {
-                // Conexión
+                // Abrir la conexión si no está abierta
                 if (_db.State != ConnectionState.Open)
                 {
                     _db.Open();
                 }
 
-                // Validación 1: No permitir fechas exageradas
+                // Validación 1: No permitir fechas excesivas
                 if (reservaCrearVM.FechaFinal > DateTime.UtcNow.AddYears(1))
                 {
-                    return false; // La fecha es demasiado posterior
+                    return false; // Fecha fuera de rango permitido
                 }
 
-                // Validación 2: No permitir si ya existe una reserva en el mismo rango de fechas
+                // Validación 2: Verificar conflictos con otras reservas activas
                 var sqlVerificarReserva = @"
-                                 SELECT COUNT(*)
-                                 FROM reservas
-                                 WHERE IdUsuario = @IdUsuario
-                                 AND IdPublicacion = @IdPublicacion
-                                 AND ReservaEstado = 'Activo'
-                                 AND ((FechaInicial <= @FechaFinal AND FechaFinal >= @FechaInicial))";
+            SELECT COUNT(*)
+            FROM reservas
+            WHERE IdPublicacion = @IdPublicacion
+              AND ReservaEstado = 'Activo'
+              AND (
+                (@FechaInicial BETWEEN FechaInicial AND FechaFinal)
+                OR (@FechaFinal BETWEEN FechaInicial AND FechaFinal)
+                OR (FechaInicial BETWEEN @FechaInicial AND @FechaFinal)
+              )";
 
                 var reservasConflicto = await _db.ExecuteScalarAsync<int>(sqlVerificarReserva, new
                 {
-                    IdUsuario = reservaCrearVM.IdUsuario,
                     IdPublicacion = reservaCrearVM.IdPublicacion,
                     FechaInicial = reservaCrearVM.FechaInicial,
                     FechaFinal = reservaCrearVM.FechaFinal
@@ -250,26 +251,31 @@ namespace Dviaje.DataAccess.Repository
 
                 if (reservasConflicto > 0)
                 {
-                    return false; // Ya existe una reserva en ese periodo
+                    return false; // Ya hay una reserva en ese rango
                 }
 
                 using (var transaction = _db.BeginTransaction())
                 {
                     try
                     {
-                        // Inserción de la reserva en la tabla reservas
-                        var sqlReserva = @"
-                                 INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                                 VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
-                                 SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
+                        // Insertar la nueva reserva
+                        var sqlInsertarReserva = @"
+                    INSERT INTO reservas (
+                        FechaReserva, FechaInicial, FechaFinal, ReservaEstado, 
+                        PrecioTotal, IdUsuario, IdPublicacion
+                    )
+                    VALUES (
+                        @FechaReserva, @FechaInicial, @FechaFinal, @ReservaEstado, 
+                        @PrecioTotal, @IdUsuario, @IdPublicacion
+                    );
+                    SELECT LAST_INSERT_ID();"; // Obtener el ID de la reserva recién insertada
 
-                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
+                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlInsertarReserva, new
                         {
                             FechaReserva = DateTime.UtcNow,
-                            ReservaEstado = "Activo",
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
-                            NumeroPersonas = reservaCrearVM.NumeroPersonas,
+                            ReservaEstado = "Activo", // Estado inicial para la reserva
                             PrecioTotal = reservaCrearVM.PrecioTotal,
                             IdUsuario = reservaCrearVM.IdUsuario,
                             IdPublicacion = reservaCrearVM.IdPublicacion
@@ -281,7 +287,7 @@ namespace Dviaje.DataAccess.Repository
                     }
                     catch
                     {
-                        // Si algo falla, revertir la transacción
+                        // Revertir la transacción si ocurre algún error
                         transaction.Rollback();
                         return false;
                     }
