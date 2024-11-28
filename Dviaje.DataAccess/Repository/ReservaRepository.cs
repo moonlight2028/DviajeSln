@@ -20,35 +20,33 @@ namespace Dviaje.DataAccess.Repository
         public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario)
         {
             var sql = @"
-        SELECT 
-            r.IdReserva, 
-            r.FechaInicial, 
-            r.FechaFinal, 
-            r.NumeroPersonas, 
-            r.ReservaEstado AS ReservaEstado,
-            p.IdPublicacion, 
-            p.Titulo AS TituloPublicacion, 
-            p.Puntuacion, 
-            p.NumeroResenas, 
-            p.Direccion,
-            u.Id AS IdAliado, 
-            u.UserName AS NombreAliado, 
-            u.Avatar AS AvatarAliado, 
-            u.Verificado AS Verificado,
-            (SELECT pi.Ruta 
-             FROM publicacionesimagenes pi 
-             WHERE pi.IdPublicacion = p.IdPublicacion 
-             ORDER BY pi.Orden 
-             LIMIT 1) AS Imagen
-        FROM 
-            reservas r
-        INNER JOIN 
-            publicaciones p ON r.IdPublicacion = p.IdPublicacion
-        INNER JOIN 
-            aspnetusers u ON p.IdAliado = u.Id
-        WHERE 
-            r.IdReserva = @IdReserva 
-            AND r.IdUsuario = @IdUsuario";
+    SELECT 
+        r.IdReserva, 
+        r.FechaInicial, 
+        r.FechaFinal, 
+        r.ReservaEstado AS ReservaEstado,
+        p.IdPublicacion, 
+        p.Titulo AS TituloPublicacion, 
+        p.Puntuacion, 
+        p.NumeroResenas, 
+        p.Direccion,
+        u.Id AS IdAliado, 
+        u.UserName AS NombreAliado, 
+        u.Avatar AS AvatarAliado,
+        (SELECT pi.Ruta 
+         FROM publicacionesimagenes pi 
+         WHERE pi.IdPublicacion = p.IdPublicacion 
+         ORDER BY pi.Orden 
+         LIMIT 1) AS Imagen
+    FROM 
+        reservas r
+    INNER JOIN 
+        publicaciones p ON r.IdPublicacion = p.IdPublicacion
+    INNER JOIN 
+        aspnetusers u ON p.IdAliado = u.Id
+    WHERE 
+        r.IdReserva = @IdReserva 
+        AND r.IdUsuario = @IdUsuario";
 
             var reserva = await _db.QueryFirstOrDefaultAsync<ReservaMiReservaVM>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
             return reserva;
@@ -214,30 +212,31 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-
         public async Task<bool> RegistrarReservaAsync(ReservaCrearVM reservaCrearVM)
         {
             try
             {
-                // Conexión
+                // Abrir la conexión si no está abierta
                 if (_db.State != ConnectionState.Open)
                 {
                     _db.Open();
                 }
 
 
-                // Validación 2: No permitir si ya existe una reserva en el mismo rango de fechas
+                // Validación 2: Verificar conflictos con otras reservas activas
                 var sqlVerificarReserva = @"
-                                 SELECT COUNT(*)
-                                 FROM reservas
-                                 WHERE IdUsuario = @IdUsuario
-                                 AND IdPublicacion = @IdPublicacion
-                                 AND ReservaEstado = 'Activo'
-                                 AND ((FechaInicial <= @FechaFinal AND FechaFinal >= @FechaInicial))";
+            SELECT COUNT(*)
+            FROM reservas
+            WHERE IdPublicacion = @IdPublicacion
+              AND ReservaEstado = 'Activo'
+              AND (
+                (@FechaInicial BETWEEN FechaInicial AND FechaFinal)
+                OR (@FechaFinal BETWEEN FechaInicial AND FechaFinal)
+                OR (FechaInicial BETWEEN @FechaInicial AND @FechaFinal)
+              )";
 
                 var reservasConflicto = await _db.ExecuteScalarAsync<int>(sqlVerificarReserva, new
                 {
-                    IdUsuario = reservaCrearVM.IdUsuario,
                     IdPublicacion = reservaCrearVM.IdPublicacion,
                     FechaInicial = reservaCrearVM.FechaInicial,
                     FechaFinal = reservaCrearVM.FechaFinal
@@ -258,10 +257,9 @@ namespace Dviaje.DataAccess.Repository
                                  VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @PrecioTotal, @IdUsuario, @IdPublicacion);
                                  SELECT LAST_INSERT_ID();";
 
-                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
+                        var idReserva = await _db.ExecuteScalarAsync<int>(sqlInsertarReserva, new
                         {
                             FechaReserva = DateTime.UtcNow,
-                            ReservaEstado = "Activo",
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
                             PrecioTotal = reservaCrearVM.PrecioTotal,
@@ -275,7 +273,7 @@ namespace Dviaje.DataAccess.Repository
                     }
                     catch
                     {
-                        // Si algo falla, revertir la transacción
+                        // Revertir la transacción si ocurre algún error
                         transaction.Rollback();
                         return false;
                     }
@@ -322,34 +320,34 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-
-        // obtener el resumen de la tarjeta de reserva
         public async Task<ReservaTarjetaResumenVM?> ObtenerReservaTarjetaResumenVMAsync(int idReserva, string idUsuario)
         {
-            // obtener los datos de la reserva y la publicación
             var sql = @"
-        SELECT 
-            r.IdReserva,
-            r.FechaInicial,
-            r.FechaFinal,
-            r.NumeroPersonas AS Personas,
-            p.IdPublicacion,
-            p.NumeroResenas AS NumeroResenasPublicacion,
-            (SELECT COUNT(*) FROM Reservas WHERE IdPublicacion = p.IdPublicacion) AS NumeroReservasPublicacion,
-            (SELECT pi.Ruta FROM PublicacionesImagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS ImagenPublicacion
-        FROM 
-            Reservas r
-        INNER JOIN 
-            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-        WHERE 
-            r.IdReserva = @IdReserva
-        AND 
-            r.IdUsuario = @IdUsuario;
+    SELECT 
+        r.IdReserva,
+        r.FechaInicial,
+        r.FechaFinal,
+        p.IdPublicacion,
+        p.NumeroResenas AS NumeroResenasPublicacion,
+        (SELECT COUNT(*) 
+         FROM Reservas 
+         WHERE IdPublicacion = p.IdPublicacion) AS NumeroReservasPublicacion,
+        (SELECT pi.Ruta 
+         FROM PublicacionesImagenes pi 
+         WHERE pi.IdPublicacion = p.IdPublicacion 
+         ORDER BY pi.Orden 
+         LIMIT 1) AS ImagenPublicacion
+    FROM 
+        Reservas r
+    INNER JOIN 
+        Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+    WHERE 
+        r.IdReserva = @IdReserva
+    AND 
+        r.IdUsuario = @IdUsuario;
     ";
 
-            // Ejecutar la consulta utilizando Dapper
             var reservaResumen = await _db.QueryFirstOrDefaultAsync<ReservaTarjetaResumenVM>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
-
             return reservaResumen;
         }
 

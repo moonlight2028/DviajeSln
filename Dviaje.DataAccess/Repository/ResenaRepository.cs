@@ -112,40 +112,43 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
-
-        // Obtner los detalles de la reseña
+        // Obtener los detalles de las reseñas
         public async Task<List<ResenaTarjetaDetalleVM>?> ObtenerListaResenaTarjetaDetalleAsync(string idUsuario, int pagina = 1, int resultadosMostrados = 10)
         {
             var sql = @"
-                    SELECT 
-                    p.IdPublicacion, 
-                    rs.Opinion, 
-                    rs.Fecha, 
-                    rs.Calificacion AS Puntuacion, 
-                    (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena) AS NumerosLikes,
-                    p.Titulo AS TituloPublicacion, 
-                    pi.Ruta AS ImagenPublicacion, 
-                    u.Id AS IdAliado, 
-                    u.UserName AS NombreAliado, 
-                    u.Avatar AS AvatarAliado, 
-                    u.NumeroPublicaciones AS NumeroPublicacionesAliado
-                FROM 
-                    Resenas rs
-                INNER JOIN 
-                    Reservas r ON rs.IdReserva = r.IdReserva
-                INNER JOIN 
-                    Publicaciones p ON r.IdPublicacion = p.IdPublicacion
-                INNER JOIN 
-                    aspnetusers u ON p.IdAliado = u.Id
-                LEFT JOIN 
-                    PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
-                WHERE 
-                    r.IdUsuario = '@IdUsuario'
-                ORDER BY 
-                    rs.Fecha DESC
-                LIMIT ELEMENTOS_POR_PAGINA OFFSET OFFSET";
+        SELECT 
+            p.IdPublicacion, 
+            rs.Opinion, 
+            rs.Fecha, 
+            rs.Calificacion AS Puntuacion, 
+            COALESCE(
+                (SELECT COUNT(*) FROM ResenaMeGusta WHERE IdResena = rs.IdResena),
+                0
+            ) AS NumerosLikes,
+            p.Titulo AS TituloPublicacion, 
+            pi.Ruta AS ImagenPublicacion, 
+            u.Id AS IdAliado, 
+            u.UserName AS NombreAliado, 
+            u.Avatar AS AvatarAliado,
+            (SELECT COUNT(*) FROM Publicaciones WHERE IdAliado = u.Id) AS NumeroPublicacionesAliado
+        FROM 
+            Resenas rs
+        INNER JOIN 
+            Reservas r ON rs.IdReserva = r.IdReserva
+        INNER JOIN 
+            Publicaciones p ON r.IdPublicacion = p.IdPublicacion
+        LEFT JOIN 
+            PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion AND pi.Orden = 1
+        INNER JOIN 
+            aspnetusers u ON p.IdAliado = u.Id
+        WHERE 
+            r.IdUsuario = @IdUsuario
+        ORDER BY 
+            rs.Fecha DESC
+        LIMIT @ElementosPorPagina OFFSET @Offset";
 
             var offset = (pagina - 1) * resultadosMostrados;
+
             var result = await _db.QueryAsync<ResenaTarjetaDetalleVM>(sql, new
             {
                 IdUsuario = idUsuario,
@@ -154,7 +157,6 @@ namespace Dviaje.DataAccess.Repository
             });
 
             return result.ToList();
-
         }
 
 
