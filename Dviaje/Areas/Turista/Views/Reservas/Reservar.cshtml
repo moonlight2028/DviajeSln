@@ -48,27 +48,6 @@
             </div>
         </div>
 
-        <div class="hr"></div>
-
-        <div>
-            <h2>Servicios Adicionales</h2>
-            <div class="reserva-lista-servicios">
-                @if (Model.ServiciosAdicionales != null && Model.ServiciosAdicionales.Any())
-                {
-                    foreach (var servicio in Model.ServiciosAdicionales)
-                    {
-                        <div class="reserva-servicio reserva-servicio-activo">
-                            <input type="checkbox" asp-for="@servicio.Seleccionado" value="@servicio.IdServicioAdicional" data-servicio-precio="@servicio.Precio" />
-                            <label asp-for="@servicio.IdServicioAdicional">
-                                <i class="@servicio.RutaIcono"></i>
-                                <span>@servicio.NombreServicio</span>
-                            </label>
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-
         <div class="reserva-precio">
             <span>$ @Model.PrecioTotal.ToString("N0")</span>
             <button type="submit" class="button-87-main">Reservar</button>

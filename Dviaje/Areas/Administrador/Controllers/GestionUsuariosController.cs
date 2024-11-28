@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dviaje.Areas.Administrador.Controllers
 {
@@ -37,13 +36,10 @@ namespace Dviaje.Areas.Administrador.Controllers
             var usuarios = await _userRepository.ObtenerUsuariosAsync();
 
             // Asegúrate de incluir los roles disponibles para cada usuario.
-            foreach (var usuario in usuarios)
-            {
-                usuario.RolesDisponibles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
-            }
+            return Json(new { data = usuarios });
 
             // Devuelve los datos en el formato esperado por DataTables.
-            return Json(new { data = usuarios });
+
         }
 
         /// <summary>
