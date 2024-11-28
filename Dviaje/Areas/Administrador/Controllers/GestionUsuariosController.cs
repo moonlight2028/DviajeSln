@@ -21,6 +21,7 @@ namespace Dviaje.Areas.Administrador.Controllers
         /// <summary>
         /// Vista principal para la gestión de usuarios.
         /// </summary>
+        [Route("gestion/GestionUsuarios")]
         public IActionResult GestionUsuario()
         {
             return View();
@@ -32,14 +33,14 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsuarios()
         {
-            // Obtiene los usuarios desde el repositorio.
             var usuarios = await _userRepository.ObtenerUsuariosAsync();
 
-            // Asegúrate de incluir los roles disponibles para cada usuario.
+            if (usuarios == null || !usuarios.Any())
+            {
+                return Json(new { data = new List<object>() });
+            }
+
             return Json(new { data = usuarios });
-
-            // Devuelve los datos en el formato esperado por DataTables.
-
         }
 
         /// <summary>
@@ -48,7 +49,11 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> CambiarRol(string idUsuario, string nuevoRol)
         {
-            // Verifica si el rol existe.
+            if (string.IsNullOrWhiteSpace(idUsuario) || string.IsNullOrWhiteSpace(nuevoRol))
+            {
+                return BadRequest(new { success = false, message = "El ID de usuario o el rol no pueden estar vacíos." });
+            }
+
             if (!await _roleManager.RoleExistsAsync(nuevoRol))
             {
                 return BadRequest(new { success = false, message = "El rol especificado no existe." });
@@ -70,6 +75,11 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> BanearUsuario(string idUsuario)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario))
+            {
+                return BadRequest(new { success = false, message = "El ID de usuario no puede estar vacío." });
+            }
+
             var resultado = await _userRepository.BanearUsuarioAsync(idUsuario);
 
             if (resultado)
@@ -86,6 +96,11 @@ namespace Dviaje.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> EliminarUsuario(string idUsuario)
         {
+            if (string.IsNullOrWhiteSpace(idUsuario))
+            {
+                return BadRequest(new { success = false, message = "El ID de usuario no puede estar vacío." });
+            }
+
             var resultado = await _userRepository.EliminarUsuarioAsync(idUsuario);
 
             if (resultado)

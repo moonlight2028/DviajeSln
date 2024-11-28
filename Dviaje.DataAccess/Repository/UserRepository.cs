@@ -21,16 +21,19 @@ public class UserRepository : IUserRepository
             u.Email, 
             u.Avatar, 
             u.PhoneNumber, 
-            (SELECT GROUP_CONCAT(r.Name SEPARATOR ', ') 
-             FROM aspnetuserroles ur
-             JOIN aspnetroles r ON ur.RoleId = r.Id
-             WHERE ur.UserId = u.Id) AS Roles,
-          
+            COALESCE(
+                (SELECT GROUP_CONCAT(r.Name SEPARATOR ', ') 
+                 FROM aspnetuserroles ur
+                 JOIN aspnetroles r ON ur.RoleId = r.Id
+                 WHERE ur.UserId = u.Id),
+                'Sin rol'
+            ) AS Roles
         FROM 
             aspnetusers u";
 
         return (await _db.QueryAsync<UsuarioVM>(sql)).ToList();
     }
+
 
 
 
