@@ -202,12 +202,20 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             // Actualización de imágenes
             if (InputAvatar != null)
             {
-                var imagenes = await _optimizacionImagenes.OptimizarMultiplesImagenesAWebPAsync(InputAvatar.OpenReadStream(), 75, $"avatar-{user.Id}", ArchivosUtility.ResolucionesAvatar);
+                var resultado = await _subirArchivos.SubirImagenAsync(InputAvatar, ArchivosUtility.CarpetaAvatares, $"avatar-{user.Id}");
+                if (resultado == null)
+                {
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar actualizar el avatar.";
+                    return RedirectToPage();
+                }
 
-                var resultado = await _subirArchivos.SubirImagenesAsync(imagenes, ArchivosUtility.CarpetaAvatares);
+                user.Avatar = resultado.Url;
+                user.IdAvatar = resultado.PublicId;
+                var resultadoUpdate = await _userManager.UpdateAsync(user);
 
-                var resultadoAvatar = await _perfilRepository.SetAvatar(resultado[0].Url, resultado[1].Url, user.Id, $"avatar-{user.Id}");
-                if (!resultadoAvatar)
+                if (!resultadoUpdate.Succeeded)
                 {
                     Notificacion = "error";
                     NotificacionTitulo = "Perfil";
@@ -217,11 +225,20 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             }
             if (InputBanner != null)
             {
-                var imagen = await _optimizacionImagenes.OptimizarImagenAWebPAsync(InputBanner.OpenReadStream(), 75, $"banner-{user.Id}", ArchivosUtility.ResolucionAnchoBanner, ArchivosUtility.ResolucionAltoBanner);
+                var resultado = await _subirArchivos.SubirImagenAsync(InputBanner, ArchivosUtility.CarpetaBanners, $"banner-{user.Id}");
+                if (resultado == null)
+                {
+                    Notificacion = "error";
+                    NotificacionTitulo = "Perfil";
+                    NotificacionMensaje = "Error inesperado al intentar actualizar el banner.";
+                    return RedirectToPage();
+                }
 
-                var resultado = await _subirArchivos.SubirImagenAsync(imagen.imagen, imagen.nombre, ArchivosUtility.CarpetaBanners);
-                var resultadoBanner = await _perfilRepository.SetBanner(resultado.Url, user.Id, $"banner-{user.Id}");
-                if (!resultadoBanner)
+                user.Banner = resultado.Url;
+                user.IdBanner = resultado.PublicId;
+                var resultadoUpdate = await _userManager.UpdateAsync(user);
+
+                if (!resultadoUpdate.Succeeded)
                 {
                     Notificacion = "error";
                     NotificacionTitulo = "Perfil";

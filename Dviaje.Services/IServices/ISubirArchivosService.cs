@@ -24,5 +24,9 @@ namespace Dviaje.Services.IServices
 
         Task<(string publicId, string secureUrl)> SubirImagenAsync(ImagenVM imagen);
         Task<List<(string publicId, string secureUrl)>> SubirMultiplesImagenesAsync(List<ImagenVM> imagenes);
+
+
+
+        Task<ImagenCloudinary?> SubirImagenAsync(IFormFile archivo, string carpeta, string publicId);
     }
 }

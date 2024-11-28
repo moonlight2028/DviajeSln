@@ -43,10 +43,10 @@
 | `gestion/restricciones`                                | Moderador      | Vista CRUD de restricciones.                                 | |
 | `gestion/categorias`                                   | Moderador      | Vista CRUD de categorías.                                    | |
 | `favoritos?{pagina}`                                   | Turista        | Favoritos guardados por el usuario.                          | |
-| `Identity/Account/Manage`                              | Turista        | Gestión de información básica del perfil.                    |✖|
-| `Identity/Account/Manage/Aliado`                       | Turista        | Gestión de información del perfil relacionada con el aliado  | |
-| `Identity/Account/Manage/Email`                        | Turista        | Gestión del correo electrónico.                              | |
-| `Identity/Account/Manage/ChangePassword`               | Turista        | Gestión de la contraseña.                                    | |
+| `Identity/Account/Manage`                              | Turista        | Gestión de información básica del perfil.                    |🤷‍♂️|
+| `Identity/Account/Manage/Aliado`                       | Turista        | Gestión de información del perfil relacionada con el aliado  |🤷‍♂️|
+| `Identity/Account/Manage/Email`                        | Turista        | Gestión del correo electrónico.                              |🤷‍♂️|
+| `Identity/Account/Manage/ChangePassword`               | Turista        | Gestión de la contraseña.                                    |🤷‍♂️|
 | `Identity/Account/Manage/TwoFactorAuthentication`      | Turista        | Gestión de TF2.                                              |✖|
 | `perfil?{id}`                                          | Público        | Perfil público.                                              | |
 | `publicacion?{id}`                                     | Público        | Información completa de una publicación.                     | |
