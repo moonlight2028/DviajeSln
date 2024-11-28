@@ -2,29 +2,154 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@{
+    var avatarUrl = await UserManager.GetUserAsync(User) as Usuario;
+}
 
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="menu-desplegable">
         <button class="menu-desplegable-boton nav-principal-avatar">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww" alt="Alternate Text" class="img-f" />
+            <img src="@avatarUrl.Avatar" alt="Alternate Text" class="img-f" />
         </button>
         <div class="menu-desplegable-contenido b-s-95">
+
+            @{
+                var currentUser = await UserManager.GetUserAsync(User);
+                if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Turista"))
+                {
+                    <div>
+                        <li>
+                            <a class="nav-avatar-item" asp-area="Turista" asp-controller="Favoritos" asp-action="Index" title="Manage">
+                                Favoritos
+                                <i class="fa-solid fa-suitcase"></i>
+                            </a>
+                        </li>
+                    </div>
+                    <span class="nav-avatar-separador"></span>
+                    if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Aliado"))
+                    {
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Aliado" asp-controller="Publicaciones" asp-action="Crear" title="Manage">
+                                    Crear Publicación
+                                    <i class="fa-solid fa-book-open"></i>
+                                </a>
+                            </li>
+                        </div>
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Aliado" asp-controller="Publicaciones" asp-action="MisPublicaciones" title="Manage">
+                                    Mis Publicaciones
+                                    <i class="fa-solid fa-receipt"></i>
+                                </a>
+                            </li>
+                        </div>
+                        <span class="nav-avatar-separador"></span>
+                    }
+                    <div>
+                        <li>
+                            <a class="nav-avatar-item" asp-area="Turista" asp-controller="Reservas" asp-action="MisReservas" title="Manage">
+                                Mis Reservas
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </a>
+                        </li>
+                    </div>
+                    <span class="nav-avatar-separador"></span>
+                    <div>
+                        <li>
+                            <a class="nav-avatar-item" asp-area="Turista" asp-controller="Resenas" asp-action="MisReseñas" title="Manage">
+                                Mis Reseñas
+                                <i class="fa-solid fa-book-open-reader"></i>
+                            </a>
+                        </li>
+                    </div>
+                    <div>
+                        <li>
+                            <a class="nav-avatar-item" asp-area="Turista" asp-controller="Resenas" asp-action="Disponibles" title="Manage">
+                                Reseñas Disponibles
+                                <i class="fa-solid fa-book"></i>
+                            </a>
+                        </li>
+                    </div>
+                    <span class="nav-avatar-separador"></span>
+                    <div>
+                        <li>
+                            <a class="nav-avatar-item" asp-area="Turista" asp-controller="Pqrs" asp-action="MisPqrs" title="Manage">
+                                Mis PQRS
+                                <i class="fa-solid fa-handshake-angle"></i>
+                            </a>
+                        </li>
+                    </div>
+                    if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Moderador"))
+                    {
+                        <span class="nav-avatar-separador"></span>
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Moderador" asp-controller="GestionParametros" asp-action="Servicios" title="Manage">
+                                    Gestionar Servicios
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </a>
+                            </li>
+                        </div>
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Moderador" asp-controller="GestionParametros" asp-action="Categorias" title="Manage">
+                                    Gestionar Categorias
+                                    <i class="fa-solid fa-list"></i>
+                                </a>
+                            </li>
+                        </div>
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Moderador" asp-controller="Pqrs" asp-action="Pqrs" title="Manage">
+                                    Gestionar PQRS
+                                    <i class="fa-solid fa-hand-holding-hand"></i>
+                                </a>
+                            </li>
+                        </div>
+                    }
+                    if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Administrador"))
+                    {
+                        <span class="nav-avatar-separador"></span>
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Administrador" asp-controller="Reportes" asp-action="Publicaciones" title="Manage">
+                                    Reportes
+                                    <i class="fa-solid fa-database"></i>
+                                </a>
+                            </li>
+                        </div>
+                        <div>
+                            <li>
+                                <a class="nav-avatar-item" asp-area="Administrador" asp-controller="GestionUsuarios" asp-action="GestionUsuario" title="Manage">
+                                    Gestionar Usuarios
+                                    <i class="fa-solid fa-bars-progress"></i>
+                                </a>
+                            </li>
+                        </div>
+                    }
+                }
+            }
+            <span class="nav-avatar-separador"></span>
+            
             <div>
                 <li>
                     <a class="nav-avatar-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                        <i class="fa-solid fa-user-gear"></i>
                         Administrar Cuenta
+                        <i class="fa-solid fa-user-gear"></i>
                     </a>
                 </li>
             </div>
+
             <span class="nav-avatar-separador"></span>
+
             <div>
                 <li>
                     <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index","Inicio",new { area = "" })" class="nav-cerrar-sesion">
                         <button id="logout" type="submit" class="nav-avatar-item">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             Crear Sesión
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         </button>
                     </form>
                 </li>
