@@ -249,17 +249,32 @@ namespace Dviaje.Areas.Aliado.Controllers
         [Route("publicaciones/mis-publicaciones")]
         public async Task<IActionResult> MisPublicaciones(int? pagina, string? ordenar)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var paginaActual = pagina ?? 1;
+            var idAlido = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var misPublicaciones = await _publicacionesRepository.ObtenerListaPublicacionTarjetaBusquedaVMAsync(paginaActual, 10, ordenar ?? "puntuacion");
+            // Verificar si la página es válida
+            if (pagina is null or <= 0) pagina = 1;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Lógica para publicaciones generales con paginación
+            int publicacionesTotales = await _publicacionesRepository.PublicacionesTotalesPorIdAliadoAsync(idAlido);
+            int numeroPublicaciones = 10;
+            int paginasTotales = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(publicacionesTotales) / numeroPublicaciones));
+
+            if (pagina > paginasTotales) pagina = 1;
+
+            ordenar ??= "";
+
+            var misPublicaciones = await _publicacionesRepository.ObtenerListaPublicacionMisPublicacionesVMAsync((int)pagina, 10, ordenar ?? "puntuacion", idAlido);
 
             if (misPublicaciones == null)
             {
-                TempData["Info"] = "No tienes publicaciones para mostrar.";
-                return View();
+                return View(misPublicaciones);
             }
 
+            ViewBag.PaginacionPaginas = paginasTotales;
+            ViewBag.PaginacionItems = numeroPublicaciones;
+            ViewBag.PaginacionResultados = publicacionesTotales;
             return View(misPublicaciones);
         }
 

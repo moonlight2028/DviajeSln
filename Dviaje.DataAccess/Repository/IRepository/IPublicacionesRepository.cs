@@ -6,7 +6,12 @@ namespace Dviaje.DataAccess.Repository.IRepository
     public interface IPublicacionesRepository
     {
         Task<int> PublicacionesTotales();
+        Task<int> PublicacionesTotalesPorIdAliadoAsync(string idAliado);
         Task<List<PublicacionTarjetaBusquedaVM>> ObtenerListaPublicacionTarjetaBusquedaVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null);
+        Task<List<PublicacionMisPublicacionesVM>>? ObtenerListaPublicacionMisPublicacionesVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null, string idAliado = "");
+
+
+
         Task<PublicacionDetalleVM?> ObtenerPublicacionDetalleVMAsync(int idPublicacion);
         Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsync(int idPublicacion);
         Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion);
