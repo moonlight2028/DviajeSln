@@ -205,10 +205,10 @@ namespace Dviaje.DataAccess.Repository
             }
 
             // Ejecutar la consulta para obtener los servicios
-            var servicios = await _db.QueryAsync<ServicioVM>(sqlServicios);
+            //var servicios = await _db.QueryAsync<ServicioVM>(sqlServicios);
 
             // Asignar los servicios a la publicación
-            publicacion.Servicios = servicios.ToList();
+            //publicacion.Servicios = servicios.ToList();
 
             return publicacion;
         }
@@ -225,11 +225,6 @@ namespace Dviaje.DataAccess.Repository
                     _db.Open();
                 }
 
-                // Validación 1: No permitir fechas exageradas
-                if (reservaCrearVM.FechaFinal > DateTime.UtcNow.AddYears(1))
-                {
-                    return false; // La fecha es demasiado posterior
-                }
 
                 // Validación 2: No permitir si ya existe una reserva en el mismo rango de fechas
                 var sqlVerificarReserva = @"
@@ -250,7 +245,7 @@ namespace Dviaje.DataAccess.Repository
 
                 if (reservasConflicto > 0)
                 {
-                    return false; // Ya existe una reserva en ese periodo
+                    return false;
                 }
 
                 using (var transaction = _db.BeginTransaction())
@@ -259,9 +254,9 @@ namespace Dviaje.DataAccess.Repository
                     {
                         // Inserción de la reserva en la tabla reservas
                         var sqlReserva = @"
-                                 INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, NumeroPersonas, PrecioTotal, IdUsuario, IdPublicacion)
-                                 VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @NumeroPersonas, @PrecioTotal, @IdUsuario, @IdPublicacion);
-                                 SELECT LAST_INSERT_ID();";  // Obtener el ID de la reserva recién insertada
+                                 INSERT INTO reservas (FechaReserva, ReservaEstado, FechaInicial, FechaFinal, PrecioTotal, IdUsuario, IdPublicacion)
+                                 VALUES (@FechaReserva, @ReservaEstado, @FechaInicial, @FechaFinal, @PrecioTotal, @IdUsuario, @IdPublicacion);
+                                 SELECT LAST_INSERT_ID();";
 
                         var idReserva = await _db.ExecuteScalarAsync<int>(sqlReserva, new
                         {
@@ -269,7 +264,6 @@ namespace Dviaje.DataAccess.Repository
                             ReservaEstado = "Activo",
                             FechaInicial = reservaCrearVM.FechaInicial,
                             FechaFinal = reservaCrearVM.FechaFinal,
-                            NumeroPersonas = reservaCrearVM.NumeroPersonas,
                             PrecioTotal = reservaCrearVM.PrecioTotal,
                             IdUsuario = reservaCrearVM.IdUsuario,
                             IdPublicacion = reservaCrearVM.IdPublicacion

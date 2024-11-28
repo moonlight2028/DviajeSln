@@ -83,6 +83,7 @@ builder.Services.AddScoped<IValidator<IdentityManageEmailVM>, IdentityManageEmai
 builder.Services.AddScoped<IValidator<IdentityManagePasswordVM>, IdentityManagePasswordVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityManageAliadoVM>, IdentityManageAliadoVMValidator>();
 builder.Services.AddScoped<IValidator<PublicacionCrearFrontVM>, PublicacionCrearVMValidator>();
+builder.Services.AddScoped<IValidator<ReservaCrearVM>, ReservaCrearVMValidator>();
 
 
 var app = builder.Build();

@@ -65,7 +65,7 @@
 | `reseñas/mis-reseñas?{pagina}`                         | Turista        | Reseñas escritas por el turista.                             | |
 | `reseñas/recibidas?{pagina}&&{ordenar}`                | Aliado         | Reseñas recibidas de las publicaciones asociadas al aliado.  | |
 | `reserva/mi-reserva?{id}`                              | Turista        | Detalles de la reserva.                                      | |
-| `reservar?{id}`                                        | Turista        | Reserva una publicación.                                     | |
+| `reservar?{id}`                                        | Turista        | Reserva una publicación.                                     |🤷‍♂️|
 | `reservas/detalle?{id}`                                | Aliado         | Detalles de la reserva desde la vista del aliado.            | |
 | `reservas/mis-reservas?{pagina}&&{estado}`             | Turista        | Reservas realizadas por el turista.                          | |
 

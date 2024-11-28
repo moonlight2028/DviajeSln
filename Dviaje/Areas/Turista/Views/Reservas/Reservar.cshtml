@@ -1,25 +1,21 @@
 ﻿@model ReservaCrearVM
 
+
 @{
     ViewData["Title"] = "Reservar";
 }
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/reservas/reservar.css">
 }
 
+
 <div class="reserva-publicacion">
-    <form class="reserva" method="post" asp-area="Turista" asp-controller="Reservas" asp-action="ReservaCrear">
+    <form class="reserva" method="post" asp-area="Turista" asp-controller="Reservas" asp-action="Reservar">
         <input type="hidden" asp-for="IdPublicacion" />
         <h1>Reserva ahora, vive la experiencia</h1>
 
-        <!-- Mensajes de error o advertencia -->
-        @if (!ViewData.ModelState.IsValid)
-        {
-            <div class="alert alert-warning">
-                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:")
-            </div>
-        }
 
         <div class="reserva-inputs">
             <div>
@@ -38,20 +34,13 @@
                 </label>
                 <span asp-validation-for="FechaFinal" class="validation-message"></span>
             </div>
-            <div>
-                <label asp-for="NumeroPersonas" class="input-label input-label-personas">
-                    <input asp-for="NumeroPersonas" type="number" autocomplete="on" aria-required="true"
-                           class="input-field" placeholder="Número de Personas" min="1" value="1" />
-                    <span class="input-placeholder">Número de Personas</span>
-                </label>
-                <span asp-validation-for="NumeroPersonas" class="validation-message"></span>
-            </div>
         </div>
 
         <div class="reserva-precio">
             <span>$ @Model.PrecioTotal.ToString("N0")</span>
             <button type="submit" class="button-87-main">Reservar</button>
         </div>
+        <div asp-validation-summary="ModelOnly" class="validation-message-all"></div>
     </form>
 
     <section class="publicacion">
@@ -78,8 +67,6 @@
         </div>
     </section>
 
-    <!-- Div para mostrar mensajes de error o éxito -->
-    <div id="reserva-mensaje" class="alert" style="display: none;"></div>
 </div>
 
 @section Scripts {

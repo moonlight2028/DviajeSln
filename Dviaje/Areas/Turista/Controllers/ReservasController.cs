@@ -2,6 +2,7 @@
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Dviaje.Utility;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -14,12 +15,14 @@ namespace Dviaje.Areas.Turista.Controllers
     {
         private readonly IReservaRepository _reservaRepository;
         private readonly IEnvioEmailService _envioEmail;
+        private IValidator<ReservaCrearVM> _reservaCrearVMValidator;
 
 
-        public ReservasController(IReservaRepository reservaRepository, IEnvioEmailService envioEmail)
+        public ReservasController(IReservaRepository reservaRepository, IEnvioEmailService envioEmail, IValidator<ReservaCrearVM> reservaCrearVMValidator)
         {
             _reservaRepository = reservaRepository;
             _envioEmail = envioEmail;
+            _reservaCrearVMValidator = reservaCrearVMValidator;
         }
 
 
@@ -64,13 +67,11 @@ namespace Dviaje.Areas.Turista.Controllers
         [Route("reservar/{id?}")]
         public async Task<IActionResult> Reservar(int? id)
         {
-            // Verifica si el ID de publicación es válido
             if (!id.HasValue)
             {
                 return RedirectToAction("Publicaciones", "Publicaciones", new { area = "Dviaje" });
             }
 
-            // Inicializa un ViewModel de ReservaCrearVM para la vista
             var reservaFormulario = await _reservaRepository.ObtenerReservaCrearVMAsync((int)id);
 
             if (reservaFormulario == null)
@@ -82,34 +83,47 @@ namespace Dviaje.Areas.Turista.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ReservaCrear(ReservaCrearVM reservaFormCrear)
+        [Route("reservar/{id?}")]
+        public async Task<IActionResult> Reservar(ReservaCrearVM reservaFormCrear)
         {
-            // Obtiene el ID del usuario autenticado
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            reservaFormCrear.IdUsuario = userId; // Asigna el ID del usuario al ViewModel
+            // Validaciones
+            var validacion = await _reservaCrearVMValidator.ValidateAsync(reservaFormCrear);
 
-
-
-            // Validaciones en el servidor
-            if (reservaFormCrear.FechaFinal > DateTime.UtcNow.AddYears(1))
+            if (!validacion.IsValid)
             {
-                return Json(new { success = false, message = "La fecha seleccionada es demasiado posterior. Selecciona una fecha dentro del próximo año." });
+                foreach (var error in validacion.Errors)
+                {
+                    ModelState.AddModelError($"{error.PropertyName}", error.ErrorMessage);
+                }
             }
+            if (!ModelState.IsValid)
+            {
+                var reservaFormulario = await _reservaRepository.ObtenerReservaCrearVMAsync(reservaFormCrear.IdPublicacion);
+
+                if (reservaFormulario == null)
+                {
+                    return RedirectToAction("Publicaciones", "Publicaciones", new { area = "Dviaje" });
+                }
+                return View(reservaFormulario);
+            }
+            // TODO: Validacion fechas disponibles
 
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            reservaFormCrear.IdUsuario = userId;
+            // TODO: Calcular precio
+            reservaFormCrear.PrecioTotal = 15616515m;
 
 
-            // Llama al método del repositorio para registrar la reserva
-            var success = await _reservaRepository.RegistrarReservaAsync(reservaFormCrear);
+            var registro = await _reservaRepository.RegistrarReservaAsync(reservaFormCrear);
 
             // Si la reserva es exitosa
-            if (success)
+            if (!registro)
             {
-                return RedirectToAction(nameof(MisReservas));
+                return View(reservaFormCrear);
             }
 
-            // Si falla la reserva, retorna un mensaje de error
-            return Json(new { success = false, message = "Hubo un problema al registrar la reserva. Por favor, inténtalo nuevamente." });
+            return RedirectToAction(nameof(MisReservas));
         }
 
 
