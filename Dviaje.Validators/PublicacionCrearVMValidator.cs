@@ -48,15 +48,6 @@ namespace Dviaje.Validators
                 .Must(x => x == null || (x >= 0 && x <= 50))
                 .WithMessage("El número de baños debe ser 0 o un valor entre 0 y 50.");
 
-            RuleFor(x => x.Imagenes)
-                .NotEmpty().WithMessage("Debe agregar al menos una imagen.")
-                .Must(x => x != null && x.Count >= 5 && x.Count <= 20)
-                .WithMessage("Debe agregar entre 5 y 20 imágenes.");
-
-            RuleForEach(x => x.Imagenes)
-                .ChildRules(imagen => imagen.RuleFor(i => i.Type)
-                    .Matches(@"^image\/(jpeg|png|webp|jpg)$").WithMessage("El archivo debe ser una imagen válida (JPEG, PNG, WEBP o JPG)."));
-
             RuleFor(x => x.PrecioNoche)
                 .GreaterThan(0).WithMessage("El precio por noche debe ser mayor a 0.")
                 .LessThanOrEqualTo(1000000000).WithMessage("El precio por noche no debe exceder 1,000,000,000");

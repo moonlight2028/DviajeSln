@@ -5,6 +5,8 @@ galeriaImagenes();
 
 
 // Datos globales
+const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+const formData = new FormData();
 let datos = {
     titulo: null,
     descripcion: null,
@@ -31,6 +33,7 @@ let serviciosLista = {
     establecimiento: null
 };
 let restricciones = [];
+let fileList;
 
 
 // Pasos
@@ -486,7 +489,7 @@ const pasos = [
             const dropZone = document.getElementById('drop-zone');
             const imageInput = document.getElementById('imageInput');
             const previewContainer = document.getElementById('preview-container');
-            let fileList = datos.imagenes;
+            fileList = datos.imagenes;
 
             // Mostrar imágenes previamente cargadas
             datos.imagenes.forEach((file) => {
@@ -773,107 +776,82 @@ const pasos = [
                 validarAlCambiar();
             });
 
-            // Asociar evento al botón para enviar datos
-            //botonMain.addEventListener('click', async (e) => {
-            //    e.preventDefault();
-            //    if (pasos[pasoActual].validar()) {
-            //        await enviarDatos(datos,'/publicaciones/mis-publicaciones');
-            //    } 
-            //});
-
-            // Inicializar validación
             validarAlCambiar();
         }
     }
 ];
 
-const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
-
-
-
-
-function objectToFormData(obj, formData = new FormData(), parentKey = "") {
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            const value = obj[key];
-            const fullKey = parentKey ? `${parentKey}[${key}]` : key;
-
-            if (Array.isArray(value)) {
-                // Si es un array, iteramos sobre los elementos
-                value.forEach((item, index) => {
-                    const arrayKey = `${fullKey}[${index}]`;
-                    if (typeof item === "object" && item !== null) {
-                        objectToFormData(item, formData, arrayKey);
-                    } else {
-                        formData.append(arrayKey, item);
-                    }
-                });
-            } else if (typeof value === "object" && value !== null) {
-                // Si es un objeto, hacemos una llamada recursiva
-                objectToFormData(value, formData, fullKey);
-            } else {
-                // Si es un valor simple, lo agregamos directamente
-                formData.append(fullKey, value);
-            }
-        }
-    }
-    return formData;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-const btnPublicar = document.getElementById("publicar-post");
-btnPublicar.addEventListener("click", async () => {
-    //const imagenes = document.querySelector("#input-imagenes").files;
-    const formData = objectToFormData(datos);
-    //for (const imagen of imagenes) {
-    //    formData.append("imagenes", imagen);
-    //}
-
-    console.log(formData);
-
-    await enviarDatos(datos, "", formData);
-})
-
 
 // Funciones
 // Enviar datos
-const enviarDatos = async (obj, redireccionamiento, form) => {
+const enviarDatos = async () => {
+    formData.append('titulo', datos.titulo);
+    formData.append('descripcion', datos.descripcion);
+    formData.append('direccion', datos.direccion);
+    formData.append('CategoriaSeleccionada', datos.categoriaSeleccionada);
+    formData.append('propiedadSeleccionada', datos.propiedadSeleccionada);
+    datos.serviciosSeleccionados.forEach(servicio => {
+        formData.append('ServiciosSeleccionados', servicio);
+    });
+    datos.restriccionesSeleccionadas.forEach(restriccion => {
+        formData.append('RestriccionesSeleccionadas', restriccion);
+    });
+    formData.append('huespedes', datos.huespedes);
+    formData.append('recamaras', datos.recamaras);
+    formData.append('numeroCamas', datos.numeroCamas);
+    formData.append('banios', datos.banios);
+    datos.fechasNoDisponibles.forEach((rango, index) => {
+        formData.append(`FechasNoDisponibles[${index}].FechaInicial`, rango.fechaInicial);
+        formData.append(`FechasNoDisponibles[${index}].FechaFinal`, rango.fechaFinal);
+    });
+    formData.append('precioNoche', datos.precioNoche);
+
+    fileList.forEach((file) => {
+        formData.append('imagenes', file);
+    });
+
+    document.getElementById('loader').classList.toggle('loader-hide');
+
     try {
-        const response = await fetch('https://localhost:7258/publicacion/crear', {
+        const response = await fetch('/publicacion/crear', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'RequestVerificationToken': token 
+                'RequestVerificationToken': token
             },
-            body: form,
+            body: formData,
         });
 
-        console.log(response);
+        let errores = []; 
 
         if (response.ok) {
-            //window.location.href = redireccionamiento;
+            window.location.href = "/publicaciones/mis-publicaciones";
         } else {
             const result = await response.json();
 
             if (response.status === 400) {
-                console.error("Errores de validación:", result.mensaje);
-                console.error("Detalles de errores:", result.errores);
+                errores.push("Errores de validación: " + result.mensaje);
+                result.errores.forEach(error => {
+                    errores.push(error);
+                });
             } else {
-                console.error('Error en el servidor:', result.message || 'Sin mensaje');
+                errores.push('Error en el servidor: ' + (result.message || 'Sin mensaje'));
             }
+            Swal.fire({
+                title: 'Errores',
+                text: errores.join('\n'),
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
+            });
         }
     } catch (error) {
-        console.error('Error en la solicitud:', error);
+        Swal.fire({
+            title: 'Errores',
+            text: errores.join('\n'),
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
+        });
+    } finally {
+        document.getElementById('loader').classList.toggle('loader-hide');
     }
 };
 
@@ -956,7 +934,10 @@ const renderizarBotones = async () => {
     botonSiguiente.addEventListener('click', async () => {
         if (pasos[pasoActual].validar()) {
             pasos[pasoActual].guardar();
-            if (pasoActual < pasos.length - 1) {
+
+            if (pasoActual === pasos.length - 1) {
+                await enviarDatos();
+            } else {
                 pasoActual++;
                 await renderizarPaso();
             }

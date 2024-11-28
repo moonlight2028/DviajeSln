@@ -277,13 +277,13 @@ namespace Dviaje.DataAccess.Repository
 
 
                     // Registro tabla PublicacionesRestricciones
-                    if (publicacion.restriccionesSeleccionadas != null)
+                    if (publicacion.RestriccionesSeleccionadas != null)
                     {
                         var sqlRestricciones = @"
                             INSERT INTO PublicacionesRestricciones (IdPublicacion, IdRestriccion)
                             VALUES (@IdPublicacion, @IdRestriccion);
                         ";
-                        var restricciones = publicacion.restriccionesSeleccionadas.Select(restriccion => new
+                        var restricciones = publicacion.RestriccionesSeleccionadas.Select(restriccion => new
                         {
                             IdPublicacion = idPublicacion,
                             IdRestriccion = restriccion
@@ -622,22 +622,16 @@ namespace Dviaje.DataAccess.Repository
             return resultado;
         }
 
-
-
-
         public async Task<bool> RegistrarImagenes(List<PublicacionesImagenes> imagenes)
         {
             var consulta = @"
-                INSERT INTO PublicacionesImagenes (Ruta, Alt, IdPublicacion)
-                VALUES (@Ruta, @Alt, @IdPublicacion);
+                INSERT INTO PublicacionesImagenes (IdPublico, Ruta, Alt, IdPublicacion)
+                VALUES (@IdPublico, @Ruta, @Alt, @IdPublicacion);
             ";
 
             var filasAfectadas = await _db.ExecuteAsync(consulta, imagenes);
 
             return filasAfectadas > 0;
         }
-
-
-
     }
 }

@@ -11,17 +11,8 @@
     <link rel="stylesheet" href="~/css/publicaciones/publicacion-crear.css">
 }
 
-@Html.AntiForgeryToken()  <!-- Esto genera el token antifalsificación -->
-<input type="hidden" id="antiforgeryToken" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
 
-
-
-
-
-
-
-
-
+@Html.AntiForgeryToken()
 <div class="contenedor-layout">
     <div class="banner-datos">
         <section class="contenedor-banner b-s-95" id="contenedor-imagen"></section>
@@ -37,15 +28,18 @@
     </div>
 </div>
 
-
-
-
-<button id="publicar-post">Pulbicar</button>
+<div class="contenedor-loader loader-hide" id="loader">
+    <span class="loader"></span>
+    <p>Publicando ...</p>
+</div>
 
 
 @section Scripts {
     <!-- Sortable.js -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <!-- SweetAlert2 v11 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="module" src="~/js/publicaciones/publicacionCrear.js"></script>
 }

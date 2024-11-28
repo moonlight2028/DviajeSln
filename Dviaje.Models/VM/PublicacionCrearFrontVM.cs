@@ -9,12 +9,11 @@
         public int CategoriaSeleccionada { get; set; }
         public int PropiedadSeleccionada { get; set; }
         public List<int>? ServiciosSeleccionados { get; set; }
-        public List<int>? restriccionesSeleccionadas { get; set; }
+        public List<int>? RestriccionesSeleccionadas { get; set; }
         public int Huespedes { get; set; }
         public int Recamaras { get; set; }
         public int NumeroCamas { get; set; }
         public int Banios { get; set; }
-        public List<ImagenVM>? Imagenes { get; set; }
         public List<FechaNoDisponibleVM>? FechasNoDisponibles { get; set; }
         public decimal PrecioNoche { get; set; }
 

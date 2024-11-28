@@ -46,7 +46,7 @@ namespace Dviaje.Areas.Aliado.Controllers
         /// Vista para crear una nueva publicación.
         /// </summary>
         [Route("publicacion/crear")]
-        public async Task<IActionResult> Crear()
+        public IActionResult Crear()
         {
             return View();
         }
@@ -57,7 +57,8 @@ namespace Dviaje.Areas.Aliado.Controllers
         [HttpPost]
         [Route("publicacion/crear")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear([FromForm] PublicacionCrearFrontVM publicacion, List<IFormFile> imagenes)
+        public async Task<IActionResult> Crear(
+            [FromForm] PublicacionCrearFrontVM publicacion, List<IFormFile> imagenes)
         {
             // Validaciones
             var validacion = await _publicacionCrearVMValidator.ValidateAsync(publicacion);
@@ -115,9 +116,9 @@ namespace Dviaje.Areas.Aliado.Controllers
             }
 
             var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
-            if (publicacion.restriccionesSeleccionadas != null)
+            if (publicacion.RestriccionesSeleccionadas != null)
             {
-                foreach (var restriccionId in publicacion.restriccionesSeleccionadas)
+                foreach (var restriccionId in publicacion.RestriccionesSeleccionadas)
                 {
                     var restriccionExistente = restricciones.Any(r => r.IdRestriccion == restriccionId);
 
@@ -128,6 +129,26 @@ namespace Dviaje.Areas.Aliado.Controllers
                             mensaje = "La restriccion con el ID " + restriccionId + " no existe."
                         });
                     }
+                }
+            }
+
+            if (imagenes.Count < 5)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Debes cargar mínimo 5 imágenes."
+                });
+            }
+
+            var tiposPermitidos = new[] { "image/jpeg", "image/png", "image/webp" };
+            var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            foreach (var imagen in imagenes)
+            {
+                var extension = Path.GetExtension(imagen.FileName).ToLowerInvariant();
+
+                if (!tiposPermitidos.Contains(imagen.ContentType) || !extensionesPermitidas.Contains(extension))
+                {
+                    return BadRequest($"El archivo {imagen.FileName} no es válido. Solo se permiten imágenes en formatos JPEG, PNG o WebP.");
                 }
             }
 
@@ -148,81 +169,36 @@ namespace Dviaje.Areas.Aliado.Controllers
             }
 
 
+            // Subida de imágenes
+            var imagenesSubidas = await _subirArchivosService.SubirImagenesDesdeIFormFileAsync(imagenes, ArchivosUtility.CarpetaPublicaciones((int)resultado), $"{resultado}");
+            if (imagenesSubidas == null)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error, al subir las imágenes."
+                });
+            }
 
 
-
-
-
-            var resultados = await _subirArchivosService.SubirMultiplesImagenesAsync(publicacion.Imagenes);
-
-
-            var dafads = "Adf";
-
-
-
+            // Registro imágenes
+            var imagenesLista = imagenesSubidas.Select(img => new PublicacionesImagenes
+            {
+                IdPublico = img.PublicId,
+                Ruta = img.Url,
+                Alt = $"Imagen de la publicación {publicacion.Titulo}",
+                IdPublicacion = (int)resultado
+            }).ToList();
+            var registroImagenes = await _publicacionesRepository.RegistrarImagenes(imagenesLista);
+            if (!registroImagenes)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error, al registrar las imágenes."
+                });
+            }
 
 
             return Ok(new { mensaje = "Publicación creada con éxito" });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //// Subida de imágenes
-            //var imagenesSubidas = await _subirArchivosService.SubirImagenesDesdeIFormFileAsync(imagenes, ArchivosUtility.CarpetaPublicaciones((int)resultado), $"{resultado}");
-            //if (imagenesSubidas == null)
-            //{
-            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-            //    TempData["Notificacion"] = "error";
-            //    TempData["NotificacionTitulo"] = "Publicación";
-            //    TempData["NotificacionMensaje"] = "Error, al subir las imágenes.";
-
-            //    return View(datos);
-            //}
-
-            //// Registro imágenes
-            //var imagenesLista = imagenesSubidas.Select(img => new PublicacionesImagenes
-            //{
-            //    Ruta = img.Url,
-            //    Alt = $"Imagen de la publicación {publicacion.Titulo}",
-            //    IdPublicacion = (int)resultado
-            //}).ToList();
-            //var registroImagenes = await _publicacionesRepository.RegistrarImagenes(imagenesLista);
-            //if (!registroImagenes)
-            //{
-            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-            //    TempData["Notificacion"] = "error";
-            //    TempData["NotificacionTitulo"] = "Publicación";
-            //    TempData["NotificacionMensaje"] = "Error, al registra las imágenes.";
-
-            //    return View(datos);
-            //}
-
-            //var testdd = "dasf";
-
-
         }
 
         /// <summary>
