@@ -1,7 +1,4 @@
-﻿@* @model PublicacionCrearVM *@
-
-
-@{
+﻿@{
     ViewData["Title"] = "Crear Publicación";
 }
 
@@ -13,6 +10,16 @@
     <!-- Estilos custom -->
     <link rel="stylesheet" href="~/css/publicaciones/publicacion-crear.css">
 }
+
+@Html.AntiForgeryToken()  <!-- Esto genera el token antifalsificación -->
+<input type="hidden" id="antiforgeryToken" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+
+
+
+
+
+
+
 
 
 <div class="contenedor-layout">
@@ -31,10 +38,14 @@
 </div>
 
 
+
+
+<button id="publicar-post">Pulbicar</button>
+
+
 @section Scripts {
     <!-- Sortable.js -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script type="module" src="~/js/publicaciones/publicacionCrear.js"></script>
 }
-

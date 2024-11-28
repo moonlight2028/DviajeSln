@@ -39,9 +39,7 @@ namespace Dviaje.DataAccess.Repository
         //traer restricciones
         public async Task<List<Restriccion>> ObtenerRestriccionesAsync()
         {
-            var sql = @"
-                        SELECT IdRestriccion, NombreRestriccion, RutaIcono 
-                        FROM restricciones";
+            var sql = @"SELECT * FROM restricciones";
 
             var restricciones = await _db.QueryAsync<Restriccion>(sql);
             return restricciones.ToList();

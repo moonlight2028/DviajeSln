@@ -12,6 +12,7 @@ let datos = {
     categoriaSeleccionada: null,
     propiedadSeleccionada: null,
     serviciosSeleccionados: [],
+    restriccionesSeleccionadas: [],
     huespedes: 0,
     recamaras: 0,
     numeroCamas: 0,
@@ -29,6 +30,7 @@ let serviciosLista = {
     accesibilidad: null,
     establecimiento: null
 };
+let restricciones = [];
 
 
 // Pasos
@@ -307,6 +309,55 @@ const pasos = [
                     pasos[pasoActual].guardar();
 
                     agregarValidacionBoton('.button-87-main', pasos[pasoActual].validar);
+                });
+            });
+
+            agregarValidacionBoton('.button-87-main', pasos[pasoActual].validar);
+        }
+    },
+    {
+        renderizar: async () => {
+            // Cargar servicios si aún no están cargados
+            if (restricciones == null || restricciones.length < 1) {
+                restricciones = await getDatos("/restricciones");
+            }
+
+            return `
+                <h2>Restricciones</h2>
+                ${restricciones.map(r => `
+                    <div>
+                        <label for="restriccion-${r.idRestriccion}">${r.nombreRestriccion}</label>
+                        <input 
+                            type="checkbox" 
+                            name="restriccion" 
+                            value="${r.idRestriccion}" 
+                            id="restriccion-${r.idRestriccion}" 
+                            ${datos.restriccionesSeleccionadas.includes(r.idRestriccion.toString()) ? 'checked' : ''} />
+                    </div>
+                `).join('')}
+            `;
+        },
+        renderizarImagen: () => `
+            <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                alt="Imagen dirección en crear publicación" 
+                class="img-f" />
+        `,
+        renderizarTitulo: () => `
+            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+        `,
+        guardar: () => {
+            // Guardar los servicios seleccionados
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            datos.restriccionesSeleccionadas = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+        },
+        validar: () => {return true},
+        alCargar: () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    pasos[pasoActual].guardar();
                 });
             });
 
@@ -722,38 +773,110 @@ const pasos = [
                 validarAlCambiar();
             });
 
+            // Asociar evento al botón para enviar datos
+            //botonMain.addEventListener('click', async (e) => {
+            //    e.preventDefault();
+            //    if (pasos[pasoActual].validar()) {
+            //        await enviarDatos(datos,'/publicaciones/mis-publicaciones');
+            //    } 
+            //});
+
             // Inicializar validación
             validarAlCambiar();
         }
-    },
-    {
-        renderizar: () => `
-          <h2>Paso 3: Confirmacion</h2>
-          <p>Revisa los datos:</p>
-          <pre>${JSON.stringify(datos, null, 2)}</pre>
-        `,
-        guardar: () => { },
-        validar: () => true,
-        alCargar: () => console.log('Paso 3 cargado.')
     }
 ];
+
+const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+
+
+
+function objectToFormData(obj, formData = new FormData(), parentKey = "") {
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            const fullKey = parentKey ? `${parentKey}[${key}]` : key;
+
+            if (Array.isArray(value)) {
+                // Si es un array, iteramos sobre los elementos
+                value.forEach((item, index) => {
+                    const arrayKey = `${fullKey}[${index}]`;
+                    if (typeof item === "object" && item !== null) {
+                        objectToFormData(item, formData, arrayKey);
+                    } else {
+                        formData.append(arrayKey, item);
+                    }
+                });
+            } else if (typeof value === "object" && value !== null) {
+                // Si es un objeto, hacemos una llamada recursiva
+                objectToFormData(value, formData, fullKey);
+            } else {
+                // Si es un valor simple, lo agregamos directamente
+                formData.append(fullKey, value);
+            }
+        }
+    }
+    return formData;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+const btnPublicar = document.getElementById("publicar-post");
+btnPublicar.addEventListener("click", async () => {
+    //const imagenes = document.querySelector("#input-imagenes").files;
+    const formData = objectToFormData(datos);
+    //for (const imagen of imagenes) {
+    //    formData.append("imagenes", imagen);
+    //}
+
+    console.log(formData);
+
+    await enviarDatos(datos, "", formData);
+})
 
 
 // Funciones
 // Enviar datos
-const enviarDatos = async () => {
+const enviarDatos = async (obj, redireccionamiento, form) => {
     try {
-        const respuesta = await fetch('/api/enviar', {
+        const response = await fetch('https://localhost:7258/publicacion/crear', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datos)
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': token 
+            },
+            body: form,
         });
-        const resultado = await respuesta.json();
-        alert('Datos enviados con exito: ' + JSON.stringify(resultado));
+
+        console.log(response);
+
+        if (response.ok) {
+            //window.location.href = redireccionamiento;
+        } else {
+            const result = await response.json();
+
+            if (response.status === 400) {
+                console.error("Errores de validación:", result.mensaje);
+                console.error("Detalles de errores:", result.errores);
+            } else {
+                console.error('Error en el servidor:', result.message || 'Sin mensaje');
+            }
+        }
     } catch (error) {
-        console.error('Error al enviar los datos:', error);
+        console.error('Error en la solicitud:', error);
     }
 };
+
 
 const getDatos = async (url, datosTitulo) => {
     try {
@@ -836,8 +959,6 @@ const renderizarBotones = async () => {
             if (pasoActual < pasos.length - 1) {
                 pasoActual++;
                 await renderizarPaso();
-            } else {
-                enviarDatos();
             }
         }
     });

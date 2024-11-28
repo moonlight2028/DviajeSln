@@ -239,54 +239,96 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        public async Task<int> CrearPublicacionAsync(PublicacionCrearVM publicacion)
+        public async Task<int?> CrearPublicacionAsync(PublicacionCrearFrontVM publicacion)
         {
-            using var transaction = _db.BeginTransaction();
             try
             {
-                // Inserta la publicación y obtiene su ID
-                var sqlPublicacion = @"
-            INSERT INTO publicaciones (Titulo, Descripcion, PrecioNoche, Fecha, Direccion, IdAliado)
-            VALUES (@Titulo, @Descripcion, @PrecioNoche, @Fecha, @Direccion, @IdAliado);
-            SELECT LAST_INSERT_ID();";
-
-                var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
-
-                // Si hay imágenes, insértalas
-                if (publicacion.Imagenes != null)
+                if (_db.State != ConnectionState.Open)
                 {
-                    var sqlImagenes = @"
-                INSERT INTO publicacionesimagenes (IdPublicacion, Ruta, Alt, Orden)
-                VALUES (@IdPublicacion, @Ruta, @Alt, @Orden);";
-
-                    foreach (var imagen in publicacion.Imagenes)
-                    {
-                        await _db.ExecuteAsync(sqlImagenes, new { IdPublicacion = idPublicacion, imagen.Ruta, imagen.Alt, imagen.Orden }, transaction);
-                    }
+                    _db.Open();
                 }
 
-                // Si hay fechas no disponibles, insértalas
-                if (publicacion.FechasNoDisponibles != null)
+                using var transaction = _db.BeginTransaction();
+                try
                 {
-                    var sqlFechas = @"
-                INSERT INTO fechasnodisponibles (FechaInicial, FechaFinal, IdPublicacion)
-                VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);";
+                    // Registro tabla Publicaciones
+                    var sqlPublicacion = @"
+                        INSERT INTO publicaciones (Titulo, Descripcion, PrecioNoche, Fecha, Direccion, NumeroCamas, Huespedes, Recamaras, Banios, PublicacionEstado, IdPropiedad, IdAliado)
+                        VALUES (@Titulo, @Descripcion, @PrecioNoche, @Fecha, @Direccion, @NumeroCamas, @Huespedes, @Recamaras, @Banios, @PublicacionEstado, @PropiedadSeleccionada, @IdAliado);
+                        SELECT LAST_INSERT_ID();
+                    ";
+                    var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
 
-                    foreach (var fecha in publicacion.FechasNoDisponibles)
+                    var data = ":adsf";
+
+
+                    // Registro tabla PublicacionesServicios
+                    var serviciosLista = publicacion.ServiciosSeleccionados.Select(s => new
                     {
-                        await _db.ExecuteAsync(sqlFechas, new { IdPublicacion = idPublicacion, fecha.FechaInicial, fecha.FechaFinal }, transaction);
-                    }
-                }
+                        IdPublicacion = idPublicacion,
+                        IdServicio = s
+                    });
+                    var sqlServicios = @"
+                        INSERT INTO PublicacionesServicios (IdPublicacion, IdServicio)
+                        VALUES (@IdPublicacion, @IdServicio);
+                    ";
 
-                transaction.Commit();
-                return idPublicacion; // Devuelve el ID de la publicación creada
+                    await _db.ExecuteAsync(sqlServicios, serviciosLista, transaction);
+
+
+                    // Registro tabla PublicacionesRestricciones
+                    if (publicacion.restriccionesSeleccionadas != null)
+                    {
+                        var sqlRestricciones = @"
+                            INSERT INTO PublicacionesRestricciones (IdPublicacion, IdRestriccion)
+                            VALUES (@IdPublicacion, @IdRestriccion);
+                        ";
+                        var restricciones = publicacion.restriccionesSeleccionadas.Select(restriccion => new
+                        {
+                            IdPublicacion = idPublicacion,
+                            IdRestriccion = restriccion
+                        });
+                        await _db.ExecuteAsync(sqlRestricciones, restricciones, transaction);
+                    }
+
+
+                    //// Registro tabla FechasNoDisponibles
+                    if (publicacion.FechasNoDisponibles != null)
+                    {
+                        var sqlFechas = @"
+                            INSERT INTO FechasNoDisponibles (FechaInicial, FechaFinal, IdPublicacion)
+                            VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);
+                        ";
+                        var fechas = publicacion.FechasNoDisponibles.Select(fecha => new
+                        {
+                            fecha.FechaInicial,
+                            fecha.FechaFinal,
+                            IdPublicacion = idPublicacion
+                        }).ToList();
+                        await _db.ExecuteAsync(sqlFechas, fechas, transaction);
+                    }
+
+
+                    transaction.Commit();
+                    return idPublicacion;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return null;
+                }
             }
-            catch
+            finally
             {
-                transaction.Rollback();
-                return -1; // Devuelve un valor especial en caso de error
+                if (_db.State == ConnectionState.Open)
+                {
+                    _db.Close();
+                }
             }
         }
+
+
+
 
 
 
