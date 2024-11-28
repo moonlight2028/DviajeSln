@@ -3,44 +3,54 @@ using FluentValidation;
 
 namespace Dviaje.Validators
 {
-    public class PublicacionCrearVMValidator : AbstractValidator<PublicacionCrearVM>
+    public class PublicacionCrearVMValidator : AbstractValidator<PublicacionCrearFrontVM>
     {
         public PublicacionCrearVMValidator()
         {
             RuleFor(x => x.Titulo)
                 .NotEmpty().WithMessage("El título es obligatorio.")
-                .MaximumLength(50).WithMessage("El título no debe exceder los 50 caracteres.")
-                .Must(titulo => !string.Equals(titulo, "titulo", StringComparison.OrdinalIgnoreCase))
-                .WithMessage("El título no puede ser 'titulo'.");
-
-            RuleFor(x => x.Direccion)
-                .NotEmpty().WithMessage("La dirección es obligatoria.")
-                .MaximumLength(100).WithMessage("La dirección no debe exceder los 100 caracteres.")
-                .Must(direccion => !string.Equals(direccion, "direccion", StringComparison.OrdinalIgnoreCase))
-                .WithMessage("La dirección no puede ser 'direccion'.");
+                .MinimumLength(5).WithMessage("El título debe contener minimo 5 caracteres.")
+                .MaximumLength(50).WithMessage("El título no debe exceder los 50 caracteres.");
 
             RuleFor(x => x.Descripcion)
                 .NotEmpty().WithMessage("La descripción es obligatoria.")
-                .MaximumLength(500).WithMessage("La descripción no debe exceder los 500 caracteres.")
-                .Must(descripcion => !string.Equals(descripcion, "descripcion", StringComparison.OrdinalIgnoreCase))
-                .WithMessage("La descripción no puede ser 'descripcion'.");
+                .MinimumLength(10).WithMessage("La descripción debe contener minimo 10 caracteres.")
+                .MaximumLength(500).WithMessage("La descripción no debe exceder los 500 caracteres.");
+
+            RuleFor(x => x.Direccion)
+                .NotEmpty().WithMessage("La dirección es obligatoria.")
+                .MinimumLength(5).WithMessage("La dirección debe contener minimo 5 caracteres.")
+                .MaximumLength(300).WithMessage("La dirección no debe exceder los 300 caracteres.");
+
+            RuleFor(x => x.CategoriaSeleccionada)
+                .GreaterThan(0).WithMessage("Debe seleccionar una categoría válida.");
+
+            RuleFor(x => x.PropiedadSeleccionada)
+                .GreaterThan(0).WithMessage("Debe seleccionar una propiedad válida.");
+
+            RuleFor(x => x.ServiciosSeleccionados)
+                .NotNull().WithMessage("Debe seleccionar al menos un servicio.")
+                .Must(x => x != null && x.All(s => s > 0)).WithMessage("Cada servicio seleccionado debe tener un ID válido.");
+
+            RuleFor(x => x.Huespedes)
+                .GreaterThan(0).WithMessage("El número de huéspedes debe ser mayor a 0.")
+                .LessThanOrEqualTo(50).WithMessage("El número de huéspedes no debe exceder los 50.");
+
+            RuleFor(x => x.Recamaras)
+                .Must(x => x == null || (x >= 0 && x <= 50))
+                .WithMessage("El número de recámaras debe ser 0 o un valor entre 0 y 50.");
 
             RuleFor(x => x.NumeroCamas)
-                .GreaterThan(0).WithMessage("El número de camas debe ser mayor a 0.")
-                .LessThanOrEqualTo(20).WithMessage("El número de camas no debe exceder las 20.");
+                .Must(x => x == null || (x >= 0 && x <= 50))
+                .WithMessage("El número de camas debe ser 0 o un valor entre 0 y 50.");
 
-            RuleFor(x => x.Precio)
-                .GreaterThan(0).WithMessage("El precio debe ser mayor a 0.")
-                .LessThanOrEqualTo(10000000).WithMessage("El precio no debe exceder los 10,000,000.");
+            RuleFor(x => x.Banios)
+                .Must(x => x == null || (x >= 0 && x <= 50))
+                .WithMessage("El número de baños debe ser 0 o un valor entre 0 y 50.");
 
-            RuleFor(x => x.ServiciosHabitacionSeleccionados)
-                .NotNull().WithMessage("Debe seleccionar al menos un servicio para la habitación.");
-
-            RuleFor(x => x.ServiciosEstablecimientoSeleccionados)
-                .NotNull().WithMessage("Debe seleccionar al menos un servicio para el establecimiento.");
-
-            RuleFor(x => x.CategoriasSeleccionadas)
-                .NotNull().WithMessage("Debe seleccionar al menos una categoría.");
+            RuleFor(x => x.PrecioNoche)
+                .GreaterThan(0).WithMessage("El precio por noche debe ser mayor a 0.")
+                .LessThanOrEqualTo(1000000000).WithMessage("El precio por noche no debe exceder 1,000,000,000");
 
             RuleForEach(x => x.FechasNoDisponibles)
                 .ChildRules(fechas =>

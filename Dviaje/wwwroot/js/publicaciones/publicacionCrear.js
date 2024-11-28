@@ -5,6 +5,8 @@ galeriaImagenes();
 
 
 // Datos globales
+const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+const formData = new FormData();
 let datos = {
     titulo: null,
     descripcion: null,
@@ -12,6 +14,7 @@ let datos = {
     categoriaSeleccionada: null,
     propiedadSeleccionada: null,
     serviciosSeleccionados: [],
+    restriccionesSeleccionadas: [],
     huespedes: 0,
     recamaras: 0,
     numeroCamas: 0,
@@ -29,6 +32,8 @@ let serviciosLista = {
     accesibilidad: null,
     establecimiento: null
 };
+let restricciones = [];
+let fileList;
 
 
 // Pasos
@@ -315,6 +320,55 @@ const pasos = [
     },
     {
         renderizar: async () => {
+            // Cargar servicios si aún no están cargados
+            if (restricciones == null || restricciones.length < 1) {
+                restricciones = await getDatos("/restricciones");
+            }
+
+            return `
+                <h2>Restricciones</h2>
+                ${restricciones.map(r => `
+                    <div>
+                        <label for="restriccion-${r.idRestriccion}">${r.nombreRestriccion}</label>
+                        <input 
+                            type="checkbox" 
+                            name="restriccion" 
+                            value="${r.idRestriccion}" 
+                            id="restriccion-${r.idRestriccion}" 
+                            ${datos.restriccionesSeleccionadas.includes(r.idRestriccion.toString()) ? 'checked' : ''} />
+                    </div>
+                `).join('')}
+            `;
+        },
+        renderizarImagen: () => `
+            <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                alt="Imagen dirección en crear publicación" 
+                class="img-f" />
+        `,
+        renderizarTitulo: () => `
+            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+        `,
+        guardar: () => {
+            // Guardar los servicios seleccionados
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            datos.restriccionesSeleccionadas = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+        },
+        validar: () => {return true},
+        alCargar: () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    pasos[pasoActual].guardar();
+                });
+            });
+
+            agregarValidacionBoton('.button-87-main', pasos[pasoActual].validar);
+        }
+    },
+    {
+        renderizar: async () => {
             return `
                 <h2>Detalles</h2>
                 <div>
@@ -435,7 +489,7 @@ const pasos = [
             const dropZone = document.getElementById('drop-zone');
             const imageInput = document.getElementById('imageInput');
             const previewContainer = document.getElementById('preview-container');
-            let fileList = datos.imagenes;
+            fileList = datos.imagenes;
 
             // Mostrar imágenes previamente cargadas
             datos.imagenes.forEach((file) => {
@@ -722,19 +776,8 @@ const pasos = [
                 validarAlCambiar();
             });
 
-            // Inicializar validación
             validarAlCambiar();
         }
-    },
-    {
-        renderizar: () => `
-          <h2>Paso 3: Confirmacion</h2>
-          <p>Revisa los datos:</p>
-          <pre>${JSON.stringify(datos, null, 2)}</pre>
-        `,
-        guardar: () => { },
-        validar: () => true,
-        alCargar: () => console.log('Paso 3 cargado.')
     }
 ];
 
@@ -742,18 +785,76 @@ const pasos = [
 // Funciones
 // Enviar datos
 const enviarDatos = async () => {
+    formData.append('titulo', datos.titulo);
+    formData.append('descripcion', datos.descripcion);
+    formData.append('direccion', datos.direccion);
+    formData.append('CategoriaSeleccionada', datos.categoriaSeleccionada);
+    formData.append('propiedadSeleccionada', datos.propiedadSeleccionada);
+    datos.serviciosSeleccionados.forEach(servicio => {
+        formData.append('ServiciosSeleccionados', servicio);
+    });
+    datos.restriccionesSeleccionadas.forEach(restriccion => {
+        formData.append('RestriccionesSeleccionadas', restriccion);
+    });
+    formData.append('huespedes', datos.huespedes);
+    formData.append('recamaras', datos.recamaras);
+    formData.append('numeroCamas', datos.numeroCamas);
+    formData.append('banios', datos.banios);
+    datos.fechasNoDisponibles.forEach((rango, index) => {
+        formData.append(`FechasNoDisponibles[${index}].FechaInicial`, rango.fechaInicial);
+        formData.append(`FechasNoDisponibles[${index}].FechaFinal`, rango.fechaFinal);
+    });
+    formData.append('precioNoche', datos.precioNoche);
+
+    fileList.forEach((file) => {
+        formData.append('imagenes', file);
+    });
+
+    document.getElementById('loader').classList.toggle('loader-hide');
+
     try {
-        const respuesta = await fetch('/api/enviar', {
+        const response = await fetch('/publicacion/crear', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datos)
+            headers: {
+                'RequestVerificationToken': token
+            },
+            body: formData,
         });
-        const resultado = await respuesta.json();
-        alert('Datos enviados con exito: ' + JSON.stringify(resultado));
+
+        let errores = []; 
+
+        if (response.ok) {
+            window.location.href = "/publicaciones/mis-publicaciones";
+        } else {
+            const result = await response.json();
+
+            if (response.status === 400) {
+                errores.push("Errores de validación: " + result.mensaje);
+                result.errores.forEach(error => {
+                    errores.push(error);
+                });
+            } else {
+                errores.push('Error en el servidor: ' + (result.message || 'Sin mensaje'));
+            }
+            Swal.fire({
+                title: 'Errores',
+                text: errores.join('\n'),
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
+            });
+        }
     } catch (error) {
-        console.error('Error al enviar los datos:', error);
+        Swal.fire({
+            title: 'Errores',
+            text: errores.join('\n'),
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
+        });
+    } finally {
+        document.getElementById('loader').classList.toggle('loader-hide');
     }
 };
+
 
 const getDatos = async (url, datosTitulo) => {
     try {
@@ -833,11 +934,12 @@ const renderizarBotones = async () => {
     botonSiguiente.addEventListener('click', async () => {
         if (pasos[pasoActual].validar()) {
             pasos[pasoActual].guardar();
-            if (pasoActual < pasos.length - 1) {
+
+            if (pasoActual === pasos.length - 1) {
+                await enviarDatos();
+            } else {
                 pasoActual++;
                 await renderizarPaso();
-            } else {
-                enviarDatos();
             }
         }
     });

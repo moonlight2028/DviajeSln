@@ -17,13 +17,15 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
 
         [HttpGet]
-        [Route("Restricciones")]
+        [Route("restricciones")]
         public async Task<IActionResult> Restricciones()
         {
             // Consulta
-            List<Restriccion>? restriccionesLista = await _restriccionesRepository.ObtenerRestriccionesAsync();
+            List<Restriccion>? restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
 
-            return Ok();
+            if (restricciones == null || !restricciones.Any()) return NotFound("No se encontraron restricciones.");
+
+            return Ok(restricciones);
         }
     }
 }

@@ -131,6 +131,8 @@ namespace Dviaje.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.Avatar = "https://res.cloudinary.com/dfpdbr5mk/image/upload/avatares/d18znj3xha7yeqioc4y4.webp";
+                user.Banner = "https://res.cloudinary.com/dfpdbr5mk/image/upload/banners/vx3mhpi1teig7w60xjuy.webp";
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -150,8 +152,6 @@ namespace Dviaje.Areas.Identity.Pages.Account
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    //await _perfilRepository.SetBanner(ArchivosUtility.UrlDefaultBanner, userId);
-                    //await _perfilRepository.SetAvatar(ArchivosUtility.UrlDefaultAvatarCincuentaPx, ArchivosUtility.UrlDefaultAvatarDoscientosPx, userId);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

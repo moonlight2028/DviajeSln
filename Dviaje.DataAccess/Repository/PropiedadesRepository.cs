@@ -23,5 +23,21 @@ namespace Dviaje.DataAccess.Repository
             var propiedades = await _db.QueryAsync<Propiedad>(sql, new { IdCategoria = idCategoria });
             return propiedades.ToList();
         }
+
+        public async Task<bool> VerificarCategoriaPropiedadAsync(int idCategoria, int idPropiedad)
+        {
+            var consulta = @"
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM Propiedades
+                    WHERE IdPropiedad = @IdPropiedad AND IdCategoria = @IdCategoria
+                );
+            ";
+
+            var resultado = await _db.ExecuteScalarAsync<bool>(consulta, new { IdCategoria = idCategoria, IdPropiedad = idPropiedad });
+
+            return resultado;
+        }
+
     }
 }

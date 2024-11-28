@@ -18,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+
 // Conexión a la base de datos para Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -81,7 +82,7 @@ builder.Services.AddScoped<IValidator<IdentityPerfilVM>, IdentityPerfilVMValidat
 builder.Services.AddScoped<IValidator<IdentityManageEmailVM>, IdentityManageEmailVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityManagePasswordVM>, IdentityManagePasswordVMValidator>();
 builder.Services.AddScoped<IValidator<IdentityManageAliadoVM>, IdentityManageAliadoVMValidator>();
-builder.Services.AddScoped<IValidator<PublicacionCrearVM>, PublicacionCrearVMValidator>();
+builder.Services.AddScoped<IValidator<PublicacionCrearFrontVM>, PublicacionCrearVMValidator>();
 
 
 var app = builder.Build();

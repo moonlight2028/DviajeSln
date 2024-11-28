@@ -1,10 +1,183 @@
-﻿@model IEnumerable<Dviaje.Models.VM.PublicacionTarjetaBusquedaVM>
+﻿@model List<PublicacionMisPublicacionesVM>
+
 
 @{
     ViewData["Title"] = "Mis Publicaciones";
 }
 
-<h2>Mis Publicaciones</h2>
+
+@section Styles{
+    <!-- Swiper v11 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Estilos custom -->
+    <link rel="stylesheet" href="~/css/publicaciones/publicaciones.css">
+    <link rel="stylesheet" href="~/css/publicaciones/publicaciones-mis-publicaciones.css">
+}
+
+
+@if (Model == null || !Model.Any())
+{
+    <div class="vacio">
+        <h1>No tienes Publicaciones</h1>
+        <img src="/img/assets/exploring.svg" alt="Alternate Text" />
+    </div>
+}
+else
+{
+    <div class="main">
+        <!-- Publicaciones -->
+        <div class="resultados">
+            <div class="ordenar">
+                <span class="ordenar-titulo">Ordenar Por</span>
+                <div class="menu-desplegable" id="ordenar-filtro"></div>
+            </div>
+            <section class="publicaciones">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var publicacion in Model)
+                    {
+                        <article class="publicacion b-s-95">
+                            <!-- Imagenes -->
+                            <div class="publicacion-imagen">
+                                <div class="swiper swiper-imagenes">
+                                    <div class="swiper-wrapper">
+                                        @if (publicacion.Imagenes != null)
+                                        {
+                                            foreach (var imagen in publicacion.Imagenes)
+                                            {
+                                                <div class="swiper-slide">
+                                                    <img src="@imagen.Ruta" alt="@imagen.Alt" id="@($"img-publicacion-{imagen.IdPublicacion}")" class="img-f">
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+
+                                    <div class="swiper-imagenes-pagination"></div>
+
+                                    <div class="swiper-imagenes-botones">
+                                        <div class="swiper-imagenes-prev">
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </div>
+                                        <div class="swiper-imagenes-next">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Datos -->
+                            <div class="publicacion-informacion">
+                                <div class="publicacion-informacion-texto">
+                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion">
+                                        <h1>@publicacion.Titulo</h1>
+                                    </a>
+                                    <div class="informacion-texto-puntuacion">
+                                        <span>@publicacion.Puntuacion.ToString("0.0")</span>
+                                        <a asp-area="Dviaje" asp-controller="Resenas" asp-action="Resenas" asp-route-id="@publicacion.IdPublicacion" class="texto-puntuacion-estrellas">
+                                            <div>
+                                                <i class="fa-regular fa-star"></i>
+                                                <i class="fa-regular fa-star"></i>
+                                                <i class="fa-regular fa-star"></i>
+                                                <i class="fa-regular fa-star"></i>
+                                                <i class="fa-regular fa-star"></i>
+                                                <div style="@($"width: {((publicacion.Puntuacion * 100) / 5).ToString()}%")">
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span>@publicacion.NumeroResenas.ToString("N0")</span>
+                                                <span>Reseñas</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <a href="" class="informacion-texto-ubicacion">
+                                        <span><i class="fa-solid fa-location-dot"></i></span>
+                                        <span class="informacion-direccion">@publicacion.Direccion</span>
+                                    </a>
+                                    <p class="informacion-texto-descripcion">@publicacion.Descripcion</p>
+                                    <div class="informacion-header-precio">
+                                        <span>$</span>
+                                        <span>@publicacion.Precio.ToString("N0")</span>
+                                    </div>
+                                </div>
+
+                                <div class="publicacion-informacion-botones">
+                                    <div class="publicacion-categorias">
+                                        <div class="swiper-wrapper-categorias">
+                                            <div class="swiper-wrapper tst">
+                                                @if (publicacion.Categoria != null)
+                                                {
+                                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@publicacion.Categoria.IdCategoria" class="swiper-slide swiper-slide-categorias">
+                                                        <i class="@publicacion.Categoria.RutaIcono"></i>
+                                                        <span class="tooltip-categoria">@publicacion.Categoria.NombreCategoria</span>
+                                                    </a>
+                                                }
+                                                @if (publicacion.Propiedad != null)
+                                                {
+                                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-propiedad="@publicacion.Propiedad.IdPropiedad" class="swiper-slide swiper-slide-categorias">
+                                                        <i class="@publicacion.Propiedad.RutaIcono"></i>
+                                                        <span class="tooltip-categoria">@publicacion.Propiedad.Nombre</span>
+                                                    </a>
+                                                }
+                                                @if (publicacion.Servicios != null && publicacion.Servicios.Any())
+                                                {
+                                                    foreach (var servicio in publicacion.Servicios)
+                                                    {
+                                                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@servicio.IdServicio" class="swiper-slide swiper-slide-categorias">
+                                                            <i class="@servicio.RutaIcono"></i>
+                                                            <span class="tooltip-categoria">@servicio.NombreServicio</span>
+                                                        </a>
+                                                    }
+                                                }
+                                                @if (publicacion.Restricciones != null && publicacion.Restricciones.Any())
+                                                {
+                                                    foreach (var restriccion in publicacion.Restricciones)
+                                                    {
+                                                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-servicio="@restriccion.IdRestriccion" class="swiper-slide swiper-slide-categorias">
+                                                            <i class="@restriccion.RutaIcono"></i>
+                                                            <span class="tooltip-categoria">@restriccion.NombreRestriccion</span>
+                                                        </a>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="btns-accciones">
+                                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicacion" asp-route-id="@publicacion.IdPublicacion"><i class="fa-regular fa-eye"></i></a>
+                                        <button id="pausar"><i class="fa-regular fa-circle-pause"></i></button>
+                                        <button><i class="fa-regular fa-pen-to-square"></i></button>
+                                        <button id="eliminar"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                }
+            </section>
+        </div>
+
+        <!-- Paginación -->
+        <div class="paginacion" id="paginacion" data-paginacion-paginas="@ViewBag.PaginacionPaginas" data-paginacion-items="@ViewBag.PaginacionItems" data-paginacion-resultados="@ViewBag.PaginacionResultados"></div>
+    </div>
+
+}
+
+
+
+
+@section Scripts {
+    <script src="~/js/publicaciones/publicacionesMisPublicaciones.js" type="module"></script>
+}
+
+
+
+@* <h2>Mis Publicaciones</h2>
 
 @if (TempData["Success"] != null)
 {
@@ -40,22 +213,22 @@ else
             </div>
         }
     </div>
-}
+} *@
 
-<script>
-    document.querySelectorAll('.eliminar-publicacion').forEach(button => {
-        button.addEventListener('click', async function () {
-            const id = this.getAttribute('data-id');
-            if (confirm('¿Estás seguro de eliminar esta publicación?')) {
-                const response = await fetch(`/Aliado/Publicaciones/publicacion/estado?id=${id}`, {
-                    method: 'DELETE'
-                });
-                if (response.ok) {
-                    location.reload();
-                } else {
-                    alert('Error al eliminar la publicación.');
-                }
-            }
-        });
-    });
-</script>
+@* <script>
+    // document.querySelectorAll('.eliminar-publicacion').forEach(button => {
+    //     button.addEventListener('click', async function () {
+    //         const id = this.getAttribute('data-id');
+    //         if (confirm('¿Estás seguro de eliminar esta publicación?')) {
+    //             const response = await fetch(`/Aliado/Publicaciones/publicacion/estado?id=${id}`, {
+    //                 method: 'DELETE'
+    //             });
+    //             if (response.ok) {
+    //                 location.reload();
+    //             } else {
+    //                 alert('Error al eliminar la publicación.');
+    //             }
+    //         }
+    //     });
+    // });
+</script> *@

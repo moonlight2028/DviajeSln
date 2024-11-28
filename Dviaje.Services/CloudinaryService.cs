@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Dviaje.Models;
+using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Microsoft.AspNetCore.Http;
 
@@ -190,6 +191,97 @@ namespace Dviaje.Services
 
             return resultados.ToList();
         }
+
+
+
+
+
+
+
+
+        public async Task<(string publicId, string secureUrl)> SubirImagenAsync(ImagenVM imagen)
+        {
+            if (imagen == null || string.IsNullOrEmpty(imagen.Content))
+            {
+                throw new ArgumentNullException("La imagen o el contenido no pueden ser nulos.");
+            }
+
+            // Decodifica la imagen en base64
+            var base64Data = imagen.Content.Split(',')[1]; // Elimina el prefijo "data:image/..."
+            var imagenBytes = Convert.FromBase64String(base64Data);
+
+            using (var stream = new MemoryStream(imagenBytes))
+            {
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(imagen.Name, stream),
+                    Type = imagen.Type ?? "upload" // Si no se proporciona el tipo, usa "upload" como valor predeterminado.
+                };
+
+                // Sube la imagen
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                // Retorna el publicId y la URL segura con la versión
+                return (uploadResult.PublicId, uploadResult.SecureUrl.ToString());
+            }
+        }
+
+
+        public async Task<List<(string publicId, string secureUrl)>> SubirMultiplesImagenesAsync(List<ImagenVM> imagenes)
+        {
+            var tareasDeSubida = new List<Task<(string publicId, string secureUrl)>>();
+
+            foreach (var imagen in imagenes)
+            {
+                tareasDeSubida.Add(SubirImagenAsync(imagen)); // Agrega cada tarea a la lista.
+            }
+
+            // Ejecuta todas las tareas en paralelo y espera el resultado
+            var resultados = await Task.WhenAll(tareasDeSubida);
+
+            // Retorna la lista de resultados
+            return resultados.ToList();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<ImagenCloudinary?> SubirImagenAsync(IFormFile archivo, string carpeta, string publicId)
+        {
+            if (archivo == null || archivo.Length == 0)
+            {
+                return null;
+            }
+
+            using (var stream = archivo.OpenReadStream())
+            {
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(archivo.FileName, stream),
+                    Folder = carpeta,
+                    Type = "upload",
+                    PublicId = publicId
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                return new ImagenCloudinary
+                {
+                    PublicId = uploadResult.PublicId,
+                    Url = uploadResult.SecureUrl?.ToString()
+                };
+            }
+        }
+
 
     }
 }

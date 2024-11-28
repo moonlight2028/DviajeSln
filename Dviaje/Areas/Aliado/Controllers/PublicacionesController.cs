@@ -1,4 +1,5 @@
 ﻿using Dviaje.DataAccess.Repository.IRepository;
+using Dviaje.Models;
 using Dviaje.Models.VM;
 using Dviaje.Services.IServices;
 using Dviaje.Utility;
@@ -17,7 +18,8 @@ namespace Dviaje.Areas.Aliado.Controllers
         private readonly IServiciosRepository _serviciosRepository;
         private readonly IRestriccionesRepository _restriccionesRepository;
         private readonly ICategoriasRepository _categoriasRepository;
-        private IValidator<PublicacionCrearVM> _publicacionCrearVMValidator;
+        private readonly IPropiedadesRepository _propiedadesRepository;
+        private IValidator<PublicacionCrearFrontVM> _publicacionCrearVMValidator;
         private ISubirArchivosService _subirArchivosService;
 
 
@@ -26,13 +28,15 @@ namespace Dviaje.Areas.Aliado.Controllers
             IServiciosRepository serviciosRepository,
             IRestriccionesRepository restriccionesRepository,
             ICategoriasRepository categoriasRepository,
-            IValidator<PublicacionCrearVM> publicacionCrearVMValidator,
-            ISubirArchivosService subirArchivosService)
+            IPropiedadesRepository propiedadesRepository,
+            IValidator<PublicacionCrearFrontVM> publicacionCrearVMValidator,
+        ISubirArchivosService subirArchivosService)
         {
             _publicacionesRepository = publicacionesRepository;
             _serviciosRepository = serviciosRepository;
             _restriccionesRepository = restriccionesRepository;
             _categoriasRepository = categoriasRepository;
+            _propiedadesRepository = propiedadesRepository;
             _publicacionCrearVMValidator = publicacionCrearVMValidator;
             _subirArchivosService = subirArchivosService;
         }
@@ -42,9 +46,8 @@ namespace Dviaje.Areas.Aliado.Controllers
         /// Vista para crear una nueva publicación.
         /// </summary>
         [Route("publicacion/crear")]
-        public async Task<IActionResult> Crear()
+        public IActionResult Crear()
         {
-            //var publicacion = await ObtenerDatosCrearPublicacionAsyn(new PublicacionCrearVM());
             return View();
         }
 
@@ -53,160 +56,149 @@ namespace Dviaje.Areas.Aliado.Controllers
         /// </summary>
         [HttpPost]
         [Route("publicacion/crear")]
-        public async Task<IActionResult> Crear(PublicacionCrearVM publicacion, List<IFormFile> imagenes)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Crear(
+            [FromForm] PublicacionCrearFrontVM publicacion, List<IFormFile> imagenes)
         {
-
-
-
-
-
-            return RedirectToAction(nameof(MisPublicaciones));
-
             // Validaciones
-            //var validacion = await _publicacionCrearVMValidator.ValidateAsync(publicacion);
-            //if (!validacion.IsValid)
-            //{
-            //    validacion.AddToModelState(this.ModelState);
-            //}
+            var validacion = await _publicacionCrearVMValidator.ValidateAsync(publicacion);
+            if (!validacion.IsValid)
+            {
+                var errores = validacion.Errors
+                    .Select(e => new
+                    {
+                        campo = e.PropertyName,
+                        mensaje = e.ErrorMessage
+                    })
+                    .ToList();
 
-            //if (imagenes == null || imagenes.Count < 3)
-            //{
-            //    ModelState.AddModelError("imagenes", "La publicación debe contener al menos tres imágenes.");
-            //}
-            //else
-            //{
-            //    foreach (var imagen in imagenes)
-            //    {
-            //        if (!ArchivosUtility.ArchivosValidosImagenes.Contains(imagen.ContentType))
-            //        {
-            //            ModelState.AddModelError("imagenes", "Formato de imagen no aceptada, formatos aceptados JPG, JPEG, WEBP o PNG.");
-            //        }
-            //    }
-            //}
+                return BadRequest(new
+                {
+                    mensaje = "Errores de validación",
+                    errores
+                });
+            }
 
-            //if (!ModelState.IsValid)
-            //{
-            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-            //    return View(datos);
-            //}
-            //else
-            //{
-            //    var servicios = await _serviciosRepository.ObtenerServiciosAsync();
-            //    var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
-            //    var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
-            //    if (publicacion.ServiciosHabitacionSeleccionados != null)
-            //    {
-            //        foreach (var servicioId in publicacion.ServiciosHabitacionSeleccionados)
-            //        {
-            //            var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
+            var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
+            var categoriaExistente = categorias.Any(c => c.IdCategoria == publicacion.CategoriaSeleccionada);
+            if (!categoriaExistente)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "La categoría no existe."
+                });
+            }
 
-            //            if (!servicioExistente)
-            //            {
-            //                ModelState.AddModelError("ServiciosHabitacionSeleccionados", "Error el servicio no existe.");
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    if (publicacion.ServiciosEstablecimientoSeleccionados != null)
-            //    {
-            //        foreach (var servicioId in publicacion.ServiciosEstablecimientoSeleccionados)
-            //        {
-            //            var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
+            var propiedadValidacion = await _propiedadesRepository.VerificarCategoriaPropiedadAsync(publicacion.CategoriaSeleccionada, publicacion.PropiedadSeleccionada);
+            if (!propiedadValidacion)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error en la propiedad seleccionada."
+                });
+            }
 
-            //            if (!servicioExistente)
-            //            {
-            //                ModelState.AddModelError("ServiciosEstablecimientoSeleccionados", "Error el servicio no existe.");
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    if (publicacion.CategoriasSeleccionadas != null)
-            //    {
-            //        foreach (var categoriaId in publicacion.CategoriasSeleccionadas)
-            //        {
-            //            var categoriaExistente = categorias.Any(c => c.IdCategoria == categoriaId);
+            var servicios = await _serviciosRepository.ObtenerServiciosAsync();
+            if (publicacion.ServiciosSeleccionados != null)
+            {
+                foreach (var servicioId in publicacion.ServiciosSeleccionados)
+                {
+                    var servicioExistente = servicios.Any(s => s.IdServicio == servicioId);
 
-            //            if (!categoriaExistente)
-            //            {
-            //                ModelState.AddModelError("CategoriasSeleccionadas", "Error la categoria no existe.");
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    if (publicacion.RestriccionesSeleccionadas != null)
-            //    {
-            //        foreach (var resticcionId in publicacion.RestriccionesSeleccionadas)
-            //        {
-            //            var restriccionExistente = restricciones.Any(r => r.IdRestriccion == resticcionId);
+                    if (!servicioExistente)
+                    {
+                        return BadRequest(new
+                        {
+                            mensaje = "El servicio con el ID " + servicioId + " no existe."
+                        });
+                    }
+                }
+            }
 
-            //            if (!restriccionExistente)
-            //            {
-            //                ModelState.AddModelError("RestriccionesSeleccionadas", "Error la restricción no existe.");
-            //                break;
-            //            }
-            //        }
-            //    }
+            var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
+            if (publicacion.RestriccionesSeleccionadas != null)
+            {
+                foreach (var restriccionId in publicacion.RestriccionesSeleccionadas)
+                {
+                    var restriccionExistente = restricciones.Any(r => r.IdRestriccion == restriccionId);
 
-            //    if (!ModelState.IsValid)
-            //    {
-            //        var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-            //        return View(datos);
-            //    }
-            //}
+                    if (!restriccionExistente)
+                    {
+                        return BadRequest(new
+                        {
+                            mensaje = "La restriccion con el ID " + restriccionId + " no existe."
+                        });
+                    }
+                }
+            }
 
+            if (imagenes.Count < 5)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Debes cargar mínimo 5 imágenes."
+                });
+            }
 
-            //// Registro publicación
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //publicacion.IdAliado = userId;
-            //publicacion.Fecha = DateTime.UtcNow;
+            var tiposPermitidos = new[] { "image/jpeg", "image/png", "image/webp" };
+            var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            foreach (var imagen in imagenes)
+            {
+                var extension = Path.GetExtension(imagen.FileName).ToLowerInvariant();
 
-            //var resultado = await _publicacionesRepository.CrearPublicacionAsync(publicacion);
-            //if (resultado == null)
-            //{
-            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-            //    TempData["Notificacion"] = "error";
-            //    TempData["NotificacionTitulo"] = "Publicación";
-            //    TempData["NotificacionMensaje"] = "Error, publicación no registrada.";
-
-            //    return View(datos);
-            //}
-
-            //// Subida de imágenes
-            //var imagenesSubidas = await _subirArchivosService.SubirImagenesDesdeIFormFileAsync(imagenes, ArchivosUtility.CarpetaPublicaciones((int)resultado), $"{resultado}");
-            //if (imagenesSubidas == null)
-            //{
-            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-            //    TempData["Notificacion"] = "error";
-            //    TempData["NotificacionTitulo"] = "Publicación";
-            //    TempData["NotificacionMensaje"] = "Error, al subir las imágenes.";
-
-            //    return View(datos);
-            //}
-
-            //// Registro imágenes
-            //var imagenesLista = imagenesSubidas.Select(img => new PublicacionesImagenes
-            //{
-            //    Ruta = img.Url,
-            //    Alt = $"Imagen de la publicación {publicacion.Titulo}",
-            //    IdPublicacion = (int)resultado
-            //}).ToList();
-            //var registroImagenes = await _publicacionesRepository.RegistrarImagenes(imagenesLista);
-            //if (!registroImagenes)
-            //{
-            //    var datos = await ObtenerDatosCrearPublicacionAsyn(publicacion);
-
-            //    TempData["Notificacion"] = "error";
-            //    TempData["NotificacionTitulo"] = "Publicación";
-            //    TempData["NotificacionMensaje"] = "Error, al registra las imágenes.";
-
-            //    return View(datos);
-            //}
-
-            //var testdd = "dasf";
+                if (!tiposPermitidos.Contains(imagen.ContentType) || !extensionesPermitidas.Contains(extension))
+                {
+                    return BadRequest($"El archivo {imagen.FileName} no es válido. Solo se permiten imágenes en formatos JPEG, PNG o WebP.");
+                }
+            }
 
 
+            // Registro publicación
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            publicacion.IdAliado = userId;
+            publicacion.Fecha = DateTime.UtcNow;
+            publicacion.PublicacionEstado = PublicacionEstado.Activa.ToString();
+
+            var resultado = await _publicacionesRepository.CrearPublicacionAsync(publicacion);
+            if (resultado == null)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error al crear la publicación."
+                });
+            }
+
+
+            // Subida de imágenes
+            var imagenesSubidas = await _subirArchivosService.SubirImagenesDesdeIFormFileAsync(imagenes, ArchivosUtility.CarpetaPublicaciones((int)resultado), $"{resultado}");
+            if (imagenesSubidas == null)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error, al subir las imágenes."
+                });
+            }
+
+
+            // Registro imágenes
+            var imagenesLista = imagenesSubidas.Select(img => new PublicacionesImagenes
+            {
+                IdPublico = img.PublicId,
+                Ruta = img.Url,
+                Alt = $"Imagen de la publicación {publicacion.Titulo}",
+                IdPublicacion = (int)resultado
+            }).ToList();
+            var registroImagenes = await _publicacionesRepository.RegistrarImagenes(imagenesLista);
+            if (!registroImagenes)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error, al registrar las imágenes."
+                });
+            }
+
+
+            return Ok(new { mensaje = "Publicación creada con éxito" });
         }
 
         /// <summary>
@@ -257,17 +249,32 @@ namespace Dviaje.Areas.Aliado.Controllers
         [Route("publicaciones/mis-publicaciones")]
         public async Task<IActionResult> MisPublicaciones(int? pagina, string? ordenar)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var paginaActual = pagina ?? 1;
+            var idAlido = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var misPublicaciones = await _publicacionesRepository.ObtenerListaPublicacionTarjetaBusquedaVMAsync(paginaActual, 10, ordenar ?? "puntuacion");
+            // Verificar si la página es válida
+            if (pagina is null or <= 0) pagina = 1;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Lógica para publicaciones generales con paginación
+            int publicacionesTotales = await _publicacionesRepository.PublicacionesTotalesPorIdAliadoAsync(idAlido);
+            int numeroPublicaciones = 10;
+            int paginasTotales = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(publicacionesTotales) / numeroPublicaciones));
+
+            if (pagina > paginasTotales) pagina = 1;
+
+            ordenar ??= "";
+
+            var misPublicaciones = await _publicacionesRepository.ObtenerListaPublicacionMisPublicacionesVMAsync((int)pagina, 10, ordenar ?? "puntuacion", idAlido);
 
             if (misPublicaciones == null)
             {
-                TempData["Info"] = "No tienes publicaciones para mostrar.";
-                return View();
+                return View(misPublicaciones);
             }
 
+            ViewBag.PaginacionPaginas = paginasTotales;
+            ViewBag.PaginacionItems = numeroPublicaciones;
+            ViewBag.PaginacionResultados = publicacionesTotales;
             return View(misPublicaciones);
         }
 

@@ -27,6 +27,15 @@ namespace Dviaje.DataAccess.Repository
         }
 
 
+        public async Task<int> PublicacionesTotalesPorIdAliadoAsync(string idAliado)
+        {
+            string consulta = "SELECT COUNT(*) FROM publicaciones WHERE IdAliado = @IdAliado;";
+            int totalPublicaciones = await _db.ExecuteScalarAsync<int>(consulta, new { IdAliado = idAliado });
+
+            return totalPublicaciones;
+        }
+
+
         public async Task<List<PublicacionTarjetaBusquedaVM>> ObtenerListaPublicacionTarjetaBusquedaVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null)
         {
             // Consulta para obtener las publicaciones
@@ -93,6 +102,193 @@ namespace Dviaje.DataAccess.Repository
 
             return publicaciones.ToList();
         }
+
+
+        public async Task<List<PublicacionMisPublicacionesVM>>? ObtenerListaPublicacionMisPublicacionesVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null, string idAliado = "")
+        {
+            // Consulta para obtener las publicaciones
+            string consultaPublicaciones = @"
+                SELECT 
+                    p.IdPublicacion,
+                    p.PrecioNoche AS Precio,
+                    p.Titulo,
+                    p.Direccion,
+                    p.Puntuacion,
+                    p.NumeroResenas,
+                    p.Descripcion,
+                    IFNULL(a.NumeroPublicaciones, 0) AS TotalPublicacionesAliado
+                FROM 
+                    publicaciones p
+                LEFT JOIN 
+                    aspnetusers a ON p.IdAliado = a.Id
+                WHERE 
+                    (@IdAliado IS NULL OR p.IdAliado = @IdAliado)
+                ORDER BY 
+                    CASE 
+                        WHEN @orderBy IS NULL OR @orderBy NOT IN ('precio_mayor', 'precio_menor') THEN p.Puntuacion 
+                    END DESC,
+                    CASE 
+                        WHEN @orderBy = 'precio_mayor' THEN p.PrecioNoche 
+                    END DESC,
+                    CASE 
+                        WHEN @orderBy = 'precio_menor' THEN p.PrecioNoche 
+                    END ASC
+                LIMIT @pageSize OFFSET @offset
+            ";
+            var publicaciones = await _db.QueryAsync<PublicacionMisPublicacionesVM>(consultaPublicaciones, new
+            {
+                orderBy = ordenarPor,
+                pageSize = numeroPublicaciones,
+                offset = (pagina - 1) * numeroPublicaciones,
+                IdAliado = idAliado
+            });
+
+            if (!publicaciones.Any()) return null;
+
+            // Ids
+            var idsPublicaciones = publicaciones.Select(p => p.IdPublicacion).ToList();
+
+            // Consulta para obtener imágenes
+            string consultaImagenes = @"
+                SELECT 
+                    pi.IdPublicacion,
+                    pi.Ruta,
+                    pi.Alt
+                FROM 
+                    publicacionesimagenes pi
+                WHERE 
+                    pi.IdPublicacion IN @idsPublicaciones
+            ";
+
+            // Consulta para obtener las propiedades
+            string consultaPropiedad = @"
+                SELECT 
+                    p.IdPublicacion,
+                    pr.IdPropiedad,
+                    pr.Nombre,
+                    pr.RutaIcono
+                FROM 
+                    publicaciones p
+                INNER JOIN 
+                    propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+                WHERE 
+                    p.IdPublicacion IN @idsPublicaciones
+            ";
+
+            // Consulta para obtener las categorías
+            string consultaCategoria = @"
+                SELECT 
+                    c.IdCategoria,
+                    c.NombreCategoria,
+                    c.RutaIcono,
+                    p.IdPublicacion
+                FROM 
+                    publicaciones p
+                INNER JOIN 
+                    propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+                INNER JOIN 
+                    categorias c ON pr.IdCategoria = c.IdCategoria
+                WHERE 
+                    p.IdPublicacion IN @idsPublicaciones;
+            ";
+
+            // Consulta para obtener los servicios
+            string consultaServicios = @"
+                SELECT 
+                    ps.IdPublicacion,
+                    s.IdServicio,
+                    s.NombreServicio,
+                    s.RutaIcono
+                FROM 
+                    PublicacionesServicios ps
+                INNER JOIN 
+                    servicios s ON ps.IdServicio = s.IdServicio
+                WHERE 
+                    ps.IdPublicacion IN @idsPublicaciones;
+            ";
+
+            // consulta para obtener las restricciones
+            string consultaRestricciones = @"
+                SELECT 
+                    pr.IdPublicacion,
+                    r.IdRestriccion,
+                    r.NombreRestriccion,
+                    r.RutaIcono
+                FROM 
+                    PublicacionesRestricciones pr
+                INNER JOIN 
+                    Restricciones r ON pr.IdRestriccion = r.IdRestriccion
+                WHERE 
+                    pr.IdPublicacion IN @idsPublicaciones;
+            ";
+
+
+            // Carga de datos en las publicaciones
+            var imagenes = await _db.QueryAsync<PublicacionImagenVM>(consultaImagenes, new { idsPublicaciones });
+            var propiedades = await _db.QueryAsync<PropiedadVM>(consultaPropiedad, new { idsPublicaciones });
+            var categorias = await _db.QueryAsync<CategoriaVM>(consultaCategoria, new { idsPublicaciones });
+            var servicios = await _db.QueryAsync<ServicioVM>(consultaServicios, new { idsPublicaciones });
+            var restricciones = await _db.QueryAsync<RestriccionVM>(consultaRestricciones, new { idsPublicaciones });
+            publicaciones = publicaciones.Select(publicacion =>
+            {
+                publicacion.Imagenes = imagenes
+                    .Where(i => i.IdPublicacion == publicacion.IdPublicacion)
+                    .ToList();
+
+                publicacion.Propiedad = propiedades
+                    .Where(p => p.IdPublicacion == publicacion.IdPublicacion)
+                    .Select(pr => new PropiedadVM
+                    {
+                        IdPropiedad = pr.IdPropiedad,
+                        Nombre = pr.Nombre,
+                        RutaIcono = pr.RutaIcono
+                    })
+                    .FirstOrDefault();
+
+                publicacion.Categoria = categorias
+                    .Where(c => c.IdPublicacion == publicacion.IdPublicacion)
+                    .Select(pr => new CategoriaVM
+                    {
+                        IdCategoria = pr.IdCategoria,
+                        NombreCategoria = pr.NombreCategoria,
+                        RutaIcono = pr.RutaIcono
+                    })
+                    .FirstOrDefault();
+
+                publicacion.Servicios = servicios
+                    .Where(s => s.IdPublicacion == publicacion.IdPublicacion)
+                    .Select(s => new ServicioVM
+                    {
+                        IdServicio = s.IdServicio,
+                        NombreServicio = s.NombreServicio,
+                        RutaIcono = s.RutaIcono
+                    })
+                    .ToList();
+
+                publicacion.Restricciones = restricciones
+                    .Where(r => r.IdPublicacion == publicacion.IdPublicacion)
+                    .Select(r => new RestriccionVM
+                    {
+                        IdRestriccion = r.IdRestriccion,
+                        NombreRestriccion = r.NombreRestriccion,
+                        RutaIcono = r.RutaIcono
+                    })
+                    .ToList();
+
+                return publicacion;
+            }).ToList();
+
+
+            return publicaciones.ToList();
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -239,54 +435,96 @@ namespace Dviaje.DataAccess.Repository
 
 
 
-        public async Task<int> CrearPublicacionAsync(PublicacionCrearVM publicacion)
+        public async Task<int?> CrearPublicacionAsync(PublicacionCrearFrontVM publicacion)
         {
-            using var transaction = _db.BeginTransaction();
             try
             {
-                // Inserta la publicación y obtiene su ID
-                var sqlPublicacion = @"
-            INSERT INTO publicaciones (Titulo, Descripcion, PrecioNoche, Fecha, Direccion, IdAliado)
-            VALUES (@Titulo, @Descripcion, @PrecioNoche, @Fecha, @Direccion, @IdAliado);
-            SELECT LAST_INSERT_ID();";
-
-                var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
-
-                // Si hay imágenes, insértalas
-                if (publicacion.Imagenes != null)
+                if (_db.State != ConnectionState.Open)
                 {
-                    var sqlImagenes = @"
-                INSERT INTO publicacionesimagenes (IdPublicacion, Ruta, Alt, Orden)
-                VALUES (@IdPublicacion, @Ruta, @Alt, @Orden);";
-
-                    foreach (var imagen in publicacion.Imagenes)
-                    {
-                        await _db.ExecuteAsync(sqlImagenes, new { IdPublicacion = idPublicacion, imagen.Ruta, imagen.Alt, imagen.Orden }, transaction);
-                    }
+                    _db.Open();
                 }
 
-                // Si hay fechas no disponibles, insértalas
-                if (publicacion.FechasNoDisponibles != null)
+                using var transaction = _db.BeginTransaction();
+                try
                 {
-                    var sqlFechas = @"
-                INSERT INTO fechasnodisponibles (FechaInicial, FechaFinal, IdPublicacion)
-                VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);";
+                    // Registro tabla Publicaciones
+                    var sqlPublicacion = @"
+                        INSERT INTO publicaciones (Titulo, Descripcion, PrecioNoche, Fecha, Direccion, NumeroCamas, Huespedes, Recamaras, Banios, PublicacionEstado, IdPropiedad, IdAliado)
+                        VALUES (@Titulo, @Descripcion, @PrecioNoche, @Fecha, @Direccion, @NumeroCamas, @Huespedes, @Recamaras, @Banios, @PublicacionEstado, @PropiedadSeleccionada, @IdAliado);
+                        SELECT LAST_INSERT_ID();
+                    ";
+                    var idPublicacion = await _db.ExecuteScalarAsync<int>(sqlPublicacion, publicacion, transaction);
 
-                    foreach (var fecha in publicacion.FechasNoDisponibles)
+                    var data = ":adsf";
+
+
+                    // Registro tabla PublicacionesServicios
+                    var serviciosLista = publicacion.ServiciosSeleccionados.Select(s => new
                     {
-                        await _db.ExecuteAsync(sqlFechas, new { IdPublicacion = idPublicacion, fecha.FechaInicial, fecha.FechaFinal }, transaction);
-                    }
-                }
+                        IdPublicacion = idPublicacion,
+                        IdServicio = s
+                    });
+                    var sqlServicios = @"
+                        INSERT INTO PublicacionesServicios (IdPublicacion, IdServicio)
+                        VALUES (@IdPublicacion, @IdServicio);
+                    ";
 
-                transaction.Commit();
-                return idPublicacion; // Devuelve el ID de la publicación creada
+                    await _db.ExecuteAsync(sqlServicios, serviciosLista, transaction);
+
+
+                    // Registro tabla PublicacionesRestricciones
+                    if (publicacion.RestriccionesSeleccionadas != null)
+                    {
+                        var sqlRestricciones = @"
+                            INSERT INTO PublicacionesRestricciones (IdPublicacion, IdRestriccion)
+                            VALUES (@IdPublicacion, @IdRestriccion);
+                        ";
+                        var restricciones = publicacion.RestriccionesSeleccionadas.Select(restriccion => new
+                        {
+                            IdPublicacion = idPublicacion,
+                            IdRestriccion = restriccion
+                        });
+                        await _db.ExecuteAsync(sqlRestricciones, restricciones, transaction);
+                    }
+
+
+                    //// Registro tabla FechasNoDisponibles
+                    if (publicacion.FechasNoDisponibles != null)
+                    {
+                        var sqlFechas = @"
+                            INSERT INTO FechasNoDisponibles (FechaInicial, FechaFinal, IdPublicacion)
+                            VALUES (@FechaInicial, @FechaFinal, @IdPublicacion);
+                        ";
+                        var fechas = publicacion.FechasNoDisponibles.Select(fecha => new
+                        {
+                            fecha.FechaInicial,
+                            fecha.FechaFinal,
+                            IdPublicacion = idPublicacion
+                        }).ToList();
+                        await _db.ExecuteAsync(sqlFechas, fechas, transaction);
+                    }
+
+
+                    transaction.Commit();
+                    return idPublicacion;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return null;
+                }
             }
-            catch
+            finally
             {
-                transaction.Rollback();
-                return -1; // Devuelve un valor especial en caso de error
+                if (_db.State == ConnectionState.Open)
+                {
+                    _db.Close();
+                }
             }
         }
+
+
+
 
 
 
@@ -592,22 +830,16 @@ namespace Dviaje.DataAccess.Repository
             return resultado;
         }
 
-
-
-
         public async Task<bool> RegistrarImagenes(List<PublicacionesImagenes> imagenes)
         {
             var consulta = @"
-                INSERT INTO PublicacionesImagenes (Ruta, Alt, IdPublicacion)
-                VALUES (@Ruta, @Alt, @IdPublicacion);
+                INSERT INTO PublicacionesImagenes (IdPublico, Ruta, Alt, IdPublicacion)
+                VALUES (@IdPublico, @Ruta, @Alt, @IdPublicacion);
             ";
 
             var filasAfectadas = await _db.ExecuteAsync(consulta, imagenes);
 
             return filasAfectadas > 0;
         }
-
-
-
     }
 }
