@@ -18,6 +18,7 @@ namespace Dviaje.Areas.Admin.Controllers
         }
 
         // Acción principal del dashboard
+        [Route("gestion/PanelControl")]
         public async Task<IActionResult> PanelControl()
         {
             // Obtener los datos del dashboard desde el repositorio
