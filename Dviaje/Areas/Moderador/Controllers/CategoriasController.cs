@@ -28,13 +28,21 @@ namespace Dviaje.Areas.Moderador.Controllers
             try
             {
                 var categorias = await _categoriasRepository.ObtenerCategoriasAsync();
-                return Ok(new { data = categorias }); // Compatible con dataSrc: "data" en DataTable
+                if (categorias == null || !categorias.Any())
+                {
+                    return Ok(new { data = new List<object>(), message = "No hay categorías disponibles." });
+                }
+
+                return Ok(new { data = categorias });
             }
             catch (Exception ex)
             {
+
+                Console.WriteLine($"Error al obtener categorías: {ex.Message}");
                 return StatusCode(500, new { success = false, message = "Error al obtener categorías.", details = ex.Message });
             }
         }
+
 
         /// <summary>
         /// Crea una nueva categoría.

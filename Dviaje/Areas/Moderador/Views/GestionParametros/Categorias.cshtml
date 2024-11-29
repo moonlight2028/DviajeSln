@@ -55,7 +55,7 @@
             // Inicializar DataTable
             var tabla = $("#tablaCategorias").DataTable({
                 ajax: {
-                    url: "/Moderador/Categorias", 
+                    url: "/Moderador/Categorias/GetCategorias", // Asegúrate de que esta URL sea correcta
                     type: "GET",
                     dataSrc: "data", // Cambia a "" si el backend no envía datos dentro de "data"
                     error: function (xhr, error, thrown) {
