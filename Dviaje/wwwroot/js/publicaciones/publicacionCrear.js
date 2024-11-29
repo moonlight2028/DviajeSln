@@ -64,8 +64,8 @@ const pasos = [
                 </div>
             </div>
         `,
-        renderizarImagen: () => `<img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagen datos básicos en crear publicación" class="img-f" />`,
-        renderizarTitulo: () => `<h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>`,
+        renderizarImagen: () => `<img src="https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagen datos básicos en crear publicación" class="img-f" />`,
+        renderizarTitulo: () => `<h1>Información Básica: Descubre lo esencial, vive la experiencia.</h1>`,
         guardar: () => {
             datos.titulo = document.getElementById('titulo').value.trim();
             datos.descripcion = document.getElementById('descripcion').value.trim();
@@ -102,8 +102,8 @@ const pasos = [
                 </div>
             </div>
         `,
-        renderizarImagen: () => `<img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagen dirección en crear publicación" class="img-f" />`,
-        renderizarTitulo: () => `<h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>`,
+        renderizarImagen: () => `<img src="https://images.unsplash.com/photo-1479888230021-c24f136d849f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagen dirección en crear publicación" class="img-f" />`,
+        renderizarTitulo: () => `<h1>Información Básica: Tu punto de partida hacia la aventura.</h1>`,
         guardar: () => {
             datos.direccion = document.getElementById('direccion').value.trim();
         },
@@ -146,7 +146,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Categorías: Explora, elige y vive tu próximo destino.</h1>
         `,
         guardar: () => {},
         validar: () => {
@@ -199,12 +199,12 @@ const pasos = [
             `;
         },
         renderizarImagen: () => `
-            <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Imagen dirección en crear publicación" 
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Propiedades: Encuentra el lugar perfecto para tu estancia.</h1>
         `,
         guardar: () => { },
         validar: () => { return !!datos.propiedadSeleccionada; },
@@ -267,12 +267,12 @@ const pasos = [
             `;
         },
         renderizarImagen: () => `
-            <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            <img src="https://images.unsplash.com/photo-1498354178607-a79df2916198?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Imagen dirección en crear publicación" 
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Servicios: Todo lo que necesitas para una experiencia inolvidable.</h1>
         `,
         guardar: () => {
             // Guardar los servicios seleccionados
@@ -341,12 +341,12 @@ const pasos = [
             `;
         },
         renderizarImagen: () => `
-            <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            <img src="https://images.unsplash.com/photo-1497302347632-904729bc24aa?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Imagen dirección en crear publicación" 
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Restricciones: Conoce los detalles, disfruta sin sorpresas</h1>
         `,
         guardar: () => {
             // Guardar los servicios seleccionados
@@ -411,7 +411,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Diseña tu experiencia con cada opción a tu medida.</h1>
         `,
         guardar: () => {
             datos.huespedes = parseInt(document.getElementById("huespedes").value, 10);
@@ -481,7 +481,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Carga tus imágenes: Comparte momentos, crea recuerdos.</h1>
         `,
         guardar: () => { },
         validar: () => { return datos.imagenes.length > 4; },
@@ -621,7 +621,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>azadfjlkajdkl adksjflakdjslf adklfjakldf kaldjflakdjf</h1>
+            <h1>Fechas no disponibles: Planifica con anticipación, asegura tu aventura.</h1>
         `,
         guardar: () => { },
         validar: () => { return true },

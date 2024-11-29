@@ -138,7 +138,7 @@ namespace Dviaje.DataAccess.Repository
         INNER JOIN 
             Publicaciones p ON r.IdPublicacion = p.IdPublicacion
         LEFT JOIN 
-            PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion AND pi.Orden = 1
+            PublicacionesImagenes pi ON pi.IdPublicacion = p.IdPublicacion
         INNER JOIN 
             aspnetusers u ON p.IdAliado = u.Id
         WHERE 
