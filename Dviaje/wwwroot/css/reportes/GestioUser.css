@@ -1,0 +1,201 @@
+﻿/* Fondo y contenedor principal */
+.usuarios-container {
+    background-color: #f8f9fa; /* Fondo claro */
+    padding: 60px 20px; /* Separación superior */
+    min-height: 100vh;
+}
+
+    .usuarios-container h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #FF512F;
+        font-size: 2.5rem;
+    }
+
+/* Tabla de usuarios */
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    .tabla-usuarios thead {
+        background-color: #FF512F;
+        color: #fff;
+    }
+
+    .tabla-usuarios th,
+    .tabla-usuarios td {
+        text-align: center;
+        padding: 15px;
+    }
+
+    .tabla-usuarios th {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+    }
+
+    .tabla-usuarios tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .tabla-usuarios tbody tr:hover {
+        background-color: #FFEBE5;
+        cursor: pointer;
+    }
+
+/* Elementos del DataTable */
+.dataTables_wrapper {
+    margin-top: 20px;
+}
+
+.dataTables_filter {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+    .dataTables_filter label {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .dataTables_filter input {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+.dataTables_length {
+    margin-bottom: 20px;
+}
+
+    .dataTables_length label {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .dataTables_length select {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+    }
+
+.dataTables_paginate {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .dataTables_paginate a {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #FF512F;
+    }
+
+        .dataTables_paginate a:hover {
+            background-color: #e64c2f;
+        }
+
+.dataTables_info {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Avatares */
+.tabla-usuarios img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Select de roles */
+.form-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: #333;
+}
+
+    .form-select:hover {
+        border-color: #FF512F;
+    }
+
+/* Botones de acciones */
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+}
+
+    .btn-eliminar:hover {
+        background-color: #a71d2a;
+    }
+
+.btn-banear {
+    background-color: #ffc107;
+    color: #000;
+}
+
+    .btn-banear:hover {
+        background-color: #d39e00;
+    }
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .tabla-usuarios th,
+    .tabla-usuarios td {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .usuarios-container h1 {
+        font-size: 2rem;
+    }
+
+    .dataTables_filter,
+    .dataTables_length {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabla-usuarios img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dataTables_filter input,
+    .dataTables_length select {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .dataTables_paginate {
+        text-align: center;
+    }
+
+        .dataTables_paginate a {
+            padding: 5px 8px;
+        }
+}

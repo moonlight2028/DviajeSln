@@ -49,99 +49,103 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
             // Inicializar DataTable
-            var tabla = $("#tablaCategorias").DataTable({
+            const tabla = $('#tablaUsuarios').DataTable({
                 ajax: {
-                    url: "/Moderador/Categorias/GetCategorias", // Asegúrate de que esta URL sea correcta
-                    type: "GET",
-                    dataSrc: "data", // Cambia a "" si el backend no envía datos dentro de "data"
-                    error: function (xhr, error, thrown) {
-                        console.error("Error al cargar datos:", xhr.responseText);
-                        alert("Hubo un problema al cargar los datos. Por favor, inténtelo más tarde.");
-                    }
+                    url: '/Administrador/GestionUsuarios/GetUsuarios',
+                    type: 'GET',
+                    dataSrc: 'data',
                 },
                 columns: [
-                    { data: "idCategoria" },
-                    { data: "nombreCategoria" },
-                    { data: "rutaIcono" },
                     {
-                        data: "idCategoria",
+                        data: 'avatar',
+                        render: function (data) {
+                            return data
+                                ? `<img src="${data}" alt="Avatar" style="border-radius: 50%; width: 50px; height: 50px;" />`
+                                : '<img src="/images/default-avatar.png" alt="Avatar por defecto" style="border-radius: 50%; width: 50px; height: 50px;" />';
+                        }
+                    },
+                    { data: 'userName' },
+                    { data: 'email' },
+                    {
+                        data: 'roles',
+                        render: function (data, type, row) {
+                            const roles = ['Turista', 'Moderador', 'Aliado', 'Administrador'];
+                            return `
+                                        <select class="form-select cambiar-rol" data-id="${row.idUsuario}">
+                                            ${roles
+                                    .map(role => `<option value="${role}" ${role === data.trim() ? 'selected' : ''}>${role}</option>`)
+                                    .join('')}
+                                        </select>`;
+                        }
+                    },
+                    {
+                        data: 'idUsuario',
                         render: function (data) {
                             return `
-                                        <button class="btn btn-primary btn-sm editar" data-id="${data}">Editar</button>
-                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                                        <button class="btn btn-danger btn-eliminar" data-id="${data}">Eliminar</button>
+                                        <button class="btn btn-warning btn-banear" data-id="${data}">Banear</button>
                                     `;
                         }
                     }
-                ]
+                ],
+                responsive: true,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es_es.json',
+                }
             });
 
-            // Crear nueva categoría
-            $("#btnNuevaCategoria").on("click", function () {
-                $("#modalCategoriaLabel").text("Nueva Categoría");
-                $("#formCategoria")[0].reset();
-                $("#modalCategoria").modal("show");
-            });
+            // Cambiar rol
+            $('#tablaUsuarios').on('change', '.cambiar-rol', function () {
+                const idUsuario = $(this).data('id');
+                const nuevoRol = $(this).val();
 
-            // Guardar categoría (crear/editar)
-            $("#formCategoria").on("submit", function (e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-                var id = $("#IdCategoria").val();
-                var url = id ? `/Moderador/Categorias/${id}` : "/Moderador/Categorias";
-                var type = id ? "PUT" : "POST";
-
-                $.ajax({
-                    url: url,
-                    type: type,
-                    data: formData,
-                    success: function () {
-                        $("#modalCategoria").modal("hide");
+                $.post('/Administrador/GestionUsuarios/CambiarRol', { idUsuario, nuevoRol }, function (response) {
+                    if (response.success) {
+                        alert(response.message);
                         tabla.ajax.reload();
-                    },
-                    error: function (xhr) {
-                        console.error("Error al guardar la categoría:", xhr.responseText);
-                        alert("Hubo un error al guardar la categoría. Por favor, inténtelo nuevamente.");
-                    }
-                });
-            });
-
-            // Editar categoría
-            $("#tablaCategorias").on("click", ".editar", function () {
-                var id = $(this).data("id");
-                $.get(`/Moderador/Categorias/${id}`, function (res) {
-                    if (res.success) {
-                        $("#IdCategoria").val(res.data.idCategoria);
-                        $("#NombreCategoria").val(res.data.nombreCategoria);
-                        $("#RutaIcono").val(res.data.rutaIcono);
-                        $("#modalCategoriaLabel").text("Editar Categoría");
-                        $("#modalCategoria").modal("show");
                     } else {
-                        alert("No se pudo cargar la categoría. Inténtelo nuevamente.");
+                        alert('Error al cambiar el rol.');
                     }
-                }).fail(function (xhr) {
-                    console.error("Error al obtener la categoría:", xhr.responseText);
-                    alert("Hubo un problema al obtener la categoría.");
+                }).fail(function () {
+                    alert('Error en la solicitud.');
                 });
             });
 
-            // Eliminar categoría
-            $("#tablaCategorias").on("click", ".eliminar", function () {
-                var id = $(this).data("id");
-                if (confirm("¿Está seguro de eliminar esta categoría?")) {
-                    $.ajax({
-                        url: `/Moderador/Categorias/${id}`,
-                        type: "DELETE",
-                        success: function () {
+            // Eliminar usuario
+            $('#tablaUsuarios').on('click', '.btn-eliminar', function () {
+                const idUsuario = $(this).data('id');
+                if (confirm('¿Estás seguro de eliminar este usuario?')) {
+                    $.post('/Administrador/GestionUsuarios/EliminarUsuario', { idUsuario }, function (response) {
+                        if (response.success) {
+                            alert(response.message);
                             tabla.ajax.reload();
-                        },
-                        error: function (xhr) {
-                            console.error("Error al eliminar la categoría:", xhr.responseText);
-                            alert("Hubo un error al eliminar la categoría. Inténtelo nuevamente.");
+                        } else {
+                            alert('Error al eliminar el usuario.');
                         }
+                    }).fail(function () {
+                        alert('Error en la solicitud.');
+                    });
+                }
+            });
+
+            // Banear usuario
+            $('#tablaUsuarios').on('click', '.btn-banear', function () {
+                const idUsuario = $(this).data('id');
+                if (confirm('¿Estás seguro de banear este usuario?')) {
+                    $.post('/Administrador/GestionUsuarios/BanearUsuario', { idUsuario }, function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            tabla.ajax.reload();
+                        } else {
+                            alert('Error al banear el usuario.');
+                        }
+                    }).fail(function () {
+                        alert('Error en la solicitud.');
                     });
                 }
             });
