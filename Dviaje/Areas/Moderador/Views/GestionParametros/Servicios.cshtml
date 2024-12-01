@@ -1,14 +1,40 @@
 ﻿@{
     ViewData["Title"] = "Gestión de Servicios";
 }
-@section Styles {
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Fondo claro para mejor visibilidad */
+        }
+
+        h2 {
+            margin-top: 20px;
+            text-align: center;
+            color: #495057;
+        }
+
+        .table {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
 }
 
 <h2>Gestión de Servicios</h2>
 
-<table id="tablaServicios" class="table table-bordered table-striped">
+<table id="tablaServicios" class="display nowrap table table-bordered table-striped" style="width: 100%;">
     <thead>
         <tr>
             <th>Id</th>
@@ -42,8 +68,9 @@
                     <div class="mb-3">
                         <label for="ServicioTipo" class="form-label">Tipo</label>
                         <select class="form-select" id="ServicioTipo" name="ServicioTipo" required>
-                            <option value="Adicional">Adicional</option>
-                            <option value="Principal">Principal</option>
+                            <option value="Habitacion">Habitación</option>
+                            <option value="Accesibilidad">Accesibilidad</option>
+                            <option value="Establecimiento">Establecimiento</option>
                         </select>
                     </div>
                 </div>
@@ -57,21 +84,37 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Inicializar el DataTable para listar los servicios
-            var tabla = $("#tablaServicios").DataTable({
+            // Inicializar DataTable
+            const tabla = $("#tablaServicios").DataTable({
                 ajax: {
-                    url: "/Moderador/servicios/listar", // Ruta corregida
+                    url: "/Moderador/servicios/listar",
                     type: "GET",
-                    dataSrc: "data" // Verifica que el backend envíe datos en esta estructura
+                    dataSrc: "data"
                 },
                 columns: [
                     { data: "idServicio" },
                     { data: "nombreServicio" },
                     { data: "rutaIcono" },
-                    { data: "servicioTipo" },
+                    {
+                        data: "servicioTipo",
+                        render: function (data) {
+                            // Mapeo de los valores ENUM
+                            switch (data) {
+                                case "Habitacion":
+                                    return "Habitación";
+                                case "Accesibilidad":
+                                    return "Accesibilidad";
+                                case "Establecimiento":
+                                    return "Establecimiento";
+                                default:
+                                    return "Desconocido";
+                            }
+                        }
+                    },
                     {
                         data: "idServicio",
                         render: function (data) {
@@ -81,28 +124,24 @@
                                     `;
                         }
                     }
-                ]
+                ],
+                responsive: true,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es_es.json'
+                }
             });
 
-            // Abrir modal para crear un nuevo servicio
-            $("#btnNuevoServicio").on("click", function () {
-                $("#modalServicioLabel").text("Nuevo Servicio");
-                $("#formServicio")[0].reset();
-                $("#modalServicio").modal("show");
-            });
-
-            // Guardar cambios (crear/editar)
+            // Crear servicio
             $("#formServicio").on("submit", function (e) {
                 e.preventDefault();
-                var formData = $(this).serialize();
-                var id = $("#IdServicio").val();
-                var url = id ? `/Moderador/servicios/${id}` : "/Moderador/servicios";
-                var type = id ? "PUT" : "POST";
+                const id = $("#IdServicio").val();
+                const url = id ? `/Moderador/servicios/${id}` : "/Moderador/servicios";
+                const type = id ? "PUT" : "POST";
 
                 $.ajax({
                     url: url,
                     type: type,
-                    data: formData,
+                    data: $(this).serialize(),
                     success: function (response) {
                         if (response.success) {
                             alert(response.message);
@@ -118,28 +157,28 @@
                 });
             });
 
-            // Cargar datos en el modal para editar
+            // Cargar datos para editar
             $("#tablaServicios").on("click", ".editar", function () {
-                var id = $(this).data("id");
-                $.get(`/Moderador/servicios/${id}`, function (res) {
-                    if (res.success) {
-                        $("#IdServicio").val(res.data.idServicio);
-                        $("#NombreServicio").val(res.data.nombreServicio);
-                        $("#RutaIcono").val(res.data.rutaIcono);
-                        $("#ServicioTipo").val(res.data.servicioTipo);
+                const id = $(this).data("id");
+                $.get(`/Moderador/servicios/${id}`, function (response) {
+                    if (response.success) {
+                        $("#IdServicio").val(response.data.idServicio);
+                        $("#NombreServicio").val(response.data.nombreServicio);
+                        $("#RutaIcono").val(response.data.rutaIcono);
+                        $("#ServicioTipo").val(response.data.servicioTipo);
                         $("#modalServicioLabel").text("Editar Servicio");
                         $("#modalServicio").modal("show");
                     } else {
-                        alert(res.message);
+                        alert(response.message);
                     }
                 }).fail(function () {
                     alert("Error al cargar los datos del servicio.");
                 });
             });
 
-            // Eliminar un servicio
+            // Eliminar servicio
             $("#tablaServicios").on("click", ".eliminar", function () {
-                var id = $(this).data("id");
+                const id = $(this).data("id");
                 if (confirm("¿Está seguro de eliminar este servicio?")) {
                     $.ajax({
                         url: `/Moderador/servicios/${id}`,
@@ -157,6 +196,14 @@
                         }
                     });
                 }
+            });
+
+            // Abrir modal para crear
+            $("#btnNuevoServicio").on("click", function () {
+                $("#modalServicioLabel").text("Nuevo Servicio");
+                $("#formServicio")[0].reset();
+                $("#IdServicio").val("");
+                $("#modalServicio").modal("show");
             });
         });
     </script>

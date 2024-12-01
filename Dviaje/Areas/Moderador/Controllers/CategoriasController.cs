@@ -37,93 +37,175 @@ namespace Dviaje.Areas.Moderador.Controllers
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Error al obtener categorías: {ex.Message}");
-                return StatusCode(500, new { success = false, message = "Error al obtener categorías.", details = ex.Message });
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno al obtener las categorías.",
+                    details = ex.Message
+                });
             }
         }
-
 
         /// <summary>
         /// Crea una nueva categoría.
         /// </summary>
         [HttpPost]
+        [Route("crear")]
         public async Task<IActionResult> CrearCategoria(Categoria categoria)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                Console.WriteLine("Datos recibidos para CrearCategoria:");
+                foreach (var key in Request.Form.Keys)
+                {
+                    Console.WriteLine($"{key}: {Request.Form[key]}");
+                }
 
-            var resultado = await _categoriasRepository.CrearCategoriaAsync(categoria);
-            if (resultado)
+                Console.WriteLine($"IdCategoria: {categoria.IdCategoria}");
+                Console.WriteLine($"NombreCategoria: {categoria.NombreCategoria}");
+                Console.WriteLine($"Descripcion: {categoria.Descripcion}");
+                Console.WriteLine($"RutaIcono: {categoria.RutaIcono}");
+                Console.WriteLine($"UrlImagen: {categoria.UrlImagen}");
+                Console.WriteLine($"IdImagen: {categoria.IdImagen}");
+
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("Errores en el modelo:");
+                    foreach (var error in ModelState)
+                    {
+                        Console.WriteLine($" - {error.Key}: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+                    }
+
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Datos inválidos.",
+                        errors = ModelState.Values.SelectMany(v => v.Errors)
+                                                  .Select(e => e.ErrorMessage)
+                                                  .ToList()
+                    });
+                }
+
+                var resultado = await _categoriasRepository.CrearCategoriaAsync(categoria);
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Categoría creada exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "No se pudo crear la categoría." });
+            }
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Categoría creada exitosamente." });
+                Console.WriteLine($"Error al crear categoría: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno al crear la categoría.",
+                    details = ex.Message
+                });
             }
-
-            return BadRequest(new { success = false, message = "Error al crear la categoría." });
         }
+
+
 
         /// <summary>
         /// Obtiene una categoría por su ID.
         /// </summary>
         [HttpGet]
-        [Route("{id?}")]
-        public async Task<IActionResult> ObtenerCategoria(int? id)
+        [Route("{id}")]
+        public async Task<IActionResult> ObtenerCategoria(int id)
         {
-            if (!id.HasValue)
+            try
             {
-                return BadRequest(new { success = false, message = "ID de categoría no proporcionado." });
-            }
+                var categoria = await _categoriasRepository.ObtenerCategoriaPorIdAsync(id);
+                if (categoria == null)
+                {
+                    Console.WriteLine($"Categoría con ID {id} no encontrada.");
+                    return NotFound(new { success = false, message = "Categoría no encontrada." });
+                }
 
-            var categoria = await _categoriasRepository.ObtenerCategoriaPorIdAsync(id.Value);
-            if (categoria == null)
+                return Ok(new { success = true, data = categoria });
+            }
+            catch (Exception ex)
             {
-                return NotFound(new { success = false, message = "Categoría no encontrada." });
+                Console.WriteLine($"Error al obtener categoría con ID {id}: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno al obtener la categoría.",
+                    details = ex.Message
+                });
             }
-
-            return Ok(new { success = true, data = categoria });
         }
 
         /// <summary>
         /// Actualiza una categoría existente.
         /// </summary>
         [HttpPut]
+        [Route("actualizar")]
         public async Task<IActionResult> ActualizarCategoria(Categoria categoria)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("Error en los datos enviados para ActualizarCategoria:");
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($" - {error.ErrorMessage}");
+                    }
+                    return BadRequest(new { success = false, message = "Datos inválidos." });
+                }
 
-            var resultado = await _categoriasRepository.ActualizarCategoriaAsync(categoria);
-            if (resultado)
+                var resultado = await _categoriasRepository.ActualizarCategoriaAsync(categoria);
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Categoría actualizada exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "No se pudo actualizar la categoría." });
+            }
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Categoría actualizada exitosamente." });
+                Console.WriteLine($"Excepción al actualizar categoría con ID {categoria.IdCategoria}: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno al actualizar la categoría.",
+                    details = ex.Message
+                });
             }
-
-            return BadRequest(new { success = false, message = "Error al actualizar la categoría." });
         }
 
         /// <summary>
         /// Elimina una categoría por su ID.
         /// </summary>
         [HttpDelete]
-        [Route("{id?}")]
-        public async Task<IActionResult> EliminarCategoria(int? id)
+        [Route("{id}")]
+        public async Task<IActionResult> EliminarCategoria(int id)
         {
-            if (!id.HasValue)
+            try
             {
-                return BadRequest(new { success = false, message = "ID de categoría no proporcionado." });
-            }
+                var resultado = await _categoriasRepository.EliminarCategoriaAsync(id);
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Categoría eliminada exitosamente." });
+                }
 
-            var resultado = await _categoriasRepository.EliminarCategoriaAsync(id.Value);
-            if (resultado)
+                Console.WriteLine($"Error al intentar eliminar la categoría con ID {id}.");
+                return BadRequest(new { success = false, message = "No se pudo eliminar la categoría." });
+            }
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Categoría eliminada exitosamente." });
+                Console.WriteLine($"Excepción al eliminar categoría con ID {id}: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno al eliminar la categoría.",
+                    details = ex.Message
+                });
             }
-
-            return BadRequest(new { success = false, message = "Error al eliminar la categoría." });
         }
     }
 }

@@ -1,14 +1,14 @@
 ﻿/* Fondo y contenedor principal */
 .usuarios-container {
-    background-color: #f8f9fa; /* Fondo claro */
-    padding: 60px 20px; /* Separación superior */
+    background-color: var(--color-gris-50); /* Fondo claro */
+    padding: 60px 20px;
     min-height: 100vh;
 }
 
     .usuarios-container h1 {
         text-align: center;
         margin-bottom: 30px;
-        color: #FF512F;
+        color: var(--color-primario-500); /* Naranja principal */
         font-size: 2.5rem;
     }
 
@@ -17,15 +17,15 @@
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--color-default); /* Blanco */
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
     .tabla-usuarios thead {
-        background-color: #FF512F;
-        color: #fff;
+        background-color: var(--color-primario-500); /* Naranja principal */
+        color: var(--color-default); /* Blanco */
     }
 
     .tabla-usuarios th,
@@ -41,11 +41,11 @@
     }
 
     .tabla-usuarios tbody tr:nth-child(odd) {
-        background-color: #f9f9f9;
+        background-color: var(--color-gris-100); /* Gris claro */
     }
 
     .tabla-usuarios tbody tr:hover {
-        background-color: #FFEBE5;
+        background-color: var(--color-primario-50); /* Fondo naranja claro */
         cursor: pointer;
     }
 
@@ -61,13 +61,13 @@
 
     .dataTables_filter label {
         font-size: 1rem;
-        color: #333;
+        color: var(--color-dark-600); /* Texto gris oscuro */
     }
 
     .dataTables_filter input {
         padding: 5px 10px;
         border-radius: 5px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--color-gris-300); /* Gris bordes */
     }
 
 .dataTables_length {
@@ -76,14 +76,14 @@
 
     .dataTables_length label {
         font-size: 1rem;
-        color: #333;
+        color: var(--color-dark-600); /* Texto gris oscuro */
     }
 
     .dataTables_length select {
         padding: 5px 10px;
         border-radius: 5px;
-        border: 1px solid #ddd;
-        background-color: #fff;
+        border: 1px solid var(--color-gris-300); /* Gris bordes */
+        background-color: var(--color-default); /* Blanco */
     }
 
 .dataTables_paginate {
@@ -97,18 +97,18 @@
         margin: 0 5px;
         border-radius: 5px;
         text-decoration: none;
-        color: #fff;
-        background-color: #FF512F;
+        color: var(--color-default); /* Blanco */
+        background-color: var(--color-primario-500); /* Naranja principal */
     }
 
         .dataTables_paginate a:hover {
-            background-color: #e64c2f;
+            background-color: var(--color-primario-600); /* Naranja más oscuro */
         }
 
 .dataTables_info {
     margin-top: 10px;
     font-size: 0.9rem;
-    color: #555;
+    color: var(--color-dark-400); /* Gris info */
 }
 
 /* Avatares */
@@ -122,15 +122,15 @@
 /* Select de roles */
 .form-select {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-gris-300); /* Gris bordes */
     border-radius: 5px;
     font-size: 0.9rem;
-    background-color: #fff;
-    color: #333;
+    background-color: var(--color-default); /* Blanco */
+    color: var(--color-dark-600); /* Texto gris oscuro */
 }
 
     .form-select:hover {
-        border-color: #FF512F;
+        border-color: var(--color-primario-500); /* Naranja principal */
     }
 
 /* Botones de acciones */
@@ -140,26 +140,25 @@
     border-radius: 5px;
     font-size: 0.9rem;
     cursor: pointer;
-    color: #fff;
+    color: var(--color-default); /* Blanco */
 }
 
 .btn-eliminar {
-    background-color: #dc3545;
+    background-color: var(--color-terciario-500); /* Rojo principal */
 }
 
     .btn-eliminar:hover {
-        background-color: #a71d2a;
+        background-color: var(--color-terciario-400); /* Rojo más claro */
     }
 
 .btn-banear {
-    background-color: #ffc107;
-    color: #000;
+    background-color: var(--color-cuarto-400); /* Amarillo principal */
+    color: var(--color-default-black); /* Texto negro */
 }
 
     .btn-banear:hover {
-        background-color: #d39e00;
+        background-color: var(--color-cuarto-50); /* Fondo amarillo claro */
     }
-
 
 /* Responsividad */
 @media (max-width: 768px) {

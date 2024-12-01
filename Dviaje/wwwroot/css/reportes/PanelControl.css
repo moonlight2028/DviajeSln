@@ -1,7 +1,7 @@
 ﻿/* Fondo negro para todo el dashboard */
 .dashboard-container {
-    background-color: #000; /* Fondo negro */
-    color: #fff; /* Texto blanco */
+    background-color: var(--color-default-black); /* Fondo negro */
+    color: var(--color-default); /* Texto blanco */
     min-height: 100vh; /* Ocupar la pantalla completa */
     padding-top: 80px; /* Separación del navbar */
     font-family: 'Arial', sans-serif;
@@ -19,7 +19,7 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 40px;
-    color: #FF512F; /* Color principal */
+    color: var(--color-primario-500); /* Color principal */
 }
 
 /* Contenedor de métricas */
@@ -33,8 +33,8 @@
 
 /* Tarjetas de métricas */
 .metric-card {
-    background: linear-gradient(145deg, #FF512F, #F09819);
-    color: #fff;
+    background: linear-gradient(145deg, var(--color-primario-500), var(--color-primario-300)); /* Gradiente de naranjas */
+    color: var(--color-default); /* Texto blanco */
     flex: 1;
     text-align: center;
     padding: 20px;
@@ -56,7 +56,7 @@
 
 /* Gráfica */
 .chart-container {
-    background-color: #222; /* Fondo oscuro */
+    background-color: var(--color-dark-800); /* Fondo oscuro */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -66,7 +66,7 @@
     .chart-container h2 {
         font-size: 1.8rem;
         margin-bottom: 20px;
-        color: #FF512F;
+        color: var(--color-primario-500); /* Color principal */
     }
 
 canvas {
