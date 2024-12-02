@@ -25,5 +25,11 @@ namespace Dviaje.Areas.Moderador.Controllers
         {
             return View();
         }
+
+        [Route("gestion/Propiedades")]
+        public IActionResult Propiedades()
+        {
+            return View();
+        }
     }
 }

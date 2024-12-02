@@ -55,6 +55,8 @@
                 </div>
                 <form id="formCategoria">
                     <div class="modal-body">
+                        <!-- Contenedor para el campo oculto del ID -->
+                        <div id="hiddenFieldContainer"></div>
                         <div class="mb-3">
                             <label for="NombreCategoria" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" required>
@@ -81,7 +83,6 @@
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -123,7 +124,7 @@
             $('#btnCrearCategoria').on('click', function () {
                 $('#modalCategoriaLabel').text('Crear Categoría');
                 $('#formCategoria')[0].reset();
-                $('#IdCategoria').val('');
+                $('#hiddenFieldContainer').html(''); // Remover el campo oculto en creación
                 $('#modalCategoria').modal('show');
             });
 
@@ -158,10 +159,12 @@
                 const id = $(this).data('id');
                 $.get(`/Moderador/categorias/${id}`, function (response) {
                     if (response.success) {
-                        $('#IdCategoria').val(response.data.idCategoria);
+                        $('#hiddenFieldContainer').html(`
+                                    <input type="hidden" id="IdCategoria" name="IdCategoria" value="${response.data.idCategoria}">
+                                `); // Agregar campo oculto solo al editar
                         $('#NombreCategoria').val(response.data.nombreCategoria);
-                        $('#RutaIcono').val(response.data.rutaIcono);
                         $('#Descripcion').val(response.data.descripcion);
+                        $('#RutaIcono').val(response.data.rutaIcono);
                         $('#UrlImagen').val(response.data.urlImagen);
                         $('#IdImagen').val(response.data.idImagen);
                         $('#modalCategoriaLabel').text('Editar Categoría');
@@ -169,6 +172,7 @@
                     }
                 }).fail(function (xhr) {
                     console.error('Error al cargar la categoría:', xhr.responseText);
+                    alert('Ocurrió un error al intentar cargar la categoría.');
                 });
             });
 

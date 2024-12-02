@@ -28,11 +28,16 @@ namespace Dviaje.Areas.Moderador.Controllers
             try
             {
                 var servicios = await _serviciosRepository.ObtenerServiciosAsync();
-                return Ok(new { data = servicios }); // Compatible con dataSrc: "data" en DataTable
+                if (servicios == null || !servicios.Any())
+                {
+                    return Ok(new { data = new List<object>() }); // Si no hay servicios, enviar lista vacía
+                }
+                return Ok(new { data = servicios });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = "Error al obtener los servicios.", details = ex.Message });
+                Console.WriteLine($"Error al obtener servicios: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al obtener los servicios." });
             }
         }
 
@@ -40,86 +45,113 @@ namespace Dviaje.Areas.Moderador.Controllers
         /// Crea un nuevo servicio.
         /// </summary>
         [HttpPost]
+        [Route("crear")]
         public async Task<IActionResult> CrearServicio(Servicio servicio)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("Errores en el modelo para CrearServicio:");
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($"- {error.ErrorMessage}");
+                    }
+                    return BadRequest(new { success = false, message = "Datos inválidos.", errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+                }
+
+                var resultado = await _serviciosRepository.CrearServicioAsync(servicio);
+
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Servicio creado exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "No se pudo crear el servicio." });
             }
-
-            var resultado = await _serviciosRepository.CrearServicioAsync(servicio);
-
-            if (resultado)
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Servicio creado exitosamente." });
+                Console.WriteLine($"Error al crear servicio: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al crear el servicio." });
             }
-
-            return BadRequest(new { success = false, message = "No se pudo crear el servicio." });
         }
 
         /// <summary>
         /// Obtiene un servicio por su ID.
         /// </summary>
         [HttpGet]
-        [Route("{id?}")]
-        public async Task<IActionResult> ObtenerServicio(int? id)
+        [Route("obtener/{id}")]
+        public async Task<IActionResult> ObtenerServicio(int id)
         {
-            if (!id.HasValue)
+            try
             {
-                return BadRequest(new { success = false, message = "ID de servicio no proporcionado." });
+                var servicio = await _serviciosRepository.ObtenerServicioPorIdAsync(id);
+                if (servicio == null)
+                {
+                    return NotFound(new { success = false, message = "Servicio no encontrado." });
+                }
+                return Ok(new { success = true, data = servicio });
             }
-
-            var servicio = await _serviciosRepository.ObtenerServicioPorIdAsync(id.Value);
-
-            if (servicio == null)
+            catch (Exception ex)
             {
-                return NotFound(new { success = false, message = "Servicio no encontrado." });
+                Console.WriteLine($"Error al obtener servicio con ID {id}: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al obtener el servicio." });
             }
-
-            return Ok(new { success = true, data = servicio });
         }
 
         /// <summary>
         /// Actualiza un servicio existente.
         /// </summary>
         [HttpPut]
+        [Route("actualizar")]
         public async Task<IActionResult> ActualizarServicio(Servicio servicio)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new { success = false, message = "Datos inválidos.", errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+                }
+
+                var resultado = await _serviciosRepository.ActualizarServicioAsync(servicio);
+
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Servicio actualizado exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "No se pudo actualizar el servicio." });
             }
-
-            var resultado = await _serviciosRepository.ActualizarServicioAsync(servicio);
-
-            if (resultado)
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Servicio actualizado exitosamente." });
+                Console.WriteLine($"Error al actualizar servicio con ID {servicio.IdServicio}: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al actualizar el servicio." });
             }
-
-            return BadRequest(new { success = false, message = "No se pudo actualizar el servicio." });
         }
 
         /// <summary>
         /// Elimina un servicio por su ID.
         /// </summary>
         [HttpDelete]
-        [Route("{id?}")]
-        public async Task<IActionResult> EliminarServicio(int? id)
+        [Route("eliminar/{id}")]
+        public async Task<IActionResult> EliminarServicio(int id)
         {
-            if (!id.HasValue)
+            try
             {
-                return BadRequest(new { success = false, message = "ID de servicio no proporcionado." });
+                var resultado = await _serviciosRepository.EliminarServicioAsync(id);
+
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Servicio eliminado exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "No se pudo eliminar el servicio." });
             }
-
-            var resultado = await _serviciosRepository.EliminarServicioAsync(id.Value);
-
-            if (resultado)
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Servicio eliminado exitosamente." });
+                Console.WriteLine($"Error al eliminar servicio con ID {id}: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al eliminar el servicio." });
             }
-
-            return BadRequest(new { success = false, message = "No se pudo eliminar el servicio." });
         }
     }
 }
