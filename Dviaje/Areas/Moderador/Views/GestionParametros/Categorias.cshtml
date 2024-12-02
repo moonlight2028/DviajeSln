@@ -55,27 +55,24 @@
                 </div>
                 <form id="formCategoria">
                     <div class="modal-body">
-                        <input type="hidden" id="IdCategoria" name="IdCategoria">
                         <div class="mb-3">
                             <label for="NombreCategoria" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" required>
                         </div>
                         <div class="mb-3">
+                            <label for="Descripcion" class="form-label">Descripción</label>
+                            <input type="text" class="form-control" id="Descripcion" name="Descripcion" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="RutaIcono" class="form-label">Ícono</label>
                             <input type="text" class="form-control" id="RutaIcono" name="RutaIcono" required>
-                            <small class="text-muted">Ejemplo: <code>fa-solid fa-hotel</code></small>
                         </div>
                         <div class="mb-3">
-                            <label for="Descripcion" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="Descripcion" name="Descripcion" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="UrlImagen" class="form-label">URL Imagen</label>
+                            <label for="UrlImagen" class="form-label">URL de Imagen</label>
                             <input type="text" class="form-control" id="UrlImagen" name="UrlImagen" required>
-                            <small class="text-muted">Ejemplo: <code>https://example.com/imagen.jpg</code></small>
                         </div>
                         <div class="mb-3">
-                            <label for="IdImagen" class="form-label">ID Imagen</label>
+                            <label for="IdImagen" class="form-label">ID de Imagen</label>
                             <input type="text" class="form-control" id="IdImagen" name="IdImagen" required>
                         </div>
                     </div>
@@ -84,6 +81,7 @@
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

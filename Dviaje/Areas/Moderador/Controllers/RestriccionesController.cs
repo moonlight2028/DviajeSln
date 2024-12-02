@@ -18,9 +18,6 @@ namespace Dviaje.Areas.Moderador.Controllers
             _restriccionesRepository = restriccionesRepository;
         }
 
-        /// <summary>
-        /// Obtiene el listado de todas las restricciones (para el DataTable).
-        /// </summary>
         [HttpGet]
         [Route("listar")]
         public async Task<IActionResult> ObtenerRestricciones()
@@ -28,94 +25,137 @@ namespace Dviaje.Areas.Moderador.Controllers
             try
             {
                 var restricciones = await _restriccionesRepository.ObtenerRestriccionesAsync();
-                return Ok(new { data = restricciones }); // Compatible con dataSrc: "data" en DataTable
+                if (restricciones == null || !restricciones.Any())
+                {
+                    return Ok(new { data = new List<object>(), message = "No hay restricciones disponibles." });
+                }
+
+                return Ok(new { data = restricciones });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = "Error al obtener las restricciones.", details = ex.Message });
+                Console.WriteLine($"Error al listar restricciones: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error al listar restricciones.",
+                    details = ex.Message
+                });
             }
         }
 
-        /// <summary>
-        /// Crea una nueva restricción.
-        /// </summary>
+        [HttpGet]
+        [Route("obtener/{id}")]
+        public async Task<IActionResult> ObtenerRestriccion(int id)
+        {
+            try
+            {
+                var restriccion = await _restriccionesRepository.ObtenerRestriccionPorIdAsync(id);
+
+                if (restriccion == null)
+                {
+                    Console.WriteLine($"Restricción con ID {id} no encontrada.");
+                    return NotFound(new { success = false, message = "Restricción no encontrada." });
+                }
+
+                return Ok(new { success = true, data = restriccion });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener restricción con ID {id}: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno al obtener la restricción.",
+                    details = ex.Message
+                });
+            }
+        }
+
         [HttpPost]
+        [Route("crear")]
         public async Task<IActionResult> CrearRestriccion(Restriccion restriccion)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("Errores en el modelo recibido:");
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($" - {error.ErrorMessage}");
+                    }
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Datos inválidos.",
+                        errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList()
+                    });
+                }
 
-            var resultado = await _restriccionesRepository.CrearRestriccionAsync(restriccion);
-            if (resultado)
+                var resultado = await _restriccionesRepository.CrearRestriccionAsync(restriccion);
+
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Restricción creada exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "Error al crear la restricción." });
+            }
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Restricción creada exitosamente." });
+                Console.WriteLine($"Error al crear restricción: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al crear la restricción.", details = ex.Message });
             }
-
-            return BadRequest(new { success = false, message = "Error al crear la restricción." });
         }
 
-        /// <summary>
-        /// Obtiene una restricción por su ID.
-        /// </summary>
-        [HttpGet]
-        [Route("{id?}")]
-        public async Task<IActionResult> ObtenerRestriccion(int? id)
-        {
-            if (!id.HasValue)
-            {
-                return BadRequest(new { success = false, message = "ID de restricción no proporcionado." });
-            }
-
-            var restriccion = await _restriccionesRepository.ObtenerRestriccionPorIdAsync(id.Value);
-            if (restriccion == null)
-            {
-                return NotFound(new { success = false, message = "Restricción no encontrada." });
-            }
-
-            return Ok(new { success = true, data = restriccion });
-        }
-
-        /// <summary>
-        /// Actualiza una restricción existente.
-        /// </summary>
         [HttpPut]
+        [Route("actualizar")]
         public async Task<IActionResult> ActualizarRestriccion(Restriccion restriccion)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new { success = false, message = "Datos inválidos." });
+                }
 
-            var resultado = await _restriccionesRepository.ActualizarRestriccionAsync(restriccion);
-            if (resultado)
+                var resultado = await _restriccionesRepository.ActualizarRestriccionAsync(restriccion);
+
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Restricción actualizada exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "Error al actualizar la restricción." });
+            }
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Restricción actualizada exitosamente." });
+                Console.WriteLine($"Error al actualizar restricción: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al actualizar la restricción.", details = ex.Message });
             }
-
-            return BadRequest(new { success = false, message = "Error al actualizar la restricción." });
         }
 
-        /// <summary>
-        /// Elimina una restricción por su ID.
-        /// </summary>
         [HttpDelete]
-        [Route("{id?}")]
-        public async Task<IActionResult> EliminarRestriccion(int? id)
+        [Route("{id}")]
+        public async Task<IActionResult> EliminarRestriccion(int id)
         {
-            if (!id.HasValue)
+            try
             {
-                return BadRequest(new { success = false, message = "ID de restricción no proporcionado." });
-            }
+                var resultado = await _restriccionesRepository.EliminarRestriccionAsync(id);
 
-            var resultado = await _restriccionesRepository.EliminarRestriccionAsync(id.Value);
-            if (resultado)
+                if (resultado)
+                {
+                    return Ok(new { success = true, message = "Restricción eliminada exitosamente." });
+                }
+
+                return BadRequest(new { success = false, message = "Error al eliminar la restricción." });
+            }
+            catch (Exception ex)
             {
-                return Ok(new { success = true, message = "Restricción eliminada exitosamente." });
+                Console.WriteLine($"Error al eliminar restricción con ID {id}: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Error interno al eliminar la restricción.", details = ex.Message });
             }
-
-            return BadRequest(new { success = false, message = "Error al eliminar la restricción." });
         }
     }
 }
