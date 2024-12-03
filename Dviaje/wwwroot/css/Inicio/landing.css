@@ -1,140 +1,203 @@
 ﻿/* -------------------------------
-   General Styles
---------------------------------*/
-/* Configuración básica del body */
-body {
-    /* Tipografía principal */
-    /* Fondo general */
-    /* Color del texto */
-    /* Margen y padding */
-}
-
-/* Configuración general para los enlaces */
-a {
-    /* Estilo predeterminado de los enlaces */
-    /* Decoración (por ejemplo: subrayado, color) */
-    /* Efectos al pasar el mouse (hover) */
-}
-
-/* Configuración general para títulos */
-h1, h2, h3 {
-    /* Tamaño de fuente */
-    /* Color del texto */
-    /* Espaciado entre títulos */
-}
-
-/* -------------------------------
    Carousel Section
 --------------------------------*/
+:root {
+    --carousel-bg: #f8f9fa; /* Fondo del carrusel */
+    --carousel-text-color: #333; /* Color del texto */
+    --carousel-control-color: #fff; /* Color de los controles */
+    --carousel-control-bg: rgba(0, 0, 0, 0.5); /* Fondo de los controles */
+    --carousel-border-radius: 10px; /* Bordes redondeados */
+}
+
 /* Contenedor principal del carrusel */
 .carousel-container {
-    /* Tamaño máximo, posición y estilo general */
-    /* Fondo, sombras y bordes */
+    position: relative;
+    max-width: 100%;
+    margin: 100px auto;
+    overflow: hidden;
+    background-color: var(--carousel-bg);
+    border-radius: var(--carousel-border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Elementos del carrusel */
+/* Contenedor de los ítems del carrusel */
 .carousel {
-    /* Configuración para alinear y desplazar los ítems */
-    /* Velocidad y transición de las animaciones */
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
 }
-
+.carousel-title {
+    margin:100px;
+}
 /* Elemento individual dentro del carrusel */
 .carousel-item {
-    /* Espaciado interno, bordes y sombra */
-    /* Tamaño fijo para mantener uniformidad */
+    display: flex;
+    min-width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Imagen principal del carrusel */
 .carousel-image {
-    /* Dimensiones y ajuste dentro del contenedor */
-    /* Bordes y efectos interactivos (hover, focus) */
+    width: 50%; /* Ocupa la mitad del espacio */
+    height: 300px;
+    object-fit: cover; /* Ajuste de la imagen */
+    border-radius: var(--carousel-border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Texto del carrusel */
 .carousel-text {
-    /* Alineación, color y estilo de los títulos y párrafos */
-    /* Espaciado entre los elementos internos */
+    width: 50%; /* Ocupa la otra mitad del espacio */
+    padding: 20px;
+    color: var(--carousel-text-color);
+    flex-direction: column;
+    justify-content: right;
+    text-align: left;
 }
+
+    .carousel-text h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .carousel-text h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: #666;
+    }
+
+    .carousel-text p {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
 
 /* Controles del carrusel (anterior/siguiente) */
 .carousel-control {
-    /* Posicionamiento (izquierda/derecha) */
-    /* Tamaño, colores y forma (ej: bordes redondeados) */
-    /* Efectos al pasar el mouse */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--carousel-control-bg);
+    color: var(--carousel-control-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
 }
 
-/* -------------------------------
-   Categories Section
---------------------------------*/
-/* Contenedor de las categorías */
-.categories-container {
-    /* Alineación general y disposición (flex, grid) */
-    /* Espaciado entre elementos */
-}
+    .carousel-control.prev {
+        left: 10px;
+    }
 
-/* Cada elemento individual de una categoría */
-.category-item {
-    /* Tamaño, alineación de texto e íconos */
-    /* Transiciones al interactuar (hover, active) */
-}
+    .carousel-control.next {
+        right: 10px;
+    }
 
-/* Ícono dentro de cada categoría */
-.category-icon {
-    /* Tamaño del ícono */
-    /* Color principal y bordes */
-    /* Fondo o sombras si se desea destacar */
-}
+    .carousel-control:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
 
-/* -------------------------------
-   About and Info Sections
---------------------------------*/
-/* Sección "Quiénes somos" */
-#about-section {
-    /* Ancho máximo, alineación y espaciado interno */
-    /* Fondo y bordes para resaltar la sección */
-}
-
-/* Sección "¿Por qué viajar?" */
-#why-travel-section {
-    /* Configuración similar a #about-section */
-    /* Ajustes específicos para títulos y párrafos */
-}
-
-/* Sección "Lugares turísticos" */
-#cundinamarca-section {
-    /* Ajustes específicos según las necesidades */
-    /* Asegúrate de mantener coherencia con las demás secciones */
-}
-
-/* -------------------------------
-   Footer
---------------------------------*/
-/* Contenedor del footer */
-footer {
-    /* Fondo, color del texto y espaciado */
-    /* Alineación y diseño general */
-}
-
-/* Estilo de los enlaces en el footer */
-.footer-links a {
-    /* Color, tamaño y espaciado de los enlaces */
-    /* Efectos al pasar el mouse (hover) */
-}
-
-/* -------------------------------
-   Responsiveness
---------------------------------*/
-/* Ajustes para pantallas grandes (opcional) */
-@media (max-width: 1024px) {
-    /* Elementos específicos que requieren ajustes */
-}
-
-/* Ajustes para tablets */
+/* Responsividad */
 @media (max-width: 768px) {
-    /* Reorganización de elementos, cambio de tamaños */
+    .carousel-item {
+        flex-direction: column;
+    }
+
+    .carousel-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .carousel-text {
+        width: 100%;
+        text-align: center;
+    }
 }
 
-/* Ajustes para móviles */
-@media (max-width: 480px) {
-    /* Texto más pequeño, reorganización de columnas */
+
+
+/* Contenedor de categorías */
+.categories-container {
+    display: flex;
+    justify-content: center; /* Centra las categorías horizontalmente */
+    align-items: center; /* Centra las categorías verticalmente si hay varias filas */
+    gap: 80px; /* Espacio entre las categorías */
+    flex-wrap: wrap; /* Si el ancho no es suficiente, las categorías se moverán a una nueva línea */
 }
+
+/* Elemento de cada categoría */
+.category-item {
+    text-align: center;
+    width: 200px; /* Puedes ajustar el ancho según lo que prefieras */
+    border: 1px solid #ddd; /* Bordes ligeros para separar cada categoría */
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+    /* Efecto hover para la categoría */
+    .category-item:hover {
+        transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el mouse */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra cuando se hace hover */
+    }
+
+/* Icono de la categoría */
+.category-icon {
+    font-size: 40px; /* Tamaño del icono */
+    color: #FF8B00; /* Color para los iconos, puedes cambiarlo */
+    margin-bottom: 10px;
+}
+
+.category-item h3 {
+    font-size: 18px;
+    color: #333; /* Color de los títulos */
+    margin-top: 10px;
+}
+
+/* Contenedor principal de los textos */
+.info-container {
+    display: flex; /* Disposición horizontal */
+    justify-content: space-between; /* Espacio entre los elementos */
+    gap: 20px; /* Espacio entre los contenedores */
+    flex-wrap: wrap; /* Para que si no cabe, se muevan a la siguiente línea */
+    margin-top: 40px; /* Espacio superior */
+}
+
+/* Contenedor de cada sección de texto */
+.info-item {
+    background-color: #f4f4f4; /* Fondo claro para cada sección */
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%; /* El ancho de cada contenedor será del 30% */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+    /* Estilo para los títulos */
+    .info-item h2 {
+        font-size: 24px; /* Tamaño de los títulos */
+        color: #333; /* Color oscuro para los títulos */
+        margin-bottom: 10px; /* Espacio debajo del título */
+    }
+
+    /* Estilo para los párrafos */
+    .info-item p {
+        font-size: 16px; /* Tamaño de fuente del párrafo */
+        color: #666; /* Color gris para el texto */
+        line-height: 1.6; /* Espaciado de líneas */
+    }
+
+/* Asegurarse que los contenedores no se vean demasiado pequeños en pantallas pequeñas */
+@media (max-width: 768px) {
+    .info-item {
+        width: 100%; /* En pantallas pequeñas, cada contenedor ocupará todo el ancho */
+    }
+}
+

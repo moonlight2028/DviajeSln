@@ -1,4 +1,5 @@
-﻿@model Dviaje.Models.VM.LandingPageVM
+﻿
+@model Dviaje.Models.VM.LandingPageVM
 
 @{
     ViewData["Title"] = "Dviaje";
@@ -8,11 +9,17 @@
     <link rel="stylesheet" href="~/css/inicio/landing.css">
 }
 
+
 <div class="landing-page">
+   
     <!-- Carrusel -->
     <section id="carousel-section">
+
+        <div class="carousel-title">
+            <h2>Destacadas</h2>
+        </div>
         @if (Model.PublicacionesDestacadas != null && Model.PublicacionesDestacadas.Any())
-        {
+        {  
             <div class="carousel-container">
                 <div id="carousel" class="carousel">
                     @foreach (var publicacion in Model.PublicacionesDestacadas)
@@ -72,29 +79,39 @@
     </section>
 
     <!-- Información sobre la página -->
-    <section id="about-section">
-        <h2>Quiénes somos</h2>
-        <p>
-            En **Dviaje**, nos apasiona conectar a las personas con experiencias únicas de viaje.
-            Nuestro objetivo es proporcionar una plataforma fácil de usar que permita a los viajeros descubrir lugares increíbles, planificar sus aventuras y disfrutar de viajes inolvidables.
-        </p>
+  
+
+    <section id="info-section">
+        <div class="info-container">
+            <!-- Quiénes somos -->
+            <div class="info-item">
+                <h2>¿Quiénes somos?</h2>
+                <p>
+                    En **Dviaje**, nos apasiona conectar a las personas con experiencias únicas de viaje.
+                    Nuestro objetivo es proporcionar una plataforma fácil de usar que permita a los viajeros descubrir lugares increíbles, planificar sus aventuras y disfrutar de viajes inolvidables.
+                </p>
+            </div>
+
+            <!-- ¿Por qué viajar? -->
+            <div class="info-item">
+                <h2>¿Por qué viajar?</h2>
+                <p>
+                    Viajar te permite descubrir nuevas culturas, conectar con personas de diferentes orígenes y ampliar tu perspectiva del mundo.
+                    Además, es una oportunidad para relajarte, explorar y recargar energías mientras creas recuerdos para toda la vida.
+                </p>
+            </div>
+
+            <!-- Lugares turísticos de Cundinamarca -->
+            <div class="info-item">
+                <h2>Lugares turísticos de Cundinamarca</h2>
+                <p>
+                    Cundinamarca es una joya escondida en Colombia, con paisajes impresionantes y una rica historia.
+                    Desde el espectacular **Salto del Tequendama** hasta las tranquilas aguas del embalse de Tominé, esta región ofrece algo para todos los gustos.
+                </p>
+            </div>
+        </div>
     </section>
 
-    <section id="why-travel-section">
-        <h2>¿Por qué viajar?</h2>
-        <p>
-            Viajar te permite descubrir nuevas culturas, conectar con personas de diferentes orígenes y ampliar tu perspectiva del mundo.
-            Además, es una oportunidad para relajarte, explorar y recargar energías mientras creas recuerdos para toda la vida.
-        </p>
-    </section>
-
-    <section id="cundinamarca-section">
-        <h2>Lugares turísticos de Cundinamarca</h2>
-        <p>
-            Cundinamarca es una joya escondida en Colombia, con paisajes impresionantes y una rica historia.
-            Desde el espectacular **Salto del Tequendama** hasta las tranquilas aguas del embalse de Tominé, esta región ofrece algo para todos los gustos.
-        </p>
-    </section>
 
     <!-- Footer -->
     <footer>
