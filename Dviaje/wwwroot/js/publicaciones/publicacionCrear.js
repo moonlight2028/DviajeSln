@@ -127,17 +127,30 @@ const pasos = [
 
             return `
                 <h2>Categoría</h2>
-                ${categoriasLista.map(c => `
-                    <div>
-                        <label for="categoria-${c.idCategoria}">${c.nombreCategoria}</label>
-                        <input 
-                            type="radio" 
-                            name="categoria" 
-                            value="${c.idCategoria}" 
-                            id="categoria-${c.idCategoria}" 
-                            ${datos.categoriaSeleccionada === c.idCategoria.toString() ? 'checked' : ''} />
-                    </div>
-                `).join('')}
+                <div class="lista-categorias">
+                    ${categoriasLista.map(c => `
+                            <input
+                                type="radio"
+                                name="categoria"
+                                value="${c.idCategoria}" 
+                                id="categoria-${c.idCategoria}" 
+                                ${datos.categoriaSeleccionada === c.idCategoria.toString() ? 'checked' : ''} />
+                            <label class="categoria-label" for="categoria-${c.idCategoria}">
+                                <div class="categoria-label-texto">
+                                    <span class="categoria-label-titulo">
+                                        <i class="${c.rutaIcono}"></i>
+                                        ${c.nombreCategoria}
+                                    </span>
+                                    <span class="categoria-label-descripcion">
+                                        ${c.descripcion}
+                                    </span>
+                                </div>
+                                <div class="categoria-label-imagen">
+                                    <img src="${c.urlImagen}" alt="Categoria ${c.nombreCategoria}" />
+                                </div>
+                            </label>
+                    `).join('')}
+                </div>
             `;
         },
         renderizarImagen: () => `
@@ -185,17 +198,25 @@ const pasos = [
 
             return `
                 <h2>Propiedad</h2>
-                ${tipoPropiedadLista.map(p => `
-                    <div>
-                        <label for="propiedad-${p.idPropiedad}">${p.nombre}</label>
-                        <input 
-                            type="radio" 
-                            name="propiedad" 
+                <div class="lista-propiedades">
+                    ${tipoPropiedadLista.map(p => `
+                        <input
+                            type="radio"
+                            name="propiedad"
                             value="${p.idPropiedad}" 
                             id="propiedad-${p.idPropiedad}" 
                             ${datos.propiedadSeleccionada === p.idPropiedad.toString() ? 'checked' : ''} />
-                    </div>
-                `).join('')}
+                        <label class="propiedad-label" for="propiedad-${p.idPropiedad}">
+                            <span class="propieadad-label-titulo">
+                                <i class="${p.rutaIcono}"></i>
+                                ${p.nombre}
+                            </span>
+                            <span class="propieadad-label-descripcion">
+                                ${p.descripcion}
+                            </span>
+                        </label>
+                    `).join('')}
+                </div>
             `;
         },
         renderizarImagen: () => `
@@ -242,28 +263,38 @@ const pasos = [
             // Generar HTML para cada tipo de servicio con una lista desplegable
             const renderServicios = (servicios, tipo) => `
                 <div class="tipo-servicio">
-                    <h3 class="tipo-titulo" data-tipo="${tipo.toLowerCase()}">${tipo}</h3>
+                    <div class="contenedor-servicio-titulo" data-tipo="${tipo.toLowerCase()}">
+                        <h3 class="tipo-titulo">${tipo}</h3>
+                        <i class="fa-solid fa-chevron-down" id="icono-${tipo.toLowerCase()}"></i>
+                    </div>
                     <div class="tipo-lista" id="lista-${tipo.toLowerCase()}" style="display: none;">
-                        ${servicios.map(s => `
-                            <div>
-                                <label for="servicio-${s.idServicio}">${s.nombreServicio}</label>
-                                <input 
-                                    type="checkbox" 
-                                    name="${tipo.toLowerCase()}" 
-                                    value="${s.idServicio}" 
-                                    id="servicio-${s.idServicio}" 
-                                    ${datos.serviciosSeleccionados.includes(s.idServicio.toString()) ? 'checked' : ''} />
-                            </div>
-                        `).join('')}
+                        <div class="lista-servicios">
+                            ${servicios.map(s => `
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        name="${tipo.toLowerCase()}" 
+                                        value="${s.idServicio}" 
+                                        id="servicio-${s.idServicio}" 
+                                        ${datos.serviciosSeleccionados.includes(s.idServicio.toString()) ? 'checked' : ''} />
+                                    <label class="servicio-item-label" for="servicio-${s.idServicio}">
+                                        <i class="${s.rutaIcono}"></i>
+                                        <span>${s.nombreServicio}</span>
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
                 </div>
             `;
 
             return `
                 <h2>Servicios</h2>
-                ${renderServicios(serviciosLista.habitacion, "Habitación")}
-                ${renderServicios(serviciosLista.establecimiento, "Establecimiento")}
-                ${renderServicios(serviciosLista.accesibilidad, "Accesibilidad")}
+                <div class="desplegables-servicios">
+                    ${renderServicios(serviciosLista.habitacion, "Habitación")}
+                    ${renderServicios(serviciosLista.establecimiento, "Establecimiento")}
+                    ${renderServicios(serviciosLista.accesibilidad, "Accesibilidad")}
+                </div>
             `;
         },
         renderizarImagen: () => `
@@ -294,13 +325,15 @@ const pasos = [
         },
         alCargar: () => {
             // Inicializar los eventos para las listas desplegables
-            const titulos = document.querySelectorAll('.tipo-titulo');
+            const titulos = document.querySelectorAll('.contenedor-servicio-titulo');
             titulos.forEach(titulo => {
                 titulo.addEventListener('click', () => {
                     const tipo = titulo.getAttribute('data-tipo');
                     const lista = document.getElementById(`lista-${tipo}`);
+                    const icono = document.getElementById(`icono-${tipo}`);
                     if (lista) {
                         lista.style.display = lista.style.display === 'none' ? 'block' : 'none';
+                        icono.classList.toggle('icono-rotado');
                     }
                 });
             });
@@ -327,17 +360,20 @@ const pasos = [
 
             return `
                 <h2>Restricciones</h2>
-                ${restricciones.map(r => `
-                    <div>
-                        <label for="restriccion-${r.idRestriccion}">${r.nombreRestriccion}</label>
-                        <input 
-                            type="checkbox" 
-                            name="restriccion" 
-                            value="${r.idRestriccion}" 
-                            id="restriccion-${r.idRestriccion}" 
-                            ${datos.restriccionesSeleccionadas.includes(r.idRestriccion.toString()) ? 'checked' : ''} />
-                    </div>
-                `).join('')}
+                <div class="contenedor-restricciones">
+                    ${restricciones.map(r => `
+                            <input
+                                type="checkbox"
+                                name="restriccion"
+                                value="${r.idRestriccion}" 
+                                id="restriccion-${r.idRestriccion}" 
+                                ${datos.restriccionesSeleccionadas.includes(r.idRestriccion.toString()) ? 'checked' : ''} />
+                            <label for="restriccion-${r.idRestriccion}" class="servicio-item-label">
+                                <i class="${r.rutaIcono}"></i>
+                                <span>${r.nombreRestriccion}</span>
+                            </label>
+                    `).join('')}
+                </div>
             `;
         },
         renderizarImagen: () => `
