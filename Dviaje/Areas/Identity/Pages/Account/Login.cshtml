@@ -1,15 +1,6 @@
 ﻿@page
-
-<!-- 
-// ------------------------------------------------------------------------------
- * Numero del programa asignado: 2617532
- * Creado por: Andres Baron
- * Fecha: 12/08/2024
- * Decripcion: Vista Login del proyecto, permitiendo el el inicio de sesion de los usuarios
-// ------------------------------------------------------------------------------
--->
-
 @model LoginModel
+
 
 @{
     ViewData["Title"] = "Ingresar";
@@ -25,7 +16,7 @@
     @* Banner *@
     <div class="ingreso-img">
         <img alt="Imagen representativa de Dviaje"
-             src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+             src="/img/assets/Login.webp"
              class="img-f" />
     </div>
 
@@ -37,14 +28,14 @@
             <div>
                 <label asp-for="Input.Email" class="input-label">
                     <input asp-for="Input.Email" type="email" autocomplete="on" aria-required="true" class="input-field" placeholder="Correo" />
-                    <span class="input-placeholder">Correo</span>
+                    <span class="input-placeholder">Correo*</span>
                 </label>
                 <span asp-validation-for="Input.Email" class="validation-message"></span>
             </div>
             <div>
                 <label asp-for="Input.Password" class="input-label">
                     <input asp-for="Input.Password" type="password" autocomplete="on" aria-required="true" class="input-field" placeholder="Contraseña" />
-                    <span class="input-placeholder">Contraseña</span>
+                    <span class="input-placeholder">Contraseña*</span>
                 </label>
                 <span asp-validation-for="Input.Password" class="validation-message"></span>
             </div>

@@ -11,10 +11,11 @@
 }
 
 
+<div class="c-r">
 <div class="reserva-publicacion">
     <form class="reserva" method="post" asp-area="Turista" asp-controller="Reservas" asp-action="Reservar">
         <input type="hidden" asp-for="IdPublicacion" />
-        <h1>Reserva ahora, vive la experiencia</h1>
+        <h1 id="titulo-reserva">Reserva ahora, vive la experiencia</h1>
 
 
         <div class="reserva-inputs">
@@ -22,7 +23,7 @@
                 <label asp-for="FechaInicial" class="input-label">
                     <input asp-for="FechaInicial" type="date" autocomplete="on" aria-required="true"
                            class="input-field" placeholder="Fecha Inicial" />
-                    <span class="input-placeholder">Fecha Inicial</span>
+                    <span class="input-placeholder">Fecha Inicial*</span>
                 </label>
                 <span asp-validation-for="FechaInicial" class="validation-message"></span>
             </div>
@@ -30,7 +31,7 @@
                 <label asp-for="FechaFinal" class="input-label">
                     <input asp-for="FechaFinal" type="date" autocomplete="on" aria-required="true"
                            class="input-field" placeholder="Fecha Final" />
-                    <span class="input-placeholder">Fecha Final</span>
+                    <span class="input-placeholder">Fecha Final*</span>
                 </label>
                 <span asp-validation-for="FechaFinal" class="validation-message"></span>
             </div>
@@ -43,32 +44,10 @@
         <div asp-validation-summary="ModelOnly" class="validation-message-all"></div>
     </form>
 
-    <section class="publicacion">
-        <div class="publicacion-informacion">
-            <img src="https://images.unsplash.com/photo-1646836366532-a282ebbd4703?q=80&w=1949&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                 alt="" class="img-f">
-            <div class="publicacion-informacion-texto">
-                <div class="ubicacion-avatar">
-                    <div class="publicacion-ubicacion">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span>Dirección de la Publicación</span>
-                    </div>
-                    <a href="" class="publicacion-avatar">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                             alt="" class="img-f">
-                    </a>
-                </div>
-                <p class="publicacion-aliado">Nombre Aliado</p>
-                <div class="publicacion-nota">
-                    <span>4.5</span>
-                    <a href="" class="button-23 button-23-mas">Ver Más</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="publicacion" id="tarjeta-publicacion"></section>
 
 </div>
-
+</div>
 @section Scripts {
     <script src="~/js/reservas/reservar.js" type="module"></script>
 }

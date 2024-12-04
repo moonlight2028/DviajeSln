@@ -1,8 +1,16 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Correo Confirmado";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+@section Styles {
+    <link href="/css/identity/register-confimation.css" rel="stylesheet" />
+}
+
+
+<div class="confirmacion">
+    <h1>Gracias por confirmar tu correo electrónico, ahora puedes iniciar sesión.</h1>
+    <img src="/img/assets/email-confirmado.svg" alt="Alternate Text" />
+</div>

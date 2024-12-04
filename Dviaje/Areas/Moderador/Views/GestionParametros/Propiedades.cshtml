@@ -84,9 +84,9 @@
                         data: 'idPropiedad',
                         render: function (data) {
                             return `
-                                                <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
-                                                <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
-                                            `;
+                                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
+                                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                                                    `;
                         }
                     }
                 ],
@@ -94,7 +94,6 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es_es.json'
                 }
             });
-
             // Crear propiedad
             $('#btnCrearPropiedad').on('click', function () {
                 $('#modalTitulo').text('Crear Propiedad');
@@ -102,14 +101,12 @@
                 $('#IdPropiedad').remove();
                 $('#modalPropiedad').modal('show');
             });
-
             // Guardar propiedad
             $('#formPropiedad').on('submit', function (e) {
                 e.preventDefault();
                 const id = $('#IdPropiedad').val();
                 const url = id ? '/Moderador/propiedades/actualizar' : '/Moderador/propiedades/crear';
                 const type = id ? 'PUT' : 'POST';
-
                 $.ajax({
                     url: url,
                     type: type,
@@ -129,7 +126,6 @@
                     }
                 });
             });
-
             // Editar propiedad
             $('#tablaPropiedades').on('click', '.editar', function () {
                 const id = $(this).data('id');
@@ -150,7 +146,6 @@
                     console.error('Error al cargar la propiedad:', xhr.responseText);
                 });
             });
-
             // Eliminar propiedad
             $('#tablaPropiedades').on('click', '.eliminar', function () {
                 const id = $(this).data('id');

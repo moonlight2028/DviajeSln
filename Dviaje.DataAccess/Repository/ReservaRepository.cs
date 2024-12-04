@@ -20,35 +20,76 @@ namespace Dviaje.DataAccess.Repository
         public async Task<ReservaMiReservaVM?> ObtenerReservaMiReservaAsync(int idReserva, string idUsuario)
         {
             var sql = @"
-    SELECT 
-        r.IdReserva, 
-        r.FechaInicial, 
-        r.FechaFinal, 
-        r.ReservaEstado AS ReservaEstado,
-        p.IdPublicacion, 
-        p.Titulo AS TituloPublicacion, 
-        p.Puntuacion, 
-        p.NumeroResenas, 
-        p.Direccion,
-        u.Id AS IdAliado, 
-        u.UserName AS NombreAliado, 
-        u.Avatar AS AvatarAliado,
-        (SELECT pi.Ruta 
-         FROM publicacionesimagenes pi 
-         WHERE pi.IdPublicacion = p.IdPublicacion 
-         ORDER BY pi.Orden 
-         LIMIT 1) AS Imagen
-    FROM 
-        reservas r
-    INNER JOIN 
-        publicaciones p ON r.IdPublicacion = p.IdPublicacion
-    INNER JOIN 
-        aspnetusers u ON p.IdAliado = u.Id
-    WHERE 
-        r.IdReserva = @IdReserva 
-        AND r.IdUsuario = @IdUsuario";
+                SELECT 
+                    p.Titulo AS TituloPublicacion, 
+                    p.Direccion,
+                    r.FechaInicial, 
+                    r.FechaFinal,
+                    p.NumeroCamas,
+                    p.Huespedes,
+                    p.Recamaras,
+                    p.Banios,
+                    r.IdReserva, 
+                    R.PrecioTotal,
+                    p.Descripcion AS DescripcionPublicacion,
+                    r.ReservaEstado AS ReservaEstado,
+                    p.IdPublicacion, 
+                    p.Puntuacion AS PuntuacionPublicacion, 
+                    p.NumeroResenas AS NumeroResenasPublicacion, 
+                    u.Id AS IdAliado, 
+                    u.UserName AS NombreAliado, 
+                    U.NumeroPublicaciones AS NumeroPublicacionesAliado,
+                    u.Avatar AS AvatarAliado
+                FROM 
+                    reservas r
+                INNER JOIN 
+                    publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN 
+                    aspnetusers u ON p.IdAliado = u.Id
+                WHERE 
+                    r.IdReserva = @IdReserva 
+                    AND r.IdUsuario = @IdUsuario
+            ";
+
+            var consultaImagenes = @"
+                SELECT 
+                    pi.Ruta,
+                    pi.Alt
+                FROM 
+                    reservas r
+                INNER JOIN 
+                    publicaciones p ON r.IdPublicacion = p.IdPublicacion
+                INNER JOIN 
+                    publicacionesimagenes pi ON p.IdPublicacion = pi.IdPublicacion
+                WHERE 
+                    r.IdReserva = @IdReserva
+                LIMIT 4;
+            ";
+
+            var consultaServicios = @"
+                SELECT 
+                    s.NombreServicio,
+                    s.RutaIcono,
+                    s.IdServicio
+                FROM 
+                    publicacionesservicios ps
+                INNER JOIN 
+                    servicios s ON ps.IdServicio = s.IdServicio
+                WHERE 
+                    ps.IdPublicacion = @IdPublicacion;
+            ";
 
             var reserva = await _db.QueryFirstOrDefaultAsync<ReservaMiReservaVM>(sql, new { IdReserva = idReserva, IdUsuario = idUsuario });
+
+            if (reserva != null)
+            {
+                var imagenes = await _db.QueryAsync<PublicacionImagenVM>(consultaImagenes, new { IdReserva = idReserva });
+                var servicios = await _db.QueryAsync<ServicioVM>(consultaServicios, new { IdPublicacion = reserva.IdPublicacion });
+
+                reserva.ImagenesPublicacion = imagenes.ToList();
+                reserva.ServiciosPublicacion = servicios.ToList();
+            }
+
             return reserva;
         }
 

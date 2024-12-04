@@ -23,6 +23,150 @@
             background-color: transparent;
             border: none;
         }
+
+     
+
+            .nav-main-ul a {
+                color: inherit; /* Mantiene el color del texto */
+                text-decoration: none; /* Sin subrayado */
+                margin-right: 15px; /* Espaciado entre enlaces */
+            }
+
+                .nav-main-ul a:hover,
+                .nav-main-ul a:focus {
+                    color: #fb923c; /* Cambia a un color visualmente atractivo en hover */
+                    text-decoration: none; /* Sin subrayado en hover */
+                }
+
+        /* Espaciado debajo de la barra de navegación para evitar superposición */
+        body {
+            padding-top: 60px; /* Ajusta este valor al alto de tu barra de navegación */
+        }
+
+
+        /* Fondo y tabla principal */
+        body {
+            background-color: var(--color-gris-50); /* Fondo claro */
+        }
+
+        .container {
+            padding: 20px;
+            background-color: var(--color-default); /* Blanco */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--color-primario-500); /* Naranja principal */
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Tabla personalizada */
+        #tablaServicios {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--color-default); /* Blanco */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+            #tablaServicios thead {
+                background-color: var(--color-primario-500) !important; /* Naranja principal */
+                color: var(--color-default) !important; /* Blanco */
+                text-transform: uppercase;
+            }
+
+
+            #tablaServicios th,
+            #tablaServicios td {
+                text-align: center;
+                padding: 15px;
+            }
+
+            #tablaServicios tbody tr:nth-child(odd) {
+                background-color: var(--color-gris-100); /* Gris claro */
+            }
+
+            #tablaServicios tbody tr:nth-child(even) {
+                background-color: var(--color-gris-50); /* Fondo gris muy claro */
+            }
+
+            #tablaServicios tbody tr:hover {
+                background-color: var(--color-primario-50); /* Fondo naranja claro */
+                cursor: pointer;
+            }
+
+        /* Estilos de DataTables */
+        .dataTables_wrapper .dataTables_filter input {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid var(--color-gris-300); /* Gris bordes */
+            background-color: var(--color-default); /* Blanco */
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid var(--color-gris-300); /* Gris bordes */
+            background-color: var(--color-default); /* Blanco */
+        }
+
+        .dataTables_paginate a {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+            color: var(--color-default); /* Blanco */
+            background-color: var(--color-primario-500); /* Naranja principal */
+            text-decoration: none;
+        }
+
+            .dataTables_paginate a:hover {
+                background-color: var(--color-primario-600); /* Naranja oscuro */
+            }
+
+        .dataTables_info {
+            color: var(--color-dark-400); /* Texto gris oscuro */
+        }
+
+        /* Botones de acciones */
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .btn-warning {
+            background-color: var(--color-cuarto-400); /* Amarillo */
+            color: var(--color-default-black); /* Texto negro */
+        }
+
+            .btn-warning:hover {
+                background-color: var(--color-cuarto-50); /* Amarillo claro */
+            }
+
+        .btn-danger {
+            background-color: var(--color-terciario-500); /* Rojo */
+            color: var(--color-default); /* Blanco */
+        }
+
+            .btn-danger:hover {
+                background-color: var(--color-terciario-400); /* Rojo más claro */
+            }
+
+        .btn-success {
+            background-color: var(--color-quinto-400); /* Verde */
+            color: var(--color-default); /* Blanco */
+        }
+
+            .btn-success:hover {
+                background-color: var(--color-quinto-50); /* Verde claro */
+            }
+
     </style>
 }
 
@@ -31,8 +175,8 @@
     <div class="text-end mb-3">
         <button id="btnCrearServicio" class="btn btn-success">Crear Nuevo Servicio</button>
     </div>
-    <table id="tablaServicios" class="table table-bordered">
-        <thead>
+    <table id="tablaServicios" class="table">
+        <thead class="tabla-header">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
@@ -115,9 +259,9 @@
                         data: 'idServicio',
                         render: function (data) {
                             return `
-                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
-                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
-                                    `;
+                                <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
+                                <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                            `;
                         }
                     }
                 ],
@@ -131,7 +275,7 @@
             $('#btnCrearServicio').on('click', function () {
                 $('#modalServicioLabel').text('Crear Servicio');
                 $('#formServicio')[0].reset();
-                $('#IdServicio').remove(); // Quita el campo oculto para la creación
+                $('#IdServicio').remove(); // Asegúrate de quitar el campo oculto si existe
                 $('#modalServicio').modal('show');
             });
 
@@ -139,7 +283,7 @@
             $('#formServicio').on('submit', function (e) {
                 e.preventDefault();
 
-                const id = $('#IdServicio').val();
+                const id = $('#IdServicio').val(); // Obtenemos el ID si existe
                 const url = id ? `/Moderador/servicios/actualizar` : `/Moderador/servicios/crear`;
                 const type = id ? 'PUT' : 'POST';
 
@@ -168,7 +312,10 @@
                 const id = $(this).data('id');
                 $.get(`/Moderador/servicios/obtener/${id}`, function (response) {
                     if (response.success) {
-                        $('#modalServicio').find('.modal-body').prepend('<input type="hidden" id="IdServicio" name="IdServicio">'); // Agrega el campo oculto para la edición
+                        // Asegúrate de que el campo oculto para el ID existe
+                        if (!$('#IdServicio').length) {
+                            $('#modalServicio').find('.modal-body').prepend('<input type="hidden" id="IdServicio" name="IdServicio">');
+                        }
                         $('#IdServicio').val(response.data.idServicio);
                         $('#NombreServicio').val(response.data.nombreServicio);
                         $('#RutaIcono').val(response.data.rutaIcono);
@@ -207,5 +354,6 @@
                 }
             });
         });
+
     </script>
 }

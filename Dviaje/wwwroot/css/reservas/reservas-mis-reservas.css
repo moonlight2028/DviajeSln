@@ -1,10 +1,9 @@
 ﻿.contenedor-mis-reservas {
     display:flex;
     flex-direction:column;
-    gap:50px;
-    padding: 100px 10px;
+    gap:10px;
     max-width: 1536px;
-    margin: 0 auto;
+    padding: 10px 0;
 }
 
 h1 {
@@ -262,10 +261,6 @@ h1 {
 }
 
 @media (min-width: 768px) {
-    .contenedor-mis-reservas {
-        padding: 100px 20px;
-    }
-
     .reserva-tarjeta-imagen {
         width: 40%;
     }
@@ -281,8 +276,3 @@ h1 {
     }
 }
 
-@media (min-width: 1536px) {
-    .contenedor-mis-reservas {
-        padding: 100px 0;
-    }
-}

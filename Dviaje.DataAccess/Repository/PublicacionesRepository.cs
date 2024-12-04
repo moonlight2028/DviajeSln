@@ -455,20 +455,22 @@ namespace Dviaje.DataAccess.Repository
         public async Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion)
         {
             var sql = @"
-        SELECT 
-            p.IdPublicacion,
-            (SELECT pi.Ruta FROM publicacionesimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen,
-            p.Direccion,
-            p.Puntuacion,
-            a.Id AS IdAliado,
-            a.UserName AS NombreAliado,
-            a.Avatar AS AvatarAliado
-        FROM 
-            publicaciones p
-        LEFT JOIN 
-            aspnetusers a ON p.IdAliado = a.Id
-        WHERE 
-            p.IdPublicacion = @IdPublicacion";
+                SELECT 
+                    p.Titulo,
+                    p.IdPublicacion,
+                    (SELECT pi.Ruta FROM publicacionesimagenes pi WHERE pi.IdPublicacion = p.IdPublicacion ORDER BY pi.Orden LIMIT 1) AS Imagen,
+                    p.Direccion,
+                    p.Puntuacion,
+                    a.Id AS IdAliado,
+                    a.UserName AS NombreAliado,
+                    a.Avatar AS AvatarAliado
+                FROM 
+                    publicaciones p
+                LEFT JOIN 
+                    aspnetusers a ON p.IdAliado = a.Id
+                WHERE 
+                    p.IdPublicacion = @IdPublicacion
+            ";
 
             return await _db.QueryFirstOrDefaultAsync<PublicacionTarjetaImagenVM>(sql, new { IdPublicacion = idPublicacion });
         }

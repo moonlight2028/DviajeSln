@@ -10,7 +10,6 @@
     max-width: 1536px;
     margin: 0 auto;
     color: var(--color-gris-700);
-    padding: 100px 10px;
 }
 
 /* Formulario reserva */
@@ -206,45 +205,26 @@
 }
 
 
-@media (min-width: 640px) {
-    .reserva-publicacion {
-        padding: 100px 20px;
-    }
-}
-
-@media (min-width: 768px) {
-    .reserva-publicacion {
-        padding: 100px 40px;
-    }
-}
-
 @media (min-width: 1024px) {
-    .reserva-publicacion {
-        flex-direction: row;
-        padding: 0 20px;
-    }
-
-
     /* Formulario reserva */
     .reserva {
         width: 100%;
-        padding: 80px 20px 0 0;
     }
 
 
     /* Publicación */
     .publicacion {
-        height:100dvh;
-        padding: 80px 0 20px 0;
+        height: calc(100dvh - 60px);
+        padding: 20px 0;
     }
 
     .publicacion-informacion {
         border-radius: 0 30px 30px 0;
     }
-}
 
-@media (min-width: 1536px) {
     .reserva-publicacion {
-        padding: 0;
+        flex-direction:row;
+        height: calc(100dvh - 60px);
     }
 }
+
