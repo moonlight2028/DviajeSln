@@ -1,6 +1,7 @@
 ﻿main {
     max-width: 1536px;
     margin: 0 auto;
+    height: calc(100dvh - 60px);
 }
 
 /* Inicio SideMenu */
@@ -10,8 +11,8 @@
 
 .nav-menu-lateral {
     position: absolute;
-    height: 100%;
-    padding: 80px 0 20px 20px;
+    height: calc(100dvh - 60px);
+    padding: 20px;
     color: var(--color-gris-100);
     z-index: 100;
 }
@@ -131,8 +132,8 @@
 
 .contenedor-manage {
     width: 100%;
-    height: 100dvh;
-    padding: 80px 20px 20px 100px;
+    height: calc(100dvh - 60px);
+    padding: 20px 20px 20px 100px;
 }
 
 .contenedor-manage-contenido {
