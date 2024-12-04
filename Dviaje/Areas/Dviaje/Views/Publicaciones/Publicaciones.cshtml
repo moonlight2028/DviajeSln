@@ -12,48 +12,8 @@
     <link rel="stylesheet" href="~/css/publicaciones/publicaciones.css">
 }
 
+<div class="c-r">
 <div class="main">
-    <!-- Mostrar el encabezado dinámico -->
-    @if (ViewBag.CategoriaSeleccionada != null)
-    {
-        <h2>Publicaciones en la categoría: @ViewBag.CategoriaSeleccionada</h2>
-    }
-    else
-    {
-        <h2>Todas las publicaciones</h2>
-    }
-
-    <!-- Sección búsqueda -->
-    <div class="nav-busqueda">
-        <form class="buscar b-s-95" action="">
-            <div class="buscar-datos">
-                <label class="input-label buscar-datos-input">
-                    <input type="text" autocomplete="on" aria-required="true" class="input-field"
-                           placeholder="Cundinamarca" />
-                    <span class="input-placeholder">Buscar</span>
-                </label>
-
-                <div class="buscar-fechas">
-                    <label class="input-label input-fecha">
-                        <input type="date" autocomplete="on" aria-required="true" class="input-field"
-                               placeholder="Fecha Inicial" id="booking-busqueda-llegada" />
-                        <span class="input-placeholder">Fecha Inicial</span>
-                    </label>
-
-                    <label class="input-label input-fecha">
-                        <input type="date" autocomplete="on" aria-required="true" class="input-field"
-                               placeholder="Fecha Final" id="booking-busqueda-salida" />
-                        <span class="input-placeholder">Fecha Final</span>
-                    </label>
-                </div>
-            </div>
-            <div class="buscar-botones">
-                <button class="button-23">Filtros</button>
-                <button class="button-87-main">Buscar</button>
-            </div>
-        </form>
-    </div>
-
     <!-- Publicaciones -->
     <div class="resultados">
         <div class="ordenar">
@@ -187,6 +147,7 @@
     <div class="paginacion" id="paginacion" data-paginacion-paginas="@ViewBag.PaginacionPaginas" data-paginacion-items="@ViewBag.PaginacionItems" data-paginacion-resultados="@ViewBag.PaginacionResultados"></div>
 </div>
 
+</div>
 @section Scripts {
     <script src="~/js/publicaciones/publicaciones.js" type="module"></script>
 }
