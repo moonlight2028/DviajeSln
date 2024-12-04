@@ -17,28 +17,17 @@
             font-weight: bold;
         }
 
-        .nav-main-ul {
-            position: fixed; /* Fija la barra en la parte superior */
-            top: 0; /* Ubica la barra en la parte superior de la ventana */
-            left: 0; /* Alinea la barra al borde izquierdo */
-            width: 100%; /* Ocupa todo el ancho de la ventana */
-            background-color: #fff; /* Color de fondo para que no sea transparente */
-            padding: 10px 20px; /* Espaciado interno para una mejor apariencia */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Agrega una sombra para separarla visualmente del contenido */
-            z-index: 1000; /* Asegura que la barra quede sobre otros elementos */
+        .nav-main-ul a {
+            color: inherit; /* Mantiene el color del texto */
+            text-decoration: none; /* Sin subrayado */
+            margin-right: 15px; /* Espaciado entre enlaces */
         }
 
-            .nav-main-ul a {
-                color: inherit; /* Mantiene el color del texto */
-                text-decoration: none; /* Sin subrayado */
-                margin-right: 15px; /* Espaciado entre enlaces */
+            .nav-main-ul a:hover,
+            .nav-main-ul a:focus {
+                color: #fb923c; /* Cambia a un color visualmente atractivo en hover */
+                text-decoration: none; /* Sin subrayado en hover */
             }
-
-                .nav-main-ul a:hover,
-                .nav-main-ul a:focus {
-                    color: #fb923c; /* Cambia a un color visualmente atractivo en hover */
-                    text-decoration: none; /* Sin subrayado en hover */
-                }
 
         /* Espaciado debajo de la barra de navegación para evitar superposición */
         body {
