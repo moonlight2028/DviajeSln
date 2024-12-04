@@ -15,71 +15,109 @@
     max-width: 100%;
     margin: 100px auto;
     overflow: hidden;
-    background-color: var(--carousel-bg);
+    background-color: #000000;
     border-radius: var(--carousel-border-radius);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom:30px;
+}
+#carousel-section {
+    position: relative;
+    padding-top: 400px; /* Espacio superior para el título */
 }
 
-/* Contenedor de los ítems del carrusel */
-.carousel {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
-}
 .carousel-title {
-    margin:100px;
+    width:100%;
+    margin-top:120px;
+    position: absolute; /* El título no desplazará el carrusel */
+    top: -20px; /* Ajusta la posición vertical */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Compensa para centrar */
+    z-index: 10; /* Asegúrate de que quede por encima del carrusel */
+    text-align: center;
+    color:white;
 }
-/* Elemento individual dentro del carrusel */
+
+    .carousel-title h2 {
+        margin: 0;
+        font-size: 34px; /* Ajusta el tamaño según tu diseño */
+        color: white; /* Cambia el color según el diseño */
+        background-color: gray; /* Fondo semitransparente para destacar */
+        padding: 5px 10px; /* Espaciado interno para mejor visualización */
+        border-radius: 5px; /* Bordes redondeados opcionales */
+    }
+
+.carousel-container {
+    margin-top: 120px; /* Espacio entre el título y el carrusel */
+    position: relative; /* Asegura que los controles del carrusel estén alineados */
+}
+
+
+#carousel-section {
+    position: relative;
+    padding-top: 20px; /* Espacio superior */
+}
+
+#carousel-section {
+    position: relative;
+    padding-top: 20px; /* Espacio superior para el título */
+}
+
+
+
+.carousel {
+    display: flex; /* Coloca todos los ítems en una sola fila */
+    flex-wrap: nowrap; /* Evita que los ítems se envuelvan */
+    width: 100%; /* Ajusta al ancho del contenedor padre */
+    transition: transform 0.5s ease-in-out; /* Transiciones suaves */
+}
+
+
 .carousel-item {
-    display: flex;
-    min-width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
+    visibility: visible; /* Asegúrate de que los elementos sean visibles */
+    opacity: 1; /* Asegúrate de que la opacidad sea 1 */
+    display: flex; /* Alineación horizontal de imagen y texto */
+    flex: 0 0 100%; /* Cada ítem ocupa el 100% del ancho */
+    justify-content: center; /* Opcional: Alinea el contenido en el centro */
+    align-items: center; /* Alinea verticalmente */
+    box-sizing: border-box; /* Asegúrate de que no se desborde */
+    overflow: hidden; /* Oculta contenido fuera de los límites */
 }
 
-/* Imagen principal del carrusel */
+
+.carousel-content {
+    display: flex; /* Alinea la imagen y el texto en una fila */
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
+    align-items: center; /* Alinea verticalmente los elementos */
+    justify-content: space-between; /* Espacio entre imagen y texto */
+    width: 80%; /* Asegúrate de que ocupe todo el ancho disponible */
+    height: 600px; /* Ajustar la altura según lo necesario */
+    padding: 100px;
+    margin-left:200px;
+}
+
 .carousel-image {
-    width: 50%; /* Ocupa la mitad del espacio */
-    height: 300px;
-    object-fit: cover; /* Ajuste de la imagen */
-    border-radius: var(--carousel-border-radius);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%; /* Ajusta al ancho del contenedor padre */
+    height: 100%; /* Ajusta al alto del contenedor padre */
+    object-fit: cover; /* Mantiene la proporción, llenando el espacio disponible */
+    object-fit: cover; /* Ajusta el contenido de la imagen */
+    border-radius: 10px; /* Opcional: bordes redondeados */
 }
 
-/* Texto del carrusel */
 .carousel-text {
-    width: 50%; /* Ocupa la otra mitad del espacio */
-    padding: 20px;
-    color: var(--carousel-text-color);
-    flex-direction: column;
-    justify-content: right;
-    text-align: left;
+    max-width: 40%; /* Texto ocupa el otro 50% del espacio */
+    text-align: left; /* Alinea el texto a la izquierda */
+    padding-left: 20px; /* Opcional: añade espacio a la izquierda */
 }
-
-    .carousel-text h1 {
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
-
-    .carousel-text h3 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: #666;
-    }
-
-    .carousel-text p {
-        font-size: 1rem;
-        line-height: 1.5;
-    }
+.carousel-item .carousel-content .carousel-text {
+    color: white !important; /* Asegura que este color se aplique, incluso si hay reglas más específicas */
+}
 
 /* Controles del carrusel (anterior/siguiente) */
 .carousel-control {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: var(--carousel-control-bg);
+    background-color: #FF8B00;
     color: var(--carousel-control-color);
     border: none;
     border-radius: 50%;
@@ -91,19 +129,22 @@
     justify-content: center;
     cursor: pointer;
     z-index: 100;
+    padding:10px;
 }
 
     .carousel-control.prev {
-        left: 10px;
+        left: 50px;
     }
 
     .carousel-control.next {
-        right: 10px;
+        right: 50px;
     }
 
     .carousel-control:hover {
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: #01E2FE;
     }
+
+
 
 /* Responsividad */
 @media (max-width: 768px) {
@@ -117,7 +158,8 @@
     }
 
     .carousel-text {
-        width: 100%;
+        color:white;
+        width: 60%;
         text-align: center;
     }
 }
@@ -125,11 +167,28 @@
 
 
 /* Contenedor de categorías */
+.title {
+    width: 100%;
+    text-align: center; /* Centra el texto dentro del contenedor */
+
+    font-size: 34px; /* Ajusta el tamaño según tu diseño */
+    color: white; /* Cambia el color según el diseño */
+    background-color: gray; /* Fondo semitransparente para destacar */
+
+    border-radius: 5px; /* Bordes redondeados opcionales */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    /* Para centrar el contenedor en relación a su posición en el padre */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); /* Ajuste para centrar completamente */
+}
+
 .categories-container {
+    margin-top:100px;
     display: flex;
     justify-content: center; /* Centra las categorías horizontalmente */
     align-items: center; /* Centra las categorías verticalmente si hay varias filas */
-    gap: 80px; /* Espacio entre las categorías */
+    gap: 50px; /* Espacio entre las categorías */
     flex-wrap: wrap; /* Si el ancho no es suficiente, las categorías se moverán a una nueva línea */
 }
 
@@ -138,8 +197,8 @@
     text-align: center;
     width: 200px; /* Puedes ajustar el ancho según lo que prefieras */
     border: 1px solid #ddd; /* Bordes ligeros para separar cada categoría */
-    border-radius: 8px;
-    padding: 10px;
+    border-radius: 50px;
+    padding: 40px;
     transition: transform 0.3s ease;
 }
 
@@ -151,6 +210,7 @@
 
 /* Icono de la categoría */
 .category-icon {
+    
     font-size: 40px; /* Tamaño del icono */
     color: #FF8B00; /* Color para los iconos, puedes cambiarlo */
     margin-bottom: 10px;
@@ -165,18 +225,19 @@
 /* Contenedor principal de los textos */
 .info-container {
     display: flex; /* Disposición horizontal */
-    justify-content: space-between; /* Espacio entre los elementos */
-    gap: 20px; /* Espacio entre los contenedores */
+    gap: 100px; /* Espacio entre los contenedores */
     flex-wrap: wrap; /* Para que si no cabe, se muevan a la siguiente línea */
-    margin-top: 40px; /* Espacio superior */
+    margin-top: 60px; /* Espacio superior */
+    justify-content: center;
 }
 
 /* Contenedor de cada sección de texto */
 .info-item {
+    margin-top:70px;
     background-color: #f4f4f4; /* Fondo claro para cada sección */
     border-radius: 8px;
     padding: 20px;
-    width: 30%; /* El ancho de cada contenedor será del 30% */
+    width: 20%; /* El ancho de cada contenedor será del 30% */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
