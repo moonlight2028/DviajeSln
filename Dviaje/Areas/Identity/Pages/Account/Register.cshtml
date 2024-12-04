@@ -13,7 +13,7 @@
     @* Banner *@
     <div class="ingreso-img">
         <img alt="Imagen representativa de Dviaje"
-             src="/assets/Registro.webp"
+             src="/img/assets/Registro.webp"
              class="img-f" />
     </div>
 
@@ -25,36 +25,25 @@
             <div>
                 <label asp-for="Input.Email" class="input-label">
                     <input asp-for="Input.Email" type="email" autocomplete="on" aria-required="true" class="input-field" placeholder="Correo" />
-                    <span class="input-placeholder">Correo</span>
+                    <span class="input-placeholder">Correo*</span>
                 </label>
                 <span asp-validation-for="Input.Email" class="validation-message"></span>
             </div>
             <div>
                 <label asp-for="Input.Password" class="input-label">
                     <input asp-for="Input.Password" type="password" autocomplete="on" aria-required="true" class="input-field" placeholder="Contraseña" />
-                    <span class="input-placeholder">Contraseña</span>
+                    <span class="input-placeholder">Contraseña*</span>
                 </label>
                 <span asp-validation-for="Input.Password" class="validation-message"></span>
             </div>
             <div>
                 <label asp-for="Input.ConfirmPassword" class="input-label">
                     <input asp-for="Input.ConfirmPassword" type="password" autocomplete="on" aria-required="true" class="input-field" placeholder="Confirmar contraseña" />
-                    <span class="input-placeholder">Confirmar contraseña</span>
+                    <span class="input-placeholder">Confirmar contraseña*</span>
                 </label>
                 <span asp-validation-for="Input.ConfirmPassword" class="validation-message"></span>
             </div>
             <div asp-validation-summary="ModelOnly" class="validation-message-all"></div>
-
-            @* Campo temporal de los roles. *@
-            <div>
-                <label>Roles temporales de test:</label>
-
-                @foreach (var rol in Model.Input.ListaRoles)
-                {
-                    <input type="checkbox" name="Input.RolesSeleccionados" value="@rol" id="@($"{rol}-rol")" />
-                    <label for="@($"{rol}-rol")">@rol</label>
-                }
-            </div>    
         </div>
 
         <span class="ingreso-form-condiciones">
@@ -75,6 +64,6 @@
     </form>
 </section>
 
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

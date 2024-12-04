@@ -16,7 +16,7 @@
     @* Banner *@
     <div class="ingreso-img">
         <img alt="Imagen representativa de Dviaje"
-             src="/assets/Login.webp"
+             src="/img/assets/Login.webp"
              class="img-f" />
     </div>
 
@@ -28,14 +28,14 @@
             <div>
                 <label asp-for="Input.Email" class="input-label">
                     <input asp-for="Input.Email" type="email" autocomplete="on" aria-required="true" class="input-field" placeholder="Correo" />
-                    <span class="input-placeholder">Correo</span>
+                    <span class="input-placeholder">Correo*</span>
                 </label>
                 <span asp-validation-for="Input.Email" class="validation-message"></span>
             </div>
             <div>
                 <label asp-for="Input.Password" class="input-label">
                     <input asp-for="Input.Password" type="password" autocomplete="on" aria-required="true" class="input-field" placeholder="Contraseña" />
-                    <span class="input-placeholder">Contraseña</span>
+                    <span class="input-placeholder">Contraseña*</span>
                 </label>
                 <span asp-validation-for="Input.Password" class="validation-message"></span>
             </div>

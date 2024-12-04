@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
@@ -101,22 +100,11 @@ namespace Dviaje.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "La contraseña y su confirmación no coinciden.")]
             public string ConfirmPassword { get; set; }
-
-            // Lista de roles.
-            // Campo temporal no va en la versión final.
-            [ValidateNever]
-            public IEnumerable<string> ListaRoles { get; set; }
-
-            // Lista de roles seleccionados.
-            // Campo temporal no va en la versión final.
-            public List<string> RolesSeleccionados { get; set; } = new List<string>();
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            await CargarRolesAsync();
-
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -140,17 +128,7 @@ namespace Dviaje.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (Input.RolesSeleccionados == null && Input.RolesSeleccionados.Any())
-                    {
-                        // Asignando el rol default.
-                        await _userManager.AddToRoleAsync(user, RolesUtility.RoleTurista);
-                    }
-                    else
-                    {
-                        // Asignando roles elegidos.
-                        await _userManager.AddToRolesAsync(user, Input.RolesSeleccionados);
-                    }
-
+                    await _userManager.AddToRoleAsync(user, RolesUtility.RoleTurista);
                     var userId = await _userManager.GetUserIdAsync(user);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -161,8 +139,7 @@ namespace Dviaje.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirma tu correo electrónico.",
-                        $"Por favor, verifica tu cuenta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>haciendo clic aquí</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirma tu correo electrónico.", PlantillasHTML.PlantillaRegistro($"{HtmlEncoder.Default.Encode(callbackUrl)}"));
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -180,19 +157,8 @@ namespace Dviaje.Areas.Identity.Pages.Account
                 }
             }
 
-            await CargarRolesAsync();
-
             // If we got this far, something failed, redisplay form
             return Page();
-        }
-
-        // Carga de roles
-        public async Task CargarRolesAsync()
-        {
-            Input = new()
-            {
-                ListaRoles = await Task.FromResult(_roleManager.Roles.Select(r => r.Name))
-            };
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using Dviaje.Models.VM;
+using Dviaje.Utility;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -105,10 +106,8 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = ManageEmail.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    ManageEmail.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailSender.SendEmailAsync(ManageEmail.NewEmail, "Confirma tu correo electrónico.", PlantillasHTML.PlantillaCambioCorreo($"{HtmlEncoder.Default.Encode(callbackUrl)}"));
+
 
                 Notificacion = "success";
                 NotificacionTitulo = "Correo";
@@ -143,8 +142,7 @@ namespace Dviaje.Areas.Identity.Pages.Account.Manage
             }
 
             var userId = await _userManager.GetUserIdAsync(user);
-            //var email = await _userManager.GetEmailAsync(user);
-            var email = "afbaronsena@gmail.com";
+            var email = await _userManager.GetEmailAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.Page(

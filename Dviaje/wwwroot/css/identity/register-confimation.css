@@ -1,0 +1,17 @@
+﻿.confirmacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    height: calc(100dvh - 60px);
+    padding: 100px 0;
+}
+
+    .confirmacion h1 {
+        color: var(--color-gris-300);
+    }
+
+    .confirmacion img {
+        height: 100%;
+    }

@@ -33,8 +33,8 @@ builder.Services.AddScoped<IDbConnection>(cr =>
 // Identity personalizado
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    //options.SignIn.RequireConfirmedEmail = true;
-    //options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedAccount = true;
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
