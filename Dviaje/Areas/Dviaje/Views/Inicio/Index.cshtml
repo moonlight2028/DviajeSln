@@ -22,6 +22,13 @@
         {  
             <div class="carousel-container">
                 <div id="carousel" class="carousel">
+                    <!-- Indicadores del carrusel -->
+                    <div class="carousel-indicators">
+                        @for (var i = 0; i < Model.PublicacionesDestacadas.Count(); i++)
+                        {
+                            <button type="button" data-bs-target="#carousel" data-bs-slide-to="@i" class="carousel-indicator" aria-label="Slide @i"></button>
+                        }
+                    </div>
                     @foreach (var publicacion in Model.PublicacionesDestacadas)
                     {
                         <div class="carousel-item">
@@ -50,7 +57,9 @@
 
     <!-- Categorías -->
     <section id="categories-section">
-        <h2>Categorías</h2>
+        <div class="title">
+        <h4>Categorías</h4>
+        </div>
         <div class="categories-container">
             @if (Model.Categorias != null && Model.Categorias.Any())
             {
@@ -96,7 +105,7 @@
             <div class="info-item">
                 <h2>¿Por qué viajar?</h2>
                 <p>
-                    Viajar te permite descubrir nuevas culturas, conectar con personas de diferentes orígenes y ampliar tu perspectiva del mundo.
+                    Viajar te permite descubrir nuevas culturas, conectar con personas de diferentes orígenes y ampliar tu perspectiva de cundinamrca.
                     Además, es una oportunidad para relajarte, explorar y recargar energías mientras creas recuerdos para toda la vida.
                 </p>
             </div>
@@ -152,5 +161,7 @@
             currentIndex = (currentIndex + 1) % items.length;
             showItem(currentIndex);
         }, 5000);
+
+        
     </script>
 }
