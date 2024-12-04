@@ -1,5 +1,4 @@
-﻿import { validacionInputFechas } from "../general/inputsFechas.js"
-import { publicacionesOrdenar } from "./publicacionesOrdenar.js"
+﻿import { publicacionesOrdenar } from "./publicacionesOrdenar.js"
 import { publicacionesSwipers } from "./publicacionesSwipers.js"
 import { paginacionNav } from "../general/paginacionNav.js"
 
@@ -38,9 +37,6 @@ if (parametros.has("pagina")) {
     paginaActual = parseInt(parametros.get("pagina"));
 }
 
-
-// Validación de fechas en la nav de búsqueda
-validacionInputFechas("booking-busqueda-llegada", "booking-busqueda-salida");
 
 // Render filtro ordenar
 publicacionesOrdenar(filtroOrdenar, valoresOrdenar);
