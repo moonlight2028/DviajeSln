@@ -10,19 +10,61 @@
             margin-top: 70px;
         }
 
-        .table th {
-            background-color: #f4f4f4;
-            text-align: center;
+        .table {
+            font-size: 0.9rem; /* Reduce el tamaño del texto */
         }
 
-        .table td {
-            text-align: center;
+            .table th, .table td {
+                text-align: center;
+                vertical-align: middle;
+                padding: 10px; /* Aumenta el espacio entre celdas */
+                white-space: nowrap; /* Evita que el contenido salte de línea */
+            }
+
+                .table td.truncate {
+                    max-width: 150px; /* Ajusta el ancho según sea necesario */
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
-        .btn-close {
-            background-color: transparent;
-            border: none;
+        .table-responsive {
+            margin-top: 20px;
         }
+
+        .nav-main-ul {
+            position: fixed; /* Fija la barra en la parte superior */
+            top: 0; /* Ubica la barra en la parte superior de la ventana */
+            left: 0; /* Alinea la barra al borde izquierdo */
+            width: 100%; /* Ocupa todo el ancho de la ventana */
+            background-color: #fff; /* Color de fondo para que no sea transparente */
+            padding: 10px 20px; /* Espaciado interno para una mejor apariencia */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Agrega una sombra para separarla visualmente del contenido */
+            z-index: 1000; /* Asegura que la barra quede sobre otros elementos */
+        }
+
+            .nav-main-ul a {
+                color: inherit; /* Mantiene el color del texto */
+                text-decoration: none; /* Sin subrayado */
+                margin-right: 15px; /* Espaciado entre enlaces */
+            }
+
+                .nav-main-ul a:hover,
+                .nav-main-ul a:focus {
+                    color: #fb923c; /* Cambia a un color visualmente atractivo en hover */
+                    text-decoration: none; /* Sin subrayado en hover */
+                }
+
+        /* Espaciado debajo de la barra de navegación para evitar superposición */
+        body {
+            padding-top: 60px; /* Ajusta este valor al alto de tu barra de navegación */
+        }
+
     </style>
 }
 
@@ -31,19 +73,21 @@
     <div class="text-end mb-3">
         <button id="btnCrearCategoria" class="btn btn-success">Crear Nueva Categoría</button>
     </div>
-    <table id="tablaCategorias" class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Ícono</th>
-                <th>Descripción</th>
-                <th>URL Imagen</th>
-                <th>ID Imagen</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="table-responsive">
+        <table id="tablaCategorias" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Ícono</th>
+                    <th>Descripción</th>
+                    <th>URL Imagen</th>
+                    <th>ID Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
     <!-- Modal para Crear/Editar Categoría -->
     <div class="modal fade" id="modalCategoria" tabindex="-1" aria-labelledby="modalCategoriaLabel" aria-hidden="true">
@@ -55,7 +99,6 @@
                 </div>
                 <form id="formCategoria">
                     <div class="modal-body">
-                        <!-- Contenedor para el campo oculto del ID -->
                         <div id="hiddenFieldContainer"></div>
                         <div class="mb-3">
                             <label for="NombreCategoria" class="form-label">Nombre</label>
@@ -102,33 +145,45 @@
                 },
                 columns: [
                     { data: 'idCategoria' },
-                    { data: 'nombreCategoria' },
-                    { data: 'rutaIcono' },
-                    { data: 'descripcion' },
-                    { data: 'urlImagen' },
+                    { data: 'nombreCategoria', className: 'truncate' },
+                    {
+                        data: 'rutaIcono',
+                        className: 'truncate',
+                        render: function (data) {
+                            return data
+                                ? `<i class="${data}"></i> <span>${data}</span>`
+                                : '<span class="text-muted">Sin ícono</span>';
+                        }
+                    },
+                    { data: 'descripcion', className: 'truncate' },
+                    { data: 'urlImagen', className: 'truncate' },
                     { data: 'idImagen' },
                     {
                         data: 'idCategoria',
                         render: function (data) {
                             return `
-                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
-                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">
+                                            <i class="fas fa-trash-alt"></i> Eliminar
+                                        </button>
                                     `;
                         }
                     }
                 ],
-                language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es_es.json' }
+                language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es_es.json' },
+                autoWidth: false,
+                scrollX: true, // Habilita scroll horizontal para tablas grandes
             });
 
-            // Crear Categoría
             $('#btnCrearCategoria').on('click', function () {
                 $('#modalCategoriaLabel').text('Crear Categoría');
                 $('#formCategoria')[0].reset();
-                $('#hiddenFieldContainer').html(''); // Remover el campo oculto en creación
+                $('#hiddenFieldContainer').html('');
                 $('#modalCategoria').modal('show');
             });
 
-            // Guardar Categoría
             $('#formCategoria').on('submit', function (e) {
                 e.preventDefault();
                 const id = $('#IdCategoria').val();
@@ -154,14 +209,13 @@
                 });
             });
 
-            // Editar Categoría
             $('#tablaCategorias').on('click', '.editar', function () {
                 const id = $(this).data('id');
                 $.get(`/Moderador/categorias/${id}`, function (response) {
                     if (response.success) {
                         $('#hiddenFieldContainer').html(`
                                     <input type="hidden" id="IdCategoria" name="IdCategoria" value="${response.data.idCategoria}">
-                                `); // Agregar campo oculto solo al editar
+                                `);
                         $('#NombreCategoria').val(response.data.nombreCategoria);
                         $('#Descripcion').val(response.data.descripcion);
                         $('#RutaIcono').val(response.data.rutaIcono);
@@ -176,7 +230,6 @@
                 });
             });
 
-            // Eliminar Categoría
             $('#tablaCategorias').on('click', '.eliminar', function () {
                 const id = $(this).data('id');
                 if (confirm('¿Está seguro de eliminar esta categoría?')) {
