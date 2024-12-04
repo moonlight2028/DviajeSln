@@ -491,6 +491,12 @@ header {
     justify-content: space-between;
 }
 
+.nav-logo-items {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
 .nav-main-items {
     display: none;
 }

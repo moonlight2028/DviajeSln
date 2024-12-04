@@ -20,17 +20,21 @@
     <header class="b-s-11">
         <nav class="c-r">
             <ul class="nav-main-ul">
-                <li>
-                    <a asp-area="Dviaje" asp-controller="Inicio" asp-action="Index" class="logo-a">
-                        <!-- Optimizar imagen del logo -->
-                        <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
-                    </a>
-                </li>
+                <div class="nav-logo-items">
+                    <li>
+                        <a asp-area="Dviaje" asp-controller="Inicio" asp-action="Index" class="logo-a">
+                            <!-- Optimizar imagen del logo -->
+                            <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
+                        </a>
+                    </li>
+                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
+                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
+                </div>
+
                 <!-- Items de escritorio -->
 @*                 <div class="nav-main-items"></div> *@
                 <div class="nav-main-botones">
-                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
-                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
+
                     <partial name="_SinIngresoPartial" />
                     <partial name="_LoginPartial" />
                     
