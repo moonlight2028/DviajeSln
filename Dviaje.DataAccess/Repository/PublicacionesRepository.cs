@@ -691,7 +691,7 @@ namespace Dviaje.DataAccess.Repository
         // Obtener publicaciones filtradas por categoría
         public async Task<List<PublicacionCategoriaVM>> ObtenerPublicacionesPorCategoriaAsync(int idCategoria)
         {
-            var sql = @"
+            var sqlPublicaciones = @"
     SELECT 
         p.IdPublicacion,
         p.Titulo,
@@ -701,7 +701,6 @@ namespace Dviaje.DataAccess.Repository
         p.PrecioNoche AS Precio,
         p.Direccion,
         p.PublicacionEstado,
-        pi.Ruta AS ImagenPrincipal,
         c.NombreCategoria
     FROM 
         publicaciones p
@@ -709,15 +708,40 @@ namespace Dviaje.DataAccess.Repository
         propiedades pr ON p.IdPropiedad = pr.IdPropiedad
     INNER JOIN 
         categorias c ON pr.IdCategoria = c.IdCategoria
-    LEFT JOIN 
-        publicacionesimagenes pi ON p.IdPublicacion = pi.IdPublicacion AND pi.Orden = 1
     WHERE 
         c.IdCategoria = @IdCategoria 
         AND p.PublicacionEstado = 'Activa'
     ORDER BY 
         p.Fecha DESC";
 
-            return (await _db.QueryAsync<PublicacionCategoriaVM>(sql, new { IdCategoria = idCategoria })).ToList();
+            var sqlImagenes = @"
+    SELECT 
+        pi.IdPublicacion,
+        pi.Ruta,
+        pi.Alt
+    FROM 
+        publicacionesimagenes pi
+    WHERE 
+        pi.IdPublicacion IN @idsPublicaciones";
+
+            // Ejecutar la consulta de publicaciones
+            var publicaciones = await _db.QueryAsync<PublicacionCategoriaVM>(sqlPublicaciones, new { IdCategoria = idCategoria });
+
+            // Obtener los IDs de las publicaciones
+            var idsPublicaciones = publicaciones.Select(p => p.IdPublicacion).ToList();
+
+            if (!idsPublicaciones.Any()) return publicaciones.ToList(); // Retornar vacío si no hay publicaciones
+
+            // Ejecutar la consulta de imágenes
+            var imagenes = await _db.QueryAsync<PublicacionImagenVM>(sqlImagenes, new { idsPublicaciones });
+
+            // Mapear las imágenes en las publicaciones
+            foreach (var publicacion in publicaciones)
+            {
+                publicacion.Imagenes = imagenes.Where(i => i.IdPublicacion == publicacion.IdPublicacion).ToList();
+            }
+
+            return publicaciones.ToList();
         }
 
 

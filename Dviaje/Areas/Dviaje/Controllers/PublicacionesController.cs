@@ -43,7 +43,9 @@ namespace Dviaje.Areas.Dviaje.Controllers
                     Puntuacion = p.Puntuacion ?? 0,
                     NumeroResenas = p.NumeroResenas ?? 0,
                     Descripcion = p.Descripcion,
-                    Imagenes = new List<PublicacionImagenVM> { new PublicacionImagenVM { Ruta = p.ImagenPrincipal } },
+                    Imagenes = p.Imagenes.Any()
+                        ? p.Imagenes
+                        : new List<PublicacionImagenVM> { new PublicacionImagenVM { Ruta = p.ImagenPrincipal } }, // Asigna la imagen principal si no hay lista
                     Categorias = new List<CategoriaVM> { new CategoriaVM { NombreCategoria = p.NombreCategoria } }
                 }).ToList());
             }
@@ -66,6 +68,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
             return View(listaPublicaciones);
         }
+
 
         // Acción para mostrar el detalle de una publicación
         [Route("publicacion/{id?}")]

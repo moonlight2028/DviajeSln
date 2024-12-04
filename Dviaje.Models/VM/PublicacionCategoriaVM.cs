@@ -10,8 +10,8 @@
         public decimal Precio { get; set; }
         public string Direccion { get; set; }
         public string PublicacionEstado { get; set; }
-        public string ImagenPrincipal { get; set; }
+        public string? ImagenPrincipal { get; set; } // (puede ser null si no existe)
+        public List<PublicacionImagenVM> Imagenes { get; set; } = new(); // Lista de imágenes asociadas
         public string NombreCategoria { get; set; }
     }
-
 }
