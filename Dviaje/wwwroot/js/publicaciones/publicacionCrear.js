@@ -1,4 +1,5 @@
 ﻿import { galeriaImagenes } from "../general/galeriaFancybox.js";
+import { validacionInputFechas } from "../general/inputsFechas.js";
 
 
 galeriaImagenes();
@@ -48,7 +49,7 @@ const pasos = [
                         <textarea id="titulo" aria-required="true"
                                     class="input-field input-field-textarea" placeholder="Título"
                                     maxlength="50"></textarea>
-                        <span class="input-placeholder">Título</span>
+                        <span class="input-placeholder">Título*</span>
                     </label>
                     <p class="contador-text">0/50</p>
                 </div>
@@ -58,14 +59,14 @@ const pasos = [
                         <textarea id="descripcion" aria-required="true"
                                     class="input-field input-field-textarea" placeholder="Descripción"
                                     maxlength="500"></textarea>
-                        <span class="input-placeholder">Descripción</span>
+                        <span class="input-placeholder">Descripción*</span>
                     </label>
                     <p class="contador-text">0/500</p>
                 </div>
             </div>
         `,
         renderizarImagen: () => `<img src="https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagen datos básicos en crear publicación" class="img-f" />`,
-        renderizarTitulo: () => `<h1>Información Básica: Descubre lo esencial, vive la experiencia.</h1>`,
+        renderizarTitulo: () => `<h1>Descubre lo esencial, vive la experiencia.</h1>`,
         guardar: () => {
             datos.titulo = document.getElementById('titulo').value.trim();
             datos.descripcion = document.getElementById('descripcion').value.trim();
@@ -96,14 +97,14 @@ const pasos = [
                         <textarea id="direccion" aria-required="true"
                                     class="input-field input-field-textarea" placeholder="Título"
                                     maxlength="50"></textarea>
-                        <span class="input-placeholder">Dirección</span>
+                        <span class="input-placeholder">Dirección*</span>
                     </label>
                     <p class="contador-text">0/100</p>
                 </div>
             </div>
         `,
         renderizarImagen: () => `<img src="https://images.unsplash.com/photo-1479888230021-c24f136d849f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagen dirección en crear publicación" class="img-f" />`,
-        renderizarTitulo: () => `<h1>Información Básica: Tu punto de partida hacia la aventura.</h1>`,
+        renderizarTitulo: () => `<h1>Tu punto de partida hacia la aventura.</h1>`,
         guardar: () => {
             datos.direccion = document.getElementById('direccion').value.trim();
         },
@@ -159,7 +160,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Categorías: Explora, elige y vive tu próximo destino.</h1>
+            <h1>Descubre la categoría perfecta para destacar.</h1>
         `,
         guardar: () => {},
         validar: () => {
@@ -225,7 +226,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Propiedades: Encuentra el lugar perfecto para tu estancia.</h1>
+            <h1>Encuentra el lugar perfecto para tu estancia.</h1>
         `,
         guardar: () => { },
         validar: () => { return !!datos.propiedadSeleccionada; },
@@ -303,7 +304,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Servicios: Todo lo que necesitas para una experiencia inolvidable.</h1>
+            <h1>Todo lo que necesitas para una experiencia inolvidable.</h1>
         `,
         guardar: () => {
             // Guardar los servicios seleccionados
@@ -382,7 +383,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Restricciones: Conoce los detalles, disfruta sin sorpresas</h1>
+            <h1>Define los detalles, asegura una experiencia transparente.</h1>
         `,
         guardar: () => {
             // Guardar los servicios seleccionados
@@ -407,36 +408,38 @@ const pasos = [
         renderizar: async () => {
             return `
                 <h2>Detalles</h2>
-                <div>
-                    <label for="huespedes">Cantidad de Huespedes:</label>
-                    <div class="input-group">
-                        <button type="button" class="btn-decrement" data-target="huespedes"><i class="fas fa-minus"></i></button>
-                        <input type="number" value="${datos.huespedes || 0}" id="huespedes" min="1" max="50" />
-                        <button type="button" class="btn-increment" data-target="huespedes"><i class="fas fa-plus"></i></button>
+                <div class="contenedor-detalles">
+                    <div>
+                        <label for="huespedes">Cantidad de Huespedes*</label>
+                        <div class="input-group">
+                            <button type="button" class="btn-decrement" data-target="huespedes"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="${datos.huespedes || 0}" id="huespedes" min="1" max="50" />
+                            <button type="button" class="btn-increment" data-target="huespedes"><i class="fas fa-plus"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label for="recamaras">Cantidad de Recamaras:</label>
-                    <div class="input-group">
-                        <button type="button" class="btn-decrement" data-target="recamaras"><i class="fas fa-minus"></i></button>
-                        <input type="number" value="${datos.recamaras || 0}" id="recamaras" min="1" max="50" />
-                        <button type="button" class="btn-increment" data-target="recamaras"><i class="fas fa-plus"></i></button>
+                    <div>
+                        <label for="recamaras">Cantidad de Recamaras</label>
+                        <div class="input-group">
+                            <button type="button" class="btn-decrement" data-target="recamaras"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="${datos.recamaras || 0}" id="recamaras" min="1" max="50" />
+                            <button type="button" class="btn-increment" data-target="recamaras"><i class="fas fa-plus"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label for="camas">Numero de Camas:</label>
-                    <div class="input-group">
-                        <button type="button" class="btn-decrement" data-target="camas"><i class="fas fa-minus"></i></button>
-                        <input type="number" value="${datos.numeroCamas || 0}" id="camas" min="1" max="50" />
-                        <button type="button" class="btn-increment" data-target="camas"><i class="fas fa-plus"></i></button>
+                    <div>
+                        <label for="camas">Numero de Camas</label>
+                        <div class="input-group">
+                            <button type="button" class="btn-decrement" data-target="camas"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="${datos.numeroCamas || 0}" id="camas" min="1" max="50" />
+                            <button type="button" class="btn-increment" data-target="camas"><i class="fas fa-plus"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label for="banios">Numero de Baños:</label>
-                    <div class="input-group">
-                        <button type="button" class="btn-decrement" data-target="banios"><i class="fas fa-minus"></i></button>
-                        <input type="number" value="${datos.banios || 0}" id="banios" min="1" max="50" />
-                        <button type="button" class="btn-increment" data-target="banios"><i class="fas fa-plus"></i></button>
+                    <div>
+                        <label for="banios">Numero de Baños</label>
+                        <div class="input-group">
+                            <button type="button" class="btn-decrement" data-target="banios"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="${datos.banios || 0}" id="banios" min="1" max="50" />
+                            <button type="button" class="btn-increment" data-target="banios"><i class="fas fa-plus"></i></button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -447,7 +450,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Diseña tu experiencia con cada opción a tu medida.</h1>
+            <h1>Diseña cada opción para ofrecer experiencias únicas.</h1>
         `,
         guardar: () => {
             datos.huespedes = parseInt(document.getElementById("huespedes").value, 10);
@@ -501,7 +504,7 @@ const pasos = [
                 <h2>Imágenes</h2>
                 <div>
                     <section class="upload-container">
-                        <h2>Arrastra y Suelta Tus Imágenes</h2>
+                        <h2>Carga al menos 5 imágenes.</h2>
                         <div id="drop-zone" class="drop-zone">
                             <p>Arrastra y suelta tus imágenes aquí o haz clic para cargar</p>
                             <input type="file" id="imageInput" name="imagenes" accept="image/*" multiple>
@@ -517,7 +520,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Carga tus imágenes: Comparte momentos, crea recuerdos.</h1>
+            <h1>Muestra tu espacio, inspira experiencias.</h1>
         `,
         guardar: () => { },
         validar: () => { return datos.imagenes.length > 4; },
@@ -657,7 +660,7 @@ const pasos = [
                 class="img-f" />
         `,
         renderizarTitulo: () => `
-            <h1>Fechas no disponibles: Planifica con anticipación, asegura tu aventura.</h1>
+            <h1>Planifica con anticipación.</h1>
         `,
         guardar: () => { },
         validar: () => { return true },
@@ -669,8 +672,24 @@ const pasos = [
             const fechaFinalInput = document.getElementById('booking-busqueda-salida');
             const fechasAgregadasContainer = document.getElementById('fechas-agregadas');
             let indiceFechaNoDisponible = 0;
+            let fechaActual = new Date().toISOString().split("T")[0];
+
+            fechaInicialInput.min = fechaActual;
+            fechaInicialInput.value = fechaActual;
+            fechaFinalInput.min = fechaActual;
+            fechaFinalInput.value = fechaActual;
 
             agregarValidacionBoton('.button-87-main', pasos[pasoActual].validar);
+
+            fechaInicialInput.addEventListener("change", (e) => {
+                e.stopPropagation();
+
+                fechaFinalInput.min = fechaInicialInput.value;
+
+                if (new Date(fechaFinalInput.value) < new Date(fechaInicialInput.value)) {
+                    fechaFinalInput.value = fechaInicialInput.value;
+                }
+            });
 
             // Función para agregar fechas
             const agregarFecha = () => {
@@ -715,8 +734,10 @@ const pasos = [
                 fechasAgregadasContainer.appendChild(fechaItem);
 
                 // Limpiar los campos de entrada
-                fechaInicialInput.value = '';
-                fechaFinalInput.value = '';
+                fechaInicialInput.min = fechaActual;
+                fechaInicialInput.value = fechaActual;
+                fechaFinalInput.min = fechaActual;
+                fechaFinalInput.value = fechaActual;
 
                 // Incrementar el índice
                 indiceFechaNoDisponible++;
@@ -763,7 +784,7 @@ const pasos = [
                 class="img-f" 
             />
         `,
-        renderizarTitulo: () => `<h1>Precio por Noche</h1>`,
+        renderizarTitulo: () => `<h1>Establece el valor de cada noche inolvidable.</h1>`,
         guardar: () => {
             const precioInput = document.getElementById('precio');
             datos.precioNoche = parseFloat(precioInput.value.trim());
