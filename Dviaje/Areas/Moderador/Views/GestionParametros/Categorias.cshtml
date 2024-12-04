@@ -162,13 +162,13 @@
                         data: 'idCategoria',
                         render: function (data) {
                             return `
-                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </button>
-                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">
-                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                        </button>
-                                    `;
+                                    <button class="btn btn-warning btn-sm editar" data-id="${data}">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <button class="btn btn-danger btn-sm eliminar" data-id="${data}">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </button>
+                                `;
                         }
                     }
                 ],
@@ -177,29 +177,30 @@
                 scrollX: true, // Habilita scroll horizontal para tablas grandes
             });
 
+            // Crear nueva categoría
             $('#btnCrearCategoria').on('click', function () {
                 $('#modalCategoriaLabel').text('Crear Categoría');
                 $('#formCategoria')[0].reset();
-                $('#hiddenFieldContainer').html('');
+                $('#hiddenFieldContainer').empty(); // Asegurarse de eliminar cualquier campo de ID
                 $('#modalCategoria').modal('show');
             });
 
+            // Guardar o actualizar categoría
             $('#formCategoria').on('submit', function (e) {
                 e.preventDefault();
                 const id = $('#IdCategoria').val();
-                const url = id ? `/Moderador/categorias/actualizar` : `/Moderador/categorias/crear`;
+                const url = id ? '/Moderador/categorias/actualizar' : '/Moderador/categorias/crear';
                 const type = id ? 'PUT' : 'POST';
+
                 $.ajax({
                     url: url,
                     type: type,
                     data: $(this).serialize(),
                     success: function (response) {
+                        alert(response.message || 'Operación realizada con éxito.');
                         if (response.success) {
-                            alert(response.message);
                             $('#modalCategoria').modal('hide');
                             tabla.ajax.reload();
-                        } else {
-                            alert(response.message);
                         }
                     },
                     error: function (xhr) {
@@ -209,13 +210,14 @@
                 });
             });
 
+            // Editar categoría
             $('#tablaCategorias').on('click', '.editar', function () {
                 const id = $(this).data('id');
                 $.get(`/Moderador/categorias/${id}`, function (response) {
-                    if (response.success) {
+                    if (response.success && response.data) {
                         $('#hiddenFieldContainer').html(`
-                                    <input type="hidden" id="IdCategoria" name="IdCategoria" value="${response.data.idCategoria}">
-                                `);
+                                <input type="hidden" id="IdCategoria" name="IdCategoria" value="${response.data.idCategoria}">
+                            `);
                         $('#NombreCategoria').val(response.data.nombreCategoria);
                         $('#Descripcion').val(response.data.descripcion);
                         $('#RutaIcono').val(response.data.rutaIcono);
@@ -223,6 +225,8 @@
                         $('#IdImagen').val(response.data.idImagen);
                         $('#modalCategoriaLabel').text('Editar Categoría');
                         $('#modalCategoria').modal('show');
+                    } else {
+                        alert('No se pudo cargar la categoría.');
                     }
                 }).fail(function (xhr) {
                     console.error('Error al cargar la categoría:', xhr.responseText);
@@ -230,6 +234,7 @@
                 });
             });
 
+            // Eliminar categoría
             $('#tablaCategorias').on('click', '.eliminar', function () {
                 const id = $(this).data('id');
                 if (confirm('¿Está seguro de eliminar esta categoría?')) {
@@ -237,17 +242,19 @@
                         url: `/Moderador/categorias/${id}`,
                         type: 'DELETE',
                         success: function (response) {
+                            alert(response.message || 'Categoría eliminada con éxito.');
                             if (response.success) {
-                                alert(response.message);
                                 tabla.ajax.reload();
                             }
                         },
                         error: function (xhr) {
                             console.error('Error al eliminar la categoría:', xhr.responseText);
+                            alert('Error al eliminar la categoría.');
                         }
                     });
                 }
             });
         });
     </script>
+
 }

@@ -176,7 +176,7 @@
         <button id="btnCrearServicio" class="btn btn-success">Crear Nuevo Servicio</button>
     </div>
     <table id="tablaServicios" class="table">
-        <thead>
+        <thead class="tabla-header">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
@@ -259,9 +259,9 @@
                         data: 'idServicio',
                         render: function (data) {
                             return `
-                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
-                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
-                                    `;
+                                <button class="btn btn-warning btn-sm editar" data-id="${data}">Editar</button>
+                                <button class="btn btn-danger btn-sm eliminar" data-id="${data}">Eliminar</button>
+                            `;
                         }
                     }
                 ],
@@ -275,7 +275,7 @@
             $('#btnCrearServicio').on('click', function () {
                 $('#modalServicioLabel').text('Crear Servicio');
                 $('#formServicio')[0].reset();
-                $('#IdServicio').remove(); // Quita el campo oculto para la creación
+                $('#IdServicio').remove(); // Asegúrate de quitar el campo oculto si existe
                 $('#modalServicio').modal('show');
             });
 
@@ -283,7 +283,7 @@
             $('#formServicio').on('submit', function (e) {
                 e.preventDefault();
 
-                const id = $('#IdServicio').val();
+                const id = $('#IdServicio').val(); // Obtenemos el ID si existe
                 const url = id ? `/Moderador/servicios/actualizar` : `/Moderador/servicios/crear`;
                 const type = id ? 'PUT' : 'POST';
 
@@ -312,7 +312,10 @@
                 const id = $(this).data('id');
                 $.get(`/Moderador/servicios/obtener/${id}`, function (response) {
                     if (response.success) {
-                        $('#modalServicio').find('.modal-body').prepend('<input type="hidden" id="IdServicio" name="IdServicio">'); // Agrega el campo oculto para la edición
+                        // Asegúrate de que el campo oculto para el ID existe
+                        if (!$('#IdServicio').length) {
+                            $('#modalServicio').find('.modal-body').prepend('<input type="hidden" id="IdServicio" name="IdServicio">');
+                        }
                         $('#IdServicio').val(response.data.idServicio);
                         $('#NombreServicio').val(response.data.nombreServicio);
                         $('#RutaIcono').val(response.data.rutaIcono);
@@ -351,5 +354,6 @@
                 }
             });
         });
+
     </script>
 }
