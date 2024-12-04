@@ -25,6 +25,7 @@
 }
 else
 {
+    <div class="c-r">
     <div class="main">
         <!-- Publicaciones -->
         <div class="resultados">
@@ -165,70 +166,10 @@ else
         <!-- Paginación -->
         <div class="paginacion" id="paginacion" data-paginacion-paginas="@ViewBag.PaginacionPaginas" data-paginacion-items="@ViewBag.PaginacionItems" data-paginacion-resultados="@ViewBag.PaginacionResultados"></div>
     </div>
-
+    </div>
 }
-
-
 
 
 @section Scripts {
     <script src="~/js/publicaciones/publicacionesMisPublicaciones.js" type="module"></script>
 }
-
-
-
-@* <h2>Mis Publicaciones</h2>
-
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-
-@if (!Model.Any())
-{
-    <p>No tienes publicaciones creadas.</p>
-}
-else
-{
-    <div class="row">
-        @foreach (var publicacion in Model)
-        {
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="@publicacion.Imagenes.FirstOrDefault()?.Ruta" class="card-img-top" alt="@publicacion.Titulo" />
-                    <div class="card-body">
-                        <h5 class="card-title">@publicacion.Titulo</h5>
-                        <p class="card-text">@publicacion.Descripcion</p>
-                        <p class="card-text"><strong>Precio:</strong> $@publicacion.Precio</p>
-                        <p class="card-text"><strong>Puntuación:</strong> @publicacion.Puntuacion</p>
-                        <a asp-action="Editar" asp-route-id="@publicacion.IdPublicacion" class="btn btn-warning">Editar</a>
-                        <button class="btn btn-danger eliminar-publicacion" data-id="@publicacion.IdPublicacion">Eliminar</button>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-} *@
-
-@* <script>
-    // document.querySelectorAll('.eliminar-publicacion').forEach(button => {
-    //     button.addEventListener('click', async function () {
-    //         const id = this.getAttribute('data-id');
-    //         if (confirm('¿Estás seguro de eliminar esta publicación?')) {
-    //             const response = await fetch(`/Aliado/Publicaciones/publicacion/estado?id=${id}`, {
-    //                 method: 'DELETE'
-    //             });
-    //             if (response.ok) {
-    //                 location.reload();
-    //             } else {
-    //                 alert('Error al eliminar la publicación.');
-    //             }
-    //         }
-    //     });
-    // });
-</script> *@
