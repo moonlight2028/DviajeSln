@@ -88,5 +88,18 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
             return View(publicacion);
         }
+
+
+        [Route("publicacion/imagen/{id?}")]
+        public async Task<IActionResult> PublicacionImagen(int? id)
+        {
+            if (id is < 1)
+                return NotFound("Id de publicación incorrecto");
+
+            var publicacion = await _publicacionesRepository.ObtenerPublicacionTarjetaImagenVMAsync(id.Value);
+            return publicacion != null
+                ? Ok(publicacion)
+                : NotFound("Publicación no encontrada.");
+        }
     }
 }
