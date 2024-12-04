@@ -13,144 +13,144 @@
     <link rel="stylesheet" href="~/css/pqrs/pqrs.css">
 }
 
-
-<div class="contenedor-pqrs">
-    <section class="datos b-s-95">
-        <section>
-            <h1>Preguntas Frecuentes</h1>
-            <div class="accordion">
-                <div class="accordion-item">
-                    <button class="accordion-button" id="accordion-button-1" aria-expanded="false">
-                        <span class="accordion-title">¿Cómo puedo hacer una reserva?</span>
-                        <span class="icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="accordion-content">
-                        <p>
-                            Para hacer una reserva, simplemente navega a la sección de "Reservas" en nuestra
-                            página
-                            web,
-                            selecciona el destino y las fechas de tu viaje, y sigue las instrucciones para
-                            completar
-                            tu
-                            reserva.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion">
-                <div class="accordion-item">
-                    <button class="accordion-button" id="accordion-button-2" aria-expanded="false">
-                        <span class="accordion-title">¿Es seguro pagar en línea?</span>
-                        <span class="icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="accordion-content">
-                        <p>
-                            Sí, nuestra página utiliza tecnologías de encriptación avanzadas para garantizar que
-                            tus
-                            datos personales y de pago estén seguros.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion">
-                <div class="accordion-item">
-                    <button class="accordion-button" id="accordion-button-3" aria-expanded="false">
-                        <span class="accordion-title">¿Puedo cancelar o modificar mi reserva?</span>
-                        <span class="icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="accordion-content">
-                        <p>
-                            Sí, puedes cancelar o modificar tu reserva a través de la sección "Mi Cuenta" en
-                            nuestra
-                            página web. Ten en cuenta que pueden aplicarse políticas de cancelación y cargos
-                            adicionales.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <form asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs" method="post" enctype="multipart/form-data" id="form-pqrs" class="pqrs">
-            <div class="pqrs-inputs">
-                @if (!ViewBag.SesionIniciada)
-                {
-                    <div>
-                        <label asp-for="Correo" class="input-label">
-                            <input asp-for="Correo" type="email" autocomplete="on" aria-required="true"
-                                   class="input-field" placeholder="Correo" />
-                            <span class="input-placeholder">Correo</span>
-                        </label>
-                        <span asp-validation-for="Correo" class="validation-message"></span>
-                    </div>
-                    <div>
-                        <label asp-for="Nombre" class="input-label">
-                            <input asp-for="Nombre" type="text" autocomplete="on" aria-required="true"
-                                   class="input-field" placeholder="Nombres" />
-                            <span class="input-placeholder">Nombres</span>
-                        </label>
-                        <span asp-validation-for="Nombre" class="validation-message"></span>
-                    </div>
-                    <div>
-                        <label asp-for="Apellidos" class="input-label">
-                            <input asp-for="Apellidos" type="text" autocomplete="on" aria-required="true"
-                                   class="input-field" placeholder="Apellidos" />
-                            <span class="input-placeholder">Apellidos</span>
-                        </label>
-                        <span asp-validation-for="Apellidos" class="validation-message"></span>
-                    </div>
-                    <div>
-                        <label asp-for="Telefono" class="input-label">
-                            <input asp-for="Telefono" type="tel" autocomplete="on" aria-required="true"
-                                   class="input-field" placeholder="Correo" />
-                            <span class="input-placeholder">Telefono</span>
-                        </label>
-                        <span asp-validation-for="Telefono" class="validation-message"></span>
-                    </div>
-                }
-                <div>
-                    <div class="contenedor-select">
-                        @Html.DropDownListFor(model => model.AtencionesViajerosTipoPqrs,
-                                 Enum.GetValues(typeof(AtencionesViajerosTipoPqrs))
-                                 .Cast<AtencionesViajerosTipoPqrs>()
-                                 .Select(e => new SelectListItem
-                        {
-                            Text = e.ToString(),
-                            Value = ((int)e).ToString()
-                        }),
-                                 new { @class = "input-label input-select" }
-                                 )
-                        <div class="select-icono">
-                            <i class="fa-solid fa-chevron-down"></i>
+<div class="c-r">
+    <div class="contenedor-pqrs">
+        <section class="datos b-s-95">
+            <section>
+                <h1>Preguntas Frecuentes</h1>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-1" aria-expanded="false">
+                            <span class="accordion-title">¿Cómo puedo hacer una reserva?</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>
+                                Para hacer una reserva, simplemente navega a la sección de "Reservas" en nuestra
+                                página
+                                web,
+                                selecciona el destino y las fechas de tu viaje, y sigue las instrucciones para
+                                completar
+                                tu
+                                reserva.
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label asp-for="Descripcion" class="input-label">
-                        <textarea asp-for="Descripcion" aria-required="true"
-                                  class="input-field input-field-textarea" placeholder="Descripción"
-                                  maxlength="250"></textarea>
-                        <span class="input-placeholder">Descripción</span>
-                    </label>
-                    <span asp-validation-for="Descripcion" class="validation-message"></span>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-2" aria-expanded="false">
+                            <span class="accordion-title">¿Es seguro pagar en línea?</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>
+                                Sí, nuestra página utiliza tecnologías de encriptación avanzadas para garantizar que
+                                tus
+                                datos personales y de pago estén seguros.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="upload-container">
-                <input type="file" id="fileInput" name="archivos" multiple accept=".jpg, .jpeg, .png, .webp, .pdf" />
-                <div class="file-drop-zone">
-                    Arrastra y suelta archivos aquí o haz clic para seleccionar
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" id="accordion-button-3" aria-expanded="false">
+                            <span class="accordion-title">¿Puedo cancelar o modificar mi reserva?</span>
+                            <span class="icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>
+                                Sí, puedes cancelar o modificar tu reserva a través de la sección "Mi Cuenta" en
+                                nuestra
+                                página web. Ten en cuenta que pueden aplicarse políticas de cancelación y cargos
+                                adicionales.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <ul id="fileList"></ul>
-            </div>
+            </section>
 
-            <button class="button-87-main" type="submit">Enviar PQRS</button>
-        </form>
-    </section>
-    <div class="pqrs-imagen">
-        <img src="https://images.unsplash.com/photo-1548504769-900b70ed122e?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cundinamarca" class="img-f">
+            <form asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs" method="post" enctype="multipart/form-data" id="form-pqrs" class="pqrs">
+                <div class="pqrs-inputs">
+                    @if (!ViewBag.SesionIniciada)
+                    {
+                        <div>
+                            <label asp-for="Correo" class="input-label">
+                                <input asp-for="Correo" type="email" autocomplete="on" aria-required="true"
+                                       class="input-field" placeholder="Correo" />
+                                <span class="input-placeholder">Correo</span>
+                            </label>
+                            <span asp-validation-for="Correo" class="validation-message"></span>
+                        </div>
+                        <div>
+                            <label asp-for="Nombre" class="input-label">
+                                <input asp-for="Nombre" type="text" autocomplete="on" aria-required="true"
+                                       class="input-field" placeholder="Nombres" />
+                                <span class="input-placeholder">Nombres</span>
+                            </label>
+                            <span asp-validation-for="Nombre" class="validation-message"></span>
+                        </div>
+                        <div>
+                            <label asp-for="Apellidos" class="input-label">
+                                <input asp-for="Apellidos" type="text" autocomplete="on" aria-required="true"
+                                       class="input-field" placeholder="Apellidos" />
+                                <span class="input-placeholder">Apellidos</span>
+                            </label>
+                            <span asp-validation-for="Apellidos" class="validation-message"></span>
+                        </div>
+                        <div>
+                            <label asp-for="Telefono" class="input-label">
+                                <input asp-for="Telefono" type="tel" autocomplete="on" aria-required="true"
+                                       class="input-field" placeholder="Correo" />
+                                <span class="input-placeholder">Telefono</span>
+                            </label>
+                            <span asp-validation-for="Telefono" class="validation-message"></span>
+                        </div>
+                    }
+                    <div>
+                        <div class="contenedor-select">
+                            @Html.DropDownListFor(model => model.AtencionesViajerosTipoPqrs,
+                                     Enum.GetValues(typeof(AtencionesViajerosTipoPqrs))
+                                     .Cast<AtencionesViajerosTipoPqrs>()
+                                     .Select(e => new SelectListItem
+                            {
+                                Text = e.ToString(),
+                                Value = ((int)e).ToString()
+                            }),
+                                     new { @class = "input-label input-select" }
+                                     )
+                            <div class="select-icono">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label asp-for="Descripcion" class="input-label">
+                            <textarea asp-for="Descripcion" aria-required="true"
+                                      class="input-field input-field-textarea" placeholder="Descripción"
+                                      maxlength="250"></textarea>
+                            <span class="input-placeholder">Descripción</span>
+                        </label>
+                        <span asp-validation-for="Descripcion" class="validation-message"></span>
+                    </div>
+                </div>
+
+                <div class="upload-container">
+                    <input type="file" id="fileInput" name="archivos" multiple accept=".jpg, .jpeg, .png, .webp, .pdf" />
+                    <div class="file-drop-zone">
+                        Arrastra y suelta archivos aquí o haz clic para seleccionar
+                    </div>
+                    <ul id="fileList"></ul>
+                </div>
+
+                <button class="button-87-main" type="submit">Enviar PQRS</button>
+            </form>
+        </section>
+        <div class="pqrs-imagen">
+            <img src="https://images.unsplash.com/photo-1548504769-900b70ed122e?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cundinamarca" class="img-f">
+        </div>
     </div>
 </div>
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
