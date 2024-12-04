@@ -17,50 +17,47 @@
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <div class="contenedor-nav-main">
-            <nav class="nav-main">
-                <ul class="nav-main-ul">
-                    <li>
-                        <a asp-area="Dviaje" asp-controller="Inicio" asp-action="Index">
-                            <!-- Optimizar imagen del logo -->
-                            <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
-                        </a>
-                    </li>
-                    <!-- Items de escritorio -->
-                    <div class="nav-main-items">
-                        <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
-                        <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
-                    </div>
-                    <div class="nav-main-botones">
-                        <partial name="_SinIngresoPartial" />
-                        <partial name="_LoginPartial" />
+    <header class="b-s-11">
+        <nav class="c-r">
+            <ul class="nav-main-ul">
+                <li>
+                    <a asp-area="Dviaje" asp-controller="Inicio" asp-action="Index" class="logo-a">
+                        <!-- Optimizar imagen del logo -->
+                        <img class="nav-main-logo" src="~/img/logoDViaje.webp" alt="logo de DViaje">
+                    </a>
+                </li>
+                <!-- Items de escritorio -->
+@*                 <div class="nav-main-items"></div> *@
+                <div class="nav-main-botones">
+                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones">Publicaciones</a></li>
+                    <li><a class="nav-main-a" asp-area="Dviaje" asp-controller="Pqrs" asp-action="Pqrs">PQRS</a></li>
+                    <partial name="_SinIngresoPartial" />
+                    <partial name="_LoginPartial" />
                     
-                        <!-- Items de mobile -->
-                        <div class="menu-desplegable menu-nav-mobile">
-                            <button class="menu-desplegable-boton menu-main-mobile">
-                                <i class="fa-solid fa-bars"></i>
-                            </button>
-                            <div class="menu-desplegable-contenido b-s-95">
-                                <div>
-                                    <li>
-                                        <a href="" class="">Publicaciones</a>
-                                    </li>
-                                </div>
-                                <div>
-                                    <li>
-                                        <a href="" class="">PQRS</a>
-                                    </li>
-                                </div>
-                                <div class="ingreso-parcial-botones">
-                                    <partial name="_SinIngresoPartial" />
-                                </div>
+                    <!-- Items de mobile -->
+                    <div class="menu-desplegable menu-nav-mobile">
+                        <button class="menu-desplegable-boton menu-main-mobile">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <div class="menu-desplegable-contenido b-s-95">
+                            <div>
+                                <li>
+                                    <a href="" class="">Publicaciones</a>
+                                </li>
+                            </div>
+                            <div>
+                                <li>
+                                    <a href="" class="">PQRS</a>
+                                </li>
+                            </div>
+                            <div class="ingreso-parcial-botones">
+                                <partial name="_SinIngresoPartial" />
                             </div>
                         </div>
                     </div>
-                </ul>
-            </nav>
-        </div>
+                </div>
+            </ul>
+        </nav>
     </header>
 
 
