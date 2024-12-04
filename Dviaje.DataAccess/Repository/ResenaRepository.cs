@@ -301,5 +301,38 @@ namespace Dviaje.DataAccess.Repository
 
             return await _db.QuerySingleAsync<int>(consulta, new { IdUsuario = idUsuairo });
         }
+
+        public async Task<List<ResenaTarjetaBasicaVM>?> ObtenerTopResenaTarjetaBasicaVMAsync(int idPublicacion)
+        {
+            var consulta = @"
+                SELECT 
+                    r.IdResena,
+                    r.Calificacion AS Puntuacion,
+                    r.Opinion AS Descripcion,
+                    r.Fecha,
+                    r.MeGusta AS NumeroLikes,
+                    u.UserName AS NombreTurista,
+                    u.Avatar AS AvatarTurista,
+                    u.Id AS IdTurista
+                FROM 
+                    resenas r
+                INNER JOIN 
+                    reservas rv ON r.IdReserva = rv.IdReserva
+                INNER JOIN 
+                    publicaciones p ON rv.IdPublicacion = p.IdPublicacion
+                INNER JOIN 
+                    aspnetusers u ON rv.IdUsuario = u.Id
+                WHERE 
+                    p.IdPublicacion = @IdPublicacion
+                ORDER BY 
+                    r.Calificacion DESC, 
+                    r.Fecha DESC
+                LIMIT 3;
+            ";
+
+            var mejoresResenas = await _db.QueryAsync<ResenaTarjetaBasicaVM>(consulta, new { IdPublicacion = idPublicacion });
+
+            return mejoresResenas.ToList();
+        }
     }
 }

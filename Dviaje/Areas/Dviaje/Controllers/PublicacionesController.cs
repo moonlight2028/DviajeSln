@@ -8,10 +8,13 @@ namespace Dviaje.Areas.Dviaje.Controllers
     public class PublicacionesController : Controller
     {
         private readonly IPublicacionesRepository _publicacionesRepository;
+        private readonly IResenasRepository _resenasRepository;
 
-        public PublicacionesController(IPublicacionesRepository publicacionesRepository)
+
+        public PublicacionesController(IPublicacionesRepository publicacionesRepository, IResenasRepository resenasRepository)
         {
             _publicacionesRepository = publicacionesRepository;
+            _resenasRepository = resenasRepository;
         }
 
         // Acción para mostrar el listado de publicaciones
@@ -78,6 +81,10 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
             var publicacion = await _publicacionesRepository.ObtenerPublicacionDetalleVMAsync((int)id);
             if (publicacion is null) return RedirectToAction(nameof(Publicaciones));
+
+            var resenas = await _resenasRepository.ObtenerTopResenaTarjetaBasicaVMAsync(publicacion.IdPublicacion);
+            publicacion.TopResenas = resenas;
+
 
             return View(publicacion);
         }

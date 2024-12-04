@@ -258,124 +258,53 @@
     </div>
 </section>
 
-<div class="resena-contenedor">
-    <h2>Reseñas Reales, Experiencias Únicas</h2>
-    <section class="resenas">
-        <article class="resena-tarjeta b-s-95">
-            <a href="" class="resena-avatar b-s-93">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
-                     alt="" class="img-f">
-            </a>
-            <p>
-                La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse
-                a
-                estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar
-                constantemente es esencial en un mundo donde la innovación es la norma diaria.
-            </p>
-            <div class="hr"></div>
 
-            <div class="resena-footer">
-                <div class="resena-usuario">
-                    <a href="">Usuario</a>
-                    <span>11 de Diciembre 2024</span>
-                </div>
-                <div class="resena-estrellas">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <div class="resena-puntuacion" style="width: 60%;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="resena-like">
-                <i class="fa-regular fa-thumbs-up"></i>
-                <span>1.500</span>
-            </div>
-        </article>
-        <article class="resena-tarjeta b-s-95">
-            <a href="" class="resena-avatar b-s-93">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
-                     alt="" class="img-f">
-            </a>
-            <p>
-                La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse
-                a
-                estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar
-            </p>
-            <div class="hr"></div>
+@if(Model.TopResenas != null && Model.TopResenas.Any())
+{
+    <div class="c-r">
+    <div class="resena-contenedor">
+        <h2>Experiencias Únicas</h2>
+        <section class="resenas">
+            @foreach (var resena in Model.TopResenas)
+            {
+                <article class="resena-tarjeta b-s-95">
+                    <a href="" class="resena-avatar b-s-93">
+                        <img src="@resena.AvatarTurista" alt="@($"Avatar del turista {resena.NombreTurista}")" class="img-f">
+                    </a>
+                    <p>@resena.Descripcion</p>
+                    <div class="hr"></div>
 
-            <div class="resena-footer">
-                <div class="resena-usuario">
-                    <a href="">Usuario</a>
-                    <span>11 de Diciembre 2024</span>
-                </div>
-                <div class="resena-estrellas">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <div class="resena-puntuacion" style="width: 60%;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                    <div class="resena-footer">
+                        <div class="resena-usuario">
+                            <a href="">@resena.NombreTurista</a>
+                            <span>@resena.Fecha.ToString()</span>
+                        </div>
+                        <div class="resena-estrellas">
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <div class="resena-puntuacion" style="@($"width: {(resena.Puntuacion / 5.0m) * 100}%")">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="resena-like">
-                <i class="fa-regular fa-thumbs-up"></i>
-                <span>1.500</span>
-            </div>
-        </article>
-        <article class="resena-tarjeta b-s-95">
-            <a href="" class="resena-avatar b-s-93">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww"
-                     alt="" class="img-f">
-            </a>
-            <p>
-                La tecnología avanza rápidamente, transformando la forma en que vivimos y trabajamos. Adaptarse
-                a
-                estos cambios es clave para mantenerse competitivo. Aprender nuevas habilidades y mejorar
-                constantemente es esencial en un mundo donde la innovación es la norma diaria.
-            </p>
-            <div class="hr"></div>
+                    <div class="resena-like">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                        <span>@resena.NumeroLikes</span>
+                    </div>
+                </article>
+            }
+        </section>
+    </div>
+    </div>
+}
 
-            <div class="resena-footer">
-                <div class="resena-usuario">
-                    <a href="">Usuario</a>
-                    <span>11 de Diciembre 2024</span>
-                </div>
-                <div class="resena-estrellas">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <div class="resena-puntuacion" style="width: 60%;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="resena-like">
-                <i class="fa-regular fa-thumbs-up"></i>
-                <span>1.500</span>
-            </div>
-        </article>
-    </section>
-</div>
 
 
 @section Scripts {
