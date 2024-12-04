@@ -128,13 +128,13 @@
                         data: 'idRestriccion',
                         render: function (data) {
                             return `
-                                        <button class="btn btn-warning btn-sm editar" data-id="${data}">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </button>
-                                        <button class="btn btn-danger btn-sm eliminar" data-id="${data}">
-                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                        </button>
-                                    `;
+                                <button class="btn btn-warning btn-sm editar" data-id="${data}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-danger btn-sm eliminar" data-id="${data}">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </button>
+                            `;
                         }
                     }
                 ],
@@ -146,7 +146,7 @@
             $('#btnCrearRestriccion').on('click', function () {
                 $('#modalRestriccion').find('.modal-title').text('Crear Restricción');
                 $('#formRestriccion')[0].reset();
-                $('#hiddenFieldContainer').html('');
+                $('#hiddenFieldContainer').html(''); // Asegura que no haya campo oculto de ID
                 $('#modalRestriccion').modal('show');
             });
 
@@ -179,10 +179,9 @@
                 const id = $(this).data('id');
                 $.get(`/Moderador/restricciones/obtener/${id}`, function (response) {
                     if (response.success) {
-                        $('#IdRestriccion').val(response.data.idRestriccion);
                         $('#hiddenFieldContainer').html(`
-                                    <input type="hidden" id="IdRestriccion" name="IdRestriccion" value="${response.data.idRestriccion}">
-                                `);
+                            <input type="hidden" id="IdRestriccion" name="IdRestriccion" value="${response.data.idRestriccion}">
+                        `); // Crea el campo oculto dinámicamente
                         $('#NombreRestriccion').val(response.data.nombreRestriccion);
                         $('#RutaIcono').val(response.data.rutaIcono);
                         $('#modalRestriccion').find('.modal-title').text('Editar Restricción');
@@ -211,5 +210,6 @@
                 }
             });
         });
+
     </script>
 }

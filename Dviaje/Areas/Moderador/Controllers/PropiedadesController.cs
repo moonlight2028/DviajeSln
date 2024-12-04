@@ -39,7 +39,24 @@ namespace Dviaje.Areas.Moderador.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { success = false, message = "Datos inválidos." });
+                // Log de los valores de la propiedad y los errores de validación en detalle
+                Console.WriteLine("Valores de la propiedad:");
+                Console.WriteLine($"IdPropiedad: {propiedad.IdPropiedad}");
+                Console.WriteLine($"Nombre: {propiedad.Nombre}");
+                Console.WriteLine($"RutaIcono: {propiedad.RutaIcono}");
+                Console.WriteLine($"Descripcion: {propiedad.Descripcion}");
+                Console.WriteLine($"IdCategoria: {propiedad.IdCategoria}");
+
+                foreach (var modelState in ModelState)
+                {
+                    foreach (var error in modelState.Value.Errors)
+                    {
+                        Console.WriteLine($"Error de validación: {modelState.Key} - {error.ErrorMessage}");
+                    }
+                }
+
+                // Retornamos una respuesta más amigable al cliente
+                return BadRequest(new { success = false, message = "Datos inválidos. Verifique los campos." });
             }
 
             var resultado = await _propiedadesRepository.CrearPropiedadAsync(propiedad);
