@@ -27,8 +27,8 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual);
         Task<bool> RegistrarImagenes(List<PublicacionesImagenes> imagenes);
         Task<List<PublicacionTarjetaBusquedaVM>>? BuscarPublicacionesAsync(
-            int? idCategoria,
-            int? idPropiedad,
+            List<int> categorias,
+            List<int> propiedadaes,
             List<int> restricciones,
             string palabraClave,
             DateTime? fechaInicio,

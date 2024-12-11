@@ -15,6 +15,17 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
 
         [HttpGet]
+        [Route("propiedades")]
+        public async Task<IActionResult> Propiedades()
+        {
+            var propiedades = await _propiedadesRepository.ObtenerPropiedadesAsync();
+
+            if (propiedades == null || !propiedades.Any()) return NotFound("No se encontraron propiedades.");
+
+            return Ok(propiedades);
+        }
+
+        [HttpGet]
         [Route("propiedades/{id}")]
         public async Task<IActionResult> Propiedades(int id)
         {

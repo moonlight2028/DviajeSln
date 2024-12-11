@@ -21,8 +21,8 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
         [Route("publicaciones")]
         public async Task<IActionResult> Publicaciones(
-            [FromQuery(Name = "categoria")] int? idCategoria,
-            [FromQuery(Name = "propiedad")] int? idPropiedad,
+            [FromQuery(Name = "categorias")] List<int> categorias,
+            [FromQuery(Name = "propiedades")] List<int> propieades,
             [FromQuery(Name = "restricciones")] List<int> restricciones,
             [FromQuery(Name = "busqueda")] string busqueda,
             [FromQuery(Name = "fecha-inicio")] DateTime? fechaInicio,
@@ -41,7 +41,7 @@ namespace Dviaje.Areas.Dviaje.Controllers
 
 
             var publicaciones = await _publicacionesRepository.BuscarPublicacionesAsync(
-                idCategoria, idPropiedad, restricciones, busqueda, fechaInicio, fechaFin, precioMinimo, precioMaximo, ordenar, pagina, elementosPorPagina);
+                categorias, propieades, restricciones, busqueda, fechaInicio, fechaFin, precioMinimo, precioMaximo, ordenar, pagina, elementosPorPagina);
 
             if (publicaciones == null || !publicaciones.Any()) return View(publicaciones);
 

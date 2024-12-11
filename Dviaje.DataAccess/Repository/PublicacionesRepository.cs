@@ -916,8 +916,8 @@ namespace Dviaje.DataAccess.Repository
 
 
         public async Task<List<PublicacionTarjetaBusquedaVM>>? BuscarPublicacionesAsync(
-            int? idCategoria,
-            int? idPropiedad,
+            List<int> categorias,
+            List<int> propiedadaes,
             List<int> restricciones,
             string palabraClave,
             DateTime? fechaInicio,
@@ -963,8 +963,8 @@ namespace Dviaje.DataAccess.Repository
                     LEFT JOIN 
                         fechasnodisponibles fn ON p.IdPublicacion = fn.IdPublicacion
                     WHERE 
-                        (@IdCategoria IS NULL OR c.IdCategoria = @IdCategoria)
-                        AND (@IdPropiedad IS NULL OR p.IdPropiedad = @IdPropiedad)
+                        (@IdCategorias IS NULL OR c.IdCategoria IN @IdCategorias)
+                        AND (@IdPropiedades IS NULL OR p.IdPropiedad IN @IdPropiedades)
                         AND (@Restricciones IS NULL OR rp.IdRestriccion IN @Restricciones)
                         AND (@FechaInicio IS NULL OR @FechaFin IS NULL OR NOT (
                             fn.FechaInicial BETWEEN @FechaInicio AND @FechaFin 
@@ -1011,8 +1011,8 @@ namespace Dviaje.DataAccess.Repository
 
             var parametros = new
             {
-                IdCategoria = idCategoria,
-                IdPropiedad = idPropiedad,
+                IdCategorias = categorias?.Count > 0 ? categorias : null,
+                IdPropiedades = propiedadaes?.Count > 0 ? propiedadaes.ToArray() : null,
                 Restricciones = restricciones?.Count > 0 ? restricciones : null,
                 PalabraClave = !string.IsNullOrEmpty(palabraClave) ? palabraClave : null,
                 FechaInicio = fechaInicio,
