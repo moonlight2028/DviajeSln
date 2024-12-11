@@ -9,9 +9,6 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<int> PublicacionesTotalesPorIdAliadoAsync(string idAliado);
         Task<List<PublicacionTarjetaBusquedaVM>> ObtenerListaPublicacionTarjetaBusquedaVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null);
         Task<List<PublicacionMisPublicacionesVM>>? ObtenerListaPublicacionMisPublicacionesVMAsync(int pagina, int numeroPublicaciones, string? ordenarPor = null, string idAliado = "");
-
-
-
         Task<PublicacionDetalleVM?> ObtenerPublicacionDetalleVMAsync(int idPublicacion);
         Task<PublicacionResenasVM?> ObtenerPublicacionResenasVMAsync(int idPublicacion);
         Task<PublicacionTarjetaImagenVM?> ObtenerPublicacionTarjetaImagenVMAsync(int idPublicacion);
@@ -29,5 +26,18 @@ namespace Dviaje.DataAccess.Repository.IRepository
         Task<List<ReportesPublicacionesTopPublicacionesVM>?> ReporteTopPublicacionesAsync();
         Task<ReportesPublicacionesDetallesVM?> ReporteDetallesAsync(DateTime FechaActual);
         Task<bool> RegistrarImagenes(List<PublicacionesImagenes> imagenes);
+        Task<List<PublicacionTarjetaBusquedaVM>>? BuscarPublicacionesAsync(
+            int? idCategoria,
+            int? idPropiedad,
+            List<int> restricciones,
+            string palabraClave,
+            DateTime? fechaInicio,
+            DateTime? fechaFin,
+            decimal? precioMinimo,
+            decimal? precioMaximo,
+            string? ordenar = null,
+            int pagina = 1,
+            int elementosPorPagina = 10
+        );
     }
 }

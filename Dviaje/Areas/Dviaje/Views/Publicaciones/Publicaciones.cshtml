@@ -119,16 +119,14 @@
                                 <div class="publicacion-categorias">
                                     <div class="swiper-wrapper-categorias">
                                         <div class="swiper-wrapper">
-                                            @if (publicacion.Categorias != null && publicacion.Categorias.Any())
-                                            {
-                                                foreach (var categoria in publicacion.Categorias)
-                                                {
-                                                    <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@categoria.IdCategoria" class="swiper-slide swiper-slide-categorias">
-                                                        <i class="@categoria.RutaIcono"></i>
-                                                        <span class="tooltip-categoria">@categoria.NombreCategoria</span>
-                                                    </a>
-                                                }
-                                            }
+                                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categoria="@publicacion.IdCategoria" class="swiper-slide swiper-slide-categorias">
+                                                <i class="@publicacion.IconoCategoria"></i>
+                                                <span class="tooltip-categoria">@publicacion.NombreCategoria</span>
+                                            </a>
+                                            <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-propiedad="@publicacion.IdPropiedad" class="swiper-slide swiper-slide-categorias">
+                                                <i class="@publicacion.IconoPropiedad"></i>
+                                                <span class="tooltip-categoria">@publicacion.NombrePropiedad</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

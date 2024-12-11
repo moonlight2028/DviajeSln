@@ -3,6 +3,7 @@ using Dviaje.DataAccess.Repository.IRepository;
 using Dviaje.Models;
 using Dviaje.Models.VM;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Dviaje.DataAccess.Repository
 {
@@ -907,6 +908,137 @@ namespace Dviaje.DataAccess.Repository
             var filasAfectadas = await _db.ExecuteAsync(consulta, imagenes);
 
             return filasAfectadas > 0;
+        }
+
+
+
+
+
+
+        public async Task<List<PublicacionTarjetaBusquedaVM>>? BuscarPublicacionesAsync(
+            int? idCategoria,
+            int? idPropiedad,
+            List<int> restricciones,
+            string palabraClave,
+            DateTime? fechaInicio,
+            DateTime? fechaFin,
+            decimal? precioMinimo,
+            decimal? precioMaximo,
+            string? ordenar = null,
+            int pagina = 1,
+            int elementosPorPagina = 10
+        )
+        {
+            string consulta = @"
+                WITH PublicacionesFiltradas AS (
+                    SELECT DISTINCT
+                        p.IdPublicacion,
+                        p.Titulo,
+                        p.Descripcion,
+                        p.PrecioNoche AS Precio,
+                        p.Direccion,
+                        p.Puntuacion,
+                        pr.IdPropiedad,
+                        pr.Nombre AS NombrePropiedad,
+                        pr.RutaIcono AS IconoPropiedad,
+                        c.IdCategoria,
+                        c.NombreCategoria,
+                        c.RutaIcono AS IconoCategoria,
+                        a.Id AS AliadoId,
+                        a.Avatar AS AvatarAliado,
+                        a.UserName AS NombreAliado,
+                        a.NumeroPublicaciones AS TotalPublicaciones,
+                        a.Verificado,
+                        a.NumeroResenas
+                    FROM 
+                        publicaciones p
+                    INNER JOIN 
+                        propiedades pr ON p.IdPropiedad = pr.IdPropiedad
+                    INNER JOIN 
+                        categorias c ON pr.IdCategoria = c.IdCategoria
+                    INNER JOIN 
+                        aspnetusers a ON p.IdAliado = a.Id
+                    LEFT JOIN 
+                        publicacionesrestricciones rp ON p.IdPublicacion = rp.IdPublicacion
+                    LEFT JOIN 
+                        fechasnodisponibles fn ON p.IdPublicacion = fn.IdPublicacion
+                    WHERE 
+                        (@IdCategoria IS NULL OR c.IdCategoria = @IdCategoria)
+                        AND (@IdPropiedad IS NULL OR p.IdPropiedad = @IdPropiedad)
+                        AND (@Restricciones IS NULL OR rp.IdRestriccion IN @Restricciones)
+                        AND (@FechaInicio IS NULL OR @FechaFin IS NULL OR NOT (
+                            fn.FechaInicial BETWEEN @FechaInicio AND @FechaFin 
+                            OR fn.FechaFinal BETWEEN @FechaInicio AND @FechaFin
+                        ))
+                        AND (@PrecioMinimo IS NULL OR @PrecioMaximo IS NULL OR (
+                            p.PrecioNoche BETWEEN @PrecioMinimo AND @PrecioMaximo
+                        ))
+                        AND (@PalabraClave IS NULL OR TRIM(@PalabraClave) = '' OR (
+                            LOWER(p.Titulo) LIKE LOWER(CONCAT('%', @PalabraClave, '%')) OR
+                            LOWER(c.NombreCategoria) LIKE LOWER(CONCAT('%', @PalabraClave, '%')) OR
+                            LOWER(pr.Nombre) LIKE LOWER(CONCAT('%', @PalabraClave, '%')) OR
+                            LOWER(a.UserName) LIKE LOWER(CONCAT('%', @PalabraClave, '%'))
+                        ))
+                )
+                SELECT 
+                    COUNT(*) OVER () AS TotalResultados, 
+                    pf.*
+                FROM 
+                    PublicacionesFiltradas pf
+                ORDER BY 
+                    CASE 
+                        WHEN @Ordenar IS NULL OR @Ordenar NOT IN ('precio_mayor', 'precio_menor') THEN pf.Puntuacion 
+                    END DESC,
+                    CASE 
+                        WHEN @Ordenar = 'precio_mayor' THEN pf.Precio 
+                    END DESC,
+                    CASE 
+                        WHEN @Ordenar = 'precio_menor' THEN pf.Precio 
+                    END ASC
+                LIMIT @ElementosPorPagina OFFSET @Offset
+            ";
+
+            string consultaImagenes = @"
+                SELECT 
+                    pi.IdPublicacion,
+                    pi.Ruta,
+                    pi.Alt
+                FROM 
+                    publicacionesimagenes pi
+                WHERE 
+                    pi.IdPublicacion IN @idsPublicaciones
+            ";
+
+            var parametros = new
+            {
+                IdCategoria = idCategoria,
+                IdPropiedad = idPropiedad,
+                Restricciones = restricciones?.Count > 0 ? restricciones : null,
+                PalabraClave = !string.IsNullOrEmpty(palabraClave) ? palabraClave : null,
+                FechaInicio = fechaInicio,
+                FechaFin = fechaFin,
+                PrecioMinimo = precioMinimo,
+                PrecioMaximo = precioMaximo,
+                Ordenar = ordenar,
+                Pagina = pagina,
+                ElementosPorPagina = elementosPorPagina,
+                Offset = (pagina - 1) * elementosPorPagina,
+            };
+
+
+            var publicaciones = await _db.QueryAsync<PublicacionTarjetaBusquedaVM>(consulta, parametros);
+
+            var idsPublicaciones = publicaciones.Select(p => p.IdPublicacion).ToList();
+            var imagenes = await _db.QueryAsync<PublicacionImagenVM>(consultaImagenes, new { idsPublicaciones });
+
+
+            foreach (var publicacion in publicaciones)
+            {
+                publicacion.Imagenes = imagenes.Where(i => i.IdPublicacion == publicacion.IdPublicacion).ToList();
+            }
+
+
+            return publicaciones.ToList();
         }
     }
 }
