@@ -66,7 +66,7 @@
                 @foreach (var categoria in Model.Categorias)
                 {
                     <div class="category-item">
-                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-idCategoria="@categoria.IdCategoria">
+                        <a asp-area="Dviaje" asp-controller="Publicaciones" asp-action="Publicaciones" asp-route-categorias="@categoria.IdCategoria">
                             @if (!string.IsNullOrEmpty(categoria.RutaIcono))
                             {
                                 <i class="@categoria.RutaIcono category-icon"></i>
